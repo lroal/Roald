@@ -1,0 +1,12 @@
+src/*/*/obj
+src/*/*/bin
+src/*/*/Bin
+src/*/*/ClientBin
+src/*/*ReSharper*
+src/*/*.cache
+src/*/*.suo
+src/*/*/*.user
+src/*/TestResults
+src/Build
+deps
+deploy
