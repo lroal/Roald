@@ -8,5 +8,5 @@ src/*/*.suo
 src/*/*/*.user
 src/*/TestResults
 src/Build
-deps
-deploy
+libs
+tools
