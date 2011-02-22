@@ -8,5 +8,3 @@ src/*/*.suo
 src/*/*/*.user
 src/*/TestResults
 src/Build
-libs
-tools
