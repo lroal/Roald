@@ -1,0 +1,102 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{D2DFAB07-35B4-4534-97E2-5384EB7F25F6}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Roald.Katas</RootNamespace>
+    <AssemblyName>Specs.Roald.Katas</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="nunit.framework">
+      <HintPath>..\..\..\tools\Nunit\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TennisGameSpecs\Constructed\At15_0\At15_15\At30_15\At40_15\At40_30\Deuce\AdvantagePlayerOne\Deuce\AdvantagePlayerTwo\PlayerTwoWinBall_Act.cs" />
+    <Compile Include="TennisGameSpecs\Constructed\At15_0\At15_15\At30_15\At40_15\At40_30\Deuce\AdvantagePlayerOne\Deuce\AdvantagePlayerTwo\When_PlayerTwoWinBall.cs" />
+    <Compile Include="TennisGameSpecs\Constructed\At15_0\At15_15\At30_15\At40_15\At40_30\Deuce\AdvantagePlayerOne\Deuce\AdvantageToPlayerTwo_Act.cs" />
+    <Compile Include="TennisGameSpecs\Constructed\At15_0\At15_15\At30_15\At40_15\At40_30\Deuce\AdvantagePlayerOne\Deuce\PlayerTwoWinBall_Act.cs" />
+    <Compile Include="TennisGameSpecs\Constructed\At15_0\At15_15\At30_15\At40_15\At40_30\Deuce\AdvantagePlayerOne\Deuce\When_PlayerTwoWinBall.cs" />
+    <Compile Include="TennisGameSpecs\Constructed\At15_0\At15_15\At30_15\At40_15\At40_30\Deuce\AdvantagePlayerOne\Deuce_Act.cs" />
+    <Compile Include="TennisGameSpecs\Constructed\At15_0\At15_15\At30_15\At40_15\At40_30\Deuce\AdvantagePlayerOne\PlayerOneWinBall_Act.cs" />
+    <Compile Include="TennisGameSpecs\Constructed\At15_0\At15_15\At30_15\At40_15\At40_30\Deuce\AdvantagePlayerOne\PlayerTwoWinBall_Act.cs" />
+    <Compile Include="TennisGameSpecs\Constructed\At15_0\At15_15\At30_15\At40_15\At40_30\Deuce\AdvantagePlayerOne\When_PlayerOneWinBall.cs" />
+    <Compile Include="TennisGameSpecs\Constructed\At15_0\At15_15\At30_15\At40_15\At40_30\Deuce\AdvantagePlayerOne\When_PlayerTwoWinBall.cs" />
+    <Compile Include="TennisGameSpecs\Constructed\At15_0\At15_15\At30_15\At40_15\At40_30\Deuce\AdvantagePlayerOne_Act.cs" />
+    <Compile Include="TennisGameSpecs\Constructed\At15_0\At15_15\At30_15\At40_15\At40_30\Deuce\AdvantagePlayerTwo\PlayerTwoWinBall_Act.cs" />
+    <Compile Include="TennisGameSpecs\Constructed\At15_0\At15_15\At30_15\At40_15\At40_30\Deuce\AdvantagePlayerTwo\When_PlayerTwoWinBall.cs" />
+    <Compile Include="TennisGameSpecs\Constructed\At15_0\At15_15\At30_15\At40_15\At40_30\Deuce\AdvantagePlayerTwo_Act.cs" />
+    <Compile Include="TennisGameSpecs\Constructed\At15_0\At15_15\At30_15\At40_15\At40_30\Deuce\PlayerOneWinBall_Act.cs" />
+    <Compile Include="TennisGameSpecs\Constructed\At15_0\At15_15\At30_15\At40_15\At40_30\Deuce\PlayerTwoWinBall_Act.cs" />
+    <Compile Include="TennisGameSpecs\Constructed\At15_0\At15_15\At30_15\At40_15\At40_30\Deuce\When_PlayerOneWinBall.cs" />
+    <Compile Include="TennisGameSpecs\Constructed\At15_0\At15_15\At30_15\At40_15\At40_30\Deuce\When_PlayerTwoWinBall.cs" />
+    <Compile Include="TennisGameSpecs\Constructed\At15_0\At15_15\At30_15\At40_15\At40_30\Deuce_Act.cs" />
+    <Compile Include="TennisGameSpecs\Constructed\At15_0\At15_15\At30_15\At40_15\At40_30\PlayerOneWinBall_Act.cs" />
+    <Compile Include="TennisGameSpecs\Constructed\At15_0\At15_15\At30_15\At40_15\At40_30\PlayerTwoWinBall_Act.cs" />
+    <Compile Include="TennisGameSpecs\Constructed\At15_0\At15_15\At30_15\At40_15\At40_30\When_PlayerOneWinBall.cs" />
+    <Compile Include="TennisGameSpecs\Constructed\At15_0\At15_15\At30_15\At40_15\At40_30\When_PlayerTwoWinBall.cs" />
+    <Compile Include="TennisGameSpecs\Constructed\At15_0\At15_15\At30_15\At40_15\At40_30_Act.cs" />
+    <Compile Include="TennisGameSpecs\Constructed\At15_0\At15_15\At30_15\At40_15\PlayerTwoWinBall_Act.cs" />
+    <Compile Include="TennisGameSpecs\Constructed\At15_0\At15_15\At30_15\At40_15\When_PlayerTwoWinBall.cs" />
+    <Compile Include="TennisGameSpecs\Constructed\At15_0\At15_15\At30_15\At40_15_Act.cs" />
+    <Compile Include="TennisGameSpecs\Constructed\At15_0\At15_15\At30_15\When_PlayerOneWinBall.cs" />
+    <Compile Include="TennisGameSpecs\Constructed\At15_0\At15_15\At30_15_Act.cs" />
+    <Compile Include="TennisGameSpecs\Constructed\At15_0\At15_15\At30_15\PlayerOneWinBall_Act.cs" />
+    <Compile Include="TennisGameSpecs\Constructed\At15_0\At15_15\PlayerOneWinBall_Act.cs" />
+    <Compile Include="TennisGameSpecs\Constructed\At15_0\At15_15\When_PlayerOneWinBall.cs" />
+    <Compile Include="TennisGameSpecs\Constructed\At15_0\At15_15_Act.cs" />
+    <Compile Include="TennisGameSpecs\Constructed\At15_0\PlayerTwoWinBall_Act.cs" />
+    <Compile Include="TennisGameSpecs\Constructed\At15_0\When_PlayerTwoWinBall.cs" />
+    <Compile Include="TennisGameSpecs\Constructed\At15_0_Act.cs" />
+    <Compile Include="TennisGameSpecs\Constructed\PlayerOneWinBall_Act.cs" />
+    <Compile Include="TennisGameSpecs\Constructed\When_PlayerOneWinBall.cs" />
+    <Compile Include="TennisGameSpecs\Construct_Act.cs" />
+    <Compile Include="TennisGameSpecs\When_Constructed.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Roald.Katas\Roald.Katas.csproj">
+      <Project>{747DAD7F-6251-41B4-BE12-8918F203DF46}</Project>
+      <Name>Roald.Katas</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Specs.Roald.Katas", "Specs.Roald.Katas\Specs.Roald.Katas.csproj", "{D2DFAB07-35B4-4534-97E2-5384EB7F25F6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Roald.Katas", "Roald.Katas\Roald.Katas.csproj", "{747DAD7F-6251-41B4-BE12-8918F203DF46}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D2DFAB07-35B4-4534-97E2-5384EB7F25F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D2DFAB07-35B4-4534-97E2-5384EB7F25F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D2DFAB07-35B4-4534-97E2-5384EB7F25F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D2DFAB07-35B4-4534-97E2-5384EB7F25F6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{747DAD7F-6251-41B4-BE12-8918F203DF46}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{747DAD7F-6251-41B4-BE12-8918F203DF46}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{747DAD7F-6251-41B4-BE12-8918F203DF46}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{747DAD7F-6251-41B4-BE12-8918F203DF46}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
