@@ -8,16 +8,23 @@
         <script type="text/javascript" src="../../lib/jquery-1.6.min.js"></script>
         <script type="text/javascript" src="../../Core/Namespace.js"></script>
 		<script type="text/javascript" src="Roald.js"></script>
-        <script type="text/javascript" src="HelloWorld/HelloWorld.js"></script>
+		<script type="text/javascript" src="SimpleRegion.js"></script>
+		<script type="text/javascript" src="SimpleRegionFactory.js"></script>
+        <script type="text/javascript" src="HelloWorld/HelloWorld.js"></script>		
         <script type="text/javascript" src="HelloWorld/HelloWorldPresenter.js"></script>
+		<script type="text/javascript" src="HelloWorld/HelloWorldView.js"></script>
 
     <script type="text/javascript">
 			
-            var Roald = undefined;
+            
 			function initialize() {
-                var presenter = Roald.HelloWorld.NewHelloWorldPresenter();
-               
-                presenter.Activate("Main");
+				
+				var regionFactory = Roald.NewSimpleRegionFactory();
+				var region = regionFactory.Create("Main");
+				
+				var presenter = Roald.HelloWorld.NewHelloWorldPresenter();
+				presenter.Activate(region);
+                              
             }
 			$(document).ready( function() {
 				initialize();
