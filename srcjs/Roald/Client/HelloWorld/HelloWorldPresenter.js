@@ -1,15 +1,20 @@
-
-
 namespace("Roald.HelloWorld");
 
 Roald.HelloWorld.HelloWorldPresenter = function ()
 {
-	this._view = Roald.HelloWorld.NewHelloWorldView();
+	var _view = Roald.HelloWorld.NewHelloWorldView();
 	
-	this.Activate = function (region)
+	function activate(region)
     {
-		region.Add(this._view);
+		region.Add(_view);
     }
-
+	
+	this.Activate = activate;
  
 }
+
+Roald.HelloWorld.NewHelloWorldPresenter = function  ()
+{
+    return new Roald.HelloWorld.HelloWorldPresenter();
+}
+

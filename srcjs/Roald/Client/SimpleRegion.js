@@ -1,24 +1,36 @@
+namespace("Roald");
+
 Roald.SimpleRegion = function()
 {
 	var _elementId;
 		
-	this.Setup = function (elementId)
+	function setup(elementId)
 	{
-		this._elementId = elementId;					
-		this.changeId();
+		_elementId = elementId;					
+		changeId();
 	}
 	
-	this.changeId = function ()
+	function changeId()
 	{
+		//todo: use Guid generator
 		var newId = "newId";
-		$("#"+this._elementId).attr("id", newId);
-		this._elementId = newId;
+		$("#"+_elementId).attr("id", newId);
+		_elementId = newId;
 	}
 	
-	this.Add = function (view)
+	function add(view)
 	{
-		$("#" + this._elementId).html(view.GetHtml());
+		$("#" + _elementId).html(view.GetHtml());
 	}
+	
+	this.Setup = setup;
+	this.Add = add;
 		
 }
+
+Roald.NewSimpleRegion = function  ()
+{
+    return new Roald.SimpleRegion();
+}
+
 
