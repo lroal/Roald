@@ -1,1 +1,23 @@
-TennisKata in BDD way.
+------------------
+Prerequisites
+------------------
+You need the following ruby gems:
+gem install jsmin
+gem install sprockets
+
+------------------
+How to build srcjs
+------------------
+1. goto tortage/lib
+2. run: ruby makejs.rb
+3. Then total js will by merged to: srcjs/deploy
+
+
+
+
+
+
+------------------
+Content in src
+------------------
+Roald.Katas: TennisKata in BDD way.

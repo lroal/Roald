@@ -2,12 +2,21 @@ namespace("Roald.HelloWorld");
 
 Roald.HelloWorld.HelloWorldView = function()
 {
+	var _helloMsg = undefined;
+
 	function getHtml()
 	{
-		return "<p>Hello World </p>";
+		return "<p>" + _helloMsg + "</p>";
+	}
+
+	function setHelloMsg(helloMsg) {
+		
+		_helloMsg = helloMsg;		
 	}
 	
+	
 	this.GetHtml = getHtml;
+	this.SetHelloMsg = setHelloMsg;
 }
 
 Roald.HelloWorld.NewHelloWorldView = function  ()
