@@ -1,21 +1,34 @@
 ------------------
 Prerequisites
 ------------------
+Java must be installed.
+
+Ruby must be installed.
+
 You need the following ruby gems:
 gem install jsmin
 gem install sprockets
 
-------------------
+You need JsTestDriver:
+-environment variable JSTESTDRIVER_HOME must be set to e.g. c:\bin
+-JsTestDriver-1.2.1.jar in e.g. c:\bin
+
+-------------------
 How to build srcjs
-------------------
+-------------------
 1. goto tortage/lib
 2. run: ruby makejs.rb
 3. Then total js will by merged to: srcjs/deploy
 
+--------------------------
+How to run js tests
+--------------------------
+1. Start the jstestdriver server:
+java -jar %JSTESTDRIVER_HOME%\JsTestDriver-1.2.1.jar --port 4224
 
+2. Capture the browser by typing http://localhost:4224 in the browser. Select transactional or strict mode.
 
-
-
+3. The test results will be shown in the browser. Requires that jsTestDriver.conf files are correctly setup.
 
 ------------------
 Content in src
