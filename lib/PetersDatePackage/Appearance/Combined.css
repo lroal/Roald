@@ -1,0 +1,27 @@
+/* All control's styles merged into one file */
+/* NOTE: All imported files must be in the same folder as this one */
+
+/* Date TextBoxes */
+@IMPORT url(DateTextBox.css);
+
+/* Time TextBoxes */
+@IMPORT url(TimeTextBox.css);
+
+/* CS_Calendar */
+@IMPORT url(Calendar.css);
+
+/* MultiSelectionCalendar */
+@IMPORT url(MultiSelectionCalendar.css);
+
+/* SpecialDates */
+@IMPORT url(SpecialDates.css);
+
+/* ContextMenu */
+@IMPORT url(ContextMenu.css);
+
+/* MonthYearPicker */
+@IMPORT url(MonthYearPicker.css);
+
+/* TimePicker */
+@IMPORT url(TimePicker.css);
+

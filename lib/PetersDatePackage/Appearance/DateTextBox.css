@@ -1,0 +1,52 @@
+.DTBToggleCalendar
+{
+}
+
+.DTBToggleCalendarPressed
+{
+}
+
+.DTBHelpButton
+{
+}
+
+.DTBHelpButtonPressed
+{
+}
+
+/* prevent external img styles from affecting these styles */
+.DTBToggleCalendar img
+{
+   background-color:transparent; 
+   margin-left: 0px; 
+   margin-top: 0px; 
+   margin-bottom:0px; 
+   margin-right:0px;
+}
+/* prevent external img styles from affecting these styles */
+.DTBToggleCalendarPressed img
+{
+   background-color:transparent; 
+   margin-left: 0px; 
+   margin-top: 0px; 
+   margin-bottom:0px; 
+   margin-right:0px;
+}
+/* prevent external img styles from affecting these styles */
+.DTBHelpButton img
+{
+   background-color:transparent; 
+   margin-left: 0px; 
+   margin-top: 0px; 
+   margin-bottom:0px; 
+   margin-right:0px;
+}
+/* prevent external img styles from affecting these styles */
+.DTBHelpButtonPressed img
+{
+   background-color:transparent; 
+   margin-left: 0px; 
+   margin-top: 0px; 
+   margin-bottom:0px; 
+   margin-right:0px;
+}

@@ -1,0 +1,101 @@
+/* SpecialDates that use xDayCellFormatter.xFormat <> Standard need the [class] TR format setup */
+
+.SD_Selectable1, .SD_Selectable1 TR
+{
+   background-color: mistyrose;
+   cursor: pointer;  /* W3C approved hand. */
+   cursor: hand;   /* IE specific hand */
+}
+
+.SD_SelectableOM1, .SD_SelectableOM1 TR
+{
+   background-color: powderblue;
+   cursor: pointer;
+   cursor: hand;
+}
+
+.SD_Selectable2, .SD_Selectable2 TR
+{
+   background-color: palegoldenrod;
+   cursor: pointer;
+   cursor: hand;
+}
+
+.SD_SelectableOM2, .SD_SelectableOM2 TR
+{
+   background-color: gainsboro;
+   cursor: pointer;
+   cursor: hand;
+}
+
+.SD_Unselectable1, .SD_Unselectable1 TR
+{
+   color: gray;
+   background-color: mistyrose;
+}
+
+.SD_UnselectableOM1, .SD_UnselectableOM1 TR
+{
+   color: gray;
+   background-color: powderblue;
+}
+
+.SD_Unselectable2, .SD_Unselectable2 TR
+{
+   color: gray;
+   background-color: palegoldenrod;
+}
+
+.SD_UnselectableOM2, .SD_UnselectableOM2 TR
+{
+   color: gray;
+   background-color: gainsboro;
+}
+
+
+
+/* SpecialDate timerows */
+.SD_TimeRow, .SD_TimeRow TD
+{
+}
+.SD_TimeRowAlt, .SD_TimeRowAlt TD
+{
+}
+
+/* xExtendedDateFormatter styles */
+.EDFMain
+{
+   font-size: 8pt;
+   font-family: Arial;
+   color: black;
+   background-color: aliceblue;
+   border-right: black 1px solid;
+   border-top: black 1px solid;
+   border-left: black 1px solid;
+   border-bottom: black 1px solid;
+   padding-right: 5px;
+   padding-left: 5px;
+   padding-bottom: 5px;
+   padding-top: 5px;
+   max-height:400px;  /* adjust this size as needed */
+   overflow:auto;
+}
+.EDFMain TR
+{
+   font-size: 8pt;
+   font-family: Arial;
+   color: black;
+}
+.EDFTitle
+{
+   background-color: white;
+   border-top: black 1px solid;
+   border-bottom: black 1px solid;
+}
+
+.EDFTitle TR
+{
+   font-size: 8pt;
+   font-family: Arial;
+   color: black;
+}

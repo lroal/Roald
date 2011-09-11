@@ -1,0 +1,287 @@
+.CSCCalendar
+{
+   border-right: #E0E0E0 4px ridge;  /* lightgrey */
+   border-top: #E0E0E0 4px ridge;
+   border-left: #E0E0E0 4px ridge;
+   border-bottom: #E0E0E0 4px ridge;
+   font-size: 8pt;
+   font-family: Arial;
+   background-color: white; 
+}
+
+.CSCCalendar TABLE
+{
+   font-size: 8pt;
+   font-family: Arial;
+}
+
+/* prevent external img styles from affecting these styles */
+.CSCCalendar img
+{
+   background-color:transparent; 
+   margin-left: 0px; 
+   margin-top: 0px; 
+   margin-bottom:0px; 
+   margin-right:0px;
+}
+/* used on server side only version */
+.CSCCalendar A
+{
+   color:black;
+   text-decoration:none;
+}
+
+/* Available for upgraders of 1.1. This class can be deleted if not used */
+.CSCCalendarNoFilter
+{
+   border-right: #E0E0E0 4px ridge;  /* lightgrey */
+   border-top: #E0E0E0 4px ridge;
+   border-left: #E0E0E0 4px ridge;
+   border-bottom: #E0E0E0 4px ridge;
+   font-family: Arial;
+   font-size: 8pt;
+   background-color: white;
+}
+/* Available for upgraders of 1.1. This class can be deleted if not used */
+.CSCCalendarNoFilter TABLE
+{
+   font-size: 8pt;
+   font-family: Arial;
+}
+
+
+.CSCWeekRowsTable
+{
+   border-right: royalblue 1px solid; /* was black in v1 */
+   border-top: royalblue 1px solid;
+   border-left: royalblue 1px solid;
+   border-bottom: royalblue 1px solid;
+   font-family: Arial;
+   font-size: 8pt;
+}
+
+.CSCWeekRowsTable_NS70  /* for Netscape 7.0x only */
+{
+   font-family: Arial;
+   font-size: 8pt;
+}
+
+/* The next few are for the day cells. Formatted day cells that use nested tables need to carry the styles into their inner TR tags */
+
+.CSCDay, .CSCDay TR
+{
+   cursor: pointer;  /* W3C approved hand. */
+   cursor: hand;   /* IE specific hand */
+}
+
+.CSCSelectedDay, .CSCSelectedDay TR
+{
+   background-color: gold;
+   cursor: pointer;
+   cursor: hand;
+}
+
+.CSCSelectedToday, .CSCSelectedToday TR
+{
+   font-weight: bold;
+   background-color: gold;
+   cursor: pointer;
+   cursor: hand;
+}
+
+.CSCToday, .CSCToday TR
+{
+   font-weight: bold;
+   cursor: pointer;
+   cursor: hand;
+}
+
+.CSCSpecialDay, .CSCSpecialDay TR
+{
+   cursor: pointer;
+   cursor: hand;
+   background-color: lemonchiffon;
+}
+
+.CSCOtherMonthDays, .CSCOtherMonthDays TR
+{
+   cursor: default;
+   color: gray;
+}
+
+.CSCOutsideRangeDay
+{
+   cursor: default;
+   color: gray;
+/* if you want to show a background image, uncomment and set the URL correctly. Graphic available in the Appearance folder: outofrangeday.gif.
+   background-image: url(outofrangeday.gif);
+   background-repeat: no-repeat;
+   background-position: center center;
+*/
+}
+
+.CSCWeekNumberColumn
+{
+   background-color: lightblue;
+/* optional background image. Appearance/Backgrounds has several predefined images
+   background-image: url(Backgrounds/GradientBlue16px.gif);
+   background-repeat: repeat-x;
+ */
+}
+
+
+.CSCDayHeader
+{
+   font-size: 7pt;
+   background-color: lightblue;
+/* optional background image. Appearance/Backgrounds has several predefined images
+   background-image: url(Backgrounds/GradientBlue16px.gif);
+   background-repeat: repeat-x;
+*/
+}
+
+.CSCDayHeaderCell
+{
+}
+
+
+.CSCHeaderTable
+{
+/*   
+   font-size: 8pt;
+   font-family: Arial;
+*/
+   margin-top: 2px;
+   margin-bottom: 2px;
+/* optional background image. Appearance/Backgrounds has several predefined images
+   background-image: url(Backgrounds/GradientBlue24px.gif);
+   background-repeat: repeat-x;
+ */
+}
+
+
+/* use to establish a background color for CSCHeaderTable */
+.CSCHeaderTable TABLE
+{
+   background-color:transparent;
+}
+
+.CSCHeaderRows
+{
+   font-size: 8pt;
+   font-family: Arial;
+   cursor: default;
+}
+
+.CSCHeaderRows TR
+{
+   background-color:transparent;
+}
+
+.CSCIncrementalButtons
+{
+   cursor: pointer;
+   cursor: hand;
+   color: mediumblue;
+}
+
+.CSCIncrementalButtonsPressed
+{
+   cursor: pointer;
+   cursor: hand;
+   color: darkblue;
+}
+
+.CSCJumpButtons
+{
+   color: mediumblue;
+   cursor: pointer;
+   cursor: hand;
+}
+
+.CSCJumpButtonsPressed
+{
+   color: darkblue;
+   cursor: pointer;
+   cursor: hand;
+}
+
+.CSCCloseButton
+{
+   cursor: default;
+}
+
+.CSCCloseButtonPressed
+{
+   cursor: default;
+}
+.CSCHelpButton
+{
+   cursor: default;
+}
+
+.CSCHelpButtonPressed
+{
+   cursor: default;
+}
+
+.CSCFooterTable
+{
+/* optional background image. Appearance/Backgrounds has several predefined images
+   background-image: url(Backgrounds/GradientBlue24px.gif);
+   background-repeat: repeat-x;
+ */
+}
+
+.CSCFooterTable TABLE
+{
+   background-color:transparent;
+}
+
+.CSCFooterButton
+{
+   border-right: #E0E0E0 thin outset;  /* lightgrey */
+   border-top: #E0E0E0 thin outset;
+   border-left: #E0E0E0 thin outset;
+   border-bottom: #E0E0E0 thin outset;
+   background-color: lightblue;
+   font-family: Arial;
+   font-size: 8pt;
+   color: black;
+   cursor: pointer;
+   cursor: hand;
+}
+.CSCFooterButtonPressed
+{
+   border-right: #E0E0E0 thin inset;  /* lightgrey */
+   border-top: #E0E0E0 thin inset;
+   border-left: #E0E0E0 thin inset;
+   border-bottom: #E0E0E0 thin inset;
+   background-color: lightblue;
+   color: black;
+   font-size: 8pt;
+   font-family: Arial;
+   cursor: pointer;
+   cursor: hand;
+}
+
+.CSCFooterCurrentDate
+{
+}
+
+.CSCMultiMonthContainer
+{
+   padding-right: 1px;
+   padding-left: 1px;
+   padding-bottom: 1px;
+}
+
+.CSCMultiMonthHeader
+{
+   border-right: royalblue 1px solid;
+   border-top: royalblue 1px solid;
+   border-left: royalblue 1px solid;
+   border-bottom: royalblue 1px solid;
+   margin-right: -1px; /* only affects Opera 7+ to better align this box to the weekrowstable */
+   margin-bottom: 2px;
+}

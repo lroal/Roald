@@ -1,0 +1,32 @@
+.MSCMessageCenter
+{
+   border-right: gray double;
+   border-top: gray double;
+   border-left: gray double;
+   border-bottom: gray double;
+}
+
+.MSCMessageCenterTitle
+{
+   color: blue;
+   font-size: 8pt;
+   font-family: Arial;
+}
+
+.MSCMessageCenterBody
+{
+   padding-right: 5px;
+   padding-left: 5px;
+   padding-bottom: 5px;
+   padding-top: 5px;
+}
+
+.MSCMessageCenterBody A
+{
+   color:blue;
+   text-decoration:underline;
+}
+
+.MSCMessageCenterNextClick
+{
+}

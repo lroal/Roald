@@ -1,0 +1,661 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>IdeaBlade.Persistence.Server</name>
+    </assembly>
+    <members>
+        <member name="T:IdeaBlade.Persistence.Server.RdbAdapterProvider">
+            <summary>
+            Internal use only.  Immutable object - one per entity type per PersistenceServer.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.Persistence.Server.IAdapterProvider">
+            <summary>
+            Interface to be implemented for any <see cref="T:IdeaBlade.Persistence.Entity"/> requiring a custom <see cref="T:System.Data.Common.DataAdapter"/>.
+            </summary>
+            <remarks>In most cases the default DataAdapter used internally by DevForce is sufficient for all business objects.
+            The <see cref="T:IdeaBlade.Persistence.Server.RdbAdapterProvider"/> creates a provider-specific DataAdapter appropriate to the connection,
+            and builds the <see cref="P:System.Data.IDbDataAdapter.SelectCommand"/>, <see cref="P:System.Data.IDbDataAdapter.UpdateCommand"/>, 
+            <see cref="P:System.Data.IDbDataAdapter.InsertCommand"/> and <see cref="P:System.Data.IDbDataAdapter.DeleteCommand"/> needed for the 
+            <see cref="T:IdeaBlade.Persistence.EntityTable"/>.
+            <para>A typical reason to implement a custom AdapterProvider is to call your own stored procedures when
+            updating, inserting and deleting data.  When implementing this interface, you will construct and initialize a
+            <see cref="P:IdeaBlade.Persistence.Server.IAdapterProvider.DataAdapter"/> with the UpdateCommand, InsertCommand and DeleteCommand
+            which the framework will then use for all data modifications to the underlying data source.  You will
+            also provide the <see cref="M:IdeaBlade.Persistence.Server.IAdapterProvider.Refetch(System.Data.IDataAdapter,System.Data.DataTable,System.Data.DataTable)"/> logic to re-query the data source after modified rows have been saved.
+            </para>
+            <para>The DevForce Tutorials provide a complete example of implementing IAdapterProvider in the
+            <b>"How to create, update, and delete business objects using stored procedures"</b> lesson.
+            </para>
+            </remarks>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Server.IAdapterProvider.Initialize(System.Type,IdeaBlade.Util.IDataSourceKey)">
+            <summary>
+            Called by the <see cref="T:IdeaBlade.Persistence.Server.PersistenceServer"/> to initialize an instance of the class.
+            </summary>
+            <param name="pEntityType">Supported <see cref="T:IdeaBlade.Persistence.Entity"/> type requiring initialization</param>
+            <param name="pDataSourceKey">Data source key which can be used in data source access</param>
+            <remarks><b>Initialize</b> will be called by the PersistenceServer to build the <see cref="T:System.Data.IDataAdapter"/>
+            to be used to handle inserts, updates and deletes of objects of the <see cref="T:IdeaBlade.Persistence.Entity"/> type.
+            Use the <see cref="T:IdeaBlade.Util.IDataSourceKey"/> passed to help create the <see cref="T:System.Data.IDataAdapter"/> and 
+            <see cref="T:System.Data.IDbCommand"/> objects for the SQL provider type.
+            <para>During initialization you should also ensure that any instance variables backing the
+            <see cref="P:IdeaBlade.Persistence.Server.IAdapterProvider.EntityType"/>, <see cref="P:IdeaBlade.Persistence.Server.IAdapterProvider.DataAdapter"/> and <see cref="P:IdeaBlade.Persistence.Server.IAdapterProvider.TemplateDataTable"/> properties
+            are set.</para>
+            <para>Note: Although it will not be used, you must also create a <see cref="P:System.Data.IDbDataAdapter.SelectCommand"/>
+            for the adapter, otherwise a NullReferenceException will be thrown.
+            </para>
+            </remarks>
+            <example><code lang="C#">
+// Sample Initialize implementation - see the example in the Tutorials for more detail
+private Type mEntityType;
+private EntityTable mRdbTable;
+private AdoHelper mAdoHelper;
+private IDbDataAdapter mAdapter;
+
+public void Initialize(Type pEntityType, IDataSourceKey pDataSourceKey) {
+   // Initialize instance variables used to back properties, and for refetch processing.
+   RdbKey aRdbKey = (RdbKey)pDataSourceKey;
+   mAdoHelper = aRdbKey.AdoHelper;
+   mEntityType = pEntityType;
+   mRdbTable = EntityTable.GetPrototypeTable(pEntityType);
+
+   // Create the DataAdapter - use the AdoHelper for provider-independent code.
+   mAdapter = mAdoHelper.CreateDbDataAdapter();
+   IDbConnection connection = mAdoHelper.CreateConnection(true);
+
+   // This is a very simple example and does not show parameter construction...
+
+   mAdapter.SelectCommand = mAdoHelper.CreateDbCommand(connection);
+   // because the select will not be called it does not need to be further initialized
+
+   mAdapter.UpdateCommand = AdoHelper.CreateDbCommand(connection);
+   mAdapter.UpdateCommand.CommandText = "myUpdateProc";
+   // add UpdateCommand.Parameters 
+
+   mAdapter.InsertCommand = AdoHelper.CreateDbCommand(connection);
+   mAdapter.InsertCommand.CommandText = "myInsertProc";
+   // add InsertCommand.Parameters 
+
+   mAdapter.DeleteCommand = AdoHelper.CreateDbCommand(connection);
+   mAdapter.DeleteCommand.CommandText = "myDeleteProc";
+   // add DeleteCommand.Parameters 
+}
+</code></example><example><code lang="VB">
+' Sample Initialize implementation - see the example in the Tutorials for more detail
+Private mEntityType As Type
+Private mRdbTable As EntityTable
+Private mAdoHelper As AdoHelper
+Private mAdapter As IDbDataAdapter
+
+Public Sub Initialize(ByVal pEntityType As System.Type, ByVal pDataSourceKey As IdeaBlade.Util.IDataSourceKey) _
+   Implements IdeaBlade.Persistence.Server.IAdapterProvider.Initialize
+
+   ' Initialize instance variables used to back properties, and for refetch processing.
+   Dim aRdbKey As RdbKey = CType(pDataSourceKey, RdbKey)
+   mAdoHelper = aRdbKey.AdoHelper
+   mEntityType = pEntityType
+   mRdbTable = EntityTable.GetPrototypeTable(pEntityType)
+
+   ' Create the DataAdapter - use the AdoHelper for provider-independent code.
+   mAdapter = mAdoHelper.CreateDbDataAdapter()
+   Dim connection As IDbConnection = mAdoHelper.CreateConnection(True)
+
+   ' This is a very simple example and does not show parameter construction...
+   mAdapter.SelectCommand = mAdoHelper.CreateDbCommand(connection)
+   ' because the select will not be called it does not need to be further initialized
+   
+   mAdapter.UpdateCommand = AdoHelper.CreateDbCommand(connection)
+   mAdapter.UpdateCommand.CommandText = "myUpdateProc"
+   ' add UpdateCommand.Parameters 
+
+   mAdapter.InsertCommand = AdoHelper.CreateDbCommand(connection)
+   mAdapter.InsertCommand.CommandText = "myInsertProc"
+   ' add InsertCommand.Parameters 
+
+   mAdapter.DeleteCommand = AdoHelper.CreateDbCommand(connection)
+   mAdapter.DeleteCommand.CommandText = "myDeleteProc"
+   ' add DeleteCommand.Parameters 
+End Sub
+	</code></example>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Server.IAdapterProvider.Refetch(System.Data.IDataAdapter,System.Data.DataTable,System.Data.DataTable)">
+            <summary>
+            Called by the <see cref="T:IdeaBlade.Persistence.Server.PersistenceServer"/> after a save operation to re-retrieve the modified
+            entities from the data source.
+            </summary>
+            <param name="pAdapter">A clone of your DataAdapter</param>
+            <param name="pSourceTable">Table containing modified rows</param>
+            <param name="pDestTable">Table to re-retrieve rows into</param>
+            <remarks>In DevForce, after modified rows are persisted to the data source a re-retrieval of those rows is 
+            always performed to ensure that any outside modifications via expressions or triggers are now reflected
+            in the cache.  When you implement a custom AdapterProvider this re-retrieval is not required, but 
+            you are responsible for refetching the modified rows if needed.
+            <para>You can use the DataAdapter passed to build a SelectCommand to fill the destination table.</para>
+            </remarks>
+            <example><code lang="C#">
+// Sample Refetch implementation - see the example in the Tutorials for more detail
+
+public void Refetch(System.Data.IDataAdapter pAdapter, System.Data.DataTable pSourceTable, System.Data.DataTable pDestTable) {
+   DbDataAdapter iAdapter = (DbDataAdapter)pAdapter;
+   IList&lt;EntityQuery&gt; refetchQueries = EntityQueryBuilder.BuildRefetchQueries(pSourceTable.Rows, 50);
+
+   foreach (EntityQuery aQuery in refetchQueries) {
+     RdbQuerySqlFormatter aFormatter = new RdbQuerySqlFormatter(aQuery, mAdoHelper);
+     ParameterizedSql query = aFormatter.GetSelectExpression();
+     iAdapter.SelectCommand.CommandText = query.Sql;
+     mAdoHelper.CopyParameters(query.Parameters, iAdapter.SelectCommand.Parameters);
+     iAdapter.Fill(pDestTable);
+   }
+}
+</code></example><example><code lang="VB">
+' Sample Refetch implementation - see the example in the Tutorials for more detail
+
+Public Sub Refetch(ByVal pAdapter As System.Data.IDataAdapter, ByVal pSourceTable As System.Data.DataTable, ByVal pDestTable As System.Data.DataTable) _
+  Implements IdeaBlade.Persistence.Server.IAdapterProvider.Refetch
+  Dim iAdapter As DbDataAdapter = CType(pAdapter, DbDataAdapter)
+
+  ' Use the querybuilder to build an RdbQuery for the changed row Entity types.
+  Dim refetchQueries As IList(Of EntityQuery) = EntityQueryBuilder.BuildRefetchQueries(pSourceTable.Rows, 50)
+
+  ' Format a select command and re-fetch into the destination table.
+  For Each aQuery As EntityQuery In refetchQueries
+     Dim aFormatter As New RdbQuerySqlFormatter(aQuery, mAdoHelper)
+	 Dim query As ParameterizedSql = aFormatter.GetSelectExpression()
+     iAdapter.SelectCommand.CommandText = query.Sql
+     iAdapter.Fill(pDestTable)
+  Next
+End Sub
+	</code></example>
+        </member>
+        <member name="P:IdeaBlade.Persistence.Server.IAdapterProvider.SupportedEntityTypes">
+            <summary>
+            Returns the <see cref="T:IdeaBlade.Persistence.Entity"/> types supported by the AdapterProvider.
+            </summary>
+            <remarks>A single class implementing <b>IAdapterProvider</b> may support multiple
+            <see cref="T:IdeaBlade.Persistence.Entity"/> types.  An instance of the class will be initialized
+            for each supported type.
+            </remarks>
+        </member>
+        <member name="P:IdeaBlade.Persistence.Server.IAdapterProvider.EntityType">
+            <summary>
+            Returns the <see cref="T:IdeaBlade.Persistence.Entity"/> type the instance supports.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.Persistence.Server.IAdapterProvider.DataAdapter">
+            <summary>
+            Returns an <see cref="T:System.Data.IDataAdapter"/> initialized for the EntityType.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.Persistence.Server.IAdapterProvider.TemplateDataTable">
+            <summary>
+            Returns the <see cref="T:IdeaBlade.Persistence.EntityTable"/> container holding objects of the <see cref="P:IdeaBlade.Persistence.Server.IAdapterProvider.EntityType"/>.
+            </summary>
+            <remarks>Properties of the DataTable must be initialized.  You can use <see cref="M:IdeaBlade.Persistence.EntityTypeInfo.GetPrototypeTable(System.Type)"/>
+            to retrieve the appropriate <see cref="T:IdeaBlade.Persistence.EntityTable"/>.</remarks>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Server.RdbAdapterProvider.Initialize(System.Type,IdeaBlade.Util.IDataSourceKey)">
+            <summary>
+            Initialize the AdapterProvider.
+            </summary>
+            <param name="pEntityType"></param>
+            <param name="pDataSourceKey"></param>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Server.RdbAdapterProvider.Refetch(System.Data.IDataAdapter,System.Data.DataTable,System.Data.DataTable)">
+            <summary>
+            Re-query database for the changed entities.
+            </summary>
+            <param name="pAdapter"></param>
+            <param name="pSourceTable"></param>
+            <param name="pDestTable"></param>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Server.RdbAdapterProvider.InitializeInsertCommand(System.Data.IDbCommand)">
+            <summary>
+            
+            </summary>
+            <param name="pCommand"></param>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Server.RdbAdapterProvider.InitializeUpdateCommand(System.Data.IDbCommand)">
+            <summary>
+            
+            </summary>
+            <param name="pCommand"></param>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Server.RdbAdapterProvider.InitializeDeleteCommand(System.Data.IDbCommand)">
+            <summary>
+            
+            </summary>
+            <param name="pCommand"></param>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Server.RdbAdapterProvider.InitializeCommand(System.Data.IDbCommand,System.String,System.Data.IDataParameter[],System.Data.UpdateRowSource)">
+            <summary>
+            
+            </summary>
+            <param name="pCommand"></param>
+            <param name="pCommandText"></param>
+            <param name="pParameters"></param>
+            <param name="pUpdateRowSource"></param>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Server.RdbAdapterProvider.CreateDbParameter(System.Data.DataColumn,System.String,System.Data.DataRowVersion,System.String,System.Int32@)">
+            <summary>
+            Creates a new provider independent IDataParameter
+            </summary>
+            <param name="pColumn"></param>
+            <param name="pSourceColumnName"></param>
+            <param name="pVersion"></param>
+            <param name="pColumnPrefix"></param>
+            <param name="pNextParameterId"></param>
+            <returns></returns>
+        </member>
+        <member name="P:IdeaBlade.Persistence.Server.RdbAdapterProvider.SupportedEntityTypes">
+            <summary>
+            All entity types are supported.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.Persistence.Server.RdbAdapterProvider.EntityType">
+            <summary>
+            Entity type for the instance.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.Persistence.Server.RdbAdapterProvider.DataAdapter">
+            <summary>
+            Data adapter.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.Persistence.Server.RdbAdapterProvider.TemplateDataTable">
+            <summary>
+            RdbTable for the entity.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.Persistence.Server.SessionManager">
+            <summary>
+            Internal use only.  Used by the <see cref="T:IdeaBlade.Persistence.Server.PersistenceServer"/> to manage user authentication.
+            </summary>
+            <remarks>
+            The <b>SessionManager</b> maintains a list of encrypted <see cref="T:IdeaBlade.Persistence.SessionBundle"/>s representing
+            client sessions.  Use may use the <see cref="P:IdeaBladeConfig.RemotingInfo.SessionEncryptionKey"/>
+            to set the encryption key used.
+            </remarks>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Server.SessionManager.#ctor(IdeaBlade.Persistence.Server.PersistenceServer)">
+            <summary>
+            Create an instance of this class.
+            </summary>
+            <param name="pServer"></param>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Server.SessionManager.Login(IdeaBlade.Persistence.ILoginCredential)">
+            <summary>
+            Validate a user's credentials. 
+            </summary>
+            <param name="pCredential"></param>
+            <returns></returns>
+            <remarks>The SessionManager keeps a map of encrypted SessionBundles identifying user sessions.
+            </remarks>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Server.SessionManager.Logout(System.Guid)">
+            <summary>
+            Logs a user off, discarding his session information.
+            </summary>
+            <param name="pSessionKey"></param>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Server.SessionManager.GetPrincipal(IdeaBlade.Persistence.SessionBundle,System.Boolean)">
+            <summary>
+            Returns the Principal for a session.
+            </summary>
+            <param name="pSessionBundle"></param>
+            <param name="pErrorIfNotFound"></param>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Server.SessionManager.InServerSession(IdeaBlade.Persistence.SessionBundle)">
+            <summary>
+            Internal use only.
+            </summary>
+            <param name="pSessionBundle"></param>
+            <returns></returns>
+        </member>
+        <member name="T:IdeaBlade.Persistence.Server.DeclarativeTransactionManager">
+            <summary>
+            Internal use only.  TransactionManager used during save processing when <see cref="P:IdeaBlade.Util.IdeaBladeConfig.UseDeclarativeTransactions"/> is specified.
+            </summary>
+            <remarks>
+            The <b>DeclarativeTransactionManager</b> is a COM+ component with <b>TransactionOption.Required</b>,
+            <b>EventTrackingEnabled(true)</b> and <b>ObjectPooling(true, 5,20)</b> attributes specified.
+            <para>
+            A COM+ application called "IdeaBlade.Persistence.Server" will be registered automatically on first
+            activation if not already registered.  You can use regsvcs.exe (the .NET Services Installation Tool) to manually
+            register the component.
+            </para>
+            </remarks>
+        </member>
+        <member name="T:IdeaBlade.Persistence.Server.ITransactionManager">
+            <summary>
+            Internal use only.  
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Server.ITransactionManager.Save(IdeaBlade.Persistence.Server.PersistenceServer,System.Data.DataSet,IdeaBlade.Persistence.SaveOptions,IdeaBlade.Persistence.DataSourceResolver)">
+            <summary>
+            Perform save processing.
+            </summary>
+            <param name="pServer"></param>
+            <param name="pDataSet"></param>
+            <param name="pSaveOptions"></param>
+            <param name="pDataSourceResolver"></param>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Server.DeclarativeTransactionManager.CanBePooled">
+            <summary>
+            Object can be pooled.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Server.DeclarativeTransactionManager.Save(IdeaBlade.Persistence.Server.PersistenceServer,System.Data.DataSet,IdeaBlade.Persistence.SaveOptions,IdeaBlade.Persistence.DataSourceResolver)">
+            <summary>
+            Perform save processing.  Transaction is committed or aborted based on processing results.
+            </summary>
+            <param name="pServer"></param>
+            <param name="pDataSet"></param>
+            <param name="pSaveOptions"></param>
+            <param name="pDataSourceResolver"></param>
+            <returns></returns>
+        </member>
+        <member name="T:IdeaBlade.Persistence.Server.TransactionManagerHelper">
+            <summary>
+            Internal use only.  Performs actual save processing, regardless of TransactionManager implementation.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Server.TransactionManagerHelper.#ctor(IdeaBlade.Persistence.Server.PersistenceServer,IdeaBlade.Persistence.DataSourceResolver,System.Boolean,System.Boolean)">
+            <summary>
+            Create a new instance of this class.
+            </summary>
+            <param name="pServer"></param>
+            <param name="pDataSourceResolver"></param>
+            <param name="pIsTransactional"></param>
+            <param name="pUseExplicitTrx"></param>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Server.TransactionManagerHelper.Save(System.Data.DataSet,IdeaBlade.Persistence.SaveOptions)">
+            <summary>
+            Save processing.
+            </summary>
+            <param name="pDataSet"></param>
+            <param name="pSaveOptions"></param>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Server.TransactionManagerHelper.AnyErrors(System.Data.DataSet)">
+            <summary>
+            Returns true if any errors occurred during the save processing.
+            </summary>
+            <param name="pDataSet"></param>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Server.TransactionManagerHelper.Commit">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Server.TransactionManagerHelper.Rollback">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Server.TransactionManagerHelper.SaveTable(IdeaBlade.Persistence.EntityTable,System.Boolean,IdeaBlade.Persistence.Server.TransactionManagerHelper.PostSaveHandler,System.Boolean)">
+            <summary>
+            Save any inserts/updates/deletes to an EntityTable to its backend data source.
+            IAdapterProvider is required for non-DB backed entities.
+            </summary>
+            <param name="pTable"></param>
+            <param name="pDeleting"></param>
+            <param name="pPostSaveHandler"></param>
+            <param name="pExcludeFromRefetch"></param>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Server.TransactionManagerHelper.SaveTableWithSetIdentity(IdeaBlade.Rdb.RdbKey,IdeaBlade.Persistence.EntityTable,System.Boolean)">
+            <summary>
+            Save to a SQL Server table having an Identiy column, using 
+            embedded 'set identity_insert' statements.
+            </summary>
+            <param name="pRdbKey"></param>
+            <param name="pTable"></param>
+            <param name="pExcludeFromRefetch"></param>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Server.TransactionManagerHelper.SaveTableWithSqlProc(IdeaBlade.Rdb.RdbKey,IdeaBlade.Persistence.EntityTable,System.Boolean)">
+            <summary>
+            Save to a SQL Server table having an Identity column, using 
+            a stored procedure for post-insert processing.  Rows are inserted
+            to a temporary table (see RdbAdapterProvider), and moved to
+            the real table by the sp.  The temp table is created here, 
+            as a 'local' temp table for the connection.
+            Post-save processing is actually done as a second part, because
+            it needs to occur before Refetch logic is done.
+            </summary>
+            <param name="pRdbKey"></param>
+            <param name="pTable"></param>
+            <param name="pExcludeFromRefetch"></param>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Server.TransactionManagerHelper.SaveTableWithSqlProcPart2(IdeaBlade.Persistence.EntityTable)">
+            <summary>
+            Part2 of SQL save with stored proc logic - move data from temp table to real table.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.Persistence.Server.AdapterProviderMap">
+            <summary>
+            Internal use only.  Map entity types to AdapterProviders.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Server.AdapterProviderMap.GetProvider(System.Type,IdeaBlade.Util.IDataSourceKey)">
+            <summary>
+            Returns the AdapterProvider for the given entity type.
+            </summary>
+            <param name="pEntityType"></param>
+            <param name="pDataSourceKey"></param>
+            <returns></returns>
+        </member>
+        <member name="T:IdeaBlade.Persistence.Server.PersistenceServiceConfigurator">
+            <summary>
+            Helper class used to start/stop remoting of the PersistenceService.  Internal use only.
+            </summary>
+            <remarks>
+            Used by ServerConsole.exe and ServerService.exe.
+            </remarks>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Server.PersistenceServiceConfigurator.Start(System.Boolean)">
+            <summary>
+            Start the service.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Server.PersistenceServiceConfigurator.Stop">
+            <summary>
+            Stop the service.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Server.PersistenceServiceConfigurator.ConfigFileConfiguration">
+            <summary>
+            Configure remoting using app.config file info.
+            </summary>
+            <returns></returns>
+            <remarks>
+            This form of configuration creates the PersistenceService
+            as a singleton WellKnownServiceType.  The app.config
+            remoting> section should be the same as when running
+            the service under IIS, except that the port is required
+            on the channel element.
+            </remarks>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Server.PersistenceServiceConfigurator.ProgrammaticConfiguration">
+            <summary>
+            Configure remoting using ibconfig info (or app.config as of 3.5.0).
+            </summary>
+            <remarks>
+            This form of configuration creates a local PersistenceService and
+            then marshals it to make it remotable.
+            </remarks>
+        </member>
+        <member name="T:IdeaBlade.Persistence.Server.WcfPersistenceServiceConfiguratorWrapper">
+            <summary>
+            Used by the console and service applications to start/stop the PersistenceService when WCF is used.  Internal use only.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Server.WcfPersistenceServiceConfiguratorWrapper.Start(System.Boolean)">
+            <summary>
+            Start the service.
+            </summary>
+            <param name="pUseConsole"></param>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Server.WcfPersistenceServiceConfiguratorWrapper.Stop">
+            <summary>
+            Stop the service.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.Persistence.Server.PersistenceServer">
+            <summary>
+            Internal use only.  DevForce Business Object Server.
+            </summary>
+            <remarks>
+            One instance of this class will reside on the Business Object Server
+            for each unique data source extension key and will communicate with the PersistenceManager(s) on each client machine.
+            <para>
+            Knowledge of this class is only needed in the event that the existing query and persistence mechanisms 
+            need to be extended.
+            </para>
+            </remarks>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Server.PersistenceServer.#ctor(System.String)">
+            <summary>
+            Construct a PersistenceServer for the specified data source extension.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Server.PersistenceServer.GetPersistenceManager(IdeaBlade.Persistence.SessionBundle)">
+            <summary>
+            Return a server-side PersistenceManager.
+            </summary>
+            <param name="pSessionBundle"></param>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Server.PersistenceServer.GetPrincipal(IdeaBlade.Persistence.SessionBundle)">
+            <summary>
+            Return an IPrincipal for SessionBundle.
+            </summary>
+            <param name="pSessionBundle"></param>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Server.PersistenceServer.CheckDataSourceKey(System.String)">
+            <summary>
+            Resolves the data source key and determines the connection status.
+            </summary>
+            <param name="pDataSourceKeyName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Server.PersistenceServer.Login(IdeaBlade.Persistence.ILoginCredential)">
+            <summary>
+            Validate a user's credentials.
+            </summary>
+            <param name="pCredential">Login credential</param>
+            <returns>Encrypted session bundle</returns>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Server.PersistenceServer.Logout(IdeaBlade.Persistence.SessionBundle)">
+            <summary>
+            Logs a user off, discarding his session information.
+            </summary>
+            <param name="pBundle"></param>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Server.PersistenceServer.GetRealIdMap(System.Collections.Generic.IDictionary{IdeaBlade.Util.IDataSourceKey,IdeaBlade.Persistence.UniqueIdCollection})">
+            <summary>
+            Build and return a dictionary that maps temporary ids to real ids.
+            </summary>
+            <param name="pTempIdCollectionMap"></param>
+            <returns></returns>
+            <remarks>
+            This will call the <see cref="M:IdeaBlade.Persistence.IIdGenerator.GetRealIdMap(IdeaBlade.Persistence.UniqueIdCollection,IdeaBlade.Util.IDataSourceKey)"/> method in your custom
+            <see cref="T:IdeaBlade.Persistence.IIdGenerator"/> implementation.
+            </remarks>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Server.PersistenceServer.Fetch(IdeaBlade.Persistence.SessionBundle,IdeaBlade.Persistence.IEntityQuery)">
+            <summary>
+            Return a dataset that contains the results of a single EntityQuery. 
+            </summary>
+            <param name="pSessionBundle"></param>
+            <param name="pEntityQuery"></param>
+            <returns></returns>
+            <remarks>
+            This dataset may contain more than one datatable if the EntityQuery contained a subselect.
+            </remarks>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Server.PersistenceServer.SaveChanges(IdeaBlade.Persistence.SessionBundle,IdeaBlade.Persistence.EntityDataSetSurrogate,IdeaBlade.Persistence.SaveOptions)">
+            <summary>
+            Saves the changes made to a DataSet into the backend data source.
+            </summary>
+            <param name="pSessionBundle">Encrypted session bundle identifies the client</param>
+            <param name="pEntityDataSetSurrogate">Data set with changes</param>
+            <param name="pSaveOptions">Save options</param>
+            <returns></returns>
+            <remarks>
+            The <see cref="T:IdeaBlade.Persistence.Server.ITransactionManager"/> indicated by settings in the <b>IdeaBlade.ibconfig</b>
+            file is used to perform the save processing.
+            </remarks>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Server.PersistenceServer.InvokeServerMethod(IdeaBlade.Persistence.SessionBundle,System.Type,System.String,System.String,System.Object[])">
+            <summary>
+            Invokes a static method for execution on the server.
+            </summary>
+            <param name="pSessionBundle">Encrypted session bundle identifying the client</param>
+            /// <param name="pDelegateType"></param>
+            <param name="pTypeName">Assembly-qualified type name</param>
+            <param name="pMethodName">Method to be called</param>
+            <param name="pArgs">Arguments to the method</param>
+            <returns>Any serializable object may be returned</returns>
+            <exception cref="T:System.Security.SecurityException">The method must be marked with the <see cref="T:IdeaBlade.Persistence.AllowRpcAttribute"/></exception>
+            <remarks>
+            Called by the corresponding <see cref="T:IdeaBlade.Persistence.PersistenceManager"/> method.
+            </remarks>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Server.PersistenceServer.InitializeLifetimeService">
+            <summary>
+            Sets lifetime for the server.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:IdeaBlade.Persistence.Server.PersistenceServer.DataSourceExtension">
+            <summary>
+            Gets the DataSourceExtension for this server instance
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.Persistence.Server.PersistenceServer.DataSourceResolver">
+            <summary>
+            Gets the DataSourceResolver used to manage data source keys.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.Persistence.Server.PersistenceServer.AdapterProviderMap">
+            <summary>
+            Gets the AdapterProviderMap for this Server
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.Persistence.Server.SimpleTransactionManager">
+            <summary>
+            Internal use only. TransactionManager used when <see cref="P:IdeaBlade.Util.IdeaBladeConfig.UseDeclarativeTransactions"/> 
+            is not specified.
+            </summary>
+            <remarks>
+            If <see cref="P:IdeaBlade.Util.IdeaBladeConfig.UseDTC"/> is <c>true</c> a <see cref="T:System.Transactions.TransactionScope"/>
+            will be used to manage a transactional save.  
+            </remarks>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Server.SimpleTransactionManager.Save(IdeaBlade.Persistence.Server.PersistenceServer,System.Data.DataSet,IdeaBlade.Persistence.SaveOptions,IdeaBlade.Persistence.DataSourceResolver)">
+            <summary>
+            Perform save processing.  Transaction is committed or rolled back based on processing results.
+            </summary>
+            <param name="pServer"></param>
+            <param name="pDataSet"></param>
+            <param name="pSaveOptions"></param>
+            <param name="pDataSourceResolver"></param>
+            <returns></returns>
+        </member>
+        <member name="T:IdeaBlade.Persistence.Server.NamespaceDoc">
+            <summary>
+              Contains the classes and interfaces comprising the IdeaBlade Business Object Server.
+              Most classes here are not used directly by application developers, but via a 
+              <see cref="T:IdeaBlade.Persistence.PersistenceManager"/>.  The <see cref="T:IdeaBlade.Persistence.Server.IAdapterProvider"/> interface is
+              provided for those developers needing custom DataAdapters for their business entities.
+            </summary>
+        </member>
+    </members>
+</doc>

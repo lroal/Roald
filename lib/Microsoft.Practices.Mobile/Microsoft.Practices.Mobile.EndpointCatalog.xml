@@ -1,0 +1,323 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Microsoft.Practices.Mobile.EndpointCatalog</name>
+    </assembly>
+    <members>
+        <member name="T:Microsoft.Practices.Mobile.EndpointCatalog.Configuration.NetworkElement">
+            <summary>
+            Helper class 
+            </summary>
+        </member>
+        <member name="P:Microsoft.Practices.Mobile.EndpointCatalog.Configuration.NetworkElement.Name">
+            <summary>
+            Name for the network.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Practices.Mobile.EndpointCatalog.Configuration.NetworkElement.Address">
+            <summary>
+            Address for the network.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Practices.Mobile.EndpointCatalog.Configuration.NetworkElement.AccountName">
+            <summary>
+            Gets or sets AccountName for the the endpoint
+            </summary>
+        </member>
+        <member name="T:Microsoft.Practices.Mobile.EndpointCatalog.Endpoint">
+            <summary>
+            This class stores the networks address and credentials account name for an endpoint defined in the 
+            <see cref="T:Microsoft.Practices.Mobile.EndpointCatalog.EndpointCatalog"/>. You can also define the default credential account name for the endpoint. 
+            </summary>
+        </member>
+        <member name="M:Microsoft.Practices.Mobile.EndpointCatalog.Endpoint.#ctor(System.String)">
+            <summary>
+            Constructor which creates an Endpoint with the given name.
+            </summary>
+            <param name="name">Name for the endpoint.</param>
+        </member>
+        <member name="M:Microsoft.Practices.Mobile.EndpointCatalog.Endpoint.ContainsConfigForNetwork(System.String)">
+            <summary>
+            Checks if a network exists in the endpoint. 
+            </summary>
+            <param name="networkName">Network name to check.</param>
+            <returns>If a default configuration exists for the endpoint, returns true. If not, checks in the 
+            network's dictionary to see if it's defined or not.
+            </returns>
+        </member>
+        <member name="M:Microsoft.Practices.Mobile.EndpointCatalog.Endpoint.GetAccountNameForNetwork(System.String)">
+            <summary>
+            Gets the credentials account name for a given network. If the <paramref name="networkName"/> parameter is null,
+            then returns the default credential account name of the endpoint. 
+            </summary>
+            <param name="networkName">Network name to look for.</param>
+            <returns>The credentials account name of the <paramref name="networkName"/> network.</returns>
+        </member>
+        <member name="M:Microsoft.Practices.Mobile.EndpointCatalog.Endpoint.GetAddressForNetwork(System.String)">
+            <summary>
+            Gets the address for a network. If the address is not found, it returns the default address (if it exists).
+            </summary>
+            <param name="networkName">Network name.</param>
+            <returns>The address for the network name or the default address if the network is not found.</returns>
+        </member>
+        <member name="M:Microsoft.Practices.Mobile.EndpointCatalog.Endpoint.SetConfiguration(System.String,Microsoft.Practices.Mobile.EndpointCatalog.EndpointConfig)">
+            <summary>
+            Sets the endpoint configuration (address and credentials account name) for a network.
+            </summary>
+            <param name="networkName">String with the network name.</param>
+            <param name="endpointConfiguration">EndpointConfig with the address and credentials account name for the network.</param>
+        </member>
+        <member name="P:Microsoft.Practices.Mobile.EndpointCatalog.Endpoint.Default">
+            <summary>
+            Sets/Gets the default configuration for an endpoint.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Practices.Mobile.EndpointCatalog.Endpoint.Name">
+            <summary>
+            Sets/Gets the name for an endpoint. 
+            </summary>
+        </member>
+        <member name="P:Microsoft.Practices.Mobile.EndpointCatalog.Endpoint.NetworkNames">
+            <summary>
+            Returns a list of all the network names defined in an endpoint. 
+            Helper function for use in the unit tests.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Practices.Mobile.EndpointCatalog.IEndpointCatalogFactory">
+            <summary>
+            Interface for the EndpointCatalog factory.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Practices.Mobile.EndpointCatalog.IEndpointCatalogFactory.CreateCatalog">
+            <summary>
+            	This method must be implemented in order to create an EndpointCatalog.
+            </summary>
+            <returns>
+            	The EndpointCatalog created by the factory.
+            </returns>
+        </member>
+        <member name="M:Microsoft.Practices.Mobile.EndpointCatalog.IEndpointCatalog.AddressExistsForEndpoint(System.String,System.String)">
+            <summary>
+            Must be implemented to verify the existance of endpoint information (address and 
+            credentials account name) for a given endpoint in the given network name.
+            </summary>
+            <param name="endpointName">Name of the endpoint to be searched.</param>
+            <param name="networkName">Network name.</param>
+            <returns>true if the information has been found. Otherwise false.</returns>
+        </member>
+        <member name="M:Microsoft.Practices.Mobile.EndpointCatalog.IEndpointCatalog.GetAccountNameForEndpoint(System.String,System.String)">
+            <summary>
+            Must be implemented to provide the credentials account name for 
+            a given endpoint in the given network name.
+            </summary>
+            <param name="endpointName">Name of the endpoint.</param>
+            <param name="networkName">Network name.</param>
+            <returns>account name corresponding to the given parameters.</returns>
+        </member>
+        <member name="M:Microsoft.Practices.Mobile.EndpointCatalog.IEndpointCatalog.GetAddressForEndpoint(System.String,System.String)">
+            <summary>
+            Must be implemented to provide the address for
+            a given endpoint in the given network name.
+            </summary>
+            <param name="endpointName">Name of the endpoint.</param>
+            <param name="networkName">Network name.</param>
+            <returns>String containing the address for the given parameters.</returns>
+        </member>
+        <member name="M:Microsoft.Practices.Mobile.EndpointCatalog.IEndpointCatalog.SetEndpoint(Microsoft.Practices.Mobile.EndpointCatalog.Endpoint)">
+            <summary>
+            Must be implemented to add/update an endpoint in the Catalog.
+            </summary>
+            <param name="endpoint">Endpoint to be added/updated.</param>
+        </member>
+        <member name="M:Microsoft.Practices.Mobile.EndpointCatalog.IEndpointCatalog.EndpointExists(System.String)">
+            <summary>
+            Must be implemented to verify the existance of an endpoint in the catalog.
+            </summary>
+            <param name="endpointName">Name of the endpoint to be searched.</param>
+            <returns>True if the endpoint exists in the catalog. Otherwise false.</returns>
+        </member>
+        <member name="P:Microsoft.Practices.Mobile.EndpointCatalog.IEndpointCatalog.Count">
+            <summary>
+            Must be implemented to get the endpoints quantity.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Practices.Mobile.EndpointCatalog.Guard">
+            <summary>
+            Common guard clauses
+            </summary>
+        </member>
+        <member name="M:Microsoft.Practices.Mobile.EndpointCatalog.Guard.ArgumentNotNull(System.Object,System.String)">
+            <summary>
+            Checks an argument to ensure it isn't null.
+            </summary>
+            <param name="argumentValue">The argument value to check.</param>
+            <param name="argumentName">The name of the argument.</param>
+        </member>
+        <member name="T:Microsoft.Practices.Mobile.EndpointCatalog.Configuration.EndpointSection">
+            <summary>
+            Configuration helper class to get the configuration section for endpoint.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Practices.Mobile.EndpointCatalog.Configuration.EndpointSection.EndpointItemCollection">
+            <summary>
+            Getter for the EndpointItemCollection.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Practices.Mobile.EndpointCatalog.Configuration.EndpointItemElementCollection">
+            <summary>
+            Helper class to get the configuration element collection for endpoints.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Practices.Mobile.EndpointCatalog.Configuration.EndpointItemElementCollection.GetEndpoint(System.String)">
+            <summary>
+            Gets the EndpointItemElement with the name.
+            </summary>
+            <param name="name">EndpointItemElement name to get.</param>
+            <returns>Matching EndpointItemElement.</returns>
+        </member>
+        <member name="M:Microsoft.Practices.Mobile.EndpointCatalog.EndpointCatalogFactory.#ctor(System.String)">
+            <summary>
+            Constructor for the factory with a section name.
+            </summary>
+            <param name="sectionName">Name for the section corresponding to the endpoint catalog in the configuration.</param>
+        </member>
+        <member name="M:Microsoft.Practices.Mobile.EndpointCatalog.EndpointCatalogFactory.CreateCatalog">
+            <summary>
+            Creates a new EndpointCatalog using the section name in the configuration.
+            </summary>
+            <returns>
+            	EndpointCatalog created from the section in the configuration, 
+            	implementing the IEndpointCatalog interface.
+            </returns>
+        </member>
+        <member name="T:Microsoft.Practices.Mobile.EndpointCatalog.Configuration.NetworkElementCollection">
+            <summary>
+            Helper class to get the configuration NetworkElement collection.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Practices.Mobile.EndpointCatalog.Configuration.NetworkElementCollection.GetNetwork(System.String)">
+            <summary>
+            Gets the NetworkElement for the given name.
+            </summary>
+            <param name="name">Name of the NetworkElement.</param>
+            <returns>Matching NetworkElement.</returns>
+        </member>
+        <member name="T:Microsoft.Practices.Mobile.EndpointCatalog.Configuration.EndpointItemElement">
+            <summary>
+            Helper class to get an endpoint from the configuration.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Practices.Mobile.EndpointCatalog.Configuration.EndpointItemElement.Name">
+            <summary>
+            Endpoint name for the configuration.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Practices.Mobile.EndpointCatalog.Configuration.EndpointItemElement.Address">
+            <summary>
+            Default Address for the endpoint.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Practices.Mobile.EndpointCatalog.Configuration.EndpointItemElement.AccountName">
+            <summary>
+            Default AccountName for the the endpoint
+            </summary>
+        </member>
+        <member name="P:Microsoft.Practices.Mobile.EndpointCatalog.Configuration.EndpointItemElement.Networks">
+            <summary>
+            Networks section with the configuration overrides for specific networks.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Practices.Mobile.EndpointCatalog.EndpointCatalog">
+            <summary>
+            Provides features to store and manage the endpoints and credentials accounts used by other applications 
+            running on the mobile device.
+            Implements an IEndpointCatalog interface.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Practices.Mobile.EndpointCatalog.EndpointCatalog.AddressExistsForEndpoint(System.String,System.String)">
+            <summary>
+            Checks if the network <paramref name="networkName"/> is defined for the endpoint 
+            <paramref name="endpointName"/>. 
+            </summary>
+            <param name="endpointName">The name of the endpoint.</param>
+            <param name="networkName">The name of the network.</param>
+            <returns>If there is a default network defined for the endpoint, the method will return true.</returns>
+        </member>
+        <member name="M:Microsoft.Practices.Mobile.EndpointCatalog.EndpointCatalog.GetAccountNameForEndpoint(System.String,System.String)">
+            <summary>
+            Retrives the credentials account name for a network in a given endpoint. 
+            </summary>
+            <param name="endpointName">The name of the endpoint.</param>
+            <param name="networkName">The name of the network. This parameter can be null.</param>
+            <returns>If the <paramref name="networkName"/> parameter is null or doesn't exist, the method returns 
+            the default credentials account name defined for the endpoint. If there isn't a default one, 
+            throws an exception.
+            </returns>
+        </member>
+        <member name="M:Microsoft.Practices.Mobile.EndpointCatalog.EndpointCatalog.GetAddressForEndpoint(System.String,System.String)">
+            <summary>
+            Retrives the address for a network in a given endpoint. 
+            </summary>
+            <param name="endpointName">The name of the endpoint.</param>
+            <param name="networkName">The name of the network. This parameter can be null.</param>
+            <returns>If the <paramref name="networkName"/> parameter is null or doesn't exist, the method returns 
+            the address defined for the endpoint. If there isn't a default one, throws an exception.
+            </returns>
+        </member>
+        <member name="M:Microsoft.Practices.Mobile.EndpointCatalog.EndpointCatalog.SetEndpoint(Microsoft.Practices.Mobile.EndpointCatalog.Endpoint)">
+            <summary>
+            Add a new endpoint to the catalog. If the endpoint name already exist, then is removed an replaced with
+            the new endpoint.
+            </summary>
+            <param name="endpoint">The new endpoint for the catalog.</param>
+        </member>
+        <member name="M:Microsoft.Practices.Mobile.EndpointCatalog.EndpointCatalog.EndpointExists(System.String)">
+            <summary>
+            Checks if an endpoint is defined in the catalog.
+            </summary>
+            <param name="endpointName">The name of the endpoint to look for.</param>
+            <returns>Returns true if the endpoint name is defined in the catalog, false otherwise.</returns>
+        </member>
+        <member name="P:Microsoft.Practices.Mobile.EndpointCatalog.EndpointCatalog.Count">
+            <summary>
+            Returns the number of endpoints in the catalog.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Practices.Mobile.EndpointCatalog.Properties.Resources">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Practices.Mobile.EndpointCatalog.Properties.Resources.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Practices.Mobile.EndpointCatalog.Properties.Resources.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Practices.Mobile.EndpointCatalog.Properties.Resources.ExceptionEndpointNotInCatalog">
+            <summary>
+              Looks up a localized string similar to Endpoint doesn&apos;t exist in the catalog..
+            </summary>
+        </member>
+        <member name="P:Microsoft.Practices.Mobile.EndpointCatalog.Properties.Resources.ExceptionNetworkNotInEndpoint">
+            <summary>
+              Looks up a localized string similar to {0} doesnt exist for the {1} endpoint..
+            </summary>
+        </member>
+        <member name="P:Microsoft.Practices.Mobile.EndpointCatalog.Properties.Resources.ExceptionNonDefault">
+            <summary>
+              Looks up a localized string similar to Undefined default account name for the {0} endpoint..
+            </summary>
+        </member>
+        <member name="P:Microsoft.Practices.Mobile.EndpointCatalog.Properties.Resources.InvalidSection">
+            <summary>
+              Looks up a localized string similar to The specified section is invalid.
+            </summary>
+        </member>
+    </members>
+</doc>

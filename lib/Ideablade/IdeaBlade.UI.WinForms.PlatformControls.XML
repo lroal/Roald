@@ -1,0 +1,139 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>IdeaBlade.UI.WinForms.PlatformControls</name>
+    </assembly>
+    <members>
+        <member name="T:IdeaBlade.UI.WinForms.PlatformControls.TraceViewerSubscriptionDialog">
+            <summary>
+            Dialog used by the <see cref="T:IdeaBlade.UI.WinForms.PlatformControls.TraceViewerForm"/> to select a TracePublisher.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.PlatformControls.TraceViewerSubscriptionDialog.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.PlatformControls.TraceViewerSubscriptionDialog.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="F:IdeaBlade.UI.WinForms.PlatformControls.TraceMessageDialog.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.PlatformControls.TraceMessageDialog.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.PlatformControls.TraceMessageDialog.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.UI.WinForms.PlatformControls.TraceViewerForm">
+            <summary>
+            A form that provides an immediate display surface for any trace messages.  
+            <seealso cref="T:IdeaBlade.Util.TraceFns"/>
+            </summary>
+            <remarks>
+            Any messages written to the Trace log will also be displayed on this form.  Messages
+            sent to the log before this form is created will not be shown.
+            <para>The <b>TraceViewerForm</b> is used by the DevForce Trace Viewer utility, but
+            may also be used by developers for their own applications.  The form contains
+            a subscriber to a <see cref="T:IdeaBlade.Util.TracePublisher"/>.</para>
+            <para>
+            The <see cref="T:IdeaBlade.Util.CommunicationsTechnology"/> property determines if
+            Windows Communication Foundation will be used for communications between
+            the Trace Publisher and any subscribers.  If <c>false</c>, then .NET Remoting
+            is used.
+            </para>
+            </remarks>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.PlatformControls.TraceViewerForm.#ctor">
+            <summary>
+            Create a new TraceViewerForm subscribed to the default local <see cref="T:IdeaBlade.Util.TracePublisher"/>.
+            </summary>
+            <remarks>
+            The <see cref="T:IdeaBlade.Util.CommunicationsTechnology"/> property determines if
+            Windows Communication Foundation or .NET Remoting will be used for communications between
+            the TracePublisher and any subscribers.
+            </remarks>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.PlatformControls.TraceViewerForm.#ctor(IdeaBlade.Util.CommunicationsTechnology)">
+            <summary>
+            Create a new TraceViewerForm subscribed to the default local <see cref="T:IdeaBlade.Util.TracePublisher"/>.
+            </summary>
+            <param name="pTechnology">Communications technology</param>
+            <remarks>
+            Set the appropriate communications technology for communication between the TraceViewer
+            and the TracePublisher.
+            </remarks>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.PlatformControls.TraceViewerForm.#ctor(IdeaBlade.Util.TracePublisher)">
+            <summary>
+            Create a new TraceViewerForm subscribed to the specified <see cref="T:IdeaBlade.Util.TracePublisher"/>.
+            </summary>
+            <param name="pTracePublisher"></param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.PlatformControls.TraceViewerForm.#ctor(System.String)">
+            <summary>
+            Create a new TraceViewerForm subscribed to the <see cref="T:IdeaBlade.Util.TracePublisher"/> at the specified URL.
+            </summary>
+            <param name="pTracePublisherURL"></param>
+            <remarks>
+            Use this constructor to subscribe to a remote TracePublisher.
+            <para>
+            The protocol defined in the <paramref name="pTracePublisherURL"/> parameter determines
+            if Windows Communication Foundation will be used for communications with the publisher.
+            If the "TCP" protocol is specified then .NET Remoting will be used; if "net.tcp" is specified
+            then WCF will be used.
+            </para>
+            </remarks>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.PlatformControls.TraceViewerForm.Subscribe(System.String,IdeaBlade.Util.TracePublisher)">
+            <summary>
+            Will never receive both parms - either both will be null or only one will be set.
+            </summary>
+            <param name="pTracePublisherURL">Remote Publisher uri</param>
+            <param name="pTracePublisher">Existing local publisher</param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.PlatformControls.TraceViewerForm.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.PlatformControls.TraceViewerForm.InitializeComponent">
+            <summary>
+            Required method for Designer support, do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.PlatformControls.TraceViewerForm.PingPublisherSeconds">
+            <summary>
+            Gets or sets the number of seconds to wait before checking if a remote TracePublisher is still active.
+            </summary>
+            <remarks>
+            By default, the TracePublisher is pinged every 10 seconds.
+            </remarks>
+        </member>
+        <member name="T:IdeaBlade.UI.WinForms.PlatformControls.TraceViewerForm.TraceEventHandler">
+            <summary>
+            Delegates used in BeginInvoke calls.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.UI.WinForms.PlatformControls.NamespaceDoc">
+            <summary>
+              Provides a set of standardized user interface controls for generic services
+              such as browsing / selecting a file or folder from the file system or
+              viewing a trace log. 
+            </summary>
+        </member>
+    </members>
+</doc>

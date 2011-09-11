@@ -1,0 +1,159 @@
+.MYPMonthYearPicker
+{
+   border-right: gray 1px solid;
+   border-top: gray 1px solid;
+   border-left: gray 1px solid;
+   border-bottom: gray 1px solid;
+   font-family: Arial;
+   font-size: 8pt;
+   background-color: white;
+}
+/* used on server side only version */
+.MYPMonthYearPicker A
+{
+   color:black;
+   text-decoration:none;
+}
+/* prevent external img styles from affecting these styles */
+.MYPMonthYearPicker img
+{
+   background-color:transparent; 
+   margin-left: 0px; 
+   margin-top: 0px; 
+   margin-bottom:0px; 
+   margin-right:0px;
+}
+
+
+.MYPMonthYearPicker TABLE
+{
+   font-size: 8pt;
+   font-family: Arial;
+   background-color: transparent;
+}
+
+.MYPHeader
+{
+   background-color:transparent;
+}
+
+.MYPOutOfRangeCell
+{
+   color: gray;
+/* add if you want borders   
+   border-right: #E0E0E0 1px solid;
+   border-top: #E0E0E0 1px solid;
+   border-left: #E0E0E0 1px solid;
+   border-bottom: #E0E0E0 1px solid;
+*/
+}
+
+/* most used only by Many Years format */
+.MYPMonthTable
+{
+}
+
+.MYPYearTable
+{
+}
+
+.MYPMonthCell
+{
+   cursor: pointer;  /* W3C approved hand. */
+   cursor: hand;   /* IE specific hand */
+/* add if you want borders   
+   border-right: #E0E0E0 1px solid;
+   border-top: #E0E0E0 1px solid;
+   border-left: #E0E0E0 1px solid;
+   border-bottom: #E0E0E0 1px solid;
+*/
+}
+
+.MYPSelectedMonthCell
+{
+   background-color: gold;
+   cursor: pointer;
+   cursor: hand;
+/* add if you want borders   
+   border-right: #E0E0E0 1px solid;
+   border-top: #E0E0E0 1px solid;
+   border-left: #E0E0E0 1px solid;
+   border-bottom: #E0E0E0 1px solid;
+*/
+}
+
+
+.MYPYearCell
+{
+   cursor: pointer;
+   cursor: hand;
+/* add if you want borders   
+   border-right: #E0E0E0 1px solid;
+   border-top: #E0E0E0 1px solid;
+   border-left: #E0E0E0 1px solid;
+   border-bottom: #E0E0E0 1px solid;
+*/
+}
+.MYPSelectedYearCell
+{
+   cursor: pointer;
+   cursor: hand;
+   background-color: gold;
+/* add if you want borders   
+   border-right: #E0E0E0 1px solid;
+   border-top: #E0E0E0 1px solid;
+   border-left: #E0E0E0 1px solid;
+   border-bottom: #E0E0E0 1px solid;
+*/
+}
+
+.MYPMoveYearsButtons
+{
+}
+
+.MYPMoveYearsButtonsPressed
+{
+}
+
+.MYPTogglePicker
+{
+}
+
+.MYPTogglePickerPressed
+{
+}
+
+/* used only by the Few Years format */
+.FYPYearTitle
+{
+   border-top: black 1px solid;
+   border-bottom: black 1px solid;
+   background-color: lightblue;
+}
+.FYPFooterButton
+{
+   border-right: #E0E0E0 thin outset;  /* = lightgray */
+   border-top: #E0E0E0 thin outset;
+   border-left: #E0E0E0 thin outset;
+   border-bottom: #E0E0E0 thin outset;
+   background-color: lightblue;
+   font-family: Arial;
+   font-size: 8pt;
+   color: black;
+   cursor: pointer;
+   cursor: hand;
+}
+
+.FYPFooterButtonPressed
+{
+   border-right: #E0E0E0 thin inset; /* = lightgray */
+   border-top: #E0E0E0 thin inset;
+   border-left: #E0E0E0 thin inset;
+   border-bottom: #E0E0E0 thin inset;
+   background-color: lightblue;
+   font-family: Arial;
+   font-size: 8pt;
+   color: black;
+   cursor: pointer;
+   cursor: hand;
+}

@@ -1,0 +1,1941 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>IdeaBlade.UI.WinForms.DotnetControls</name>
+    </assembly>
+    <members>
+        <member name="T:IdeaBlade.UI.WinForms.DotnetControls.NumericUpDownDataBinder">
+            <summary>
+              Binder for a NumericUpDown control.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.NumericUpDownDataBinder.GetBaseFitness(IdeaBlade.UI.IDataConverter)">
+            <summary>
+              Returns the fitness of using this binder for the specified converter.
+              See <see cref="T:IdeaBlade.UI.WinForms.UIFitness"/>.
+            </summary>
+            <param name="pConverter">
+              Converter that specifies formatting, syntactic, and semantic validation.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.NumericUpDownDataBinder.InitializeControl(System.Windows.Forms.Control,IdeaBlade.UI.ViewDescriptor)">
+            <summary>
+              Initializes the properties of a control before being bound.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.DotnetControls.NumericUpDownDataBinder.ControlType">
+            <summary>
+              The base type of control this binder works with.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.DotnetControls.NumericUpDownDataBinder.BindingPropertyName">
+            <summary>
+              Property on the control that is set during binding.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.UI.WinForms.DotnetControls.DataGridViewBindingDescriptor">
+            <summary>
+            Encapsulates the metadata about a binding between an object property and a column in 
+            a <see cref="T:System.Windows.Forms.DataGridView"/>.
+            <seealso cref="T:IdeaBlade.UI.WinForms.DotnetControls.DataGridViewBindingManager"/>
+            <seealso cref="T:IdeaBlade.UI.WinForms.DotnetControls.DataGridViewBindingDescriptorCollection"/>
+            </summary>
+            <remarks>
+            Use the <b>DataGridViewBindingDescriptor</b> to create a binding between a column and
+            a business object property.  Each binding is added to a <see cref="T:IdeaBlade.UI.WinForms.DotnetControls.DataGridBindingManager"/>
+            using the <see cref="M:IdeaBlade.UI.WinForms.DotnetControls.DataGridViewBindingDescriptorCollection.Add(System.String,System.String)"/> method.  A binding
+            is constructed for a column, together with a <see cref="T:IdeaBlade.UI.ViewDescriptor"/> or
+            additional property and <see cref="T:IdeaBlade.UI.DataConverter"/> information.  
+            </remarks> 
+            <example><code lang="C#">
+
+// This example shows various ways of constructing and using DataGridViewBindingDescriptors
+
+PersistenceManager pm = PersistenceManager.DefaultManager;
+DataGridViewBindingManager mgr = new DataGridViewBindingManager(this.DataGridView1, typeof(Employee));
+      
+DataGridViewBindingDescriptor d1, d2, d3;
+
+// a simple descriptor
+d1 = new DataGridViewBindingDescriptor("First Name", typeof(Employee), "FirstName");
+
+// using a dataconverter
+d2 = new DataGridViewBindingDescriptor("Hire Date", typeof(Employee), "HireDate", DataConverter.RequiredDate);
+
+// using a ViewDescriptor
+ViewDescriptor vd = new ViewDescriptor("Title", typeof(Employee), "Title");
+d3 = new DataGridViewBindingDescriptor(vd);
+
+// add the BindingDescriptors to the BindingManager
+mgr.Descriptors.Add(d1);
+mgr.Descriptors.Add(d2);
+mgr.Descriptors.Add(d3);
+
+// add employees to the BindingManager's DataSource now
+mgr.DataSource.AddRange(pm.GetEntities&lt;Employee&gt;());
+
+	</code></example><example><code lang="VB">
+
+ ' This example shows various ways of constructing and using DataGridViewBindingDescriptors
+Dim pm As PersistenceManager = PersistenceManager.DefaultManager
+Dim mgr As New DataGridViewBindingManager(Me.DataGridView1, GetType(Employee))
+
+Dim d1, d2, d3 As DataGridViewBindingDescriptor
+
+' a simple descriptor
+d1 = New DataGridViewBindingDescriptor("First Name", GetType(Employee), "FirstName")
+
+' using a dataconverter
+d2 = New DataGridViewBindingDescriptor("Hire Date", GetType(Employee), "HireDate", DataConverter.RequiredDate)
+
+' using a ViewDescriptor
+Dim vd As New ViewDescriptor("Title", GetType(Employee), "Title")
+d3 = New DataGridViewBindingDescriptor(vd)
+
+' add the BindingDescriptors to the BindingManager
+mgr.Descriptors.Add(d1)
+mgr.Descriptors.Add(d2)
+mgr.Descriptors.Add(d3)
+
+' add employees to the BindingManager's DataSource now
+mgr.DataSource.AddRange(pm.GetEntities(Of Employee)())
+	</code></example>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.DataGridViewBindingDescriptor.#ctor(IdeaBlade.UI.ViewDescriptor)">
+            <summary>
+              Constructs an DataGridViewBindingDescriptor.
+            </summary>
+            <param name="pViewDescriptor">
+              ViewDescriptor describing the bound property and conversion information.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.DataGridViewBindingDescriptor.#ctor(System.Type,IdeaBlade.UI.ViewDescriptor)">
+            <summary>
+              Constructs an DataGridViewBindingDescriptor.
+            </summary>
+            <param name="pControlType">
+              Type of control to used to edit data in a GridColumn.
+            </param>
+            <param name="pViewDescriptor">
+              ViewDescriptor describing the bound property and conversion information.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.DataGridViewBindingDescriptor.#ctor(System.String,System.Type,System.String)">
+            <summary>
+              Constructs an DataGridViewBindingDescriptor.
+            </summary>
+            <param name="pColumnTitle">
+              Title of the GridColumn.
+            </param>
+            <param name="pObjectType">
+              Type of the object that the property exists on.  e.g. typeof(Employee)
+            </param>
+            <param name="pPropertyPath">
+              Period delimited path of the property. e.g. "BirthDate" or "Address.City"
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.DataGridViewBindingDescriptor.#ctor(System.String,System.Type,System.String,System.Type)">
+            <summary>
+              Constructs an DataGridViewBindingDescriptor.
+            </summary>
+            <param name="pColumnTitle">
+              Title of the GridColumn.
+            </param>
+            <param name="pObjectType">
+              Type of the object that the property exists on.  e.g. typeof(Employee)
+            </param>
+            <param name="pPropertyPath">
+              Period delimited path of the property. e.g. "BirthDate" or "Address.City"
+            </param>
+            <param name="pControlType">
+              Type of control to used to edit data in a GridColumn.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.DataGridViewBindingDescriptor.#ctor(System.String,System.Type,System.String,IdeaBlade.UI.IDataConverter)">
+            <summary>
+              Constructs an DataGridViewBindingDescriptor.
+            </summary>
+            <param name="pColumnTitle">
+              Title of the GridColumn.
+            </param>
+            <param name="pObjectType">
+              Type of the object that the property exists on.  e.g. typeof(Employee)
+            </param>
+            <param name="pPropertyPath">
+              Period delimited path of the property. e.g. "BirthDate" or "Address.City"
+            </param>
+            <param name="pConverter">
+              Converter that specifies formatting, syntactic, and semantic validation.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.DataGridViewBindingDescriptor.#ctor(System.String,System.Type,System.String,IdeaBlade.UI.IDataConverter,System.Type)">
+            <summary>
+              Constructs an DataGridViewBindingDescriptor.
+            </summary>
+            <param name="pColumnTitle">
+              Title of the GridColumn.
+            </param>
+            <param name="pObjectType">
+              Type of the object that the property exists on.  e.g. typeof(Employee)
+            </param>
+            <param name="pPropertyPath">
+              Period delimited path of the property. e.g. "BirthDate" or "Address.City"
+            </param>
+            <param name="pConverter">
+              Converter that specifies formatting, syntactic, and semantic validation.
+            </param>
+            <param name="pControlType">
+              Type of control to used to edit data in a GridColumn.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.DataGridViewBindingDescriptor.RefreshCore">
+            <summary>
+              Refreshes the binding with the current properties.
+              Typically used when some aspect of the converter changes.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.DotnetControls.DataGridViewBindingDescriptor.Column">
+            <summary>
+              Gets the GridColumn for this binding.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.UI.WinForms.DotnetControls.DataGridViewEventAdapter">
+            <summary>
+              Maps controls and DataGridColumnBinders to each other.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.DataGridViewEventAdapter.#ctor(System.Windows.Forms.DataGridView,IdeaBlade.UI.IDataConverter)">
+            <summary>
+            
+            </summary>
+            <param name="pDataGridView"></param>
+            <param name="pConverter"></param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.DataGridViewEventAdapter.CellEndEditHandler(System.Object,System.Windows.Forms.DataGridViewCellEventArgs)">
+            <summary>
+            
+            </summary>
+            <param name="sender"></param>
+            <param name="pArgs"></param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.DataGridViewEventAdapter.CellValidatingHandler(System.Object,System.Windows.Forms.DataGridViewCellValidatingEventArgs)">
+            <summary>
+            
+            </summary>
+            <param name="sender"></param>
+            <param name="pArgs"></param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.DataGridViewEventAdapter.CellFormattingHandler(System.Object,System.Windows.Forms.DataGridViewCellFormattingEventArgs)">
+            <summary>
+            
+            </summary>
+            <param name="sender"></param>
+            <param name="pArgs"></param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.DataGridViewEventAdapter.CellParsingHandler(System.Object,System.Windows.Forms.DataGridViewCellParsingEventArgs)">
+            <summary>
+            
+            </summary>
+            <param name="sender"></param>
+            <param name="pArgs"></param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.DataGridViewEventAdapter.DataErrorHandler(System.Object,System.Windows.Forms.DataGridViewDataErrorEventArgs)">
+            <summary>
+            
+            </summary>
+            <param name="sender"></param>
+            <param name="pArgs"></param>
+        </member>
+        <member name="T:IdeaBlade.UI.WinForms.DotnetControls.ComboBoxDataBinder">
+            <summary>
+              Binder for a CheckBox control.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.ComboBoxDataBinder.GetBaseFitness(IdeaBlade.UI.IDataConverter)">
+            <summary>
+              Returns the fitness of using this binder for the specified converter.
+              See <see cref="T:IdeaBlade.UI.WinForms.UIFitness"/>.
+            </summary>
+            <param name="pConverter">
+              Converter that specifies formatting, syntactic, and semantic validation.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.ComboBoxDataBinder.InitializeControl(System.Windows.Forms.Control,IdeaBlade.UI.ViewDescriptor)">
+            <summary>
+              Initializes the properties of a control before being bound.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.DotnetControls.ComboBoxDataBinder.ControlType">
+            <summary>
+              The base type of control this binder works with.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.DotnetControls.ComboBoxDataBinder.BindingPropertyName">
+            <summary>
+              Property on the control that is set during binding.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.UI.WinForms.DotnetControls.DataGridViewBindingDescriptorCollection">
+            <summary>
+              A strongly typed collection of <see cref="T:IdeaBlade.UI.WinForms.DotnetControls.DataGridViewBindingDescriptor">DataGridViewBindingDescriptors</see>.
+              <seealso cref="T:IdeaBlade.UI.WinForms.DotnetControls.DataGridViewBindingDescriptor"/>
+              <seealso cref="T:IdeaBlade.UI.WinForms.DotnetControls.DataGridViewBindingManager"/>
+            </summary>
+            <remarks>
+            The <b>DataGridViewBindingDescriptorCollection</b> is normally accessed
+            from a <see cref="T:IdeaBlade.UI.WinForms.DotnetControls.DataGridViewBindingManager"/> through the <see cref="P:IdeaBlade.UI.WinForms.DotnetControls.DataGridViewBindingManager.Descriptors"/>
+            property.  BindingDescriptors are added to the collection through one of the many overloaded
+            <b>Add</b> methods. Use the <see cref="M:IdeaBlade.UI.WinForms.DotnetControls.DataGridViewBindingDescriptorCollection.Get(System.String)"/> method to retrieve an existing 
+            descriptor.  Changes made to an existing BindingDescriptor will be immediately
+            reflected in the data binding.
+            </remarks>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.DataGridViewBindingDescriptorCollection.#ctor">
+            <summary>
+              Constructs an DataGridViewBindingDescriptorCollection.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.DataGridViewBindingDescriptorCollection.Add(System.String,System.String)">
+            <summary>
+              Adds a binding using the specified property path.
+            </summary>
+            <param name="pColumnTitle">
+              Title of the GridColumn.
+            </param>
+            <param name="pPropertyPath">
+              Period delimited path of the property. e.g. "BirthDate" or "Address.City"
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.DataGridViewBindingDescriptorCollection.Add(System.String,System.String,IdeaBlade.UI.IDataConverter)">
+            <summary>
+              Adds a binding using the specified property path.
+            </summary>
+            <param name="pColumnTitle">
+              Title of the GridColumn.
+            </param>
+            <param name="pPropertyPath">
+              Period delimited path of the property. e.g. "BirthDate" or "Address.City"
+            </param>
+            <param name="pConverter">
+              Converter that specifies formatting, syntactic, and semantic validation.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.DataGridViewBindingDescriptorCollection.Add(System.String,System.String,System.Type)">
+            <summary>
+              Adds a binding using the specified property path.
+            </summary>
+            <param name="pColumnTitle">
+              Title of the GridColumn.
+            </param>
+            <param name="pPropertyPath">
+              Period delimited path of the property. e.g. "BirthDate" or "Address.City"
+            </param>
+            <param name="pControlType">
+              Type of control to used to edit data in a GridColumn.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.DataGridViewBindingDescriptorCollection.Add(System.String,System.String,IdeaBlade.UI.IDataConverter,System.Type)">
+            <summary>
+              Adds a binding using the specified property path.
+            </summary>
+            <param name="pColumnTitle">
+              Title of the GridColumn.
+            </param>
+            <param name="pPropertyPath">
+              Period delimited path of the property. e.g. "BirthDate" or "Address.City"
+            </param>
+            <param name="pConverter">
+              Converter that specifies formatting, syntactic, and semantic validation.
+            </param>
+            <param name="pControlType">
+              Type of control to used to edit data in a GridColumn.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.DataGridViewBindingDescriptorCollection.Add(IdeaBlade.UI.ViewDescriptor)">
+            <summary>
+              Adds a binding using the specified ViewDescriptor.
+            </summary>
+            <param name="pViewDescriptor">
+              ViewDescriptor describing the bound property and conversion information.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.DataGridViewBindingDescriptorCollection.Add(IdeaBlade.UI.ViewDescriptor,System.Type)">
+            <summary>
+              Adds a binding using the specified ViewDescriptor.
+            </summary>
+            <param name="pViewDescriptor">
+              ViewDescriptor describing the bound property and conversion information.
+            </param>
+            <param name="pControlType">
+              Type of control to used to edit data in a DataGridViewColumn.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.DataGridViewBindingDescriptorCollection.Add(IdeaBlade.UI.WinForms.DotnetControls.DataGridViewBindingDescriptor)">
+            <summary>
+              Adds an DataGridViewBindingDescriptor to the collection.
+            </summary>
+            <param name="pDescriptor">
+              The DataGridViewBindingDescriptor to add.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.DataGridViewBindingDescriptorCollection.Get(System.String)">
+            <summary>
+              Get the DataGridViewBindingDescriptor for the corresponding property path.
+              If multiple columns bind to the same property, returns the first one found.
+            </summary>
+            <param name="pPropertyPath">
+              Period delimited path of the property. e.g. "BirthDate" or "Address.City"
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.DataGridViewBindingDescriptorCollection.Remove(IdeaBlade.UI.WinForms.DotnetControls.DataGridViewBindingDescriptor)">
+            <summary>
+              Removes the specified DataGridViewBindingDescriptor.
+            </summary>
+            <param name="pDescriptor">
+              DataGridViewBindingDescriptor to remove.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.DataGridViewBindingDescriptorCollection.Remove(System.String)">
+            <summary>
+              Removes the DataGridViewBindingDescriptor for the corresponding property path.
+              If multiple controls bind to the same property, returns the first one found.
+            </summary>
+            <param name="pPropertyPath">
+              Period delimited path of the property. e.g. "BirthDate" or "Address.City"
+            </param>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.DotnetControls.DataGridViewBindingDescriptorCollection.Item(System.Int32)">
+            <summary>
+              Get the DataGridViewBindingDescriptor at the specified index.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.DotnetControls.DataGridViewBindingDescriptorCollection.CollectionType">
+            <summary>
+              Type of object this collection accepts.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.UI.WinForms.DotnetControls.LabelDataBinder">
+            <summary>
+              Binder for a Label control.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.LabelDataBinder.GetBaseFitness(IdeaBlade.UI.IDataConverter)">
+            <summary>
+              Returns the fitness of using this binder for the specified converter.
+              See <see cref="T:IdeaBlade.UI.WinForms.UIFitness"/>.
+            </summary>
+            <param name="pConverter">
+              Converter that specifies formatting, syntactic, and semantic validation.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.LabelDataBinder.SetControlEditability(System.Windows.Forms.Control,IdeaBlade.UI.Editability)">
+            <summary>
+              Configures the control to best match the editability requirement.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.DotnetControls.LabelDataBinder.ControlType">
+            <summary>
+              The base type of control this binder works with.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.DotnetControls.LabelDataBinder.BindingPropertyName">
+            <summary>
+              Property on the control that is set during binding.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.UI.WinForms.DotnetControls.DataGridViewBindingManager">
+            <summary>
+              Manages the data binding between a list of business objects and a .NET DataGridView control.
+              <seealso cref="T:IdeaBlade.UI.WinForms.DotnetControls.DataGridViewBindingDescriptor"/>
+            </summary>
+            <remarks>
+            <para>
+            The <see cref="P:IdeaBlade.UI.WinForms.BindingManager.BoundType"/> determines the type of business object to be managed. 
+            The <see cref="P:IdeaBlade.UI.WinForms.BindingManager.BindingSource"/> is the <see cref="T:System.Windows.Forms.BindingSource"/>
+            that contains one or more business objects of the BoundType.
+            Use the <see cref="P:IdeaBlade.UI.WinForms.DotnetControls.DataGridViewBindingManager.Descriptors"/> property to add <see cref="T:IdeaBlade.UI.WinForms.DotnetControls.DataGridViewBindingDescriptor">DataGridViewBindingDescriptors</see>
+            to bind columns in the DataGridView to business object properties. 
+            </para>
+            <para>When using the <b>DataGridViewBindingManager</b> it is not necessary for you to set the DataGridView's DataSource
+            and DataMember properties, since the bindings will be managed by DevForce.  You will also not need to use the DataGridView's
+            Column Editor, as the <b>DataGridViewBindingDescriptors</b> will determine the columns displayed.
+            </para>
+            </remarks>
+            <example><code lang="C#">
+
+// This example will bind Customer info to a DataGridView
+
+// Create the BindingManager and BindableList
+PersistenceManager pm = PersistenceManager.DefaultManager;
+DataGridViewBindingManager mgr = new DataGridViewBindingManager(this.DataGridView1, typeof(Customer));
+BindableList&lt;Customer&gt; custList = new BindableList&lt;Customer&gt;();
+
+// Set the DataSource
+mgr.BindingSource.DataSource = custList;
+
+// Add descriptors for the bound properties
+mgr.Descriptors.Add("Name", "ContactName", DataConverter.RequiredString);
+mgr.Descriptors.Add("Company", "CompanyName", DataConverter.ReadOnlyString);
+mgr.Descriptors.Add("Telephone", "Phone", new RegexConverter(Editability.Required, @"^\([1-9]\d{2}\)\s?\d{3}\-\d{4}$"));
+
+// Add all Customers to the BindableList
+custList.AddRange(pm.GetEntities&lt;Customer&gt;());
+
+	</code></example><example><code lang="VB">
+
+' This example will bind Customer info to a DataGridView
+
+' Create the BindingManager and BindableList
+Dim pm As PersistenceManager = PersistenceManager.DefaultManager
+Dim mgr As New DataGridViewBindingManager(Me.DataGridView1, GetType(Customer))
+Dim custList As New BindableList(Of Customer)
+
+' Set the DataSource
+mgr.BindingSource.DataSource = custList
+
+' Add descriptors for the bound properties
+mgr.Descriptors.Add("Name", "ContactName", DataConverter.RequiredString)
+mgr.Descriptors.Add("Company", "CompanyName", DataConverter.ReadOnlyString)
+mgr.Descriptors.Add("Telephone", "Phone",  New RegexConverter(Editability.Required, "^(\d{3}-\d{3}-\d{4})*$"))
+
+' Add all Customers to the BindableList
+custList.AddRange(pm.GetEntities(Of Customer)())
+	</code></example>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.DataGridViewBindingManager.#ctor">
+            <summary>
+              Constructs a DataGridViewBindingManager.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.DataGridViewBindingManager.#ctor(System.ComponentModel.IContainer)">
+            <summary>
+              Constructs an DataGridViewBindingManager and adds to parent control's components
+            </summary>
+            <param name="pContainer">Parent control's container</param>
+            <remarks>Parent control will dispose of this manager.</remarks>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.DataGridViewBindingManager.#ctor(System.Type)">
+            <summary>
+              Constructs a DataGridViewBindingManager for the specified BoundType.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.DataGridViewBindingManager.#ctor(System.Windows.Forms.DataGridView,System.Type)">
+            <summary>
+              Constructs a DataGridViewBindingManager for the specified DataGridView and BoundType.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.DataGridViewBindingManager.#ctor(System.Windows.Forms.DataGridView,System.Windows.Forms.BindingSource)">
+            <summary>
+              Constructs a DataGridViewBindingManager for the specified DataGridView and binding source.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.DataGridViewBindingManager.#ctor(System.Windows.Forms.DataGridView,System.Object)">
+            <summary>
+              Constructs a DataridViewBindingManager for the specified DataGridView and data source.
+            </summary>
+            <remarks>
+            See <see cref="P:IdeaBlade.UI.WinForms.BindingManager.DataSource"/> for additional information.
+            </remarks>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.DataGridViewBindingManager.OnBindingSourceChanged">
+            <summary>
+            Re-bind processing used when the binding source changes.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.DataGridViewBindingManager.OnDataSourceChanged">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.DataGridViewBindingManager.CreateBindingDescriptorCollection">
+            <summary>
+              Creates the strongly typed binding descriptor collection.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.DataGridViewBindingManager.BindCore(IdeaBlade.UI.WinForms.BindingDescriptor)">
+            <summary>
+              Binds the property in the descriptor to the DataGridView.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.DataGridViewBindingManager.UnbindCore(IdeaBlade.UI.WinForms.BindingDescriptor)">
+            <summary>
+              Unbinds the column from the descriptor and removes it if the 
+              BindCore operation created it
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.DataGridViewBindingManager.CellValidatingHandler(System.Object,System.Windows.Forms.DataGridViewCellValidatingEventArgs)">
+            <summary>
+            Handler for the DataGridView CellValidating event.
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.DataGridViewBindingManager.CellFormattingHandler(System.Object,System.Windows.Forms.DataGridViewCellFormattingEventArgs)">
+            <summary>
+            Handler for the DataGridView CellFormatting event.
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.DataGridViewBindingManager.CellParsingHandler(System.Object,System.Windows.Forms.DataGridViewCellParsingEventArgs)">
+            <summary>
+            Handler for the DataGridView CellParsing event.
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.DataGridViewBindingManager.CellEndEditHandler(System.Object,System.Windows.Forms.DataGridViewCellEventArgs)">
+            <summary>
+            Handler for the DataGridView CellEndEdit event.
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.DataGridViewBindingManager.DataErrorHandler(System.Object,System.Windows.Forms.DataGridViewDataErrorEventArgs)">
+            <summary>
+            Handler for the DataGridView DataError event.
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.DataGridViewBindingManager.Dispose(System.Boolean)">
+            <summary>
+            See <see cref="M:System.ComponentModel.Component.Dispose(System.Boolean)"/>.
+            </summary>
+            <param name="disposing"></param>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.DotnetControls.DataGridViewBindingManager.Descriptors">
+            <summary>
+              Gets the collection of bindings managed by this BindingManager.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.DotnetControls.DataGridViewBindingManager.BoundControl">
+            <summary>
+              Returns the bound DataGridView control.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.DotnetControls.DataGridViewBindingManager.DataGridView">
+            <summary>
+              Gets or sets the DataGridView.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.UI.WinForms.DotnetControls.DropDownForm">
+            <summary>For internal use only.</summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.DropDownForm.#ctor">
+            <summary>For internal use only.</summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.DropDownForm.UpdateOwner">
+            <summary>For internal use only.</summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.DropDownForm.UpdateLocation">
+            <summary>For internal use only.</summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.DropDownForm.OnOwnerChanged(System.EventArgs)">
+            <summary>For internal use only.</summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.DropDownForm.OnVisibleChanged(System.EventArgs)">
+            <summary>For internal use only.</summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.DropDownForm.OnResize(System.EventArgs)">
+            <summary>For internal use only.</summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.DropDownForm.AncestorLocationChangedHandler(System.Object,System.EventArgs)">
+            <summary>For internal use only.</summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.DropDownForm.AncestorParentChangedHandler(System.Object,System.EventArgs)">
+            <summary>For internal use only.</summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.DropDownForm.ContentsKeyDownHandler(System.Object,System.Windows.Forms.KeyEventArgs)">
+            <summary>For internal use only.</summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.DotnetControls.DropDownForm.Controller">
+            <summary>For internal use only.</summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.DotnetControls.DropDownForm.Contents">
+            <summary>For internal use only.</summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.DotnetControls.DropDownForm.LocationOffset">
+            <summary>For internal use only.</summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.DotnetControls.DropDownForm.DesktopOriginOffset">
+            <summary>For internal use only.</summary>
+        </member>
+        <member name="T:IdeaBlade.UI.WinForms.DotnetControls.DateTimePickerDataBinder">
+            <summary>
+              Binder for a DateTimePicker control.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.DateTimePickerDataBinder.GetControlValue(System.Windows.Forms.Control)">
+            <summary>
+            
+            </summary>
+            <param name="pControl"></param>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.DateTimePickerDataBinder.GetBaseFitness(IdeaBlade.UI.IDataConverter)">
+            <summary>
+              Returns the fitness of using this binder for the specified converter.
+              See <see cref="T:IdeaBlade.UI.WinForms.UIFitness"/>.
+            </summary>
+            <param name="pConverter">
+              Converter that specifies formatting, syntactic, and semantic validation.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.DateTimePickerDataBinder.ParseHandler(System.Object,System.Windows.Forms.ConvertEventArgs)">
+            <summary>
+              PictureBox is readonly so disallow parsing of image.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.DateTimePickerDataBinder.FormatHandler(System.Object,System.Windows.Forms.ConvertEventArgs)">
+            <summary>
+              Handles byte[] types and converts to Image type.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.DateTimePickerDataBinder.InitializeControl(System.Windows.Forms.Control,IdeaBlade.UI.ViewDescriptor)">
+            <summary>
+              Initializes the properties of a control before being bound.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.DotnetControls.DateTimePickerDataBinder.ControlType">
+            <summary>
+              The base type of control this binder works with.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.DotnetControls.DateTimePickerDataBinder.BindingPropertyName">
+            <summary>
+              Property on the control that is set during binding.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.UI.WinForms.DotnetControls.DataGridViewColumnBinder">
+            <summary>
+              Base class that understands how to bind to a DataGrid column.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.DataGridViewColumnBinder.CreateColumn">
+            <summary>
+              Create a DataGridViewColumn appropriate to this binder
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.DataGridViewColumnBinder.BindColumn(IdeaBlade.UI.WinForms.DotnetControls.DataGridViewBindingDescriptor)">
+            <summary>
+              Binds a column to a ViewDescriptor.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.DataGridViewColumnBinder.BindColumn(System.Windows.Forms.DataGridViewColumn,IdeaBlade.UI.ViewDescriptor)">
+            <summary>
+              Binds a column to a ViewDescriptor.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.DotnetControls.DataGridViewColumnBinder.BinderMap">
+            <summary>
+              Get the map that manages this binder.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.UI.WinForms.DotnetControls.CheckBoxDataBinder">
+            <summary>
+              Binder for a CheckBox control.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.CheckBoxDataBinder.GetBaseFitness(IdeaBlade.UI.IDataConverter)">
+            <summary>
+              Returns the fitness of using this binder for the specified converter.
+              See <see cref="T:IdeaBlade.UI.WinForms.UIFitness"/>.
+            </summary>
+            <param name="pConverter">
+              Converter that specifies formatting, syntactic, and semantic validation.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.CheckBoxDataBinder.InitializeControl(System.Windows.Forms.Control,IdeaBlade.UI.ViewDescriptor)">
+            <summary>
+            Initializes the properties of a control before being bound.
+            </summary>
+            <remarks>
+            The logic for initializing whether the control should support three states is as follows:
+            <list>
+            <item>If the developer uses the DefaultConverter's defaults, then the control's ThreeState value is used.</item>
+            <item>If the developer modifies the DefaultConverter's Editability, then the converter's Editability overrides the control.</item>
+            <item>If the developer selects the ThreeStateConverter and uses the converter's defaults,
+            then the converter's ThreeState value is used.</item>
+            <item>If the developer selects the ThreeStateConverter, keeps Editability.Optional, and modifies the ThreeState,
+            then the converter's ThreeState value is used.</item>
+            <item>If the developer selects the ThreeStateConverter and modifies the Editability, 
+            then the converter's Editability overrides its ThreeState.</item> 
+            </list>
+            </remarks>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.DotnetControls.CheckBoxDataBinder.ControlType">
+            <summary>
+              The base type of control this binder works with.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.DotnetControls.CheckBoxDataBinder.BindingPropertyName">
+            <summary>
+              Property on the control that is set during binding.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.UI.WinForms.DotnetControls.RadioButtonDataBinder">
+            <summary>
+              Binder for a RadioButton control.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.RadioButtonDataBinder.GetBaseFitness(IdeaBlade.UI.IDataConverter)">
+            <summary>
+              Returns the fitness of using this binder for the specified converter.
+              See <see cref="T:IdeaBlade.UI.WinForms.UIFitness"/>.
+            </summary>
+            <param name="pConverter">
+              Converter that specifies formatting, syntactic, and semantic validation.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.RadioButtonDataBinder.ParseHandler(System.Object,System.Windows.Forms.ConvertEventArgs)">
+            <summary>For internal use only.</summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.RadioButtonDataBinder.FormatHandler(System.Object,System.Windows.Forms.ConvertEventArgs)">
+            <summary>For internal use only.</summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.DotnetControls.RadioButtonDataBinder.ControlType">
+            <summary>
+              The base type of control this binder works with.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.DotnetControls.RadioButtonDataBinder.BindingPropertyName">
+            <summary>
+              Property on the control that is set during binding.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.UI.WinForms.DotnetControls.DataGridBindingDescriptorCollection">
+            <summary>
+              A strongly typed collection of <see cref="T:IdeaBlade.UI.WinForms.DotnetControls.DataGridBindingDescriptor">DataGridBindingDescriptors</see>.
+              <seealso cref="T:IdeaBlade.UI.WinForms.DotnetControls.DataGridBindingDescriptor"/>
+              <seealso cref="T:IdeaBlade.UI.WinForms.DotnetControls.DataGridBindingManager"/>
+            </summary>
+            <remarks>
+            The <b>DataGridBindingDescriptorCollection</b> is normally accessed
+            from a <see cref="T:IdeaBlade.UI.WinForms.DotnetControls.DataGridBindingManager"/> through the <see cref="P:IdeaBlade.UI.WinForms.DotnetControls.DataGridBindingManager.Descriptors"/>
+            property.  BindingDescriptors are added to the collection through one of the many overloaded
+            <b>Add</b> methods. Use the <see cref="M:IdeaBlade.UI.WinForms.DotnetControls.DataGridBindingDescriptorCollection.Get(System.String)"/> method to retrieve an existing 
+            descriptor.  Changes made to an existing BindingDescriptor will be immediately
+            reflected in the data binding.
+            </remarks>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.DataGridBindingDescriptorCollection.#ctor">
+            <summary>
+              Constructs an DataGridBindingDescriptorCollection.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.DataGridBindingDescriptorCollection.Add(System.String,System.String)">
+            <summary>
+              Adds a binding using the specified property path.
+            </summary>
+            <param name="pColumnTitle">
+              Title of the GridColumn.
+            </param>
+            <param name="pPropertyPath">
+              Period delimited path of the property. e.g. "BirthDate" or "Address.City"
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.DataGridBindingDescriptorCollection.Add(System.String,System.String,IdeaBlade.UI.IDataConverter)">
+            <summary>
+              Adds a binding using the specified property path.
+            </summary>
+            <param name="pColumnTitle">
+              Title of the GridColumn.
+            </param>
+            <param name="pPropertyPath">
+              Period delimited path of the property. e.g. "BirthDate" or "Address.City"
+            </param>
+            <param name="pConverter">
+              Converter that specifies formatting, syntactic, and semantic validation.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.DataGridBindingDescriptorCollection.Add(System.String,System.String,System.Type)">
+            <summary>
+              Adds a binding using the specified property path.
+            </summary>
+            <param name="pColumnTitle">
+              Title of the GridColumn.
+            </param>
+            <param name="pPropertyPath">
+              Period delimited path of the property. e.g. "BirthDate" or "Address.City"
+            </param>
+            <param name="pControlType">
+              Type of control to used to edit data in a GridColumn.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.DataGridBindingDescriptorCollection.Add(System.String,System.String,IdeaBlade.UI.IDataConverter,System.Type)">
+            <summary>
+              Adds a binding using the specified property path.
+            </summary>
+            <param name="pColumnTitle">
+              Title of the GridColumn.
+            </param>
+            <param name="pPropertyPath">
+              Period delimited path of the property. e.g. "BirthDate" or "Address.City"
+            </param>
+            <param name="pConverter">
+              Converter that specifies formatting, syntactic, and semantic validation.
+            </param>
+            <param name="pControlType">
+              Type of control to used to edit data in a GridColumn.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.DataGridBindingDescriptorCollection.Add(IdeaBlade.UI.ViewDescriptor)">
+            <summary>
+              Adds a binding using the specified ViewDescriptor.
+            </summary>
+            <param name="pViewDescriptor">
+              ViewDescriptor describing the bound property and conversion information.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.DataGridBindingDescriptorCollection.Add(IdeaBlade.UI.ViewDescriptor,System.Type)">
+            <summary>
+              Adds a binding using the specified ViewDescriptor.
+            </summary>
+            <param name="pViewDescriptor">
+              ViewDescriptor describing the bound property and conversion information.
+            </param>
+            <param name="pControlType">
+              Type of control to used to edit data in a GridColumn.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.DataGridBindingDescriptorCollection.Add(IdeaBlade.UI.WinForms.DotnetControls.DataGridBindingDescriptor)">
+            <summary>
+              Adds an DataGridBindingDescriptor to the collection.
+            </summary>
+            <param name="pDescriptor">
+              The DataGridBindingDescriptor to add.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.DataGridBindingDescriptorCollection.Get(System.Windows.Forms.DataGridColumnStyle)">
+            <summary>
+              Get the DataGridBindingDescriptor for the corresponding GridColumn.
+            </summary>
+            <param name="pColumnStyle">
+              GridColumn of interest.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.DataGridBindingDescriptorCollection.Get(System.String)">
+            <summary>
+              Get the DataGridBindingDescriptor for the corresponding property path.
+              If multiple columns bind to the same property, returns the first one found.
+            </summary>
+            <param name="pPropertyPath">
+              Period delimited path of the property. e.g. "BirthDate" or "Address.City"
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.DataGridBindingDescriptorCollection.Remove(IdeaBlade.UI.WinForms.DotnetControls.DataGridBindingDescriptor)">
+            <summary>
+              Removes the specified DataGridBindingDescriptor.
+            </summary>
+            <param name="pDescriptor">
+              DataGridBindingDescriptor to remove.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.DataGridBindingDescriptorCollection.Remove(System.Windows.Forms.DataGridColumnStyle)">
+            <summary>
+              Removes the specified DataGridBindingDescriptor for the corresponding ColumnStyle
+            </summary>
+            <param name="pColumnStyle">
+              Control of interest.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.DataGridBindingDescriptorCollection.Remove(System.String)">
+            <summary>
+              Removes the DataGridBindingDescriptor for the corresponding property path.
+              If multiple controls bind to the same property, returns the first one found.
+            </summary>
+            <param name="pPropertyPath">
+              Period delimited path of the property. e.g. "BirthDate" or "Address.City"
+            </param>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.DotnetControls.DataGridBindingDescriptorCollection.Item(System.Int32)">
+            <summary>
+              Get the DataGridBindingDescriptor at the specified index.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.DotnetControls.DataGridBindingDescriptorCollection.CollectionType">
+            <summary>
+              Type of object this collection accepts.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.UI.WinForms.DotnetControls.DataGridBinderMap">
+            <summary>
+              Maps controls and DataGridColumnBinders to each other.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.DataGridBinderMap.GetDataBinder(System.Type)">
+            <summary>
+              Gets the XtraGridColumnBinder for the specified control type.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.DataGridBinderMap.GetDataBinder(IdeaBlade.UI.IDataConverter)">
+            <summary>
+              Gets the DataGridColumnBinder that is the best fit for the specified converter.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.DataGridBinderMap.GetDataBinderOfType(System.Type)">
+            <summary>
+              Get the XtraGridColumnBinder of the specified binder type.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.DotnetControls.DataGridBinderMap.Binders">
+            <summary>
+              Get a list of the binders that are mapped.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.DotnetControls.DataGridBinderMap.Instance">
+            <summary>
+              Gets the singleton instance of the XtraGridBinderMap.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.UI.WinForms.DotnetControls.TextBoxViewColumnBinder">
+            <summary>
+              Binder for a DataGridTextBoxColumn used in a DataGrid.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.TextBoxViewColumnBinder.GetBaseFitness(IdeaBlade.UI.IDataConverter)">
+            <summary>
+              Returns the fitness of using this binder for the specified converter.
+              See <see cref="T:IdeaBlade.UI.WinForms.UIFitness"/>.
+            </summary>
+            <param name="pConverter">
+              Converter that specifies formatting, syntactic, and semantic validation.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.TextBoxViewColumnBinder.CreateColumn">
+            <summary>
+              Create the appropriate DataGridViewColumn for this binder
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.TextBoxViewColumnBinder.BindColumn(System.Windows.Forms.DataGridViewColumn,IdeaBlade.UI.ViewDescriptor)">
+            <summary>
+              Binds a column to a ViewDescriptor.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.DotnetControls.TextBoxViewColumnBinder.ControlType">
+            <summary>
+              The base type of control this binder works with.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.UI.WinForms.DotnetControls.ButtonDataBinder">
+            <summary>
+              Binder for a Button control.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.ButtonDataBinder.GetBaseFitness(IdeaBlade.UI.IDataConverter)">
+            <summary>
+              Returns the fitness of using this binder for the specified converter.
+              See <see cref="T:IdeaBlade.UI.WinForms.UIFitness"/>.
+            </summary>
+            <param name="pConverter">
+              Converter that specifies formatting, syntactic, and semantic validation.
+            </param>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.DotnetControls.ButtonDataBinder.ControlType">
+            <summary>
+              The base type of control this binder works with.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.DotnetControls.ButtonDataBinder.BindingPropertyName">
+            <summary>
+              Property on the control that is set during binding.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.UI.WinForms.DotnetControls.TextBoxColumnBinder">
+            <summary>
+              Binder for a DataGridTextBoxColumn used in a DataGrid.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.UI.WinForms.DotnetControls.DataGridColumnBinder">
+            <summary>
+              Base class that understands how to bind to a DataGrid column.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.DataGridColumnBinder.CreateColumnStyle">
+            <summary>
+              Get the DataGridColumnStyle for the preferred control type.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.DataGridColumnBinder.BindColumn(System.Windows.Forms.DataGridColumnStyle,IdeaBlade.UI.ViewDescriptor)">
+            <summary>
+              Binds a column to a ViewDescriptor.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.DataGridColumnBinder.SetControlEditability(System.Windows.Forms.DataGridColumnStyle,IdeaBlade.UI.Editability)">
+            <summary>
+              Configures the control to best match the editability requirement.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.DotnetControls.DataGridColumnBinder.BinderMap">
+            <summary>
+              Get the map that manages this binder.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.TextBoxColumnBinder.GetBaseFitness(IdeaBlade.UI.IDataConverter)">
+            <summary>
+              Returns the fitness of using this binder for the specified converter.
+              See <see cref="T:IdeaBlade.UI.WinForms.UIFitness"/>.
+            </summary>
+            <param name="pConverter">
+              Converter that specifies formatting, syntactic, and semantic validation.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.TextBoxColumnBinder.CreateColumnStyle">
+            <summary>
+              Get the DataGridColumnStyle for the preferred control type.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.TextBoxColumnBinder.BindColumn(System.Windows.Forms.DataGridColumnStyle,IdeaBlade.UI.ViewDescriptor)">
+            <summary>
+              Binds a column to a ViewDescriptor.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.DotnetControls.TextBoxColumnBinder.ControlType">
+            <summary>
+              The base type of control this binder works with.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.UI.WinForms.DotnetControls.PictureBoxDataBinder">
+            <summary>
+              Binder for a PictureBox control.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.PictureBoxDataBinder.GetBaseFitness(IdeaBlade.UI.IDataConverter)">
+            <summary>
+              Returns the fitness of using this binder for the specified converter.
+              See <see cref="T:IdeaBlade.UI.WinForms.UIFitness"/>.
+            </summary>
+            <param name="pConverter">
+              Converter that specifies formatting, syntactic, and semantic validation.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.PictureBoxDataBinder.UpdateBindingDescriptor(IdeaBlade.UI.WinForms.BindingDescriptor)">
+            <summary>
+            
+            </summary>
+            <param name="pBindingDescriptor"></param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.PictureBoxDataBinder.InitializeControl(System.Windows.Forms.Control,IdeaBlade.UI.ViewDescriptor)">
+            <summary>
+              Initializes the properties of a control before being bound.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.PictureBoxDataBinder.ParseHandler(System.Object,System.Windows.Forms.ConvertEventArgs)">
+            <summary>
+              PictureBox is readonly so disallow parsing of image.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.PictureBoxDataBinder.FormatHandler(System.Object,System.Windows.Forms.ConvertEventArgs)">
+            <summary>
+              Handles byte[] types and converts to Image type.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.DotnetControls.PictureBoxDataBinder.ControlType">
+            <summary>
+              The base type of control this binder works with.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.DotnetControls.PictureBoxDataBinder.BindingPropertyName">
+            <summary>
+              Property on the control that is set during binding.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.UI.WinForms.DotnetControls.NullableDatePickerDataBinder">
+            <summary>
+              Binder for a DatePicker control.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.NullableDatePickerDataBinder.GetBaseFitness(IdeaBlade.UI.IDataConverter)">
+            <summary>
+              Returns the fitness of using this binder for the specified converter.
+              See <see cref="T:IdeaBlade.UI.WinForms.UIFitness"/>.
+            </summary>
+            <param name="pConverter">
+              Converter that specifies formatting, syntactic, and semantic validation.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.NullableDatePickerDataBinder.InitializeControl(System.Windows.Forms.Control,IdeaBlade.UI.ViewDescriptor)">
+            <summary>
+              Initializes the properties of a control before being bound.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.DotnetControls.NullableDatePickerDataBinder.ControlType">
+            <summary>
+              The base type of control this binder works with.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.DotnetControls.NullableDatePickerDataBinder.BindingPropertyName">
+            <summary>
+              Property on the control that is set during binding.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.DotnetControls.NullableDatePickerDataBinder.PreferredControlType">
+            <summary>
+              The preferred control type of this binder.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.UI.WinForms.DotnetControls.DataGridBindingDescriptor">
+            <summary>
+            Encapsulates the metadata about a binding between an object property and a column in 
+            a <see cref="T:System.Windows.Forms.DataGrid"/>.
+            <seealso cref="T:IdeaBlade.UI.WinForms.DotnetControls.DataGridBindingManager"/>
+            <seealso cref="T:IdeaBlade.UI.WinForms.DotnetControls.DataGridBindingDescriptorCollection"/>
+            </summary>
+            <remarks>
+            Use the <b>DataGridBindingDescriptor</b> to create a binding between a column and
+            a business object property.  Each binding is added to a <see cref="T:IdeaBlade.UI.WinForms.DotnetControls.DataGridBindingManager"/>
+            using the <see cref="M:IdeaBlade.UI.WinForms.DotnetControls.DataGridBindingDescriptorCollection.Add(System.String,System.String)"/> method.  A binding
+            is constructed for a column, together with a <see cref="T:IdeaBlade.UI.ViewDescriptor"/> or
+            additional property and <see cref="T:IdeaBlade.UI.DataConverter"/> information.  
+            </remarks> 
+            <example><code lang="C#">
+
+// This example shows various ways of constructing and using DataGridBindingDescriptors
+
+PersistenceManager pm = PersistenceManager.DefaultManager;
+DataGridBindingManager mgr = new DataGridBindingManager(this.dataGrid1, typeof(Employee));
+      
+DataGridBindingDescriptor d1, d2, d3;
+
+// a simple descriptor
+d1 = new DataGridBindingDescriptor("First Name", typeof(Employee), "FirstName");
+
+// using a dataconverter
+d2 = new DataGridBindingDescriptor("Hire Date", typeof(Employee), "HireDate", DataConverter.RequiredDate);
+
+// using a ViewDescriptor
+ViewDescriptor vd = new ViewDescriptor("Title", typeof(Employee), "Title");
+d3 = new DataGridBindingDescriptor(vd);
+
+// add the BindingDescriptors to the BindingManager
+mgr.Descriptors.Add(d1);
+mgr.Descriptors.Add(d2);
+mgr.Descriptors.Add(d3);
+
+// add employees to the BindingManager's DataSource now
+mgr.DataSource.AddRange(pm.GetEntities&lt;Employee&gt;());
+
+	</code></example><example><code lang="VB">
+
+ ' This example shows various ways of constructing and using DataGridBindingDescriptors
+Dim pm As PersistenceManager = PersistenceManager.DefaultManager
+Dim mgr As New DataGridBindingManager(Me.dataGrid1, GetType(Employee))
+
+Dim d1, d2, d3 As DataGridBindingDescriptor
+
+' a simple descriptor
+d1 = New DataGridBindingDescriptor("First Name", GetType(Employee), "FirstName")
+
+' using a dataconverter
+d2 = New DataGridBindingDescriptor("Hire Date", GetType(Employee), "HireDate", DataConverter.RequiredDate)
+
+' using a ViewDescriptor
+Dim vd As New ViewDescriptor("Title", GetType(Employee), "Title")
+d3 = New DataGridBindingDescriptor(vd)
+
+' add the BindingDescriptors to the BindingManager
+mgr.Descriptors.Add(d1)
+mgr.Descriptors.Add(d2)
+mgr.Descriptors.Add(d3)
+
+' add employees to the BindingManager's DataSource now
+mgr.DataSource.AddRange(pm.GetEntities(Of Employee)())
+	</code></example>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.DataGridBindingDescriptor.#ctor(IdeaBlade.UI.ViewDescriptor)">
+            <summary>
+              Constructs an DataGridBindingDescriptor.
+            </summary>
+            <param name="pViewDescriptor">
+              ViewDescriptor describing the bound property and conversion information.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.DataGridBindingDescriptor.#ctor(System.Type,IdeaBlade.UI.ViewDescriptor)">
+            <summary>
+              Constructs an DataGridBindingDescriptor.
+            </summary>
+            <param name="pControlType">
+              Type of control to used to edit data in a GridColumn.
+            </param>
+            <param name="pViewDescriptor">
+              ViewDescriptor describing the bound property and conversion information.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.DataGridBindingDescriptor.#ctor(System.String,System.Type,System.String)">
+            <summary>
+              Constructs an DataGridBindingDescriptor.
+            </summary>
+            <param name="pColumnTitle">
+              Title of the GridColumn.
+            </param>
+            <param name="pObjectType">
+              Type of the object that the property exists on.  e.g. typeof(Employee)
+            </param>
+            <param name="pPropertyPath">
+              Period delimited path of the property. e.g. "BirthDate" or "Address.City"
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.DataGridBindingDescriptor.#ctor(System.String,System.Type,System.String,System.Type)">
+            <summary>
+              Constructs an DataGridBindingDescriptor.
+            </summary>
+            <param name="pColumnTitle">
+              Title of the GridColumn.
+            </param>
+            <param name="pObjectType">
+              Type of the object that the property exists on.  e.g. typeof(Employee)
+            </param>
+            <param name="pPropertyPath">
+              Period delimited path of the property. e.g. "BirthDate" or "Address.City"
+            </param>
+            <param name="pControlType">
+              Type of control to used to edit data in a GridColumn.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.DataGridBindingDescriptor.#ctor(System.String,System.Type,System.String,IdeaBlade.UI.IDataConverter)">
+            <summary>
+              Constructs an DataGridBindingDescriptor.
+            </summary>
+            <param name="pColumnTitle">
+              Title of the GridColumn.
+            </param>
+            <param name="pObjectType">
+              Type of the object that the property exists on.  e.g. typeof(Employee)
+            </param>
+            <param name="pPropertyPath">
+              Period delimited path of the property. e.g. "BirthDate" or "Address.City"
+            </param>
+            <param name="pConverter">
+              Converter that specifies formatting, syntactic, and semantic validation.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.DataGridBindingDescriptor.#ctor(System.String,System.Type,System.String,IdeaBlade.UI.IDataConverter,System.Type)">
+            <summary>
+              Constructs an DataGridBindingDescriptor.
+            </summary>
+            <param name="pColumnTitle">
+              Title of the GridColumn.
+            </param>
+            <param name="pObjectType">
+              Type of the object that the property exists on.  e.g. typeof(Employee)
+            </param>
+            <param name="pPropertyPath">
+              Period delimited path of the property. e.g. "BirthDate" or "Address.City"
+            </param>
+            <param name="pConverter">
+              Converter that specifies formatting, syntactic, and semantic validation.
+            </param>
+            <param name="pControlType">
+              Type of control to used to edit data in a GridColumn.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.DataGridBindingDescriptor.RefreshCore">
+            <summary>
+              Refreshes the binding with the current properties.
+              Typically used when some aspect of the converter changes.
+              Currently not supported
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.DotnetControls.DataGridBindingDescriptor.ColumnStyle">
+            <summary>
+              Gets the ColumnStyle for this binding.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.UI.WinForms.DotnetControls.CheckBoxViewColumnBinder">
+            <summary>
+              Binder for a DataGridTextBoxColumn used in a DataGrid.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.CheckBoxViewColumnBinder.GetBaseFitness(IdeaBlade.UI.IDataConverter)">
+            <summary>
+              Returns the fitness of using this binder for the specified converter.
+              See <see cref="T:IdeaBlade.UI.WinForms.UIFitness"/>.
+            </summary>
+            <param name="pConverter">
+              Converter that specifies formatting, syntactic, and semantic validation.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.CheckBoxViewColumnBinder.CreateColumn">
+            <summary>
+              Create the appropriate DataGridViewColumn for this binder
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.CheckBoxViewColumnBinder.BindColumn(System.Windows.Forms.DataGridViewColumn,IdeaBlade.UI.ViewDescriptor)">
+            <summary>
+            Binds a column to a ViewDescriptor.
+            </summary>
+            <remarks>
+            Logic for initializing whether the column should support three states is as follows:
+            <list>
+            <item>If the developer uses the DefaultConverter's defaults, then the column's ThreeState value is used.</item>
+            <item>If the developer modifies the DefaultConverter's Editability, then the converter's Editability overrides the column.</item>
+            <item>If the developer selects the ThreeStateConverter and uses the converter's defaults,
+            then the converter's ThreeState value is used.</item>
+            <item>If the developer selects the ThreeStateConverter, keeps Editability.Optional, and modifies the ThreeState,
+            then the converter's ThreeState value is used.</item>
+            <item>If the developer selects the ThreeStateConverter and modifies the Editability, 
+            then the converter's Editability overrides its ThreeState.</item> 
+            </list>
+            </remarks>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.DotnetControls.CheckBoxViewColumnBinder.ControlType">
+            <summary>
+              The base type of control this binder works with.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.UI.WinForms.DotnetControls.ComboBoxViewColumnBinder">
+            <summary>
+              Binder for a DataGridTextBoxColumn used in a DataGrid.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.ComboBoxViewColumnBinder.GetBaseFitness(IdeaBlade.UI.IDataConverter)">
+            <summary>
+              Returns the fitness of using this binder for the specified converter.
+              See <see cref="T:IdeaBlade.UI.WinForms.UIFitness"/>.
+            </summary>
+            <param name="pConverter">
+              Converter that specifies formatting, syntactic, and semantic validation.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.ComboBoxViewColumnBinder.CreateColumn">
+            <summary>
+              Create the appropriate DataGridViewColumn for this binder
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.ComboBoxViewColumnBinder.BindColumn(System.Windows.Forms.DataGridViewColumn,IdeaBlade.UI.ViewDescriptor)">
+            <summary>
+              Binds a column to a ViewDescriptor.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.DotnetControls.ComboBoxViewColumnBinder.ControlType">
+            <summary>
+              The base type of control this binder works with.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.UI.WinForms.DotnetControls.NamespaceDoc">
+            <summary>
+              Contains a set of data binding classes specific to the core Microsoft .NET
+              SDK user interface components.  Classes of interest to application
+              developers are the <see cref="T:IdeaBlade.UI.WinForms.DotnetControls.DataGridBindingManager"/> and <see cref="T:IdeaBlade.UI.WinForms.DotnetControls.DataGridBindingDescriptor"/>.
+              "Binder" classes here allow for UI object binding to standard .NET controls.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.UI.WinForms.DotnetControls.MultiFieldTextBox">
+            <summary>For internal use only.</summary>
+        </member>
+        <member name="T:IdeaBlade.UI.WinForms.DotnetControls.ControlBar">
+            <summary>
+              Lays out an array of controls.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.ControlBar.#ctor">
+            <summary>
+              Constructs a new ControlBar.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.ControlBar.ArrangeControls">
+            <summary>For internal use only.</summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.ControlBar.GetNextLocation(System.Drawing.Point,System.Drawing.Size)">
+            <summary>For internal use only.</summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.ControlBar.SortControls">
+            <summary>For internal use only.</summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.ControlBar.LayoutHandler(System.Object,System.Windows.Forms.LayoutEventArgs)">
+            <summary>For internal use only.</summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.ControlBar.OnControlAdded(System.Windows.Forms.ControlEventArgs)">
+            <summary>For internal use only.</summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.ControlBar.OnControlRemoved(System.Windows.Forms.ControlEventArgs)">
+            <summary>For internal use only.</summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.ControlBar.LocationChangedHandler(System.Object,System.EventArgs)">
+            <summary>For internal use only.</summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.ControlBar.Dispose(System.Boolean)">
+            <summary> 
+            Clean up any resources being used.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.ControlBar.InitializeComponent">
+            <summary> 
+            Required method for Designer support, do not modify 
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.DotnetControls.ControlBar.Offset">
+            <summary>
+              Offset from origin of first control in bar.  Defaults to 8,8.
+              Reminder: Point is pass by value.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.DotnetControls.ControlBar.Spacing">
+            <summary>
+              Distance between between controls.  Defaults to 8.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.DotnetControls.ControlBar.Orientation">
+            <summary>
+              Determines horizontal or vertical layout.  Defaults to horizontal.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.DotnetControls.ControlBar.OrderByLocation">
+            <summary>
+            Order controls by location order or by addition order.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.DotnetControls.ControlBar.BarControls">
+            <summary>For internal use only.</summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.MultiFieldTextBox.#ctor">
+            <summary>For internal use only.</summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.DotnetControls.MultiFieldTextBox.Delimiter">
+            <summary>For internal use only.</summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.DotnetControls.MultiFieldTextBox.Text">
+            <summary>For internal use only.</summary>
+        </member>
+        <member name="T:IdeaBlade.UI.WinForms.DotnetControls.ListBoxDataBinder">
+            <summary>
+              Binder for a ListBox control.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.ListBoxDataBinder.GetBaseFitness(IdeaBlade.UI.IDataConverter)">
+            <summary>
+              Returns the fitness of using this binder for the specified converter.
+              See <see cref="T:IdeaBlade.UI.WinForms.UIFitness"/>.
+            </summary>
+            <param name="pConverter">
+              Converter that specifies formatting, syntactic, and semantic validation.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.ListBoxDataBinder.InitializeControl(System.Windows.Forms.Control,IdeaBlade.UI.ViewDescriptor)">
+            <summary>
+              Initializes the properties of a control before being bound.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.DotnetControls.ListBoxDataBinder.ControlType">
+            <summary>
+              The base type of control this binder works with.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.DotnetControls.ListBoxDataBinder.BindingPropertyName">
+            <summary>
+              Property on the control that is set during binding.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.UI.WinForms.DotnetControls.DotnetControlConfigurator">
+            <summary>
+              
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.DotnetControlConfigurator.CanConfigureControl(System.Type)">
+            <summary>
+            
+            </summary>
+            <param name="pControlType"></param>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.DotnetControlConfigurator.ConfigureControl(System.Windows.Forms.Control,System.Type)">
+            <summary>
+            
+            </summary>
+            <param name="pControl"></param>
+            <param name="pDataType"></param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.DotnetControlConfigurator.IsListControlType(System.Type)">
+            <summary>
+            
+            </summary>
+            <param name="pControlType"></param>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.DotnetControlConfigurator.GetAssemblyReferenceNames(System.Type)">
+            <summary>
+            
+            </summary>
+            <param name="pControlType"></param>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.DotnetControlConfigurator.ConfigureLabel(System.Windows.Forms.Control)">
+            <summary>
+            
+            </summary>
+            <param name="pLabel"></param>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.DotnetControls.DotnetControlConfigurator.PreferredLabelType">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.UI.WinForms.DotnetControls.BoolColumnBinder">
+            <summary>
+              Binder for a DataGridBoolColumn used in a DataGrid.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.BoolColumnBinder.GetBaseFitness(IdeaBlade.UI.IDataConverter)">
+            <summary>
+              Returns the fitness of using this binder for the specified converter.
+              See <see cref="T:IdeaBlade.UI.WinForms.UIFitness"/>.
+            </summary>
+            <param name="pConverter">
+              Converter that specifies formatting, syntactic, and semantic validation.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.BoolColumnBinder.CreateColumnStyle">
+            <summary>
+              Get the DataGridColumnStyle for the preferred control type.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.BoolColumnBinder.BindColumn(System.Windows.Forms.DataGridColumnStyle,IdeaBlade.UI.ViewDescriptor)">
+            <summary>
+              Binds a column to a ViewDescriptor.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.DotnetControls.BoolColumnBinder.ControlType">
+            <summary>
+              The base type of control this binder works with.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.UI.WinForms.DotnetControls.NullableDatePicker">
+            <summary>
+              Edits DateTime values, but allows the null value.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.NullableDatePicker.#ctor">
+            <summary>
+              Constructs a DatePickerControl
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.NullableDatePicker.OnValueChanged(System.EventArgs)">
+            <summary>
+              Fires the ValueChanged event.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.NullableDatePicker.Dispose(System.Boolean)">
+            <summary> 
+            Clean up any resources being used.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.NullableDatePicker.InitializeComponent">
+            <summary> 
+            Required method for Designer support, do not modify 
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.DotnetControls.NullableDatePicker.FormatString">
+            <summary>
+              Custom date format string.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.DotnetControls.NullableDatePicker.TextBox">
+            <summary>
+              Gets the TextBox portion of the DatePicker.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.DotnetControls.NullableDatePicker.Text">
+            <summary>
+              Gets or sets the text.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.DotnetControls.NullableDatePicker.Value">
+            <summary>
+              Gets or sets the DateTime value of the control.
+              Returns null if the date is not specified.
+            </summary>
+        </member>
+        <member name="E:IdeaBlade.UI.WinForms.DotnetControls.NullableDatePicker.ValueChanged">
+            <summary>
+              Occurs when the Value property changes.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.UI.WinForms.DotnetControls.ImageViewColumnBinder">
+            <summary>
+              Binder for a ImageViewColumn used in a DataGridView.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.ImageViewColumnBinder.GetBaseFitness(IdeaBlade.UI.IDataConverter)">
+            <summary>
+              Returns the fitness of using this binder for the specified converter.
+              See <see cref="T:IdeaBlade.UI.WinForms.UIFitness"/>.
+            </summary>
+            <param name="pConverter">
+              Converter that specifies formatting, syntactic, and semantic validation.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.ImageViewColumnBinder.CreateColumn">
+            <summary>
+              Create the appropriate DataGridViewColumn for this binder
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.ImageViewColumnBinder.BindColumn(System.Windows.Forms.DataGridViewColumn,IdeaBlade.UI.ViewDescriptor)">
+            <summary>
+              Binds a column to a ViewDescriptor.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.DotnetControls.ImageViewColumnBinder.ControlType">
+            <summary>
+              The base type of control this binder works with.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.UI.WinForms.DotnetControls.TextBoxDataBinder">
+            <summary>
+              Binder for a TextBox control.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.TextBoxDataBinder.GetBaseFitness(IdeaBlade.UI.IDataConverter)">
+            <summary>
+              Returns the fitness of using this binder for the specified converter.
+              See <see cref="T:IdeaBlade.UI.WinForms.UIFitness"/>.
+            </summary>
+            <param name="pConverter">
+              Converter that specifies formatting, syntactic, and semantic validation.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.TextBoxDataBinder.InitializeControl(System.Windows.Forms.Control,IdeaBlade.UI.ViewDescriptor)">
+            <summary>
+              Initializes the properties of a control before being bound.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.TextBoxDataBinder.SetControlEditability(System.Windows.Forms.Control,IdeaBlade.UI.Editability)">
+            <summary>
+              Configures the control to best match the editability requirement.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.DotnetControls.TextBoxDataBinder.ControlType">
+            <summary>
+              The base type of control this binder works with.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.DotnetControls.TextBoxDataBinder.BindingPropertyName">
+            <summary>
+              Property on the control that is set during binding.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.DotnetControls.TextBoxDataBinder.PreferredControlType">
+            <summary>
+              The preferred control type of this binder.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.UI.WinForms.DotnetControls.DataGridBindingManager">
+            <summary>
+              Manages the data binding between a list of business objects and a <see cref="T:System.Windows.Forms.DataGrid"/>.
+              <seealso cref="T:IdeaBlade.Util.BindableList`1"/>
+              <seealso cref="T:IdeaBlade.UI.WinForms.DotnetControls.DataGridBindingDescriptor"/>
+            </summary>
+            <remarks>
+            <para>
+            The <see cref="P:IdeaBlade.UI.WinForms.BindingManager.BoundType"/> determines the type of business object to be managed. 
+            The <see cref="T:System.Windows.Forms.BindingSource"/> is the <see cref="T:System.Windows.Forms.BindingSource"/> that contains one or more
+            business objects of the BoundType.
+            Use the <see cref="P:IdeaBlade.UI.WinForms.DotnetControls.DataGridBindingManager.Descriptors"/> property to add <see cref="T:IdeaBlade.UI.WinForms.DotnetControls.DataGridBindingDescriptor">DataGridBindingDescriptors</see>
+            to bind columns in the DataGrid to business object properties.
+            </para>
+            </remarks>
+            <example><code lang="C#">
+
+// This example will bind Customer info to a DataGrid
+
+// Create the BindingManager and BindableList
+PersistenceManager pm = PersistenceManager.DefaultManager;
+DataGridBindingManager mgr = new DataGridBindingManager(this.dataGrid1, typeof(Customer));
+BindableList&lt;Customer&gt; custList = new BindableList&lt;Customer&gt;();
+
+// Set the DataSource
+mgr.BindingSource.DataSource = custList;
+
+// Add descriptors for the bound properties
+mgr.Descriptors.Add("Name", "ContactName", DataConverter.RequiredString);
+mgr.Descriptors.Add("Company", "CompanyName", DataConverter.ReadOnlyString);
+mgr.Descriptors.Add("Telephone", "Phone", new RegexConverter(Editability.Required, @"^\([1-9]\d{2}\)\s?\d{3}\-\d{4}$"));
+
+// Add all Customers to the BindableList
+custList.AddRange(pm.GetEntities&lt;Customer&gt;());
+
+	</code></example><example><code lang="VB">
+
+' This example will bind Customer info to a DataGrid
+
+' Create the BindingManager and BindableList
+Dim pm As PersistenceManager = PersistenceManager.DefaultManager
+Dim mgr As New DataGridBindingManager(Me.dataGrid1, GetType(Customer))
+Dim custList As New BindableList(Of Customer)()
+
+' Set the DataSource
+mgr.BindingSource.DataSource = custList
+
+' Add descriptors for the bound properties
+mgr.Descriptors.Add("Name", "ContactName", DataConverter.RequiredString)
+mgr.Descriptors.Add("Company", "CompanyName", DataConverter.ReadOnlyString)
+mgr.Descriptors.Add("Telephone", "Phone",  New RegexConverter(Editability.Required, "^(\d{3}-\d{3}-\d{4})*$"))
+
+' Add all Customers to the BindableList
+custList.AddRange(pm.GetEntities(Of Customer)())
+	</code></example><method name="CurrencyManager">
+  	  <example><code lang="C#">
+
+// sample showing use of CurrencyManager to synchronize data in 2 grids
+
+PersistenceManager pm = PersistenceManager.DefaultManager;
+BindableList&lt;Employee&gt; employeeList = new BindableList&lt;Employee&gt;();
+BindableList&lt;Order&gt; orderList = new BindableList&lt;Order&gt;();
+DataGridBindingManager mgrEmp = new DataGridBindingManager(this.dataGrid1, employeeList);
+DataGridBindingManager mgrOrders = new DataGridBindingManager(this.dataGrid2, orderList);
+
+//set up a handler for CurrentChanged event - will fire when employee changes in first grid
+mgrEmp.CurrencyManager.CurrentChanged += new EventHandler(CurrencyManager_CurrentChanged);
+
+// load all employees
+employeeList.AddRange(PersistenceManager.DefaultManager.GetEntities&lt;Employee&gt;());
+
+private void CurrencyManager_CurrentChanged(object sender, EventArgs e) {
+   // get the current employee
+   Employee emp = (Employee)mgrEmp.CurrencyManager.Current;     
+   // refill orderList with orders for current employee
+   orderList.ReplaceRange(emp.Orders); 
+}
+
+	</code></example>		
+	<example><code lang="VB">
+
+' sample showing use of CurrencyManager to synchronize data in 2 grids
+
+Dim pm As PersistenceManager = PersistenceManager.DefaultManager
+Dim employeeList As New BindableList(Of Employee)
+Dim orderList As New BindableList(Of Order)
+Dim mgrEmp As New DataGridBindingManager(Me.dataGrid1, employeeList)
+Dim mgrOrders As New DataGridBindingManager(Me.dataGrid2, orderList)
+
+'set up a handler for CurrentChanged event - will fire when employee changes in first grid
+AddHandler mgrEmp.CurrencyManager.CurrentChanged, AddressOf CurrencyManager_CurrentChanged
+
+' load all employees
+employeeList.AddRange(PersistenceManager.DefaultManager.GetEntities(Of Employee)())
+
+Private Sub CurrencyManager_CurrentChanged(sender As Object, e As EventArgs)
+   ' get the current employee
+   Dim emp As Employee = CType(mgrEmp.CurrencyManager.Current, Employee)
+   ' refill orderList with orders for current employee
+   orderList.ReplaceRange(emp.Orders)
+End Sub 
+	</code></example>		
+   </method>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.DataGridBindingManager.#ctor">
+            <summary>
+              Constructs a DataGridBindingManager with a default BindingSource
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.DataGridBindingManager.#ctor(System.ComponentModel.IContainer)">
+            <summary>
+              Constructs an DataGridBindingManager and adds to parent control's components
+            </summary>
+            <param name="pContainer">Parent control's container</param>
+            <remarks>Parent control will dispose of this manager.</remarks>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.DataGridBindingManager.#ctor(System.Type)">
+            <summary>
+              Constructs a DataGridBindingManager with a default BindingSource
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.DataGridBindingManager.#ctor(System.Windows.Forms.DataGrid,System.Type)">
+            <summary>
+              Constructs a DataGridBindingManager with a default BindingSource
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.DataGridBindingManager.#ctor(System.Windows.Forms.DataGrid,System.Windows.Forms.BindingSource)">
+            <summary>
+            Constructs a DataGridBindingManager with a BindingSource
+            </summary>
+            <param name="pGrid"></param>
+            <param name="pBindingSource"></param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.DataGridBindingManager.#ctor(System.Windows.Forms.DataGrid,System.Object)">
+            <summary>
+              Constructs a new DataGridBindingManager.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.DataGridBindingManager.OnBindingSourceChanged">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.DataGridBindingManager.OnDataSourceChanged">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.DataGridBindingManager.CreateBindingDescriptorCollection">
+            <summary>
+              Creates the strongly typed binding collection.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.DataGridBindingManager.BindCore(IdeaBlade.UI.WinForms.BindingDescriptor)">
+            <summary>
+              Binds the property in the binding to the current Grid.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.DataGridBindingManager.UnbindCore(IdeaBlade.UI.WinForms.BindingDescriptor)">
+            <summary>
+              Unbind this binding from the current Grid
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.DataGridBindingManager.UnbindAll">
+            <summary>
+              Fast method to unbind all columns from the Grid
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.DataGridBindingManager.BindCore(IdeaBlade.UI.WinForms.DotnetControls.DataGridBindingDescriptor)">
+            <summary>For internal use only.</summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.DotnetControls.DataGridBindingManager.DataGrid">
+            <summary>
+              Gets or sets the DataGrid
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.DotnetControls.DataGridBindingManager.BoundControl">
+            <summary>
+              For internal use only.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.DotnetControls.DataGridBindingManager.Descriptors">
+            <summary>
+              Gets the collection of bindings managed by this binder.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.UI.WinForms.DotnetControls.DataGridViewBinderMap">
+            <summary>
+              Maps controls and DataGridColumnBinders to each other.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.DataGridViewBinderMap.GetDataBinder(System.Type)">
+            <summary>
+              Gets the XtraGridColumnBinder for the specified control type.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.DataGridViewBinderMap.GetDataBinder(IdeaBlade.UI.IDataConverter)">
+            <summary>
+              Gets the DataGridViewColumnBinder that is the best fit for the specified converter.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DotnetControls.DataGridViewBinderMap.GetDataBinderOfType(System.Type)">
+            <summary>
+              Get the DataGridViewColumnBinder of the specified binder type.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.DotnetControls.DataGridViewBinderMap.Binders">
+            <summary>
+              Get a list of the binders that are mapped.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.DotnetControls.DataGridViewBinderMap.Instance">
+            <summary>
+              Gets the singleton instance of the XtraGridBinderMap.
+            </summary>
+        </member>
+    </members>
+</doc>

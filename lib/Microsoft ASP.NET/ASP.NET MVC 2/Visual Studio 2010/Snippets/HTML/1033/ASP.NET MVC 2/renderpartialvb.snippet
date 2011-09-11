@@ -1,0 +1,22 @@
+﻿<CodeSnippet Format="1.1.0" xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+  <Header>
+    <Title>renderpartialvb</Title>
+    <Author>Microsoft Corporation</Author>
+    <Shortcut>renderpartialvb</Shortcut>
+    <Description>Markup snippet for an ASP.NET MVC partial view rendering in VB</Description>
+    <SnippetTypes>
+      <SnippetType>Expansion</SnippetType>
+    </SnippetTypes>
+    <ProjectTypeGuids>{F85E285D-A4E0-4152-9332-AB1D724D3325};{349c5851-65df-11da-9384-00065b846f21};{F184B08F-C81C-45F6-A57F-5ABD9991F28F}</ProjectTypeGuids>
+  </Header>
+  <Snippet>
+    <Declarations>
+      <Literal>
+        <ID>viewname</ID>
+        <ToolTip>The name of the partial view to render.</ToolTip>
+        <Default>viewname</Default>
+      </Literal>
+    </Declarations>
+    <Code Language="html" Key="*"><![CDATA[<% Html.RenderPartial("$viewname$") %>$end$]]></Code>
+  </Snippet>
+</CodeSnippet>

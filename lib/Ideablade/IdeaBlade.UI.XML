@@ -1,0 +1,2026 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>IdeaBlade.UI</name>
+    </assembly>
+    <members>
+        <member name="T:IdeaBlade.UI.DateConverter">
+             <summary>
+               Used to parse, format and validate data types of <see cref="T:System.DateTime"/>.
+             </summary>
+             <remarks>
+             <para>
+            If the <see cref="P:IdeaBlade.UI.DateConverter.FormatString"/> is not set or provided in the constructor, a default
+            format pattern of "d" (ShortDate) is used.
+             </para>
+             </remarks>
+             <example><code lang="C#">
+// Sample date converters with different Editability and formats 
+DateConverter dc1 = new DateConverter(Editability.Optional, "yyyy.MM.dd");
+
+DateConverter dc2 = new DateConverter(Editability.ReadOnly, "h:mm tt");
+
+DateConverter dc3 = new DateConverter(Editability.ReadOnly, "U");
+      </code></example><example><code lang="VB">
+' Sample date converters with different Editability and formats 
+Dim dc1 As New DateConverter(Editability.Optional, "yyyy.MM.dd")
+
+Dim dc2 As New DateConverter(Editability.ReadOnly, "h:mm tt")
+
+Dim dc3 As New DateConverter(Editability.ReadOnly, "U")
+	</code></example>
+        </member>
+        <member name="T:IdeaBlade.UI.DataConverter">
+             <summary>
+             <para>
+               Provides a base implementation of the <see cref="T:IdeaBlade.UI.IDataConverter"/> interface to provide
+               formatting, parsing, editability and validation of data in DevForce data binding.
+             </para>
+             <seealso cref="T:IdeaBlade.UI.WinForms.BindingDescriptor"/>
+             <seealso cref="T:IdeaBlade.UI.ViewDescriptor"/>
+             </summary>
+             <remarks>
+             A <b>DataConverter</b> encapsulates the parsing, formatting and validation events of standard .NET data binding
+             into a single object.  It handles the process of rendering a business object property to the UI
+             in the desired format, validating the data when it changes, and parsing the data back
+             into its native format when it is saved into the object.
+             <para>A DataConverter is not used standalone, but with a <see cref="T:IdeaBlade.UI.ViewDescriptor"/>
+             and <see cref="T:IdeaBlade.UI.WinForms.BindingDescriptor"/>,
+             to set metadata about the binding of a business object property.
+            </para>
+             <para>
+                 The <see cref="P:IdeaBlade.UI.DataConverter.DataType"/> property determines the data type managed by the converter.
+                 Semantic and syntactic validation can occur in the <see cref="M:IdeaBlade.UI.DataConverter.Parse(System.Type,System.Object)"/> method, and 
+                 a <see cref="T:IdeaBlade.UI.ConverterException"/> is thrown if the input data is not valid.  
+                 The <see cref="P:IdeaBlade.UI.DataConverter.Editability"/> property is a standard semantic validator that can be used to 
+                 require a non-empty response to an input field.
+               </para>
+            <para>
+             Since many formatting and validation routines are common across applications, 
+             DevForce provides a standard library of converters that will meet many requirements.
+             These include converters for handling date ranges, lists, numerics, regular expressions
+             and required fields.
+             </para>
+             <para><b>DataConverters provided by DevForce:</b></para>
+             <list type="table">
+             <listheader>
+             <term>Class</term>
+             <description>Description</description>
+             </listheader>
+             <item>
+               <term><see cref="T:IdeaBlade.UI.BooleanConverter"/></term>
+               <description>Used to parse, format and validate boolean values.</description>
+             </item>
+             <item>
+               <term><see cref="T:IdeaBlade.UI.DateConverter"/></term>
+               <description>Used to parse, format and validate date values.</description>
+             </item>
+             <item>
+               <term><see cref="T:IdeaBlade.UI.DateRangeConverter"/></term>
+               <description>Used to parse and format dates, and validate that they are within a specified range.</description>
+             </item>
+             <item>
+               <term><see cref="T:IdeaBlade.UI.DefaultConverter"/></term>
+               <description>Marker class used by DevForce to indicate that an appropriate converter should be
+               constructed at runtime.</description>
+             </item>
+             <item>
+               <term><see cref="T:IdeaBlade.UI.WinForms.ImageListConverter"/></term>
+               <description>Converter that manages a list of images.</description>
+             </item>
+             <item>
+               <term><see cref="T:IdeaBlade.UI.ListConverter"/></term>
+               <description>Used to parse, format and validate items in a list.</description>
+             </item>
+             <item>
+               <term><see cref="T:IdeaBlade.UI.NumericConverter"/></term>
+               <description>Used to parse, format and validate numbers.</description>
+             </item>
+             <item>
+               <term><see cref="T:IdeaBlade.UI.NumericRangeConverter"/></term>
+               <description>Used to parse and format numbers, and validate that they are within a specified range.</description>
+             </item>
+             <item>
+               <term><see cref="T:IdeaBlade.UI.RegexConverter"/></term>
+               <description>A TextConverter that validates using a regular expression.</description>
+             </item>
+             <item>
+               <term><see cref="T:IdeaBlade.UI.TextConverter"/></term>
+               <description>Used to parse, format and validate strings.</description>
+             </item>
+             <item>
+               <term><see cref="T:IdeaBlade.UI.WinForms.ThreeStateBooleanConverter"/></term>
+               <description>A BooleanConverter which handles three-valued logic:
+               true, false, and indeterminate (or null/DBNull).</description>
+             </item>
+             <item>
+               <term>Standard converters</term>
+               <description>DevForce provides a large number of pre-defined converters that are implemented
+               as static (Shared in Visual Basic) members of the DataConverter class.  See the member list for more information.</description>
+             </item>
+             </list>
+             <para>
+             Data converters are fully extensible.  A sample custom DataConverter is provided with the DevForce installation. 
+             </para>
+             </remarks>
+        </member>
+        <member name="T:IdeaBlade.UI.IDataConverter">
+            <summary>
+              Provides the features implemented by all DataConverters to 
+              manage the formatting, parsing, editability and validation of data
+              during DevForce data binding.
+            </summary>
+            <remarks>
+                You can use the IDataConverter interface when implementing a custom DataConverter.  Generally,
+                however, a simpler approach is to derive your custom converter from either
+                the base DataConverter class or one of the standard converters.  A sample custom DataConverter
+                is provided with the DevForce installation.
+            </remarks>
+        </member>
+        <member name="M:IdeaBlade.UI.IDataConverter.Format(System.Type,System.Object)">
+            <summary>
+              Formats the data for display returning an object of the desired type.
+            </summary>
+            <param name="pDesiredType">
+              The type of the object to format into.  Typically typeof(String).
+            </param>
+            <param name="pValue">
+              The value to format.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.IDataConverter.Parse(System.Type,System.Object)">
+            <summary>
+              Parses input data into the native datatype, performing syntactic validation of the data.
+              It may also perform semantic validation to provide immediate user feedback.
+            </summary>
+            <param name="pDesiredType">
+              The type of the object to store the parsed value.
+            </param>
+            <param name="pValue">
+              The value to parse.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.IDataConverter.InitializeFrom(System.Type,System.String)">
+            <summary>
+              Initializes this converter from the specified property.
+            </summary>
+            <param name="pClassType">
+              Class that the property exists on.
+            </param>
+            <param name="pPropertyName">
+              Name of the property.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.IDataConverter.InitializeFrom(System.ComponentModel.PropertyDescriptor)">
+            <summary>
+              Initializes this converter from a propertyDescriptor.
+            </summary>
+            <param name="pDescriptor">
+              The PropertyDescriptor used for initialization.
+            </param>
+        </member>
+        <member name="P:IdeaBlade.UI.IDataConverter.DataType">
+            <summary>
+              Gets the native dataype that this converter works with.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.IDataConverter.Editability">
+            <summary>
+              Gets or sets the editability for the data.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.IDataConverter.IsEditable">
+            <summary>
+              Returns whether editability is set to something that can be edited.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.IDataConverter.CanFormat">
+            <summary>
+              Gets whether or not this converter implements the Format method.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.IDataConverter.CanParse">
+            <summary>
+              Gets whether or not this converter implements the Parse method.
+            </summary>
+        </member>
+        <member name="E:IdeaBlade.UI.IDataConverter.Validating">
+            <summary>
+              Fires after basic parsing and validation have been performed.
+              Should throw an exception on an invalid value.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.DataConverter.#ctor(System.Type)">
+            <summary>
+              Constructs a DataConverter for the desired data type.
+            </summary>
+            <param name="pDataType">
+              Data type that this converter works with.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.DataConverter.#ctor(System.Type,IdeaBlade.UI.Editability)">
+            <summary>
+              Constructs a DataConverter for the desired data type and 
+              <see cref="P:IdeaBlade.UI.DataConverter.Editability"/>. 
+            </summary>
+            <param name="pDataType">
+              Data type that this converter works with.
+            </param>
+            <param name="pEditability">
+              Editability of the data field during user input.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.DataConverter.Parse(System.Type,System.Object)">
+            <summary>
+              Parses input data into the desired data type and performs syntactic and semantic validation.
+            </summary>
+            <param name="pDesiredType">
+              The type of the object to store the parsed value.
+            </param>
+            <param name="pValue">
+              The value to parse.
+            </param>
+            <returns>
+                Returns <paramref name="pValue"/> parsed into the desired type unless 
+                <paramref name="pValue"/> is either null or DBNull.Value.
+              <para>
+                Returns String.Empty if <paramref name="pValue"/> is null or DBNull.Value
+                and <paramRef name="pDesiredType"/> is typeof(String).
+              </para>
+              <para>
+                Returns <paramref name="pValue"/> unchanged if every other case.  
+              </para>
+            </returns>
+            <remarks>
+              Throws a ConverterException if the editability is Editability.Required
+              and the data is empty.
+            </remarks>
+        </member>
+        <member name="M:IdeaBlade.UI.DataConverter.ParseCore(System.Type,System.Object)">
+            <summary>
+              Parses input data into the desired data type.
+            </summary>
+            <param name="pDesiredType">
+              The type of the object to store the parsed value.
+            </param>
+            <param name="pValue">
+              The value to parse.
+            </param>
+            <returns>
+              <para>
+                Returns <paramref name="pValue"/> parsed into the desired type unless 
+                <paramref name="pValue"/> is either null or DBNull.Value.
+              </para>
+              <para>
+                Returns String.Empty if <paramref name="pValue"/> is null or DBNull.Value
+                and <paramRef name="pDesiredType"/> is typeof(String).
+              </para>
+              <para>
+                Returns <paramref name="pValue"/> unchanged if every other case.  
+              </para>
+            </returns>
+            <remarks>
+              Throws a ConverterException if the editability is Editability.Required
+              and the data is empty.
+            <para>
+            You should override <b>ParseCore</b> if you implement a custom DataConverter.
+            </para>
+            </remarks>
+        </member>
+        <member name="M:IdeaBlade.UI.DataConverter.Format(System.Type,System.Object)">
+            <summary>
+              Formats the data for display returning an object of the desired type.
+            </summary>
+            <param name="pDesiredType">
+              The type of the object to format into.  Typically typeof(String).
+            </param>
+            <param name="pValue">
+              The value to format.
+            </param>
+            <returns>
+              Returns String.Empty if <paramref name="pValue"/> if null or DBNull.Value.
+              Otherwise returns <paramref name="pValue"/>.ToString().
+            </returns>
+        </member>
+        <member name="M:IdeaBlade.UI.DataConverter.FormatCore(System.Type,System.Object)">
+            <summary>
+              Formats the data for display returning an object of the desired type.
+            </summary>
+            <param name="pDesiredType">
+              The type of the object to format into.  Typically typeof(String).
+            </param>
+            <param name="pValue">
+              The value to format.
+            </param>
+            <returns>
+              Returns String.Empty if <paramref name="pValue"/> if null or DBNull.Value.
+              Otherwise returns <paramref name="pValue"/>.ToString().
+            </returns>
+             <remarks>
+            You should override <b>FormatCore</b> if you implement a custom DataConverter.
+            </remarks>
+        </member>
+        <member name="M:IdeaBlade.UI.DataConverter.Clone">
+            <summary>
+              Returns a shallow copy of this object.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.DataConverter.InitializeFrom(System.Type,System.String)">
+            <summary>
+              Initializes this converter from the specified property.
+            </summary>
+            <param name="pClassType">
+              Class that the property exists on.
+            </param>
+            <param name="pPropertyPath">
+              Name of the property.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.DataConverter.InitializeFrom(System.ComponentModel.PropertyDescriptor)">
+            <summary>
+              Initializes this converter from a <see cref="T:System.ComponentModel.PropertyDescriptor"/>.
+            </summary>
+            <param name="pDescriptor">
+              The PropertyDescriptor used for initialization.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.DataConverter.#ctor">
+            <summary>
+             Protected default constructor for subclassing.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.DataConverter.OnPropertyChanged(System.String)">
+            <summary>
+              Raises the PropertyChanged event.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.DataConverter.OnPropertyChanged(System.ComponentModel.PropertyChangedEventArgs)">
+            <summary>
+              Raises the PropertyChanged event.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.DataConverter.IsNull(System.Object)">
+            <summary>
+              Returns true if <paramref name="pValue"/> is null, DBNull.Value,
+              String.Empty, or a whitespace String.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.DataConverter.ValidateRequiredField(System.Object)">
+            <summary>
+              Throws a ConverterException if IsNull(pValue) and IsRequired is true.
+            </summary>
+            <exception cref="T:IdeaBlade.UI.ConverterException">Exception thrown by the converter when a parsing, formatting or validation error occurs.</exception>
+        </member>
+        <member name="M:IdeaBlade.UI.DataConverter.ValidateCore(System.Object)">
+            <summary>
+              Parse generally performs syntactic validation.
+              Validate should perform semantic validation.
+              Throws an exception on an invalid value.
+            </summary>
+            <remarks>
+             <see cref="M:IdeaBlade.UI.DataConverter.ParseCore(System.Type,System.Object)"/> generally performs syntactic validation, while 
+             <b>ValidateCore</b> should perform any semantic validation required.  Throw an exception if the provided value
+             fails validation.
+            <para>
+            You should override <b>ValidateCore</b> if you implement a custom DataConverter.
+            </para>
+            </remarks>
+        </member>
+        <member name="F:IdeaBlade.UI.DataConverter.mDataType">
+            <summary>Data type that this converter works with.</summary>
+        </member>
+        <member name="M:IdeaBlade.UI.DataConverter.GetDefaultConverter(System.Type)">
+            <summary>Get the default converter for a given datatype.</summary>
+        </member>
+        <member name="M:IdeaBlade.UI.DataConverter.GetDefaultConverter(System.Type,System.String)">
+            <summary>Get the default converter for a given property.</summary>
+        </member>
+        <member name="M:IdeaBlade.UI.DataConverter.GetDefaultConverter(System.ComponentModel.PropertyDescriptor)">
+            <summary>Get the default converter for a given property.</summary>
+        </member>
+        <member name="E:IdeaBlade.UI.DataConverter.Validating">
+            <summary>
+              Fires after basic parsing and validation have been performed.
+              The handler should throw an exception on an invalid value.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.DataConverter.DataType">
+            <summary>
+              Gets the data type that this converter works with.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.DataConverter.Editability">
+            <summary>
+              Gets or sets the editability for the data field.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.DataConverter.IsEditable">
+            <summary>
+              Returns whether editability is set to something that can be edited.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.DataConverter.CanParse">
+            <summary>
+              Gets whether or not this converter implements the Parse method.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.DataConverter.CanFormat">
+            <summary>
+              Gets whether or not this converter implements the Format method.
+            </summary>
+        </member>
+        <member name="E:IdeaBlade.UI.DataConverter.PropertyChanged">
+            <summary>
+              Occurs when a property has changed value on the converter.
+              This is used internally to refresh the binding with the new values.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.DataConverter.IsRequired">
+            <summary>
+              Gets whether or not the editability equals Editability.Required.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.DataConverter.OptionalField">
+            <summary>Standard converter for an optional field.</summary>
+        </member>
+        <member name="P:IdeaBlade.UI.DataConverter.RequiredField">
+            <summary>Standard converter for a required field.</summary>
+        </member>
+        <member name="P:IdeaBlade.UI.DataConverter.ReadOnlyField">
+            <summary>Standard converter for a read only field.</summary>
+        </member>
+        <member name="P:IdeaBlade.UI.DataConverter.DisabledField">
+            <summary>Standard converter for a Disabled field.</summary>
+        </member>
+        <member name="P:IdeaBlade.UI.DataConverter.OptionalString">
+            <summary>Standard converter for an optional string.</summary>
+        </member>
+        <member name="P:IdeaBlade.UI.DataConverter.RequiredString">
+            <summary>Standard converter for a required string.</summary>
+        </member>
+        <member name="P:IdeaBlade.UI.DataConverter.ReadOnlyString">
+            <summary>Standard converter for a read only string.</summary>
+        </member>
+        <member name="P:IdeaBlade.UI.DataConverter.DisabledString">
+            <summary>Standard converter for a disabled string.</summary>
+        </member>
+        <member name="P:IdeaBlade.UI.DataConverter.OptionalDate">
+            <summary>Standard converter for an optional date.</summary>
+        </member>
+        <member name="P:IdeaBlade.UI.DataConverter.RequiredDate">
+            <summary>Standard converter for a required date.</summary>
+        </member>
+        <member name="P:IdeaBlade.UI.DataConverter.ReadOnlyDate">
+            <summary>Standard converter for a read only date.</summary>
+        </member>
+        <member name="P:IdeaBlade.UI.DataConverter.DisabledDate">
+            <summary>Standard converter for a disabled date.</summary>
+        </member>
+        <member name="P:IdeaBlade.UI.DataConverter.OptionalDateTime">
+            <summary>Standard converter for an optional datetime.</summary>
+        </member>
+        <member name="P:IdeaBlade.UI.DataConverter.RequiredDateTime">
+            <summary>Standard converter for a required datetime.</summary>
+        </member>
+        <member name="P:IdeaBlade.UI.DataConverter.ReadOnlyDateTime">
+            <summary>Standard converter for a read only datetime.</summary>
+        </member>
+        <member name="P:IdeaBlade.UI.DataConverter.DisabledDateTime">
+            <summary>Standard converter for a disabled datetime.</summary>
+        </member>
+        <member name="P:IdeaBlade.UI.DataConverter.OptionalInteger">
+            <summary>Standard converter for an optional integer.</summary>
+        </member>
+        <member name="P:IdeaBlade.UI.DataConverter.RequiredInteger">
+            <summary>Standard converter for a required integer.</summary>
+        </member>
+        <member name="P:IdeaBlade.UI.DataConverter.ReadOnlyInteger">
+            <summary>Standard converter for a read only integer.</summary>
+        </member>
+        <member name="P:IdeaBlade.UI.DataConverter.DisabledInteger">
+            <summary>Standard converter for a disabled integer.</summary>
+        </member>
+        <member name="P:IdeaBlade.UI.DataConverter.OptionalShort">
+            <summary>Standard converter for an optional short.</summary>
+        </member>
+        <member name="P:IdeaBlade.UI.DataConverter.RequiredShort">
+            <summary>Standard converter for a required short.</summary>
+        </member>
+        <member name="P:IdeaBlade.UI.DataConverter.ReadOnlyShort">
+            <summary>Standard converter for a read only short.</summary>
+        </member>
+        <member name="P:IdeaBlade.UI.DataConverter.DisabledShort">
+            <summary>Standard converter for a disabled short.</summary>
+        </member>
+        <member name="P:IdeaBlade.UI.DataConverter.OptionalLong">
+            <summary>Standard converter for an optional long.</summary>
+        </member>
+        <member name="P:IdeaBlade.UI.DataConverter.RequiredLong">
+            <summary>Standard converter for a required long.</summary>
+        </member>
+        <member name="P:IdeaBlade.UI.DataConverter.ReadOnlyLong">
+            <summary>Standard converter for a read only long.</summary>
+        </member>
+        <member name="P:IdeaBlade.UI.DataConverter.DisabledLong">
+            <summary>Standard converter for a disabled long.</summary>
+        </member>
+        <member name="P:IdeaBlade.UI.DataConverter.OptionalFloat">
+            <summary>Standard converter for an optional float.</summary>
+        </member>
+        <member name="P:IdeaBlade.UI.DataConverter.RequiredFloat">
+            <summary>Standard converter for a required float.</summary>
+        </member>
+        <member name="P:IdeaBlade.UI.DataConverter.ReadOnlyFloat">
+            <summary>Standard converter for a read only float.</summary>
+        </member>
+        <member name="P:IdeaBlade.UI.DataConverter.DisabledFloat">
+            <summary>Standard converter for a disabled float.</summary>
+        </member>
+        <member name="P:IdeaBlade.UI.DataConverter.OptionalDouble">
+            <summary>Standard converter for an optional double.</summary>
+        </member>
+        <member name="P:IdeaBlade.UI.DataConverter.RequiredDouble">
+            <summary>Standard converter for a required double.</summary>
+        </member>
+        <member name="P:IdeaBlade.UI.DataConverter.ReadOnlyDouble">
+            <summary>Standard converter for a read only double.</summary>
+        </member>
+        <member name="P:IdeaBlade.UI.DataConverter.DisabledDouble">
+            <summary>Standard converter for disabled double.</summary>
+        </member>
+        <member name="P:IdeaBlade.UI.DataConverter.OptionalDecimal">
+            <summary>Standard converter for an optional decimal.</summary>
+        </member>
+        <member name="P:IdeaBlade.UI.DataConverter.RequiredDecimal">
+            <summary>Standard converter for a required decimal.</summary>
+        </member>
+        <member name="P:IdeaBlade.UI.DataConverter.ReadOnlyDecimal">
+            <summary>Standard converter for a read only decimal.</summary>
+        </member>
+        <member name="P:IdeaBlade.UI.DataConverter.DisabledDecimal">
+            <summary>Standard converter for a disabled decimal.</summary>
+        </member>
+        <member name="P:IdeaBlade.UI.DataConverter.OptionalCurrency">
+            <summary>Standard converter for an optional currency.</summary>
+        </member>
+        <member name="P:IdeaBlade.UI.DataConverter.RequiredCurrency">
+            <summary>Standard converter for a required currency.</summary>
+        </member>
+        <member name="P:IdeaBlade.UI.DataConverter.ReadOnlyCurrency">
+            <summary>Standard converter for a read only currency.</summary>
+        </member>
+        <member name="P:IdeaBlade.UI.DataConverter.DisabledCurrency">
+            <summary>Standard converter for a disabled currency.</summary>
+        </member>
+        <member name="P:IdeaBlade.UI.DataConverter.OptionalBoolean">
+            <summary>Standard converter for an optional boolean.</summary>
+        </member>
+        <member name="P:IdeaBlade.UI.DataConverter.RequiredBoolean">
+            <summary>Standard converter for a required boolean.</summary>
+        </member>
+        <member name="P:IdeaBlade.UI.DataConverter.ReadOnlyBoolean">
+            <summary>Standard converter for a read only boolean.</summary>
+        </member>
+        <member name="P:IdeaBlade.UI.DataConverter.DisabledBoolean">
+            <summary>Standard converter for a disabled boolean.</summary>
+        </member>
+        <member name="P:IdeaBlade.UI.DataConverter.Image">
+            <summary>Standard converter for an Image.</summary>
+        </member>
+        <member name="P:IdeaBlade.UI.DataConverter.DisabledImage">
+            <summary>Standard converter for a disabled Image.</summary>
+        </member>
+        <member name="F:IdeaBlade.UI.DateConverter.MinSqlDate">
+            <summary>
+              Minimum date that is accepeted by most SQL databases.  Conversion will throw
+              an exception if date is less than this value.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.DateConverter.#ctor">
+            <summary>
+              Constructs a DateConverter with optional editability and 
+              default date format.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.DateConverter.#ctor(System.String)">
+            <summary>
+              Constructs a DateConverter with optional editability.
+            </summary>
+            <param name="pFormat">
+              Format of the DateTime.  Same format as <see cref="M:System.DateTime.ToString">DateTime.ToString()</see>.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.DateConverter.#ctor(IdeaBlade.UI.Editability)">
+            <summary>
+              Constructs a DateConverter with a default date format.
+            </summary>
+            <param name="pEditability">
+              Editability of the field.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.DateConverter.#ctor(IdeaBlade.UI.Editability,System.String)">
+            <summary>
+              Constructs a DateConverter.
+            </summary>
+            <param name="pEditability">
+              Editability of the field.
+            </param>
+            <param name="pFormat">
+              Format of the DateTime.  Same format as DateTime.ToString().
+              See <see cref="M:System.DateTime.ToString"/>
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.DateConverter.ParseCore(System.Type,System.Object)">
+            <summary>
+              Parses a value into a DateTime.
+              See DataConverter.<see cref="M:IdeaBlade.UI.DataConverter.Parse(System.Type,System.Object)"/>
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.DateConverter.ValidateCore(System.Object)">
+            <summary>
+              Validates that the DateTime is greater than the minimum supported date.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.DateConverter.FormatCore(System.Type,System.Object)">
+            <summary>
+              Formats a DateTime value.
+              See DataConverter.<see cref="M:IdeaBlade.UI.DataConverter.Format(System.Type,System.Object)"/>
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.DateConverter.FormatString">
+            <summary>
+              Gets or sets the format string used to format the DateTime.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.UI.NamespaceDoc">
+            <summary>
+              Contains fundamental classes and base classes that provide validation,
+              parsing, and formatting functionality to be used in user interface data binding.
+              These classes are not specific to either Web Forms or Windows Forms implementations.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.UI.ConverterCategory">
+            <summary>
+              Determines the type of <see cref="T:IdeaBlade.UI.ConverterException">ConverterException</see> thrown.
+            </summary>
+        </member>
+        <member name="F:IdeaBlade.UI.ConverterCategory.RequiredField">
+            <summary>Field is required but left empty</summary>
+        </member>
+        <member name="F:IdeaBlade.UI.ConverterCategory.InvalidDataType">
+            <summary>An incompatible datatype was encountered in parse or format</summary>
+        </member>
+        <member name="F:IdeaBlade.UI.ConverterCategory.BadData">
+            <summary>
+              Syntax or semantic error in the data.
+              e.g. bad date format, or value out of range.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.UI.ConverterException">
+            <summary>
+              Exception thrown when parsing or formatting data during databinding.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.ConverterException.#ctor(System.String)">
+            <summary>
+              Constructs a ConverterException with the given message.
+            </summary>
+            <param name="pMessage">
+              The error messge.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.ConverterException.#ctor(System.String,System.Object[])">
+            <summary>
+              Constructs a ConverterException with the given message and parameters.
+              Uses String.Format to process parameters.
+            </summary>
+            <param name="pMessage">
+              The error messge.
+            </param>
+            <param name="pMessageArgs">
+              Parameters for the error message.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.ConverterException.#ctor(IdeaBlade.UI.ConverterCategory,System.String)">
+            <summary>
+              Constructs a ConverterException with the given category and message.
+            </summary>
+            <param name="pCategory">
+              The category for the exception.
+            </param>
+            <param name="pMessage">
+              The error messge.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.ConverterException.#ctor(IdeaBlade.UI.ConverterCategory,System.String,System.Object[])">
+            <summary>
+              Constructs a ConverterException with the given category, message,
+              and parameters.  Uses String.Format to process parameters.
+            </summary>
+            <param name="pCategory">
+              The category for the exception.
+            </param>
+            <param name="pMessage">
+              The error messge.
+            </param>
+            <param name="pMessageArgs">
+              Parameters for the error message.
+            </param>
+        </member>
+        <member name="P:IdeaBlade.UI.ConverterException.Category">
+            <summary>
+              Category of exception thrown.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.UI.NumericRangeConverter">
+            <summary>
+              Used to parse and format numbers, and validate that the value is within a given range.
+            </summary>
+            <remarks>
+            Set the valid range (inclusive) using the <see cref="P:IdeaBlade.UI.NumericRangeConverter.MinValue"/> and <see cref="P:IdeaBlade.UI.NumericRangeConverter.MaxValue"/> properties.
+            The data type of the MinValue and MaxValue properties should be the same as the data type of the
+            converter.  You can set either the MinValue or MaxValue to null if the range is open-ended in one direction.
+            </remarks>
+            <example><code lang="C#">
+
+// Sample for a float value between -10 and 10
+NumericRangeConverter nc1 = new NumericRangeConverter(typeof(float), Editability.Required, "D", -10.0f, 10.0f);
+
+// Sample for a nullable decimal between 0 and 100
+NumericRangeConverter nc2 = new NumericRangeConverter(typeof(Nullable&lt;Decimal&gt;), Editability.Optional, "C", 0m, 100m);
+
+      </code></example><example><code lang="VB">
+' Sample for a float value between -10 and 10
+Dim nc1 As New NumericRangeConverter(GetType(Single), Editability.Required, "D", -10.0F, 10.0F)
+
+' Sample for a nullable decimal between 0 and 100
+Dim nc2 As New NumericRangeConverter(GetType(Nullable(Of Decimal)), Editability.Optional, "C", 0D, 100D)
+
+	</code></example>
+        </member>
+        <member name="T:IdeaBlade.UI.NumericConverter">
+             <summary>
+               Used to parse, format and validate numbers.
+             </summary>
+             <remarks>
+            <para>
+            If the <see cref="P:IdeaBlade.UI.NumericConverter.FormatString">FormatString</see> is not set or provided in the constructor, a default
+            format pattern of either "F" (Fixed-point) or "D" (Decimal) is used.
+            </para>
+             <para><b>Derived classes:</b></para>
+             <list type="table">
+             <listheader>
+             <term>Class</term>
+             <description>Description</description>
+             </listheader>
+             <item>
+               <term><see cref="T:IdeaBlade.UI.NumericRangeConverter">NumericRangeConverter</see></term>
+               <description>Used to parse and format numbers, and validate that they are within a specified range.</description>
+             </item>
+            </list>
+            </remarks>
+             <example><code lang="C#">
+NumericConverter nc = new NumericConverter(typeof(Decimal), Editability.ReadOnly, "###");
+      </code></example><example><code lang="VB">
+Dim nc As New NumericConverter(GetType([Decimal]), Editability.ReadOnly, "###")
+	</code></example>
+        </member>
+        <member name="M:IdeaBlade.UI.NumericConverter.#ctor(System.Type)">
+            <summary>
+              Constructs a NumericConverter with optional editability and default format.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.NumericConverter.#ctor(System.Type,IdeaBlade.UI.Editability)">
+            <summary>
+              Constructs a NumericConverter with a default format string.
+            </summary>
+            <param name="pDataType">
+              Underlying data type used to represent the number.
+            </param>
+            <param name="pEditability">
+              Editability of the field.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.NumericConverter.#ctor(System.Type,System.String)">
+            <summary>
+              Constructs a NumericConverter with optional editability.
+            </summary>
+            <param name="pDataType">
+              Underlying data type used to represent the number.
+            </param>
+            <param name="pFormat">
+              Format string for the number.
+              Same format as ToString() called upon the corresponding data type.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.NumericConverter.#ctor(System.Type,IdeaBlade.UI.Editability,System.String)">
+            <summary>
+              Constructs a NumericConverter.
+            </summary>
+            <param name="pDataType">
+              Underlying data type used to represent the number.
+            </param>
+            <param name="pEditability">
+              Editability of the field.
+            </param>
+            <param name="pFormat">
+              Format string for the number.
+              Same format as ToString() called upon the corresponding data type.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.NumericConverter.ParseCore(System.Type,System.Object)">
+            <summary>
+              Parses the numeric value.
+              See DataConverter.<see cref="M:IdeaBlade.UI.DataConverter.Parse(System.Type,System.Object)"/>
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.NumericConverter.FormatCore(System.Type,System.Object)">
+            <summary>
+              Formats the numeric value.
+              See DataConverter.<see cref="M:IdeaBlade.UI.DataConverter.Format(System.Type,System.Object)"/>
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.NumericConverter.InitializeFrom(System.ComponentModel.PropertyDescriptor)">
+            <summary>
+              Initializes this converter from a propertyDescriptor.
+            </summary>
+            <param name="pDescriptor">
+              The PropertyDescriptor used for initialization.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.NumericConverter.Parse(System.String,System.Type,System.String)">
+            <summary>
+              Parses the number.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.NumericConverter.Format(System.Object,System.Type,System.String)">
+            <summary>
+              Formats the number.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.NumericConverter.GetDefaultFormat(System.Type)">
+            <summary>
+              Gets the default format string for a numeric datatype.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.NumericConverter.FormatString">
+            <summary>
+              Gets or sets the format string used to format the number.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.NumericRangeConverter.#ctor(System.Type)">
+            <summary>
+              Constructs a NumericRangeConverter.
+            </summary>
+            <param name="pDataType">
+              Underlying data type used to represent the number.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.NumericRangeConverter.#ctor(System.Type,IdeaBlade.UI.Editability)">
+            <summary>
+              Constructs a NumericRangeConverter.
+            </summary>
+            <param name="pDataType">
+              Underlying data type used to represent the number.
+            </param>
+            <param name="pEditability">
+              Editability of the field.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.NumericRangeConverter.#ctor(System.Type,IdeaBlade.UI.Editability,System.String,System.IComparable,System.IComparable)">
+            <summary>
+              Constructs a NumericRangeConverter.
+            </summary>
+            <param name="pDataType">
+              Underlying data type used to represent the number.
+            </param>
+            <param name="pEditability">
+              Editability of the field.
+            </param>
+            <param name="pFormat">
+              Format string for the number.
+              Same format as ToString() called upon the corresponding data type.
+            </param>
+            <param name="pMinValue">
+              The minimum allowed value (inclusive).
+            </param>
+            <param name="pMaxValue">
+              The maximum allowed value (inclusive).
+            </param>
+            <exception cref="T:System.ArgumentException">Thrown if the data type of the MinValue or MaxValue parameter is not of <paramref name="pDataType"/>.</exception>
+            <exception cref="T:System.ArgumentException">Thrown if MinValue exceeds MaxValue</exception>
+        </member>
+        <member name="M:IdeaBlade.UI.NumericRangeConverter.ValidateCore(System.Object)">
+            <summary>
+              Validates that the value is within the range specified by the converter.
+              See DataConverter.<see cref="M:IdeaBlade.UI.DataConverter.Validate(System.Object)"/>
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.NumericRangeConverter.MinValue">
+            <summary>
+              Gets  or sets the minimum allowed value.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.NumericRangeConverter.MaxValue">
+            <summary>
+              Gets  or sets the maximum allowed value.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.UI.Editability">
+            <summary>
+              Determines the editability status of a data field.
+              <seealso cref="T:IdeaBlade.UI.DataConverter"/>
+            </summary>
+        </member>
+        <member name="F:IdeaBlade.UI.Editability.Optional">
+            <summary>
+              Field is allowed to be empty.
+            </summary>
+        </member>
+        <member name="F:IdeaBlade.UI.Editability.Required">
+            <summary>
+              Field must not be empty.
+            </summary>
+        </member>
+        <member name="F:IdeaBlade.UI.Editability.ReadOnly">
+            <summary>
+              Field may not be changed, but can receive focus (e.g. for copying).
+              If a control does not support ReadOnly, then this has the same effect as
+              Editability.Disabled.
+            </summary>
+        </member>
+        <member name="F:IdeaBlade.UI.Editability.Disabled">
+            <summary>
+              Field may not be changed, and cannot receive focus.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.UI.EditabilityFns">
+            <summary>
+              Helper methods for Editability.  Used internally by the framework.
+            </summary>
+            <remarks>
+            These methods are used internally by the DevForce framework,
+              but may also be used when developing custom converters.
+            </remarks>
+        </member>
+        <member name="M:IdeaBlade.UI.EditabilityFns.IsEditable(IdeaBlade.UI.Editability)">
+            <summary>
+              Returns whether editability is set to something that can be edited.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.UI.RegexConverter">
+            <summary>
+              A TextConverter that validates using a regular expression.
+              <seealso cref="N:System.Text.RegularExpressions"/>
+            </summary>
+            <remarks>
+            <para>Use <see cref="P:IdeaBlade.UI.RegexConverter.Regex"/> to set the regular expression the text will
+            be matched against.  Use <see cref="P:IdeaBlade.UI.RegexConverter.Options"/> to set the 
+            <see cref="T:System.Text.RegularExpressions.RegexOptions">regular expression options</see>.
+            </para>
+            <para>
+              The input string is considered valid if the regular expression
+              matches the entire string.  
+              </para>
+            </remarks>
+            <example><code lang="C#">
+
+// A sample converter for a social security number
+RegexConverter rc = new RegexConverter(@"\d\d\d-\d\d-\d\d\d\d");
+
+// A sample converter for an email address
+RegexConverter rc2 = new RegexConverter("[^\\s,&lt;&gt;]+@[^\\s&lt;&gt;_]+\\.[^\\s&lt;&gt;_]+");
+
+      </code></example><example><code lang="VB">
+' A sample converter for a social security number
+Dim rc as new RegexConverter("\d\d\d-\d\d-\d\d\d\d")
+
+' A sample converter for an email address
+Dim rc2 As New RegexConverter("[^\s,&lt;&gt;]+@[^\s&lt;&gt;_]+\.[^\s&lt;&gt;_]+")
+	</code></example>
+        </member>
+        <member name="T:IdeaBlade.UI.TextConverter">
+             <summary>
+               Used to parse, format and validate strings.
+             </summary>
+             <remarks>
+            <para>
+             Use the <see cref="P:IdeaBlade.UI.TextConverter.MaxLength"/> property if the string length should be restricted.  You may also
+             use the <see cref="P:IdeaBlade.UI.TextConverter.TrimWhitespace"/> property to automatically have whitespace trimmed from the string.
+            </para>
+             <para><b>Derived classes:</b></para>
+             <list type="table">
+             <listheader>
+             <term>Class</term>
+             <description>Description</description>
+             </listheader>
+             <item>
+               <term><see cref="T:IdeaBlade.UI.RegexConverter">RegexConverter</see></term>
+               <description>A TextConverter that validates using a regular expression.</description>
+             </item>
+            </list>
+            </remarks> 
+             <example><code lang="C#">
+
+// A sample text converter for a required field of 10 characters maximum
+TextConverter tc = new TextConverter(Editability.Required, 10);
+      </code></example><example><code lang="VB">
+
+' A sample text converter for a required field of 10 characters maximum
+Dim tc As New TextConverter(Editability.Required, 10)
+	</code></example>
+        </member>
+        <member name="M:IdeaBlade.UI.TextConverter.#ctor">
+            <summary>
+              Constructs a TextConverter with optional editability.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.TextConverter.#ctor(System.Int32)">
+            <summary>
+              Constructs a TextConverter with optional editability.
+            </summary>
+            <param name="pMaxLength">
+              Maximum length of the text field, in characters.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.TextConverter.#ctor(IdeaBlade.UI.Editability)">
+            <summary>
+              Constructs a TextConverter.
+            </summary>
+            <param name="pEditability">
+              Editability of the field.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.TextConverter.#ctor(IdeaBlade.UI.Editability,System.Int32)">
+            <summary>
+              Constructs a TextConverter.
+            </summary>
+            <param name="pEditability">
+              Editability of the field.
+            </param>
+            <param name="pMaxLength">
+              Maximum length of the text field, in characters.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.TextConverter.ParseCore(System.Type,System.Object)">
+            <summary>
+              Parses a string.
+              See DataConverter.<see cref="M:IdeaBlade.UI.DataConverter.Parse(System.Type,System.Object)"/>
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.TextConverter.ValidateCore(System.Object)">
+            <summary>
+              Validates the length of the string.
+              See DataConverter.<see cref="M:IdeaBlade.UI.DataConverter.Validate(System.Object)"/>
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.TextConverter.InitializeFrom(System.ComponentModel.PropertyDescriptor)">
+            <summary>
+              Initializes this converter from a propertyDescriptor.
+            </summary>
+            <param name="pDescriptor">
+              The PropertyDescriptor used for initialization.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.TextConverter.GetMaxTextLength(System.ComponentModel.PropertyDescriptor)">
+            <summary>
+              Get the maximum text length for a property.
+              Returns 0 if not specified or if the property is not a string.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.TextConverter.MaxLength">
+            <summary>
+              Gets or sets the maximum length of the text field, in characters.
+              A value of zero indicates no maximum.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.TextConverter.TrimWhitespace">
+            <summary>
+              Gets or sets whether or not to trim whitespace from the beginning and end of strings
+              during parsing.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.TextConverter.ParseEmptyStringAsNull">
+            <summary>
+              Gets or sets whether or not to treat the empty string as a null value during parsing.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.RegexConverter.#ctor">
+            <summary>
+              Constructs a RegexConverter with optional editability.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.RegexConverter.#ctor(IdeaBlade.UI.Editability)">
+            <summary>
+              Constructs a RegexConverter.
+            </summary>
+            <param name="pEditability">
+              Editability of the field.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.RegexConverter.#ctor(System.String)">
+            <summary>
+              Constructs a RegexConverter with optional editability.
+            </summary>
+            <param name="pRegex">
+              Regular expression.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.RegexConverter.#ctor(IdeaBlade.UI.Editability,System.String)">
+            <summary>
+              Constructs a RegexConverter.
+            </summary>
+            <param name="pEditability">
+              Editability of the field.
+            </param>
+            <param name="pRegex">
+              Regular expression.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.RegexConverter.#ctor(IdeaBlade.UI.Editability,System.String,System.Text.RegularExpressions.RegexOptions)">
+            <summary>
+              Constructs a RegexConverter.
+            </summary>
+            <param name="pEditability">
+              Editability of the field.
+            </param>
+            <param name="pRegex">
+              Regular expression.
+            </param>
+            <param name="pOptions">
+              RegexOptions.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.RegexConverter.ValidateCore(System.Object)">
+            <summary>
+              Validates that the value is a valid string that matches the regular expression.
+              See DataConverter.<see cref="M:IdeaBlade.UI.DataConverter.Validate(System.Object)"/>
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.RegexConverter.Regex">
+            <summary>
+              Gets or sets the regular expression.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.RegexConverter.Options">
+            <summary>
+              Gets or sets the regular expression options.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.UI.DateRangeConverter">
+            <summary>
+              Used to parse and format dates, and validate they they are within a specified range.
+            </summary>
+            <remarks>
+            Set the valid date range (inclusive) using the <see cref="P:IdeaBlade.UI.DateRangeConverter.MinDate"/> and <see cref="P:IdeaBlade.UI.DateRangeConverter.MaxDate"/> properties.
+            </remarks>
+            <example><code lang="C#">
+
+DateRangeConverter dc = new DateRangeConverter(Editability.Required);
+dc.MinDate = new DateTime(2006, 1, 1);
+dc.MaxDate = new DateTime(2007, 1, 1);
+
+      </code></example><example><code lang="VB">
+
+Dim dc As New DateRangeConverter(Editability.Required)
+dc.MinDate = New DateTime(2006, 1, 1)
+dc.MaxDate = New DateTime(2007, 1, 1)
+
+	</code></example>
+        </member>
+        <member name="M:IdeaBlade.UI.DateRangeConverter.#ctor">
+            <summary>
+              Constructs a DateRangeConverter with optional editability and 
+              default date format.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.DateRangeConverter.#ctor(System.String)">
+            <summary>
+              Constructs a DateRangeConverter with optional editability.
+            </summary>
+            <param name="pFormat">
+              Format of the DateTime.  Same format as <see cref="M:System.DateTime.ToString">DateTime.ToString()</see>.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.DateRangeConverter.#ctor(IdeaBlade.UI.Editability)">
+            <summary>
+              Constructs a DateRangeConverter with a default date format.
+            </summary>
+            <param name="pEditability">
+              Editability of the field.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.DateRangeConverter.#ctor(IdeaBlade.UI.Editability,System.String)">
+            <summary>
+              Constructs a DateRangeConverter.
+            </summary>
+            <param name="pEditability">
+              Editability of the field.
+            </param>
+            <param name="pFormat">
+              Format of the DateTime.  Same format as <see cref="M:System.DateTime.ToString">DateTime.ToString()</see>.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.DateRangeConverter.ValidateCore(System.Object)">
+            <summary>
+              Validates that the DateTime is within the range specified by the converter.
+              See DataConverter.<see cref="M:IdeaBlade.UI.DataConverter.Validate(System.Object)"/>
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.DateRangeConverter.MinDate">
+            <summary>
+              Gets or sets the minimum allowed date.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.DateRangeConverter.MaxDate">
+            <summary>
+              Gets or sets the maximum allowed date.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.UI.DefaultConverter">
+            <summary>
+              Marker class used to indicate that an appropriate converter should be constructed at runtime.
+            </summary>
+            <remarks>
+            When using the DevForce designers to configure data bindings for a 
+            <see cref="T:IdeaBlade.UI.WinForms.BindingManager"/>,
+            <b>DefaultConverter</b> will always be the default DataConverter.  
+            You may then set <see cref="T:IdeaBlade.UI.Editability"/>
+            for the DefaultConverter, or choose a more specific DataConverter if 
+            additional properties are required.
+            </remarks>
+        </member>
+        <member name="M:IdeaBlade.UI.DefaultConverter.#ctor">
+            <summary>
+              Constructs a DefaultConverter.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.DefaultConverter.#ctor(IdeaBlade.UI.Editability)">
+            <summary>
+              Constructs a DefaultCoverter with the specified Editability.
+            </summary>
+            <param name="pEditability">
+              Editability of the field.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.DefaultConverter.ParseCore(System.Type,System.Object)">
+            <summary>
+              Parses input data into the native datatype.  DataConverter throws a
+              ConverterException if the editability is Editability.Required and the
+              data is empty.
+            </summary>
+            <param name="pDesiredType">
+              The type of the object to store the parsed value.
+            </param>
+            <param name="pValue">
+              The value to parse.
+            </param>
+            <returns>
+              <para>
+                Returns <paramref name="pValue"/> parsed into the desired type unless 
+                <paramref name="pValue"/> is either null or DBNull.Value.
+              </para>
+              <para>
+                Returns String.Empty if <paramref name="pValue"/> is null or DBNull.Value
+                and <paramRef name="pDesiredType"/> is typeof(String).
+              </para>
+              <para>
+                Returns <paramref name="pValue"/> unchanged if every other case.  
+              </para>
+            </returns>
+        </member>
+        <member name="M:IdeaBlade.UI.DefaultConverter.FormatCore(System.Type,System.Object)">
+            <summary>
+              Formats the data for the view returning an object of the desired type.
+            </summary>
+            <param name="pDesiredType">
+              The type of the object to format into.  Typically typeof(String).
+            </param>
+            <param name="pValue">
+              The value to format.
+            </param>
+            <returns>
+              Returns String.Empty if <paramref name="pValue"/> if null or DBNull.Value.
+              Otherwise returns <paramref name="pValue"/>.ToString().
+            </returns>
+        </member>
+        <member name="P:IdeaBlade.UI.DefaultConverter.DataType">
+            <summary>
+              Gets the datatype that this converter works with.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.DefaultConverter.CanParse">
+            <summary>
+              Gets whether or not this converter implements the Parse method.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.DefaultConverter.CanFormat">
+            <summary>
+              Gets whether or not this converter implements the Format method.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.UI.ListConverter">
+             <summary>
+               Used to parse, format and validate a data field from a list of possible items.
+             </summary>
+             <remarks>
+             A <b>ListConverter</b> is typically used with list-style controls such as a ComboBox to provide
+             a list of values from which a data field may be selected.  
+             Use <see cref="P:IdeaBlade.UI.ListConverter.DisplayMember"/> to set the property of the list item <see cref="P:IdeaBlade.UI.DataConverter.DataType"/>
+             that will be displayed, and use <see cref="P:IdeaBlade.UI.ListConverter.ValueMember"/> to set the property
+             returned for a selected item.  Typically, ValueMember will default to __Self, to return
+             the item itself.  
+             <para>
+             The ListConverter's contained list of items may be set through one of the constructors, or using the
+             <see cref="P:IdeaBlade.UI.ListConverter.ListSource"/> property.  If the <see cref="P:IdeaBlade.UI.DataConverter.DataType"/> 
+             is an enumeration or boolean, the list is automatically populated with the enumerated values.
+            </para>
+            </remarks>
+             <example><code lang="C#">
+private void SampleListConverters() {
+  // These sample list converters all bind to properties on a form (properties are defined below).
+  // Assume 4 comboBox controls have been placed on the form.
+
+  ControlBindingManager mgr = new ControlBindingManager(this);
+
+  // A sample converter for a string array.
+  ListConverter lc1 = new ListConverter(new String[] { "test3", "test2", "test1" }, Editability.Optional, true);
+  mgr.Descriptors.Add(this.comboBox1, "StringProperty", lc1);
+
+  // A sample converter for a BindableList holding Customer objects - display CompanyName, return ContactName.
+  BindableList&lt;Customer&gt; customerList = new BindableList&lt;Customer&gt;();
+  ListConverter lc2 = new ListConverter(customerList, Editability.Required, true, "CompanyName", "ContactName");
+  mgr.Descriptors.Add(this.comboBox2, "CustomerProperty", lc2);
+
+  // A sample converter using an enum as a DataType/List.
+  ListConverter lc3 = new ListConverter(typeof(System.DayOfWeek), Editability.Optional);
+  mgr.Descriptors.Add(this.comboBox3, "DayProperty", lc3);
+
+  // A sample converter using a BindingSource, displaying Order Id and returning Order.
+  ListConverter lc4 = new ListConverter(typeof(Order), Editability.Optional);
+  lc4.DisplayMember = "Id";
+  lc4.ListSource = new BindingSource();
+  mgr.Descriptors.Add(this.comboBox4, "OrderProperty", lc4);
+
+  // Load the lists used by the listconverters now.
+  customerList.AddRange(PersistenceManager.DefaultManager.GetEntities&lt;Customer&gt;());
+  lc4.ListSource.DataSource = PersistenceManager.DefaultManager.GetEntities&lt;Order&gt;();
+}
+// Bound properties on the form
+private string mStringProperty;
+private string mCustomerProperty;
+private DayOfWeek mDayProperty;
+private Order mOrderProperty;
+
+public string StringProperty {
+  get { return this.mStringProperty; }
+  set { this.mStringProperty = value; }
+}
+public string CustomerProperty {
+  get { return this.mCustomerProperty; }
+  set { this.mCustomerProperty = value; }
+}
+public DayOfWeek DayProperty {
+  get { return this.mDayProperty; }
+  set { this.mDayProperty = value; }
+}
+public Order OrderProperty {
+  get { return this.mOrderProperty; }
+  set { this.mOrderProperty = value; }
+ }
+      </code></example><example><code lang="VB">
+Private Sub SampleListConverters()
+   ' These sample list converters all bind to properties on a form (properties are defined below).
+   ' Assume 4 comboBox controls have been placed on the form.
+   Dim mgr As New ControlBindingManager(Me)
+
+   ' A sample converter for a string array.
+   Dim lc1 As New ListConverter(New [String]() {"test3", "test2", "test1"}, Editability.Optional, True)
+   mgr.Descriptors.Add(Me.comboBox1, "StringProperty", lc1)
+
+   ' A sample converter for a BindableList holding Customer objects - display CompanyName, return ContactName.
+   Dim customerList As New BindableList(Of Customer)
+   Dim lc2 As New ListConverter(customerList, Editability.Required, True, "CompanyName", "ContactName")
+   mgr.Descriptors.Add(Me.comboBox2, "CustomerProperty", lc2)
+
+   ' A sample converter using an enum as a DataType/List.
+   Dim lc3 As New ListConverter(GetType(System.DayOfWeek), Editability.Optional)
+   mgr.Descriptors.Add(Me.comboBox3, "DayProperty", lc3)
+
+   ' A sample converter using a BindingSource, displaying Order Id and returning Order.
+   Dim lc4 As New ListConverter(GetType(Order), Editability.Optional)
+   lc4.DisplayMember = "Id"
+   lc4.ListSource = New BindingSource()
+   mgr.Descriptors.Add(Me.comboBox4, "OrderProperty", lc4)
+
+   ' Load the lists used by the listconverters now.
+   customerList.AddRange(PersistenceManager.DefaultManager.GetEntities(Of Customer)())
+   lc4.ListSource.DataSource = PersistenceManager.DefaultManager.GetEntities(Of Order)()
+End Sub
+
+' Bound properties on the form
+Private mStringProperty As String
+Private mCustomerProperty As String
+Private mDayProperty As DayOfWeek
+Private mOrderProperty As Order
+
+Public Property StringProperty() As String
+   Get
+      Return Me.mStringProperty
+   End Get
+   Set(ByVal value As String)
+      Me.mStringProperty = value
+   End Set
+End Property
+Public Property CustomerProperty() As String
+   Get
+      Return Me.mCustomerProperty
+   End Get
+   Set(ByVal value As String)
+      Me.mCustomerProperty = value
+   End Set
+End Property
+Public Property DayProperty() As DayOfWeek
+   Get
+      Return Me.mDayProperty
+   End Get
+   Set(ByVal value As DayOfWeek)
+      Me.mDayProperty = value
+   End Set
+End Property
+Public Property OrderProperty() As Order
+   Get
+      Return Me.mOrderProperty
+   End Get
+   Set(ByVal value As Order)
+      Me.mOrderProperty = value
+   End Set
+End Property
+	</code></example>
+        </member>
+        <member name="M:IdeaBlade.UI.ListConverter.#ctor(System.Type)">
+            <summary>
+              Creates a ListConverter for a list of the specified data type with optional editability.
+            </summary>
+            <param name="pDataType">
+              DataType of elements in the list.
+            </param>
+            <remarks>
+            If <paramref name="pDataType"/> is not an enum or a boolean, you will need to set the 
+            <see cref="P:IdeaBlade.UI.ListConverter.ListSource"/> containing the items for the ListConverter.
+            </remarks>
+        </member>
+        <member name="M:IdeaBlade.UI.ListConverter.#ctor(System.Type,IdeaBlade.UI.Editability)">
+            <summary>
+              Creates a ListConverter for a list of the specified data type, with specified editability.
+            </summary>
+            <param name="pDataType">
+              DataType of elements in the list. 
+            </param>
+            <param name="pEditability">
+              Editability of the data field.
+            </param>
+            <remarks>
+            If <paramref name="pDataType"/> is not an enum or a boolean, you will need to set the 
+            <see cref="P:IdeaBlade.UI.ListConverter.ListSource"/> containing the items for the ListConverter.
+            </remarks>
+        </member>
+        <member name="M:IdeaBlade.UI.ListConverter.#ctor(System.Collections.IList,IdeaBlade.UI.Editability,System.Boolean)">
+            <summary>
+              Creates a ListConverter  for the list specified, with indicated editability and sorting.
+            </summary>
+            <param name="pList">
+              List of valid items.
+            </param>
+            <param name="pEditability">
+              Editability of the data field.
+            </param>
+            <param name="pSort">
+              Whether or not to sort the list.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.ListConverter.#ctor(System.Collections.IList,IdeaBlade.UI.Editability,System.Boolean,System.String)">
+            <summary>
+              Creates a ListConverter for the list specified, with indicated editability and sorting, with DisplayMember specified.
+            </summary>
+            <param name="pList">
+              List of valid items.
+            </param>
+            <param name="pEditability">
+              Editability of the data field.
+            </param>
+            <param name="pSort">
+              Whether or not to sort the list.
+            </param>
+            <param name="pDisplayMember">
+              Property of items in the list to use for display.
+              Null refers to the item itself.
+            </param>
+            <remarks>
+            </remarks>
+        </member>
+        <member name="M:IdeaBlade.UI.ListConverter.#ctor(System.Collections.IList,IdeaBlade.UI.Editability,System.Boolean,System.String,System.String)">
+            <summary>
+              Creates a ListConverter  for the list specified, with indicated editability and sorting, with DisplayMember and ValueMember specified.
+            </summary>
+            <param name="pList">
+              List of valid items.
+            </param>
+            <param name="pEditability">
+              Editability of the field.
+            </param>
+            <param name="pSort">
+              Whether or not to sort the list.
+            </param>
+            <param name="pDisplayMember">
+              Property of items in the list to use for display.
+              Null refers to the item itself.
+            </param>
+            <param name="pValueMember">
+              Property of items in the list to use for the returned value.
+              Null refers to the item itself.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.ListConverter.SetList(System.Collections.IList)">
+            <summary>
+            Sets the list of items.
+            </summary>
+            <param name="pList"></param>
+            <remarks>
+            You can use either <b>SetList</b> or <see cref="P:IdeaBlade.UI.ListConverter.ListSource"/> to set the list data.
+            </remarks>
+        </member>
+        <member name="M:IdeaBlade.UI.ListConverter.Sort">
+            <summary>
+            Sorts the list of items by the <see cref="P:IdeaBlade.UI.ListConverter.DisplayMember"/> in ascending order.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.ListConverter.Sort(System.ComponentModel.ListSortDirection)">
+            <summary>
+              Sorts the list of items by the <see cref="P:IdeaBlade.UI.ListConverter.DisplayMember"/> in the direction specified.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.ListConverter.Sort(System.String,System.ComponentModel.ListSortDirection)">
+            <summary>
+              Sorts the list using the specified property of the objects.
+            </summary>
+            <param name="pPropertyPath"></param>
+            <param name="pDirection"></param>
+        </member>
+        <member name="M:IdeaBlade.UI.ListConverter.Sort(System.ComponentModel.PropertyDescriptor,System.ComponentModel.ListSortDirection)">
+            <summary>
+              Sorts the list using the specified property of the objects.
+            </summary>
+            <param name="pPropertyDescriptor"></param>
+            <param name="pDirection"></param>
+        </member>
+        <member name="M:IdeaBlade.UI.ListConverter.ParseCore(System.Type,System.Object)">
+            <summary>
+              Parses a selected item from the list into a data field using the <see cref="P:IdeaBlade.UI.ListConverter.ValueMember"/>.
+              See DataConverter.<see cref="M:IdeaBlade.UI.DataConverter.Parse(System.Type,System.Object)"/> for more information.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.ListConverter.FormatCore(System.Type,System.Object)">
+            <summary>
+              Formats a selected item from the list using the <see cref="P:IdeaBlade.UI.ListConverter.DisplayMember"/>.
+              See DataConverter.<see cref="M:IdeaBlade.UI.DataConverter.Format(System.Type,System.Object)"/> for more information.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.ListConverter.#ctor">
+            <summary>
+              For subclassing.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.ListConverter.Editability">
+            <summary>
+              Gets or sets the editability for this converter.
+            </summary>
+            <remarks>
+            The editability of a <b>ListConverter</b> refers to the editability of the data field which is
+            displayed or chosen via the list control.
+            </remarks>
+        </member>
+        <member name="P:IdeaBlade.UI.ListConverter.ListSource">
+            <summary>
+            Gets or sets the source of the list data.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.ListConverter.List">
+            <summary>
+              Gets the list of items.  
+            </summary>
+            <remarks>
+            </remarks>
+        </member>
+        <member name="P:IdeaBlade.UI.ListConverter.DisplayMember">
+            <summary>
+              Gets or sets the item property used for displaying items in the list.
+            </summary>
+            <remarks>
+            If <b>DisplayMember</b> is not set list items are displayed using item.ToString().
+            </remarks>
+        </member>
+        <member name="P:IdeaBlade.UI.ListConverter.ValueMember">
+            <summary>
+              Gets or sets the item property returned when an item is selected.
+            </summary>
+            <remarks>
+            If <b>ValueMember</b> is not set (the default) the selected item itself is returned.
+            </remarks>
+        </member>
+        <member name="P:IdeaBlade.UI.ListConverter.DisplayPropertyAdapter">
+            <summary>
+              Gets the PropertyAdapter for the DisplayMember property on items in the list.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.ListConverter.ValuePropertyAdapter">
+            <summary>
+              Gets the PropertyAdapter for the ValueMember property on items in the list.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.UI.BooleanConverter">
+             <summary>
+              Used to parse, format and validate boolean values.
+             </summary>
+             <remarks>
+             <para><b>Derived classes:</b></para>
+             <list type="table">
+             <listheader>
+             <term>Class</term>
+             <description>Description</description>
+             </listheader>
+             <item>
+               <term><see cref="T:IdeaBlade.UI.WinForms.ThreeStateBooleanConverter">ThreeStateBooleanConverter</see></term>
+               <description>A BooleanConverter which handles three-valued logic:
+               true, false, and indeterminate (or null/DBNull).</description>
+             </item>
+            </list>
+             </remarks>
+        </member>
+        <member name="M:IdeaBlade.UI.BooleanConverter.#ctor">
+            <summary>
+              Constructs a BooleanConverter with optional editability
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.BooleanConverter.#ctor(IdeaBlade.UI.Editability)">
+            <summary>
+              Constructs a BooleanConverter.
+            </summary>
+            <param name="pEditability">
+              Editability of the field.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.BooleanConverter.ParseCore(System.Type,System.Object)">
+            <summary>
+              Parses a value into a boolean.
+              See DataConverter.<see cref="M:IdeaBlade.UI.DataConverter.Parse(System.Type,System.Object)"/>
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.BooleanConverter.FormatCore(System.Type,System.Object)">
+            <summary>
+              Formats a boolean value.
+              See DataConverter.<see cref="M:IdeaBlade.UI.DataConverter.Format(System.Type,System.Object)"/>
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.UI.ConverterTypeConverter">
+            <summary>
+              TypeConverter for IDataConverter implementations.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.ConverterTypeConverter.CanConvertTo(System.ComponentModel.ITypeDescriptorContext,System.Type)">
+            <summary>
+              Returns whether this converter can convert the object to the specified type,
+              using the specified context.
+            </summary>
+            <remarks>
+              When converting to an InstanceDescriptor, the ConverterTypeConverter will automatically
+              probe for and try to find a valid constructor and parameters for an arbitrary IDataConverter.
+              If no match can be found, then a custom TypeConverter needs to be created for the specified IDataConverter.
+              (See .NET documentation on how to do this.)
+            </remarks>
+        </member>
+        <member name="M:IdeaBlade.UI.ConverterTypeConverter.ConvertTo(System.ComponentModel.ITypeDescriptorContext,System.Globalization.CultureInfo,System.Object,System.Type)">
+            <summary>
+              Converts the given value object to the specified type, using the
+              specified context and culture information.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.ConverterTypeConverter.CanCreateInstanceDescriptorForType(System.Type)">
+            <summary>
+              For internal use only.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.UI.ValidatingEventArgs">
+            <summary>
+              Provides data for the <see cref="E:IdeaBlade.UI.IDataConverter.Validating">validating</see> event on a <see cref="T:IdeaBlade.UI.DataConverter"/>.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.ValidatingEventArgs.#ctor(System.Object)">
+            <summary>
+              Constructs a new ValidatingEventArgs.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.ValidatingEventArgs.NewValue">
+            <summary>
+              The value that is being validated.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.ListConverterPropertyTypeConverter.GetPropertyNames(System.Type)">
+            <summary>
+            does not return a generic IList&lt;String&gt; because the generic IList 
+            does not implement ICollection 
+            </summary>
+            <param name="pType"></param>
+            <returns></returns>
+        </member>
+        <member name="T:IdeaBlade.UI.ViewDescriptor">
+            <summary>
+             Describes how a specific property of a business object should be rendered by the UI.
+             <seealso cref="P:IdeaBlade.UI.ViewDescriptor.DataConverter"/>
+             <seealso cref="T:IdeaBlade.UI.WinForms.BindingDescriptor"/>
+             <seealso cref="T:IdeaBlade.UI.WinForms.BindingManager"/>
+            </summary>
+            <remarks>
+            <para>
+              The <b>ViewDescriptor</b> encapsulates the view information about a property
+              and how it is to be displayed, parsed and validated.  
+              Since the view information is encapsulated in a separate object, 
+              ViewDescriptors can be created and managed in a single location 
+              and then reused at multiple places within the UI where needed. 
+            </para>
+            <para>
+              The <see cref="P:IdeaBlade.UI.ViewDescriptor.DataType"/> indicates the underlying data type of the property.
+              <see cref="P:IdeaBlade.UI.ViewDescriptor.PropertyPath"/> is the period-delimited path to the property.  
+              The <see cref="P:IdeaBlade.UI.ViewDescriptor.DisplayName"/> can be used for generating labels and composing
+              error messages.  The <see cref="P:IdeaBlade.UI.ViewDescriptor.DataConverter"/> specifies the editability, formatting
+              and validation information about the property.
+            </para>
+            </remarks>
+            <example><code lang="C#">
+// An example showing some reusable view descriptors and data converters
+
+// define some DataConverters
+DateConverter dateCV = new DateConverter(Editability.Required, "yyyy/MM/dd");
+RegexConverter phoneCV = new RegexConverter(Editability.Optional, @"\d{3}\-\d{4}");
+
+// define a "catalog" of view descriptors - typically these would not be
+// defined directly in a form (and would be better named)
+ViewDescriptor vd1, vd2, vd3, vd4, vd5;
+vd1 = new ViewDescriptor("Customer Name", typeof(Order), "Customer.ContactName", DataConverter.RequiredString);
+vd2 = new ViewDescriptor("Order Date", typeof(Order), "OrderDate", dateCV);
+vd3 = new ViewDescriptor("Telephone", typeof(Order), "Customer.Phone", phoneCV);
+vd4 = new ViewDescriptor("Fax", typeof(Order), "Customer.Fax", phoneCV);
+vd5 = new ViewDescriptor("Order Lines", typeof(Order), "OrderDetails.Length", DataConverter.ReadOnlyInteger);
+
+// now (in a form) set up bindings
+ControlBindingManager mgr = new ControlBindingManager(typeof(Order));
+mgr.Descriptors.Add(this.textBox1, vd1);
+mgr.Descriptors.Add(this.textBox2, vd2);
+mgr.Descriptors.Add(this.textBox3, vd3);
+mgr.Descriptors.Add(this.textBox4, vd4);
+mgr.Descriptors.Add(this.textBox5, vd5);
+
+// now load some data
+mgr.DataSource.Add(PersistenceManager.DefaultManager.GetEntity(typeof(Order)));
+
+      </code></example><example><code lang="VB">
+' An example showing some reusable view descriptors and data converters
+
+' define some DataConverters
+Dim dateCV As New DateConverter(Editability.Required, "yyyy/MM/dd")
+Dim phoneCV As New RegexConverter(Editability.Optional, "\d{3}\-\d{4}")
+
+' define a "catalog" of view descriptors - typically these would not be
+' defined directly in a form (and would be better named)
+Dim vd1, vd2, vd3, vd4, vd5 As ViewDescriptor
+vd1 = New ViewDescriptor("Customer Name", GetType(Order), "Customer.ContactName", DataConverter.RequiredString)
+vd2 = New ViewDescriptor("Order Date", GetType(Order), "OrderDate", dateCV)
+vd3 = New ViewDescriptor("Telephone", GetType(Order), "Customer.Phone", phoneCV)
+vd4 = New ViewDescriptor("Fax", GetType(Order), "Customer.Fax", phoneCV)
+vd5 = New ViewDescriptor("Order Lines", GetType(Order), "OrderDetails.Length", DataConverter.ReadOnlyInteger)
+
+' now (in a form) set up bindings
+Dim mgr As New ControlBindingManager(GetType(Order))
+mgr.Descriptors.Add(Me.TextBox1, vd1)
+mgr.Descriptors.Add(Me.TextBox2, vd2)
+mgr.Descriptors.Add(Me.TextBox3, vd3)
+mgr.Descriptors.Add(Me.textBox4, vd4)
+mgr.Descriptors.Add(Me.textBox5, vd5)
+
+' now load some data
+mgr.DataSource.Add(PersistenceManager.DefaultManager.GetEntity(GetType(Order)))
+	</code></example>
+        </member>
+        <member name="M:IdeaBlade.UI.ViewDescriptor.#ctor(System.Type,System.String)">
+            <summary>
+              Constructs a ViewDescriptor.
+            </summary>
+            <param name="pObjectType">
+              Type of the object that the property exists on.  e.g. typeof(Employee).
+            </param>
+            <param name="pPropertyPath">
+              Period delimited path of the property. e.g. "BirthDate" or "Address.City"
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.ViewDescriptor.#ctor(System.Type,System.String,IdeaBlade.UI.IDataConverter)">
+            <summary>
+              Constructs a ViewDescriptor.
+            </summary>
+            <param name="pObjectType">
+              Type of the object that the property exists on.  e.g. typeof(Employee)
+            </param>
+            <param name="pPropertyPath">
+              Period delimited path of the property. e.g. "BirthDate" or "Address.City"
+            </param>
+            <param name="pConverter">
+              Converter that specifies formatting, syntactic, and semantic validation.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.ViewDescriptor.#ctor(System.String,System.Type,System.String)">
+            <summary>
+              Constructs a ViewDescriptor.
+            </summary>
+            <param name="pDisplayName">
+              Display name for the property.
+            </param>
+            <param name="pObjectType">
+              Type of the object that the property exists on.  e.g. typeof(Employee)
+            </param>
+            <param name="pPropertyPath">
+              Period delimited path of the property. e.g. "BirthDate" or "Address.City"
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.ViewDescriptor.#ctor(System.String,System.Type,System.String,IdeaBlade.UI.IDataConverter)">
+            <summary>
+              Constructs a ViewDescriptor with the specified converter.
+            </summary>
+            <param name="pDisplayName">
+              Display name for the property.
+            </param>
+            <param name="pObjectType">
+              Type of the object that the property exists on.  e.g. typeof(Employee)
+            </param>
+            <param name="pPropertyPath">
+              Period delimited path of the property. e.g. "BirthDate" or "Address.City"
+            </param>
+            <param name="pConverter">
+              Converter that specifies formatting, syntactic, and semantic validation.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.ViewDescriptor.#ctor(System.String,System.Type,System.ComponentModel.ITypedList,System.String,IdeaBlade.UI.IDataConverter)">
+            <summary>
+              Constructs a ViewDescriptor.
+            </summary>
+            <param name="pDisplayName">
+              Display name for the property.
+            </param>
+            <param name="pObjectType">
+              Type of the object that the property exists on.  e.g. typeof(Employee)
+            </param>
+            <param name="pTypedList">
+              The typed list containing the list of properties.
+            </param>
+            <param name="pPropertyPath">
+              Period delimited path of the property. e.g. "BirthDate" or "Address.City"
+            </param>
+            <param name="pConverter">
+              Converter that specifies formatting, syntactic, and semantic validation.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.ViewDescriptor.#ctor(System.ComponentModel.PropertyDescriptor)">
+            <summary>
+              Constructs a ViewDescriptor.
+            </summary>
+            <param name="pDescriptor">
+              A PropertyDescriptor.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.ViewDescriptor.#ctor(System.ComponentModel.PropertyDescriptor,IdeaBlade.UI.IDataConverter)">
+            <summary>
+              Constructs a ViewDescriptor.
+            </summary>
+            <param name="pDescriptor">
+              A PropertyDescriptor.
+            </param>
+            <param name="pConverter">
+              Converter that specifies formatting, syntactic, and semantic validation.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.ViewDescriptor.#ctor(System.String,System.ComponentModel.PropertyDescriptor)">
+            <summary>
+              Constructs a ViewDescriptor.
+            </summary>
+            <param name="pDisplayName">
+              Display name for the property.
+            </param>
+            <param name="pDescriptor">
+              A PropertyDescriptor.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.ViewDescriptor.#ctor(System.String,System.ComponentModel.PropertyDescriptor,IdeaBlade.UI.IDataConverter)">
+            <summary>
+              Constructs a ViewDescriptor using a PropertyDescriptor with the specified
+              Converter.
+            </summary>
+            <param name="pDisplayName">
+              Display name for the property.
+            </param>
+            <param name="pDescriptor">
+              PropertyDescriptor for the desired property.
+            </param>
+            <param name="pConverter">
+              Converter that specifies formatting, syntactic, and semantic validation.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.ViewDescriptor.GetAttribute(System.Type)">
+            <summary>
+              Gets the specified attribute for this property.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.ViewDescriptor.DisableDynamicConverterResolution">
+            <summary>
+              For internal design-time use only.
+              Disables a dynamically resolved converter.  Dynamic resolution occurs
+              when a DefaultConverter or null converter is passed into the constructor.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.ViewDescriptor.SetPropertyDescriptor(System.ComponentModel.PropertyDescriptor)">
+            <summary>
+              For internal use only.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.ViewDescriptor.OnPropertyChanged(System.String)">
+            <summary>
+              Raises the PropertyChanged event.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.ViewDescriptor.OnPropertyChanged(System.ComponentModel.PropertyChangedEventArgs)">
+            <summary>
+              Raises the PropertyChanged event.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.ViewDescriptor.IsNestedPropertyPath(System.String)">
+            <summary>
+              For internal use only.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.ViewDescriptor.DisplayName">
+            <summary>
+              Gets the display name for the property.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.ViewDescriptor.PropertyRoot">
+            <summary>
+              Gets the type of object that the property exists on. Will either be a type or an ITypedList;
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.ViewDescriptor.PropertyPath">
+            <summary>
+              Gets the path of the property from the ObjectType.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.ViewDescriptor.DataType">
+            <summary>
+              Gets the usable type of the property.  That is, the type of the property
+              when it is not DBNull.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.ViewDescriptor.DataConverter">
+            <summary>
+              Gets the converter for the property.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.ViewDescriptor.Name">
+            <summary>
+              Gets the logical name of the property.  Identical to the PropertyPath.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.ViewDescriptor.BindingName">
+            <summary>
+              Gets the internal name that is used to bind to the property.  Period delimited
+              property paths are not supported by .NET, so the BindingName is a mangled
+              version of the PropertyPath.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.ViewDescriptor.PropertyDescriptor">
+            <summary>
+              Gets this property's PropertyDescriptor.
+            </summary>
+        </member>
+        <member name="E:IdeaBlade.UI.ViewDescriptor.PropertyChanged">
+            <summary>
+              Occurs when a property has changed value on the ViewDescriptor.
+              This is used internally to refresh the binding with the new values.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.ViewDescriptor.UserSpecifiedConverter">
+            <summary>
+              For internal use only.
+              Preserves the default converter used at design-time. 
+              If the default converter's defaults are used, 
+                then UserSpecifiedConverter=null.
+              Otherwise, UserSpecifiedConverter=DefaultConverter.
+            </summary>
+        </member>
+    </members>
+</doc>

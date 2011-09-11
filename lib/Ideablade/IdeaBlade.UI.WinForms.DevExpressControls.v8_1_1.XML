@@ -1,0 +1,1701 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>IdeaBlade.UI.WinForms.DevExpressControls.v8_1_1</name>
+    </assembly>
+    <members>
+        <member name="T:IdeaBlade.UI.WinForms.DevExpressControls.PictureEditColumnBinder">
+            <summary>
+              Binder for a PictureEdit control used in a GridColumn.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.UI.WinForms.DevExpressControls.XtraGridColumnBinder">
+            <summary>
+              Base class that understands how to bind to an DevExpress control in a GridColumn.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DevExpressControls.XtraGridColumnBinder.GetColumnEdit">
+            <summary>
+              Get the repository item for the preferred control type.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DevExpressControls.XtraGridColumnBinder.BindColumn(IdeaBlade.UI.WinForms.DevExpressControls.XtraGridBindingDescriptor)">
+            <summary>
+              Binds a GridColumn to a ViewDescriptor.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DevExpressControls.XtraGridColumnBinder.SetColumnProperties(DevExpress.XtraGrid.Columns.GridColumn,IdeaBlade.UI.ViewDescriptor)">
+            <summary>
+              Sets the properties on a GridColumn from a ViewDescriptor.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DevExpressControls.XtraGridColumnBinder.UnRegisterEvents(DevExpress.XtraEditors.Repository.RepositoryItem)">
+            <summary>
+            UnRegisterEvents the events tied to the RepositoryItem and removes it from the msConverterAdapterMap.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DevExpressControls.XtraGridColumnBinder.SetEditorProperties(DevExpress.XtraEditors.Repository.RepositoryItem,IdeaBlade.UI.IDataConverter)">
+            <summary>
+              Sets the persistent properties of an editor from a Converter.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DevExpressControls.XtraGridColumnBinder.SetControlEditability(DevExpress.XtraEditors.Repository.RepositoryItem,IdeaBlade.UI.Editability)">
+            <summary>
+              Configures the control to best match the editability requirement.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DevExpressControls.XtraGridColumnBinder.SetCustomColors(DevExpress.XtraEditors.Repository.RepositoryItem)">
+            <summary>
+              For internal use only.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.DevExpressControls.XtraGridColumnBinder.BinderMap">
+            <summary>
+              Get the map that manages this binder.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DevExpressControls.PictureEditColumnBinder.GetBaseFitness(IdeaBlade.UI.IDataConverter)">
+            <summary>
+              Returns the fitness of using this binder for the specified converter.
+              See <see cref="T:IdeaBlade.UI.WinForms.UIFitness"/>.
+            </summary>
+            <param name="pConverter">
+              Converter that specifies formatting, syntactic, and semantic validation.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DevExpressControls.PictureEditColumnBinder.GetColumnEdit">
+            <summary>
+              Get the repository item for the preferred control type.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.DevExpressControls.PictureEditColumnBinder.ControlType">
+            <summary>
+              The base type of control this binder works with.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.UI.WinForms.DevExpressControls.LookUpEditColumnBinder">
+            <summary>
+              Binder for a LookUpEdit control used in a GridColumn.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DevExpressControls.LookUpEditColumnBinder.GetBaseFitness(IdeaBlade.UI.IDataConverter)">
+            <summary>
+              Returns the fitness of using this binder for the specified converter.
+              See <see cref="T:IdeaBlade.UI.WinForms.UIFitness"/>.
+            </summary>
+            <param name="pConverter">
+              Converter that specifies formatting, syntactic, and semantic validation.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DevExpressControls.LookUpEditColumnBinder.GetColumnEdit">
+            <summary>
+              Get the repository item for the preferred control type.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DevExpressControls.LookUpEditColumnBinder.SetEditorProperties(DevExpress.XtraEditors.Repository.RepositoryItem,IdeaBlade.UI.IDataConverter)">
+            <summary>
+              Sets the persistent properties of an editor from a Converter.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DevExpressControls.LookUpEditColumnBinder.ButtonPressedHandler(System.Object,DevExpress.XtraEditors.Controls.ButtonPressedEventArgs)">
+            <summary>
+              Handlers the ButtonPressed event.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.DevExpressControls.LookUpEditColumnBinder.ControlType">
+            <summary>
+              The base type of control this binder works with.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.UI.WinForms.DevExpressControls.CheckEditDataBinder">
+            <summary>
+              Binder for a CheckEdit control.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.UI.WinForms.DevExpressControls.DevExpressDataBinder">
+            <summary>
+              Base class that understands how to bind to a DevExpress control.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DevExpressControls.DevExpressDataBinder.InitializeControl(System.Windows.Forms.Control,IdeaBlade.UI.ViewDescriptor)">
+            <summary>
+              Initializes the properties of a control before being bound.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DevExpressControls.DevExpressDataBinder.UnInitializeControl(System.Windows.Forms.Control)">
+            <summary>
+              Releases and resources or event handlers on a control after being unbound.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DevExpressControls.DevExpressDataBinder.FormatHandler(System.Object,DevExpress.XtraEditors.Controls.ConvertEditValueEventArgs)">
+            <summary>
+              Delegates the format handler on the binding to the converter.
+              This handler has been added to serve as a delegate for the <see cref="E:DevExpress.XtraEditors.Repository.RepositoryItem.FormatEditValue"/> and
+              should not be confused with the <see cref="M:IdeaBlade.UI.WinForms.ControlDataBinder.FormatHandler(System.Object,System.Windows.Forms.ConvertEventArgs)"/>.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DevExpressControls.DevExpressDataBinder.GetIdeaBladeBinding(System.Windows.Forms.Control)">
+            <summary>
+            Retrieves the IdeaBladeBinding associated with the control.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DevExpressControls.DevExpressDataBinder.SetControlEditability(System.Windows.Forms.Control,IdeaBlade.UI.Editability)">
+            <summary>
+              Configures the control to best match the editability requirement.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DevExpressControls.DevExpressDataBinder.SetCustomColors(DevExpress.XtraEditors.BaseEdit)">
+            <summary>
+              For internal use only.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.DevExpressControls.DevExpressDataBinder.BindingPropertyName">
+            <summary>
+              Property on the control that is set during binding.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DevExpressControls.CheckEditDataBinder.GetBaseFitness(IdeaBlade.UI.IDataConverter)">
+            <summary>
+              Returns the fitness of using this binder for the specified converter.
+              See <see cref="T:IdeaBlade.UI.WinForms.UIFitness"/>.
+            </summary>
+            <param name="pConverter">
+              Converter that specifies formatting, syntactic, and semantic validation.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DevExpressControls.CheckEditDataBinder.InitializeControl(System.Windows.Forms.Control,IdeaBlade.UI.ViewDescriptor)">
+            <summary>
+            Initializes the properties of a control before being bound.
+            </summary>
+            <remarks>
+            The logic for initializing whether the control should support three states is as follows:
+            <list>
+            <item>If the developer uses the DefaultConverter's defaults, then the control's AllowGrayed value is used.</item>
+            <item>If the developer modifies the DefaultConverter's Editability, then the converter's Editability overrides the control.</item>
+            <item>If the developer selects the ThreeStateConverter and uses the converter's defaults,
+            then the converter's ThreeState value is used.</item>
+            <item>If the developer selects the ThreeStateConverter, keeps Editability.Optional, but modifies the ThreeState,
+            then the converter's ThreeState value is used.</item>
+            <item>If the developer selects the ThreeStateConverter and modifies the Editability, 
+            then the converter's Editability overrides its ThreeState.</item> 
+            </list>
+            </remarks>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.DevExpressControls.CheckEditDataBinder.ControlType">
+            <summary>
+              The base type of control this binder works with.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.DevExpressControls.CheckEditDataBinder.BindingPropertyName">
+            <summary>
+              Property on the control that is set during binding.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.UI.WinForms.DevExpressControls.MemoEditDataBinder">
+            <summary>
+              Binder for a MemoEdit control.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.UI.WinForms.DevExpressControls.TextEditDataBinder">
+            <summary>
+              Binder for a TextEdit control.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DevExpressControls.TextEditDataBinder.GetBaseFitness(IdeaBlade.UI.IDataConverter)">
+            <summary>
+              Returns the fitness of using this binder for the specified converter.
+              See <see cref="T:IdeaBlade.UI.WinForms.UIFitness"/>.
+            </summary>
+            <param name="pConverter">
+              Converter that specifies formatting, syntactic, and semantic validation.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DevExpressControls.TextEditDataBinder.InitializeControl(System.Windows.Forms.Control,IdeaBlade.UI.ViewDescriptor)">
+            <summary>
+              Initializes the properties of a control before being bound.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.DevExpressControls.TextEditDataBinder.ControlType">
+            <summary>
+              The base type of control this binder works with.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DevExpressControls.MemoEditDataBinder.GetBaseFitness(IdeaBlade.UI.IDataConverter)">
+            <summary>
+              Returns the fitness of using this binder for the specified converter.
+              See <see cref="T:IdeaBlade.UI.WinForms.UIFitness"/>.
+            </summary>
+            <param name="pConverter">
+              Converter that specifies formatting, syntactic, and semantic validation.
+            </param>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.DevExpressControls.MemoEditDataBinder.ControlType">
+            <summary>
+              The base type of control this binder works with.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.UI.WinForms.DevExpressControls.DateEditColumnBinder">
+            <summary>
+              Binder for a DateEdit control used in a GridColumn.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DevExpressControls.DateEditColumnBinder.GetBaseFitness(IdeaBlade.UI.IDataConverter)">
+            <summary>
+              Returns the fitness of using this binder for the specified converter.
+              See <see cref="T:IdeaBlade.UI.WinForms.UIFitness"/>.
+            </summary>
+            <param name="pConverter">
+              Converter that specifies formatting, syntactic, and semantic validation.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DevExpressControls.DateEditColumnBinder.GetColumnEdit">
+            <summary>
+              Get the repository item for the preferred control type.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DevExpressControls.DateEditColumnBinder.SetColumnProperties(DevExpress.XtraGrid.Columns.GridColumn,IdeaBlade.UI.ViewDescriptor)">
+            <summary>
+              Sets the properties on a GridColumn from a ViewDescriptor.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DevExpressControls.DateEditColumnBinder.SetEditorProperties(DevExpress.XtraEditors.Repository.RepositoryItem,IdeaBlade.UI.IDataConverter)">
+            <summary>
+              Sets the persistent properties of an editor from a Converter.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.DevExpressControls.DateEditColumnBinder.ControlType">
+            <summary>
+              The base type of control this binder works with.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.UI.WinForms.DevExpressControls.TimeEditDataBinder">
+            <summary>
+              Binder for a DateEdit control.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DevExpressControls.TimeEditDataBinder.GetBaseFitness(IdeaBlade.UI.IDataConverter)">
+            <summary>
+              Returns the fitness of using this binder for the specified converter.
+              See <see cref="T:IdeaBlade.UI.WinForms.UIFitness"/>.
+            </summary>
+            <param name="pConverter">
+              Converter that specifies formatting, syntactic, and semantic validation.
+            </param>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.DevExpressControls.TimeEditDataBinder.ControlType">
+            <summary>
+              The base type of control this binder works with.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.UI.WinForms.DevExpressControls.TextEditColumnBinder">
+            <summary>
+              Binder for a TextEdit control used in a GridColumn.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DevExpressControls.TextEditColumnBinder.GetBaseFitness(IdeaBlade.UI.IDataConverter)">
+            <summary>
+              Returns the fitness of using this binder for the specified converter.
+              See <see cref="T:IdeaBlade.UI.WinForms.UIFitness"/>.
+            </summary>
+            <param name="pConverter">
+              Converter that specifies formatting, syntactic, and semantic validation.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DevExpressControls.TextEditColumnBinder.GetColumnEdit">
+            <summary>
+              Get the repository item for the preferred control type.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DevExpressControls.TextEditColumnBinder.SetColumnProperties(DevExpress.XtraGrid.Columns.GridColumn,IdeaBlade.UI.ViewDescriptor)">
+            <summary>
+              Sets the properties on a GridColumn from a ViewDescriptor.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DevExpressControls.TextEditColumnBinder.SetEditorProperties(DevExpress.XtraEditors.Repository.RepositoryItem,IdeaBlade.UI.IDataConverter)">
+            <summary>
+              Sets the persistent properties of an editor from a Converter.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.DevExpressControls.TextEditColumnBinder.ControlType">
+            <summary>
+              The base type of control this binder works with.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.UI.WinForms.DevExpressControls.XtraGridFns">
+            <summary>
+              Helper functions for working with the XtraGrid.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DevExpressControls.XtraGridFns.GetColumnByBindingName(System.Collections.IEnumerable,System.String)">
+            <summary>
+            Intended to replace GridColumnCollection.ColumnByFieldName(bindingName) because
+            of a bug in that method see comment in ConfigureGrid
+            </summary>
+            <param name="pColumns"></param>
+            <param name="pBindingName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DevExpressControls.XtraGridFns.IsDataRow(DevExpress.XtraGrid.Views.Grid.GridView,System.Int32)">
+            <summary>For internal use only.</summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DevExpressControls.XtraGridFns.GetSelectedRows(DevExpress.XtraGrid.Views.Grid.GridView)">
+            <summary>For internal use only.</summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DevExpressControls.XtraGridFns.GetFocusedRow(DevExpress.XtraGrid.Views.Grid.GridView)">
+            <summary>For internal use only.</summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DevExpressControls.XtraGridFns.SetColumnAlignment(DevExpress.XtraGrid.Columns.GridColumn,DevExpress.Utils.HorzAlignment)">
+            <summary>For internal use only.</summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DevExpressControls.XtraGridFns.BestFitColumns(DevExpress.XtraGrid.Views.Base.ColumnView)">
+            <summary>For internal use only.</summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DevExpressControls.XtraGridFns.GetRowHandle(DevExpress.XtraGrid.Views.Base.ColumnView,System.Object)">
+            <summary>For internal use only.</summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DevExpressControls.XtraGridFns.FocusOnItem(DevExpress.XtraGrid.Views.Base.ColumnView,System.Object)">
+            <summary>For internal use only.</summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DevExpressControls.XtraGridFns.ClearSelectedRows(DevExpress.XtraGrid.Views.Base.ColumnView)">
+            <summary>For internal use only.</summary>
+        </member>
+        <member name="T:IdeaBlade.UI.WinForms.DevExpressControls.XtraGridBindingDescriptorCollection">
+            <summary>
+              A strongly typed collection of <see cref="T:IdeaBlade.UI.WinForms.DevExpressControls.XtraGridBindingDescriptor">XtraGridBindingDescriptors</see>.
+              <seealso cref="T:IdeaBlade.UI.WinForms.DevExpressControls.XtraGridBindingDescriptor"/>
+              <seealso cref="T:IdeaBlade.UI.WinForms.DevExpressControls.XtraGridBindingManager"/>
+            </summary>
+            <remarks>
+            The <b>XtraGridBindingDescriptorCollection</b> is normally accessed
+            from an <see cref="T:IdeaBlade.UI.WinForms.DevExpressControls.XtraGridBindingManager"/> through the <see cref="P:IdeaBlade.UI.WinForms.DevExpressControls.XtraGridBindingManager.Descriptors"/>
+            property.  BindingDescriptors are added to the collection through one of the many overloaded
+            <b>Add</b> methods. Use the <see cref="M:IdeaBlade.UI.WinForms.DevExpressControls.XtraGridBindingDescriptorCollection.Get(System.String)"/> method to retrieve an existing 
+            descriptor.  Changes made to an existing BindingDescriptor will be immediately
+            reflected in the data binding.
+            </remarks>
+            <example><code lang="C#">
+private void SampleDescriptorsAdvanced() {
+  // sample showing set up of an Advanced Banded Grid View using the XtraGridBindingDescriptorCollection
+
+  // setup column bindings 
+  XtraGridBindingManager mgr = new XtraGridBindingManager(this.advBandedGridView1, typeof(Customer));
+  mgr.Descriptors.Add("ID", "Id");
+  mgr.Descriptors.Add("Customer", "CompanyName");
+  mgr.Descriptors.Add("Contact", "ContactName");
+  mgr.Descriptors.Add("Phone", "Phone");
+  mgr.Descriptors.Add("City", "City");
+
+  // setup grid bands - we'll use 2 bands in this example
+  DevExpress.XtraGrid.Views.BandedGrid.GridBand gridBand1 = new DevExpress.XtraGrid.Views.BandedGrid.GridBand();
+  gridBand1.Caption = "Customer Info";
+  DevExpress.XtraGrid.Views.BandedGrid.GridBand gridBand2 = new DevExpress.XtraGrid.Views.BandedGrid.GridBand();
+  gridBand2.Caption = "Contact Info";
+  advBandedGridView1.Bands.Clear();  // remove default band
+  advBandedGridView1.Bands.AddRange(new DevExpress.XtraGrid.Views.BandedGrid.GridBand[] { gridBand1, gridBand2 });
+
+  // now add columns to bands
+  ((System.ComponentModel.ISupportInitialize)(this.gridControl1)).BeginInit();
+  ((System.ComponentModel.ISupportInitialize)(this.advBandedGridView1)).BeginInit();
+
+  gridBand1.Columns.Add((DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn)(mgr.Descriptors.Get("Id").Column));
+  gridBand1.Columns.Add((DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn)(mgr.Descriptors.Get("CompanyName").Column));
+  gridBand2.Columns.Add((DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn)(mgr.Descriptors.Get("Phone").Column));
+  gridBand2.Columns.Add((DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn)(mgr.Descriptors.Get("City").Column));
+
+  ((System.ComponentModel.ISupportInitialize)(this.gridControl1)).EndInit();
+  ((System.ComponentModel.ISupportInitialize)(this.advBandedGridView1)).EndInit();
+
+  // retrieve all customers
+  mgr.BindingSource.DataSource = PersistenceManager.DefaultManager.GetEntities&lt;Customer&gt;();
+}
+</code></example><example><code lang="VB">
+Private Sub SampleDescriptorsAdvanced()
+   ' sample showing set up of an Advanced Banded Grid View using the XtraGridBindingDescriptorCollection
+
+   ' setup column bindings 
+   Dim mgr As New XtraGridBindingManager(Me.advBandedGridView1, GetType(Customer))
+   mgr.Descriptors.Add("ID", "Id")
+   mgr.Descriptors.Add("Customer", "CompanyName")
+   mgr.Descriptors.Add("Contact", "ContactName")
+   mgr.Descriptors.Add("Phone", "Phone")
+   mgr.Descriptors.Add("City", "City")
+
+   ' setup grid bands - we'll use 2 bands in this example
+   Dim gridBand1 As New DevExpress.XtraGrid.Views.BandedGrid.GridBand()
+   gridBand1.Caption = "Customer Info"
+   Dim gridBand2 As New DevExpress.XtraGrid.Views.BandedGrid.GridBand()
+   gridBand2.Caption = "Contact Info"
+   advBandedGridView1.Bands.Clear() ' remove default band
+   advBandedGridView1.Bands.AddRange(New DevExpress.XtraGrid.Views.BandedGrid.GridBand() {gridBand1, gridBand2})
+
+   ' now add columns to bands
+   CType(Me.gridControl1, System.ComponentModel.ISupportInitialize).BeginInit()
+   CType(Me.advBandedGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
+
+   gridBand1.Columns.Add(CType(mgr.Descriptors.Get("Id").Column, DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn))
+   gridBand1.Columns.Add(CType(mgr.Descriptors.Get("CompanyName").Column, DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn))
+   gridBand2.Columns.Add(CType(mgr.Descriptors.Get("Phone").Column, DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn))
+   gridBand2.Columns.Add(CType(mgr.Descriptors.Get("City").Column, DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn))
+
+   CType(Me.gridControl1, System.ComponentModel.ISupportInitialize).EndInit()
+   CType(Me.advBandedGridView1, System.ComponentModel.ISupportInitialize).EndInit()
+
+   ' retrieve all customers
+   mgr.BindingSource.DataSource = PersistenceManager.DefaultManager.GetEntities(Of Customer)()
+End Sub
+	</code></example>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DevExpressControls.XtraGridBindingDescriptorCollection.#ctor">
+            <summary>
+              Constructs an XtraGridBindingDescriptorCollection.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DevExpressControls.XtraGridBindingDescriptorCollection.Add(System.String,System.String)">
+            <overloads>Adds a binding to the collection.</overloads>
+             <summary>
+               Adds a binding using the specified property path.
+             </summary>
+             <param name="pColumnTitle">
+               Title of the GridColumn.
+             </param>
+             <param name="pPropertyPath">
+               Period delimited path of the property. e.g. "BirthDate" or "Address.City"
+             </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DevExpressControls.XtraGridBindingDescriptorCollection.Add(System.String,System.String,IdeaBlade.UI.IDataConverter)">
+            <summary>
+              Adds a binding using the specified property path and <see cref="T:IdeaBlade.UI.DataConverter"/>.
+            </summary>
+            <param name="pColumnTitle">
+              Title of the GridColumn.
+            </param>
+            <param name="pPropertyPath">
+              Period delimited path of the property. e.g. "BirthDate" or "Address.City"
+            </param>
+            <param name="pConverter">
+              Converter that specifies formatting, syntactic, and semantic validation.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DevExpressControls.XtraGridBindingDescriptorCollection.Add(System.String,System.String,System.Type)">
+            <summary>
+              Adds a binding using the specified property path and editor.
+            </summary>
+            <param name="pColumnTitle">
+              Title of the GridColumn.
+            </param>
+            <param name="pPropertyPath">
+              Period delimited path of the property. e.g. "BirthDate" or "Address.City"
+            </param>
+            <param name="pControlType">
+              Type of control to used to edit data in a GridColumn.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DevExpressControls.XtraGridBindingDescriptorCollection.Add(System.String,System.String,IdeaBlade.UI.IDataConverter,System.Type)">
+            <summary>
+              Adds a binding using the specified property path, <see cref="T:IdeaBlade.UI.DataConverter"/> and editor.
+            </summary>
+            <param name="pColumnTitle">
+              Title of the GridColumn.
+            </param>
+            <param name="pPropertyPath">
+              Period delimited path of the property. e.g. "BirthDate" or "Address.City"
+            </param>
+            <param name="pConverter">
+              Converter that specifies formatting, syntactic, and semantic validation.
+            </param>
+            <param name="pControlType">
+              Type of control to used to edit data in a GridColumn.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DevExpressControls.XtraGridBindingDescriptorCollection.Add(IdeaBlade.UI.ViewDescriptor)">
+            <summary>
+              Adds a binding using the specified ViewDescriptor.
+            </summary>
+            <param name="pViewDescriptor">
+              ViewDescriptor describing the bound property and conversion information.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DevExpressControls.XtraGridBindingDescriptorCollection.Add(IdeaBlade.UI.ViewDescriptor,System.Type)">
+            <summary>
+              Adds a binding using the specified ViewDescriptor and editor.
+            </summary>
+            <param name="pViewDescriptor">
+              ViewDescriptor describing the bound property and conversion information.
+            </param>
+            <param name="pControlType">
+              Type of control to used to edit data in a GridColumn.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DevExpressControls.XtraGridBindingDescriptorCollection.Add(IdeaBlade.UI.WinForms.DevExpressControls.XtraGridBindingDescriptor)">
+            <summary>
+              Adds an XtraGridBindingDescriptor to the collection.
+            </summary>
+            <param name="pDescriptor">
+              The XtraGridBindingDescriptor to add.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DevExpressControls.XtraGridBindingDescriptorCollection.Get(DevExpress.XtraGrid.Columns.GridColumn)">
+            <summary>
+              Get the XtraGridBindingDescriptor for the corresponding GridColumn.
+            </summary>
+            <param name="pColumn">
+              GridColumn of interest.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DevExpressControls.XtraGridBindingDescriptorCollection.Get(System.String)">
+            <summary>
+              Get the XtraGridBindingDescriptor for the corresponding property path.
+              If multiple columns bind to the same property, returns the first one found.
+            </summary>
+            <param name="pPropertyPath">
+              Period delimited path of the property. e.g. "BirthDate" or "Address.City"
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DevExpressControls.XtraGridBindingDescriptorCollection.Remove(IdeaBlade.UI.WinForms.DevExpressControls.XtraGridBindingDescriptor)">
+            <summary>
+              Removes the specified XtraGridBindingDescriptor.
+            </summary>
+            <param name="pDescriptor">
+              XtraGridBindingDescriptor to remove.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DevExpressControls.XtraGridBindingDescriptorCollection.Remove(DevExpress.XtraGrid.Columns.GridColumn)">
+            <summary>
+              Removes the specified XtraGridBindingDescriptor for the corresponding GridColumn.
+            </summary>
+            <param name="pColumn">
+              Control of interest.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DevExpressControls.XtraGridBindingDescriptorCollection.Remove(System.String)">
+            <summary>
+              Removes the XtraGridBindingDescriptor for the corresponding property path.
+              If multiple controls bind to the same property, removes the first one found.
+            </summary>
+            <param name="pPropertyPath">
+              Period delimited path of the property. e.g. "BirthDate" or "Address.City"
+            </param>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.DevExpressControls.XtraGridBindingDescriptorCollection.Item(System.Int32)">
+            <summary>
+              Get the XtraGridBindingDescriptor at the specified index.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.DevExpressControls.XtraGridBindingDescriptorCollection.CollectionType">
+            <summary>
+              Type of object this collection accepts.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.UI.WinForms.DevExpressControls.MemoExEditDataBinder">
+            <summary>
+              Binder for a MemoExEdit control.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DevExpressControls.MemoExEditDataBinder.GetBaseFitness(IdeaBlade.UI.IDataConverter)">
+            <summary>
+              Returns the fitness of using this binder for the specified converter.
+              See <see cref="T:IdeaBlade.UI.WinForms.UIFitness"/>.
+            </summary>
+            <param name="pConverter">
+              Converter that specifies formatting, syntactic, and semantic validation.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DevExpressControls.MemoExEditDataBinder.InitializeControl(System.Windows.Forms.Control,IdeaBlade.UI.ViewDescriptor)">
+            <summary>
+              Initializes the properties of a control before being bound.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.DevExpressControls.MemoExEditDataBinder.ControlType">
+            <summary>
+              The base type of control this binder works with.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.UI.WinForms.DevExpressControls.ImageEditColumnBinder">
+            <summary>
+              Binder for a ImageEdit control used in a GridColumn.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DevExpressControls.ImageEditColumnBinder.GetBaseFitness(IdeaBlade.UI.IDataConverter)">
+            <summary>
+              Returns the fitness of using this binder for the specified converter.
+              See <see cref="T:IdeaBlade.UI.WinForms.UIFitness"/>.
+            </summary>
+            <param name="pConverter">
+              Converter that specifies formatting, syntactic, and semantic validation.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DevExpressControls.ImageEditColumnBinder.GetColumnEdit">
+            <summary>
+              Get the repository item for the preferred control type.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DevExpressControls.ImageEditColumnBinder.SetColumnProperties(DevExpress.XtraGrid.Columns.GridColumn,IdeaBlade.UI.ViewDescriptor)">
+            <summary>
+              Sets the properties on a GridColumn from a ViewDescriptor.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.DevExpressControls.ImageEditColumnBinder.ControlType">
+            <summary>
+              The base type of control this binder works with.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.UI.WinForms.DevExpressControls.MemoEditColumnBinder">
+            <summary>
+              Binder for a MemoEdit control used in a GridColumn.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DevExpressControls.MemoEditColumnBinder.GetBaseFitness(IdeaBlade.UI.IDataConverter)">
+            <summary>
+              Returns the fitness of using this binder for the specified converter.
+              See <see cref="T:IdeaBlade.UI.WinForms.UIFitness"/>.
+            </summary>
+            <param name="pConverter">
+              Converter that specifies formatting, syntactic, and semantic validation.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DevExpressControls.MemoEditColumnBinder.GetColumnEdit">
+            <summary>
+              Get the repository item for the preferred control type.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DevExpressControls.MemoEditColumnBinder.SetColumnProperties(DevExpress.XtraGrid.Columns.GridColumn,IdeaBlade.UI.ViewDescriptor)">
+            <summary>
+              Sets the properties on a GridColumn from a ViewDescriptor.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.DevExpressControls.MemoEditColumnBinder.ControlType">
+            <summary>
+              The base type of control this binder works with.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.UI.WinForms.DevExpressControls.GridLookUpEditColumnBinder">
+            <summary>
+              Binder for a LookUpEdit control used in a GridColumn.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DevExpressControls.GridLookUpEditColumnBinder.GetBaseFitness(IdeaBlade.UI.IDataConverter)">
+            <summary>
+              Returns the fitness of using this binder for the specified converter.
+              See <see cref="T:IdeaBlade.UI.WinForms.UIFitness"/>.
+            </summary>
+            <param name="pConverter">
+              Converter that specifies formatting, syntactic, and semantic validation.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DevExpressControls.GridLookUpEditColumnBinder.GetColumnEdit">
+            <summary>
+              Get the repository item for the preferred control type.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DevExpressControls.GridLookUpEditColumnBinder.SetEditorProperties(DevExpress.XtraEditors.Repository.RepositoryItem,IdeaBlade.UI.IDataConverter)">
+            <summary>
+              Sets the persistent properties of an editor from a Converter.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DevExpressControls.GridLookUpEditColumnBinder.ButtonPressedHandler(System.Object,DevExpress.XtraEditors.Controls.ButtonPressedEventArgs)">
+            <summary>
+              Handlers the ButtonPressed event.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.DevExpressControls.GridLookUpEditColumnBinder.ControlType">
+            <summary>
+              The base type of control this binder works with.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.UI.WinForms.DevExpressControls.SpinEditColumnBinder">
+            <summary>
+              Binder for a SpinEdit control used in a GridColumn.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DevExpressControls.SpinEditColumnBinder.GetBaseFitness(IdeaBlade.UI.IDataConverter)">
+            <summary>
+              Returns the fitness of using this binder for the specified converter.
+              See <see cref="T:IdeaBlade.UI.WinForms.UIFitness"/>.
+            </summary>
+            <param name="pConverter">
+              Converter that specifies formatting, syntactic, and semantic validation.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DevExpressControls.SpinEditColumnBinder.GetColumnEdit">
+            <summary>
+              Get the repository item for the preferred control type.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DevExpressControls.SpinEditColumnBinder.SetColumnProperties(DevExpress.XtraGrid.Columns.GridColumn,IdeaBlade.UI.ViewDescriptor)">
+            <summary>
+              Sets the properties on a GridColumn from a ViewDescriptor.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DevExpressControls.SpinEditColumnBinder.SetEditorProperties(DevExpress.XtraEditors.Repository.RepositoryItem,IdeaBlade.UI.IDataConverter)">
+            <summary>
+              Sets the persistent properties of an editor from a Converter.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.DevExpressControls.SpinEditColumnBinder.ControlType">
+            <summary>
+              The base type of control this binder works with.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.UI.WinForms.DevExpressControls.DevXControlConfigurator">
+            <summary>
+              
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DevExpressControls.DevXControlConfigurator.CanConfigureControl(System.Type)">
+            <summary>
+            
+            </summary>
+            <param name="pControlType"></param>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DevExpressControls.DevXControlConfigurator.IsListControlType(System.Type)">
+            <summary>
+            
+            </summary>
+            <param name="pControlType"></param>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DevExpressControls.DevXControlConfigurator.ConfigureControl(System.Windows.Forms.Control,System.Type)">
+            <summary>
+            
+            </summary>
+            <param name="pControl"></param>
+            <param name="pDataType"></param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DevExpressControls.DevXControlConfigurator.GetAssemblyReferenceNames(System.Type)">
+            <summary>
+            
+            </summary>
+            <param name="pControlType"></param>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DevExpressControls.DevXControlConfigurator.ConfigureLabel(System.Windows.Forms.Control)">
+            <summary>
+            
+            </summary>
+            <param name="pLabel"></param>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.DevExpressControls.DevXControlConfigurator.PreferredLabelType">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.UI.WinForms.DevExpressControls.CalcEditColumnBinder">
+            <summary>
+              Binder for a CalcEdit control used in a GridColumn.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DevExpressControls.CalcEditColumnBinder.GetBaseFitness(IdeaBlade.UI.IDataConverter)">
+            <summary>
+              Returns the fitness of using this binder for the specified converter.
+              See <see cref="T:IdeaBlade.UI.WinForms.UIFitness"/>.
+            </summary>
+            <param name="pConverter">
+              Converter that specifies formatting, syntactic, and semantic validation.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DevExpressControls.CalcEditColumnBinder.GetColumnEdit">
+            <summary>
+              Get the repository item for the preferred control type.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.DevExpressControls.CalcEditColumnBinder.ControlType">
+            <summary>
+              The base type of control this binder works with.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.UI.WinForms.DevExpressControls.XtraGridBindingManager">
+            <summary>
+              Manages the data binding between a list of business objects and a Developer Express XtraGrid control.
+              <seealso cref="!:BindableList"/>
+              <seealso cref="T:IdeaBlade.UI.WinForms.DevExpressControls.XtraGridBindingDescriptor"/>
+            </summary>
+            <remarks>
+            <para>
+            The <see cref="P:IdeaBlade.UI.WinForms.BindingManager.BoundType"/> determines the type of business object to be managed. 
+            The <see cref="P:IdeaBlade.UI.WinForms.BindingManager.BindingSource"/> is the <see cref="T:System.Windows.Forms.BindingSource"/>
+            that contains one or more business objects of the BoundType.
+            Use the <see cref="P:IdeaBlade.UI.WinForms.DevExpressControls.XtraGridBindingManager.Descriptors"/> property to add <see cref="T:IdeaBlade.UI.WinForms.DevExpressControls.XtraGridBindingDescriptor">XtraGridBindingDescriptors</see>
+            to bind columns in the XtraGrid to business object properties.  The <see cref="P:IdeaBlade.UI.WinForms.DevExpressControls.XtraGridBindingManager.GridView"/> is the XtraGrid 
+            GridView used to display the data.  When creating a master-detail or multi-hierarchical grid, use the <see cref="M:IdeaBlade.UI.WinForms.DevExpressControls.XtraGridBindingManager.AddRelationView(System.String,System.String)"/>
+            method to create the nested GridView and establish the master-detail relationship.
+            </para>
+            <para>When using the <b>XtraGridBindingManager</b> it is not necessary for you to set the XtraGrid's DataSource
+            and DataMember properties, since the bindings will be managed by DevForce.  You will also not need to use the XtraGrid's
+            Column Designer, as the <b>XtraGridBindingDescriptors</b> will determine the columns displayed.
+            Styles, properties for the MainView, and the Repository Editor can all be used as you would when not using
+            an XtraGridBindingManager.
+            </para>
+            <para><note>Default styles for FocusedRow, SelectedRow and HideSelectionRow are overridden by this class.</note></para>
+            </remarks>
+            <example><code lang="C#">
+private void SimpleGridBinding() {
+  PersistenceManager pm = PersistenceManager.DefaultManager;
+
+  // setup bindings 
+  XtraGridBindingManager mgr = new XtraGridBindingManager(this.gridView1, typeof(Customer));
+  mgr.Descriptors.Add("Customer", "CompanyName");
+  mgr.Descriptors.Add("Contact", "ContactName");
+  mgr.Descriptors.Add("Phone", "Phone");
+  mgr.Descriptors.Add("City", "City");
+
+  // get some data
+  mgr.BindingSource.DataSource = pm.GetEntities&lt;Customer&gt;();
+}
+</code></example><example><code lang="VB">
+Private Sub SimpleGridBinding()
+
+  Dim pm As PersistenceManager = PersistenceManager.DefaultManager
+
+  ' setup bindings 
+  Dim mgr As New XtraGridBindingManager(Me.GridView1, GetType(Customer))
+  mgr.Descriptors.Add("Customer", "CompanyName")
+  mgr.Descriptors.Add("Contact", "ContactName")
+  mgr.Descriptors.Add("Phone", "Phone")
+  mgr.Descriptors.Add("City", "City")
+
+  ' get some data
+  mgr.BindingSource.DataSource = pm.GetEntities(Of Customer)()
+End Sub
+	</code></example>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DevExpressControls.XtraGridBindingManager.#ctor">
+            <summary>
+              Constructs an XtraGridBindingManager.
+            </summary>
+            <remarks>Beware: potential memory leak if fail to dispose of manager.</remarks>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DevExpressControls.XtraGridBindingManager.#ctor(System.ComponentModel.IContainer)">
+            <summary>
+              Constructs an XtraGridBindingManager and adds to parent control's components
+            </summary>
+            <param name="pContainer">Parent control's container</param>
+            <remarks>Parent control will dispose of this manager.</remarks>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DevExpressControls.XtraGridBindingManager.#ctor(System.Type)">
+            <summary>
+              Constructs an XtraGridBindingManager for the specified BoundType.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DevExpressControls.XtraGridBindingManager.#ctor(DevExpress.XtraGrid.Views.Base.ColumnView,System.Type)">
+            <summary>
+              Constructs an XtraGridBindingManager for the specified GridView and BoundType.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DevExpressControls.XtraGridBindingManager.#ctor(DevExpress.XtraGrid.Views.Base.ColumnView,System.Windows.Forms.BindingSource)">
+            <summary>
+              Constructs an XtraGridBindingManager for the specified GridView and binding source.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DevExpressControls.XtraGridBindingManager.#ctor(DevExpress.XtraGrid.Views.Base.ColumnView,System.Object)">
+            <summary>
+              Constructs an XtraGridBindingManager for the specified GridView and data source.
+            </summary>
+            <remarks>
+            See <see cref="P:IdeaBlade.UI.WinForms.BindingManager.DataSource"/> for additional information.
+            </remarks>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DevExpressControls.XtraGridBindingManager.AddRelationView(System.String,System.String)">
+            <summary>
+            Adds a detail view to the current GridView managed by this BindingManager.
+            </summary>
+            <param name="pRelationDisplayName">Display name of the relation.</param>
+            <param name="pPropertyPath">Property path</param>
+            <returns>Child detail view</returns>
+            <remarks>
+            Use the GridView returned to set the child <see cref="P:IdeaBlade.UI.WinForms.DevExpressControls.XtraGridBindingManager.GridView">XtraGridBindingManager.GridView</see> property.
+            </remarks>
+            <example><code lang="C#">
+private void MasterDetailGridBinding() {
+
+  // Sample 3-level display of customers, orders and order details
+
+  XtraGridBindingManager mgrMaster = new XtraGridBindingManager(this.gridView1, typeof(Customer));
+  mgrMaster.Descriptors.Add("Customer", "CompanyName");
+  mgrMaster.Descriptors.Add("Contact", "ContactName");
+  mgrMaster.Descriptors.Add("Phone", "Phone");
+  mgrMaster.Descriptors.Add("City", "City");
+
+  XtraGridBindingManager mgrChild = new XtraGridBindingManager(typeof(Order));
+  mgrChild.Descriptors.Add("#", "Id");
+  mgrChild.Descriptors.Add("Order Date", "OrderDate");
+  mgrChild.Descriptors.Add("Freight", "Freight");
+
+  XtraGridBindingManager mgrDetail = new XtraGridBindingManager(typeof(OrderDetail));
+  mgrDetail.Descriptors.Add("Product", "Product.ProductName");
+  mgrDetail.Descriptors.Add("Qty", "Quantity");
+  mgrDetail.Descriptors.Add("Price", "UnitPrice");
+
+  // Establish the master-detail relationships
+  mgrChild.GridView = mgrMaster.AddRelationView("Orders", "Orders");
+  mgrDetail.GridView = mgrChild.AddRelationView("Details", "OrderDetails");
+
+  // Get some data
+  mgrMaster.BindingSource.DataSource = PersistenceManager.DefaultManager.GetEntities&lt;Customer&gt;();
+}
+</code></example><example><code lang="VB">
+Private Sub MasterDetailGridBinding()
+
+   ' Sample 3-level display of customers, orders and order details
+   Dim mgrMaster As New XtraGridBindingManager(Me.gridView1, GetType(Customer))
+   mgrMaster.Descriptors.Add("Customer", "CompanyName")
+   mgrMaster.Descriptors.Add("Contact", "ContactName")
+   mgrMaster.Descriptors.Add("Phone", "Phone")
+   mgrMaster.Descriptors.Add("City", "City")
+
+   Dim mgrChild As New XtraGridBindingManager(GetType(Order))
+   mgrChild.Descriptors.Add("#", "Id")
+   mgrChild.Descriptors.Add("Order Date", "OrderDate")
+   mgrChild.Descriptors.Add("Freight", "Freight")
+
+   Dim mgrDetail As New XtraGridBindingManager(GetType(OrderDetail))
+   mgrDetail.Descriptors.Add("Product", "Product.ProductName")
+   mgrDetail.Descriptors.Add("Qty", "Quantity")
+   mgrDetail.Descriptors.Add("Price", "UnitPrice")
+
+   ' Establish the master-detail relationships
+   mgrChild.GridView = mgrMaster.AddRelationView("Orders", "Orders")
+   mgrDetail.GridView = mgrChild.AddRelationView("Details", "OrderDetails")
+
+   ' Get some data
+   mgrMaster.BindingSource.DataSource = PersistenceManager.DefaultManager.GetEntities(Of Customer)()
+End Sub
+	</code></example>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DevExpressControls.XtraGridBindingManager.AddRelationView(System.String,System.ComponentModel.PropertyDescriptor)">
+            <summary>
+            Adds a detail view to the current GridView managed by this BindingManager.
+            </summary>
+            <param name="pRelationDisplayName">Display name of the relation</param>
+            <param name="pDescriptor">Property descriptor for the property path</param>
+            <param name="pViewDescriptors">View descriptors</param>
+            <returns>Child detail view</returns>
+            <remarks>
+            Use the GridView returned to set the child <see cref="P:IdeaBlade.UI.WinForms.DevExpressControls.XtraGridBindingManager.GridView">XtraGridBindingManager.GridView</see> property.
+            </remarks>
+            <example><code lang="C#">
+private void MasterDetailGridBinding() {
+
+  // Sample 3-level display of customers, orders and order details
+
+  XtraGridBindingManager mgrMaster = new XtraGridBindingManager(this.gridView1, typeof(Customer));
+  mgrMaster.Descriptors.Add("Customer", "CompanyName");
+  mgrMaster.Descriptors.Add("Contact", "ContactName");
+  mgrMaster.Descriptors.Add("Phone", "Phone");
+  mgrMaster.Descriptors.Add("City", "City");
+
+  XtraGridBindingManager mgrChild = new XtraGridBindingManager(typeof(Order));
+  mgrChild.Descriptors.Add("#", "Id");
+  mgrChild.Descriptors.Add("Order Date", "OrderDate");
+  mgrChild.Descriptors.Add("Freight", "Freight");
+
+  XtraGridBindingManager mgrDetail = new XtraGridBindingManager(typeof(OrderDetail));
+  mgrDetail.Descriptors.Add("Product", "Product.ProductName");
+  mgrDetail.Descriptors.Add("Qty", "Quantity");
+  mgrDetail.Descriptors.Add("Price", "UnitPrice");
+
+  // Establish the master-detail relationships
+  mgrChild.GridView = mgrMaster.AddRelationView("Orders", "Orders");
+  mgrDetail.GridView = mgrChild.AddRelationView("Details", "OrderDetails");
+
+  // Get some data
+  mgrMaster.BindingSource.DataSource = PersistenceManager.DefaultManager.GetEntities&lt;Customer&gt;();
+}
+</code></example><example><code lang="VB">
+Private Sub MasterDetailGridBinding()
+
+   ' Sample 3-level display of customers, orders and order details
+   Dim mgrMaster As New XtraGridBindingManager(Me.gridView1, GetType(Customer))
+   mgrMaster.Descriptors.Add("Customer", "CompanyName")
+   mgrMaster.Descriptors.Add("Contact", "ContactName")
+   mgrMaster.Descriptors.Add("Phone", "Phone")
+   mgrMaster.Descriptors.Add("City", "City")
+
+   Dim mgrChild As New XtraGridBindingManager(GetType(Order))
+   mgrChild.Descriptors.Add("#", "Id")
+   mgrChild.Descriptors.Add("Order Date", "OrderDate")
+   mgrChild.Descriptors.Add("Freight", "Freight")
+
+   Dim mgrDetail As New XtraGridBindingManager(GetType(OrderDetail))
+   mgrDetail.Descriptors.Add("Product", "Product.ProductName")
+   mgrDetail.Descriptors.Add("Qty", "Quantity")
+   mgrDetail.Descriptors.Add("Price", "UnitPrice")
+
+   ' Establish the master-detail relationships
+   mgrChild.GridView = mgrMaster.AddRelationView("Orders", "Orders")
+   mgrDetail.GridView = mgrChild.AddRelationView("Details", "OrderDetails")
+
+   ' Get some data
+   mgrMaster.BindingSource.DataSource = PersistenceManager.DefaultManager.GetEntities(Of Customer)()
+End Sub
+	</code></example>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DevExpressControls.XtraGridBindingManager.Dispose(System.Boolean)">
+            <summary>
+            Overridden disposer.  
+            Cleanup any references to other instances of objects and events to prevent memory leaks.
+            </summary>
+            <param name="disposing"></param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DevExpressControls.XtraGridBindingManager.OnBindingSourceChanged">
+            <summary>
+            Re-bind processing used when the binding source changes.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DevExpressControls.XtraGridBindingManager.OnDataSourceChanged">
+            <summary>
+            Re-bind processing used when the data source changes.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DevExpressControls.XtraGridBindingManager.EndInit">
+            <summary>
+             Signals the object that initialization is complete. 
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DevExpressControls.XtraGridBindingManager.CreateBindingDescriptorCollection">
+            <summary>
+              Creates the strongly typed binding descriptor collection.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DevExpressControls.XtraGridBindingManager.BindCore(IdeaBlade.UI.WinForms.BindingDescriptor)">
+            <summary>
+              Binds the property in the descriptor to the current GridView.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DevExpressControls.XtraGridBindingManager.UnbindCore(IdeaBlade.UI.WinForms.BindingDescriptor)">
+            <summary>
+              Removes the column in the descriptor from the grid.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DevExpressControls.XtraGridBindingManager.ColumnVisibilityHack">
+            <summary>
+            We need to poke at least one column in the GridView columns collection 
+            and toggle its visiblity state in order for all following column indexing
+            to work correctly
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.DevExpressControls.XtraGridBindingManager.Descriptors">
+            <summary>
+              Gets the collection of bindings managed by this BindingManager.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.DevExpressControls.XtraGridBindingManager.BoundControl">
+            <summary>
+             Returns the bound GridControl.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.DevExpressControls.XtraGridBindingManager.CardView">
+            <summary>
+              Gets or sets the CardView.
+            </summary>
+            <remarks>
+            A "facade" on <see cref="P:IdeaBlade.UI.WinForms.DevExpressControls.XtraGridBindingManager.ColumnView"/>.
+            </remarks>
+            <exception cref="T:System.InvalidCastException">
+            Thrown if the view exists but is not a CardView
+            </exception>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.DevExpressControls.XtraGridBindingManager.GridView">
+            <summary>
+              Gets or sets the GridView.
+            </summary>
+            <remarks>
+            A "facade" on <see cref="P:IdeaBlade.UI.WinForms.DevExpressControls.XtraGridBindingManager.ColumnView"/>.
+            </remarks>
+            <exception cref="T:System.InvalidCastException">
+            Thrown if the view exists but is not a GridView
+            </exception>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.DevExpressControls.XtraGridBindingManager.ColumnView">
+            <summary>
+              Gets the DevEx "ColumnView".
+            </summary>
+            <remarks>
+            The DeveloperExpress base class for 
+            <see cref="T:DevExpress.XtraGrid.Views.Grid.GridView"/>
+            and other "grid" views.
+            See <see cref="P:IdeaBlade.UI.WinForms.DevExpressControls.XtraGridBindingManager.GridView"/>, 
+            a property returning the GridView sub-type.
+            <para>
+            It is also the base class for 
+            <see cref="T:DevExpress.XtraGrid.Views.Card.CardView"/>.
+            See <see cref="P:IdeaBlade.UI.WinForms.DevExpressControls.XtraGridBindingManager.CardView"/>, 
+            </para>
+            </remarks>
+        </member>
+        <member name="T:IdeaBlade.UI.WinForms.DevExpressControls.PictureEditDataBinder">
+            <summary>
+              Binder for a PictureEdit control.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DevExpressControls.PictureEditDataBinder.GetBaseFitness(IdeaBlade.UI.IDataConverter)">
+            <summary>
+              Returns the fitness of using this binder for the specified converter.
+              See <see cref="T:IdeaBlade.UI.WinForms.UIFitness"/>.
+            </summary>
+            <param name="pConverter">
+              Converter that specifies formatting, syntactic, and semantic validation.
+            </param>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.DevExpressControls.PictureEditDataBinder.ControlType">
+            <summary>
+              The base type of control this binder works with.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.UI.WinForms.DevExpressControls.ImageComboBoxEditDataBinder">
+            <summary>
+              Binder for an ImageComboBoxEdit control.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DevExpressControls.ImageComboBoxEditDataBinder.GetBaseFitness(IdeaBlade.UI.IDataConverter)">
+            <summary>
+              Returns the fitness of using this binder for the specified converter.
+              See <see cref="T:IdeaBlade.UI.WinForms.UIFitness"/>.
+            </summary>
+            <param name="pConverter">
+              Converter that specifies formatting, syntactic, and semantic validation.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DevExpressControls.ImageComboBoxEditDataBinder.InitializeControl(System.Windows.Forms.Control,IdeaBlade.UI.ViewDescriptor)">
+            <summary>
+              Initializes the properties of a control before being bound.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DevExpressControls.ImageComboBoxEditDataBinder.SetCustomColors(DevExpress.XtraEditors.BaseEdit)">
+            <summary>
+              For internal use only.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.DevExpressControls.ImageComboBoxEditDataBinder.ControlType">
+            <summary>
+              The base type of control this binder works with.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.DevExpressControls.ImageComboBoxEditDataBinder.BindingPropertyName">
+            <summary>
+              Property on the control that is set during binding.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.UI.WinForms.DevExpressControls.ImageEditDataBinder">
+            <summary>
+              Binder for a ImageEdit control.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DevExpressControls.ImageEditDataBinder.GetBaseFitness(IdeaBlade.UI.IDataConverter)">
+            <summary>
+              Returns the fitness of using this binder for the specified converter.
+              See <see cref="T:IdeaBlade.UI.WinForms.UIFitness"/>.
+            </summary>
+            <param name="pConverter">
+              Converter that specifies formatting, syntactic, and semantic validation.
+            </param>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.DevExpressControls.ImageEditDataBinder.ControlType">
+            <summary>
+              The base type of control this binder works with.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.UI.WinForms.DevExpressControls.GridLookUpEditDataBinder">
+            <summary>
+              Binder for a GridLookUpEdit control.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DevExpressControls.GridLookUpEditDataBinder.GetBaseFitness(IdeaBlade.UI.IDataConverter)">
+            <summary>
+              Returns the fitness of using this binder for the specified converter.
+              See <see cref="T:IdeaBlade.UI.WinForms.UIFitness"/>.
+            </summary>
+            <param name="pConverter">
+              Converter that specifies formatting, syntactic, and semantic validation.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DevExpressControls.GridLookUpEditDataBinder.InitializeControl(System.Windows.Forms.Control,IdeaBlade.UI.ViewDescriptor)">
+            <summary>
+              Initializes the properties of a control before being bound.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DevExpressControls.GridLookUpEditDataBinder.UnInitializeControl(System.Windows.Forms.Control)">
+            <summary>
+              Releases and resources or event handlers on a control after being unbound.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DevExpressControls.GridLookUpEditDataBinder.CloseUpHandler(System.Object,DevExpress.XtraEditors.Controls.CloseUpEventArgs)">
+            <summary>
+              Handles the CloseUp event.
+            </summary>
+            <param name="pSender"></param>
+            <param name="pArgs"></param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DevExpressControls.GridLookUpEditDataBinder.ButtonPressedHandler(System.Object,DevExpress.XtraEditors.Controls.ButtonPressedEventArgs)">
+            <summary>
+              Handles the ButtonPressed event.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.DevExpressControls.GridLookUpEditDataBinder.ControlType">
+            <summary>
+              The base type of control this binder works with.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.UI.WinForms.DevExpressControls.CheckEditColumnBinder">
+            <summary>
+              Binder for a CheckEdit control used in a GridColumn.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DevExpressControls.CheckEditColumnBinder.GetBaseFitness(IdeaBlade.UI.IDataConverter)">
+            <summary>
+              Returns the fitness of using this binder for the specified converter.
+              See <see cref="T:IdeaBlade.UI.WinForms.UIFitness"/>.
+            </summary>
+            <param name="pConverter">
+              Converter that specifies formatting, syntactic, and semantic validation.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DevExpressControls.CheckEditColumnBinder.GetColumnEdit">
+            <summary>
+              Get the repository item for the preferred control type.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DevExpressControls.CheckEditColumnBinder.SetEditorProperties(DevExpress.XtraEditors.Repository.RepositoryItem,IdeaBlade.UI.IDataConverter)">
+            <summary>
+            Sets the persistent properties of an editor from a Converter.
+            </summary>
+            <remarks>
+            Logic for initializing whether the check editor should support three states is as follows:
+            <list>
+            <item>If the developer uses the DefaultConverter's defaults, then the editor's AllowGrayed value is used.</item>
+            <item>If the developer modifies the DefaultConverter's Editability, then the converter's Editability overrides the editor.</item>
+            <item>If the developer selects the ThreeStateConverter and uses the converter's defaults,
+            then the converter's ThreeState value is used.</item>
+            <item>If the developer selects the ThreeStateConverter, keeps Editability.Optional, but modifies the ThreeState,
+            then the converter's ThreeState value is used.</item>
+            <item>If the developer selects the ThreeStateConverter and modifies the Editability, 
+            then the converter's Editability overrides its ThreeState.</item> 
+            </list>
+            </remarks>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.DevExpressControls.CheckEditColumnBinder.ControlType">
+            <summary>
+              The base type of control this binder works with.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.UI.WinForms.DevExpressControls.TimeEditColumnBinder">
+            <summary>
+              Binder for a TimeEdit control used in a GridColumn.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DevExpressControls.TimeEditColumnBinder.GetBaseFitness(IdeaBlade.UI.IDataConverter)">
+            <summary>
+              Returns the fitness of using this binder for the specified converter.
+              See <see cref="T:IdeaBlade.UI.WinForms.UIFitness"/>.
+            </summary>
+            <param name="pConverter">
+              Converter that specifies formatting, syntactic, and semantic validation.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DevExpressControls.TimeEditColumnBinder.GetColumnEdit">
+            <summary>
+              Get the repository item for the preferred control type.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.DevExpressControls.TimeEditColumnBinder.ControlType">
+            <summary>
+              The base type of control this binder works with.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.UI.WinForms.DevExpressControls.ImageComboBoxEditColumnBinder">
+            <summary>
+              Binder for an ImageComboBoxEdit control used in a GridColumn.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DevExpressControls.ImageComboBoxEditColumnBinder.GetBaseFitness(IdeaBlade.UI.IDataConverter)">
+            <summary>
+              Returns the fitness of using this binder for the specified converter.
+              See <see cref="T:IdeaBlade.UI.WinForms.UIFitness"/>.
+            </summary>
+            <param name="pConverter">
+              Converter that specifies formatting, syntactic, and semantic validation.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DevExpressControls.ImageComboBoxEditColumnBinder.GetColumnEdit">
+            <summary>
+              Get the repository item for the preferred control type.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DevExpressControls.ImageComboBoxEditColumnBinder.SetColumnProperties(DevExpress.XtraGrid.Columns.GridColumn,IdeaBlade.UI.ViewDescriptor)">
+            <summary>
+              Sets the properties on a GridColumn from a ViewDescriptor.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DevExpressControls.ImageComboBoxEditColumnBinder.SetCustomColors(DevExpress.XtraEditors.Repository.RepositoryItem)">
+            <summary>
+              For internal use only.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.DevExpressControls.ImageComboBoxEditColumnBinder.ControlType">
+            <summary>
+              The base type of control this binder works with.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.UI.WinForms.DevExpressControls.XtraGridBindingDescriptor">
+            <summary>
+            Encapsulates the metadata about a binding between an object property and a column in 
+            a Developer Express XtraGrid control.
+            <seealso cref="T:IdeaBlade.UI.WinForms.DevExpressControls.XtraGridBindingManager"/>
+            <seealso cref="T:IdeaBlade.UI.WinForms.DevExpressControls.XtraGridBindingDescriptorCollection"/>
+            </summary>
+            <remarks>
+            Use the <b>XtraGridBindingDescriptor</b> to create a binding between a grid column and
+            a business object property.  Each binding is added to an <see cref="T:IdeaBlade.UI.WinForms.DevExpressControls.XtraGridBindingManager"/>
+            using the <see cref="M:IdeaBlade.UI.WinForms.DevExpressControls.XtraGridBindingDescriptorCollection.Add(System.String,System.String)"/> method.  A binding
+            is constructed for a column, together with a <see cref="T:IdeaBlade.UI.ViewDescriptor"/> or
+            additional property and <see cref="T:IdeaBlade.UI.DataConverter"/> information.  Use the <see cref="P:IdeaBlade.UI.WinForms.DevExpressControls.XtraGridBindingDescriptor.Column"/>  
+            property to retrieve the GridColumn for the binding.
+            </remarks> 
+            <example><code lang="C#">
+private void SampleDescriptors() {
+  // Sample working with XtraGridBindingDescriptors
+
+  PersistenceManager pm = PersistenceManager.DefaultManager;
+  XtraGridBindingDescriptor bd;
+  DevExpress.XtraEditors.Repository.RepositoryItemMemoEdit editor;
+
+  // customize the grid
+  this.gridView1.OptionsView.RowAutoHeight = true;
+
+  // setup bindings to the Customer object
+  XtraGridBindingManager mgr = new XtraGridBindingManager(this.gridView1, typeof(Customer));
+  mgr.Descriptors.Add("Name", "ContactName");
+  mgr.Descriptors.Add("Company", "CompanyName");
+
+  // change the editor for the Address column to a MemoEdit showing 3 lines
+  bd = mgr.Descriptors.Add("Address", "Address");
+  editor = new DevExpress.XtraEditors.Repository.RepositoryItemMemoEdit();
+  editor.LinesCount = 3;
+  bd.Column.ColumnEdit = editor;
+
+  // change the column width for the "# Orders" column
+  bd = mgr.Descriptors.Add("# Orders", "Orders.Count", DataConverter.ReadOnlyField);
+  bd.Column.Width = 30;
+
+  // populate with data
+  mgr.BindingSource.DataSource = pm.GetEntities&lt;Customer&gt;();
+}
+	</code></example><example><code lang="VB">
+Private Sub SampleDescriptors()
+   ' Sample working with XtraGridBindingDescriptors
+   Dim pm As PersistenceManager = PersistenceManager.DefaultManager
+   Dim bd As XtraGridBindingDescriptor
+   Dim editor As DevExpress.XtraEditors.Repository.RepositoryItemMemoEdit
+
+   ' customize the grid
+   Me.gridView1.OptionsView.RowAutoHeight = True
+
+   ' setup bindings to the Customer object
+   Dim mgr As New XtraGridBindingManager(Me.gridView1, GetType(Customer))
+   mgr.Descriptors.Add("Name", "ContactName")
+   mgr.Descriptors.Add("Company", "CompanyName")
+
+   ' change the editor for the Address column to a MemoEdit showing 3 lines
+   bd = mgr.Descriptors.Add("Address", "Address")
+   editor = New DevExpress.XtraEditors.Repository.RepositoryItemMemoEdit()
+   editor.LinesCount = 3
+   bd.Column.ColumnEdit = editor
+
+   ' change the column width for the "# Orders" column
+   bd = mgr.Descriptors.Add("# Orders", "Orders.Count", DataConverter.ReadOnlyField)
+   bd.Column.Width = 30
+
+   ' populate with data
+   mgr.BindingSource.DataSource = pm.GetEntities(Of Customer)()
+End Sub
+	</code></example>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DevExpressControls.XtraGridBindingDescriptor.#ctor(IdeaBlade.UI.ViewDescriptor)">
+            <summary>
+              Constructs an XtraGridBindingDescriptor.
+            </summary>
+            <param name="pViewDescriptor">
+              ViewDescriptor describing the bound property and conversion information.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DevExpressControls.XtraGridBindingDescriptor.#ctor(System.Type,IdeaBlade.UI.ViewDescriptor)">
+            <summary>
+              Constructs an XtraGridBindingDescriptor.
+            </summary>
+            <param name="pControlType">
+              Type of control to use to edit data in a GridColumn.
+            </param>
+            <param name="pViewDescriptor">
+              ViewDescriptor describing the bound property and conversion information.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DevExpressControls.XtraGridBindingDescriptor.#ctor(System.String,System.Type,System.String)">
+            <summary>
+              Constructs an XtraGridBindingDescriptor.
+            </summary>
+            <param name="pColumnTitle">
+              Title of the GridColumn.
+            </param>
+            <param name="pObjectType">
+              Type of the object that the property exists on.  e.g. typeof(Employee)
+            </param>
+            <param name="pPropertyPath">
+              Period delimited path of the property. e.g. "BirthDate" or "Address.City"
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DevExpressControls.XtraGridBindingDescriptor.#ctor(System.String,System.Type,System.String,System.Type)">
+            <summary>
+              Constructs an XtraGridBindingDescriptor.
+            </summary>
+            <param name="pColumnTitle">
+              Title of the GridColumn.
+            </param>
+            <param name="pObjectType">
+              Type of the object that the property exists on.  e.g. typeof(Employee)
+            </param>
+            <param name="pPropertyPath">
+              Period delimited path of the property. e.g. "BirthDate" or "Address.City"
+            </param>
+            <param name="pControlType">
+              Type of control to used to edit data in a GridColumn.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DevExpressControls.XtraGridBindingDescriptor.#ctor(System.String,System.Type,System.String,IdeaBlade.UI.IDataConverter)">
+            <summary>
+              Constructs an XtraGridBindingDescriptor.
+            </summary>
+            <param name="pColumnTitle">
+              Title of the GridColumn.
+            </param>
+            <param name="pObjectType">
+              Type of the object that the property exists on.  e.g. typeof(Employee)
+            </param>
+            <param name="pPropertyPath">
+              Period delimited path of the property. e.g. "BirthDate" or "Address.City"
+            </param>
+            <param name="pConverter">
+              Converter that specifies formatting, syntactic, and semantic validation.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DevExpressControls.XtraGridBindingDescriptor.#ctor(System.String,System.Type,System.String,IdeaBlade.UI.IDataConverter,System.Type)">
+            <summary>
+              Constructs an XtraGridBindingDescriptor.
+            </summary>
+            <param name="pColumnTitle">
+              Title of the GridColumn.
+            </param>
+            <param name="pObjectType">
+              Type of the object that the property exists on.  e.g. typeof(Employee)
+            </param>
+            <param name="pPropertyPath">
+              Period delimited path of the property. e.g. "BirthDate" or "Address.City"
+            </param>
+            <param name="pConverter">
+              Converter that specifies formatting, syntactic, and semantic validation.
+            </param>
+            <param name="pControlType">
+              Type of control to used to edit data in a GridColumn.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DevExpressControls.XtraGridBindingDescriptor.RefreshCore">
+            <summary>
+              Refreshes the binding with the current properties.
+              Typically used when some aspect of the converter changes.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.DevExpressControls.XtraGridBindingDescriptor.Column">
+            <summary>
+              Gets the GridColumn for this binding.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.UI.WinForms.DevExpressControls.XtraGridBinderMap">
+            <summary>
+              Maps controls and XtraGridColumnBinders to each other.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DevExpressControls.XtraGridBinderMap.GetDataBinder(IdeaBlade.UI.IDataConverter)">
+            <summary>
+              Gets the XtraGridColumnBinder that is the best fit for the specified converter.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DevExpressControls.XtraGridBinderMap.GetDataBinder(System.Type)">
+            <summary>
+              Gets the XtraGridColumnBinder for the specified control type.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DevExpressControls.XtraGridBinderMap.GetDataBinderOfType(System.Type)">
+            <summary>
+              Get the XtraGridColumnBinder of the specified binder type.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DevExpressControls.XtraGridBinderMap.AdjustFitness(System.Type,System.Double)">
+            <summary>
+              Adjusts the fitness for a binder.
+              Typically used to set a bias for a set of controls such as DevExpress.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DevExpressControls.XtraGridBinderMap.GetBinder(System.Type)">
+            <summary>
+              Get the binder for the specified control type.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.DevExpressControls.XtraGridBinderMap.ControlTypes">
+            <summary>
+              Get a list of the control types that are mapped.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.DevExpressControls.XtraGridBinderMap.Binders">
+            <summary>
+              Get a list of the binders that are mapped.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.DevExpressControls.XtraGridBinderMap.Instance">
+            <summary>
+              Gets the singleton instance of the XtraGridBinderMap.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.UI.WinForms.DevExpressControls.DevExpressFns">
+            <summary>
+              Helper functions for working with DevExpress.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.DevExpressControls.DevExpressFns.UseCustomDisabledColors">
+            <summary>
+              Gets or sets whether or not to apply custom colors to DevExpress controls
+              when they are disabled.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.UI.WinForms.DevExpressControls.DateEditDataBinder">
+            <summary>
+              Binder for a DateEdit control.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DevExpressControls.DateEditDataBinder.GetBaseFitness(IdeaBlade.UI.IDataConverter)">
+            <summary>
+              Returns the fitness of using this binder for the specified converter.
+              See <see cref="T:IdeaBlade.UI.WinForms.UIFitness"/>.
+            </summary>
+            <param name="pConverter">
+              Converter that specifies formatting, syntactic, and semantic validation.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DevExpressControls.DateEditDataBinder.InitializeControl(System.Windows.Forms.Control,IdeaBlade.UI.ViewDescriptor)">
+            <summary>
+              Initializes the properties of a control before being bound.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.DevExpressControls.DateEditDataBinder.ControlType">
+            <summary>
+              The base type of control this binder works with.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.UI.WinForms.DevExpressControls.MemoExEditColumnBinder">
+            <summary>
+              Binder for a MemoExEdit control used in a GridColumn.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DevExpressControls.MemoExEditColumnBinder.GetBaseFitness(IdeaBlade.UI.IDataConverter)">
+            <summary>
+              Returns the fitness of using this binder for the specified converter.
+              See <see cref="T:IdeaBlade.UI.WinForms.UIFitness"/>.
+            </summary>
+            <param name="pConverter">
+              Converter that specifies formatting, syntactic, and semantic validation.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DevExpressControls.MemoExEditColumnBinder.GetColumnEdit">
+            <summary>
+              Get the repository item for the preferred control type.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.DevExpressControls.MemoExEditColumnBinder.ControlType">
+            <summary>
+              The base type of control this binder works with.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.UI.WinForms.DevExpressControls.LookUpEditDataBinder">
+            <summary>
+              Binder for a LookUpEdit control.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DevExpressControls.LookUpEditDataBinder.GetBaseFitness(IdeaBlade.UI.IDataConverter)">
+            <summary>
+              Returns the fitness of using this binder for the specified converter.
+              See <see cref="T:IdeaBlade.UI.WinForms.UIFitness"/>.
+            </summary>
+            <param name="pConverter">
+              Converter that specifies formatting, syntactic, and semantic validation.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DevExpressControls.LookUpEditDataBinder.InitializeControl(System.Windows.Forms.Control,IdeaBlade.UI.ViewDescriptor)">
+            <summary>
+              Initializes the properties of a control before being bound.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DevExpressControls.LookUpEditDataBinder.UnInitializeControl(System.Windows.Forms.Control)">
+            <summary>
+              Releases and resources or event handlers on a control after being unbound.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DevExpressControls.LookUpEditDataBinder.CloseUpHandler(System.Object,DevExpress.XtraEditors.Controls.CloseUpEventArgs)">
+            <summary>
+              Handles the CloseUp event.
+            </summary>
+            <param name="pSender"></param>
+            <param name="pArgs"></param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DevExpressControls.LookUpEditDataBinder.ButtonPressedHandler(System.Object,DevExpress.XtraEditors.Controls.ButtonPressedEventArgs)">
+            <summary>
+              Handles the ButtonPressed event.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.DevExpressControls.LookUpEditDataBinder.ControlType">
+            <summary>
+              The base type of control this binder works with.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.UI.WinForms.DevExpressControls.SpinEditDataBinder">
+            <summary>
+              Binder for a SpinEdit control.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DevExpressControls.SpinEditDataBinder.GetBaseFitness(IdeaBlade.UI.IDataConverter)">
+            <summary>
+              Returns the fitness of using this binder for the specified converter.
+              See <see cref="T:IdeaBlade.UI.WinForms.UIFitness"/>.
+            </summary>
+            <param name="pConverter">
+              Converter that specifies formatting, syntactic, and semantic validation.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DevExpressControls.SpinEditDataBinder.InitializeControl(System.Windows.Forms.Control,IdeaBlade.UI.ViewDescriptor)">
+            <summary>
+              Initializes the properties of a control before being bound.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.DevExpressControls.SpinEditDataBinder.ControlType">
+            <summary>
+              The base type of control this binder works with.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.UI.WinForms.DevExpressControls.CalcEditDataBinder">
+            <summary>
+              Binder for a CalcEdit control.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DevExpressControls.CalcEditDataBinder.GetBaseFitness(IdeaBlade.UI.IDataConverter)">
+            <summary>
+              Returns the fitness of using this binder for the specified converter.
+              See <see cref="T:IdeaBlade.UI.WinForms.UIFitness"/>.
+            </summary>
+            <param name="pConverter">
+              Converter that specifies formatting, syntactic, and semantic validation.
+            </param>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.DevExpressControls.CalcEditDataBinder.ControlType">
+            <summary>
+              The base type of control this binder works with.
+            </summary>
+        </member>
+    </members>
+</doc>

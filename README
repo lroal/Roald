@@ -11,7 +11,7 @@ gem install sprockets
 
 You need JsTestDriver:
 -environment variable JSTESTDRIVER_HOME must be set to e.g. c:\bin
--JsTestDriver-1.2.1.jar in e.g. c:\bin
+-JsTestDriver-1.3.2.jar in e.g. c:\bin
 
 -------------------
 How to build srcjs
@@ -24,7 +24,7 @@ How to build srcjs
 How to run js tests
 --------------------------
 1. Start the jstestdriver server:
-java -jar %JSTESTDRIVER_HOME%\JsTestDriver-1.2.1.jar --port 4224
+java -jar %JSTESTDRIVER_HOME%\JsTestDriver-1.3.2.jar --port 4224
 
 2. Capture the browser by typing http://localhost:4224 in the browser. Select transactional or strict mode.
 

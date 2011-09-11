@@ -1,0 +1,410 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>IdeaBlade.Util.Wcf</name>
+    </assembly>
+    <members>
+        <member name="T:IdeaBlade.Util.Wcf.WcfTraceSubscriber">
+            <summary>
+            Subscriber to a <see cref="T:IdeaBlade.Util.Wcf.WcfTracePublisher"/>.
+            </summary>
+            <remarks>
+            This TraceSubscriber uses Windows Communication Foundation to communicate with a TracePublisher.
+            </remarks>
+            <seealso cref="T:IdeaBlade.Util.Wcf.WcfTracePublisher"/>
+        </member>
+        <member name="T:IdeaBlade.Util.Wcf.IWcfTraceSubscriberCallback">
+            <summary>
+            Interface that any subscriber to a <see cref="T:IdeaBlade.Util.Wcf.WcfTracePublisher"/> must implement.
+            </summary>
+            <remarks>
+            This is the callback contract that any subscriber to an <see cref="T:IdeaBlade.Util.Wcf.IWcfTracePublisher"/>
+            service contract must implement for duplex communications.
+            <see cref="M:IdeaBlade.Util.Wcf.IWcfTraceSubscriberCallback.OnPublish(IdeaBlade.Util.TraceMessage)"/> will be called on a duplex channel from a remote publisher.
+            </remarks>
+        </member>
+        <member name="M:IdeaBlade.Util.Wcf.IWcfTraceSubscriberCallback.OnPublish(IdeaBlade.Util.TraceMessage)">
+            <summary>
+            Receive messages published by the TracePublisher.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.Util.Wcf.WcfTraceSubscriber.StartSubscription">
+            <summary>
+            Start subscription to the local TracePublisher.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.Util.Wcf.WcfTraceSubscriber.StartSubscription(System.String)">
+            <summary>
+            Start subscription to the remote TracePublisher at the specified Url.
+            </summary>
+            <param name="pPublisherUrl"></param>
+        </member>
+        <member name="M:IdeaBlade.Util.Wcf.WcfTraceSubscriber.StartSubscription(IdeaBlade.Util.TracePublisher)">
+            <summary>
+            Start subscribing to the specified local TracePublisher instance.
+            </summary>
+            <param name="pTracePublisher"></param>
+        </member>
+        <member name="M:IdeaBlade.Util.Wcf.WcfTraceSubscriber.StopSubscription">
+            <summary>
+            Unsubscribe from the TracePublisher.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.Util.Wcf.WcfTraceSubscriber.PingPublisher">
+            <summary>
+            Ping the TracePublisher.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:IdeaBlade.Util.Wcf.WcfTraceSubscriber.IsSubscribed">
+            <summary>
+            Returns whether the subscriber is currently subscribed to a publisher.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.Util.Wcf.WcfTraceSubscriber.Protocol">
+            <summary>
+            Returns the protocol used to communicate with a remote publisher.
+            </summary>
+            <remarks>
+            Always "net.tcp".
+            </remarks>
+        </member>
+        <member name="T:IdeaBlade.Util.Wcf.Extensions.ErrorBehaviorAttribute">
+            <summary>
+            Attribute applied to a service to install a custom error handling behavior.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.Util.Wcf.Extensions.ErrorBehaviorAttribute.#ctor(System.Type)">
+            <summary>
+            Create an instance of this class.
+            </summary>
+            <param name="errorHandlerType"></param>
+        </member>
+        <member name="T:IdeaBlade.Util.Wcf.IWcfTracePublisher">
+            <summary>
+            Interface to be implemented by any publisher of trace messages
+            which will be using the Windows Communication Foundation to
+            communicate with subscribers.
+            </summary>
+            <remarks>
+            This is the service contract used by the <see cref="T:IdeaBlade.Util.Wcf.WcfTracePublisher"/>.
+            Subscribers to this publisher must implement the <see cref="T:IdeaBlade.Util.Wcf.IWcfTraceSubscriberCallback"/>
+            callback contract.
+            </remarks>
+        </member>
+        <member name="M:IdeaBlade.Util.Wcf.IWcfTracePublisher.Subscribe(System.Guid,IdeaBlade.Util.Wcf.IWcfTraceSubscriberCallback)">
+            <summary>
+            Called by <see cref="T:IdeaBlade.Util.Wcf.IWcfTraceSubscriberCallback"/> implementations in order to receive <see cref="M:IdeaBlade.Util.Wcf.IWcfTraceSubscriberCallback.OnPublish(IdeaBlade.Util.TraceMessage)"/> notifications.
+            </summary>
+            <param name="pKey">Id of the subscriber</param>
+            <param name="pSubscriber"></param>
+        </member>
+        <member name="M:IdeaBlade.Util.Wcf.IWcfTracePublisher.Unsubscribe(System.Guid)">
+            <summary>
+            Called by <see cref="T:IdeaBlade.Util.Wcf.IWcfTraceSubscriberCallback"/> implementations when publication notice is no longer wanted.
+            </summary>
+            <param name="pKey">Id of the subscriber</param>
+        </member>
+        <member name="M:IdeaBlade.Util.Wcf.IWcfTracePublisher.Publish(IdeaBlade.Util.TraceMessage)">
+            <summary>
+            Instructs the TracePublisher to publish a message.
+            </summary>
+            <remarks>
+            This method is not part of the Service Contract and is not used by subscribers.
+            </remarks>
+        </member>
+        <member name="M:IdeaBlade.Util.Wcf.IWcfTracePublisher.Ping">
+            <summary>
+            Determine if the service is active.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:IdeaBlade.Util.Wcf.WcfTracePublisher">
+            <summary>
+            Publishes debugging and tracing messages generated by DevForce applications.
+            </summary>
+            <remarks>
+            This TracePublisher uses Windows Communication Foundation when hosted as a service.
+            </remarks>
+        </member>
+        <member name="M:IdeaBlade.Util.Wcf.WcfTracePublisher.GetRemoteInstance(System.String,IdeaBlade.Util.Wcf.IWcfTraceSubscriberCallback)">
+            <summary>
+            Returns a proxy to the remote TracePublisher.
+            </summary>
+            <param name="pTracePublisherUrl">URL of the publisher</param>
+            <param name="pSubscriber"></param>
+            <returns></returns>
+            <remarks>
+            The subscriber instance is required in order to create the DuplexChannelFactory.  The subscriber's
+            OnPublish method will be called on a callback channel.
+            </remarks>
+        </member>
+        <member name="M:IdeaBlade.Util.Wcf.WcfTracePublisher.MakeRemotableCore">
+            <summary>
+            Start the TracePublisher service.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.Util.Wcf.WcfTracePublisher.PublishCore(IdeaBlade.Util.TraceMessage)">
+            <summary>
+            Call OnPublish method for all subscribers.
+            </summary>
+            <param name="pTraceMessage"></param>
+        </member>
+        <member name="M:IdeaBlade.Util.Wcf.WcfTracePublisher.Subscribe(System.Guid,IdeaBlade.Util.Wcf.IWcfTraceSubscriberCallback)">
+            <summary>
+            Called by <see cref="T:IdeaBlade.Util.Wcf.IWcfTraceSubscriberCallback"/> implementations in order to receive <see cref="M:IdeaBlade.Util.Wcf.IWcfTraceSubscriberCallback.OnPublish(IdeaBlade.Util.TraceMessage)"/> notifications.
+            </summary>
+            <param name="pKey">Subscriber Id</param>
+            <param name="pSubscriber"></param>
+            <remarks>
+            If subscribing to a remote TracePublisher the <paramref name="pSubscriber"/> parameter should be null since
+            a callback channel is used instead.
+            </remarks>
+        </member>
+        <member name="M:IdeaBlade.Util.Wcf.WcfTracePublisher.Unsubscribe(System.Guid)">
+            <summary>
+            Called by <see cref="T:IdeaBlade.Util.Wcf.IWcfTraceSubscriberCallback"/> implementations when publication notice is no longer wanted.
+            </summary>
+            <param name="pKey">Subscriber Id</param>
+        </member>
+        <member name="M:IdeaBlade.Util.Wcf.WcfTracePublisher.Dispose(System.Boolean)">
+            <summary>
+            All subscribers receive a shutdown notice when the publisher is disposing.
+            </summary>
+            <param name="pDisposing"></param>
+        </member>
+        <member name="F:IdeaBlade.Util.Wcf.WcfTracePublisher.mSubscribers">
+            <summary>
+            Why we use a dictionary instead of the ArrayList used in Remoting -
+            when the TraceFileXmlLogger uses a separate AppDomain, Unsubscribe
+            calls from OTHER remote subscribers fail when we try to remove
+            the subscriber from the list.  This seems to have something to
+            do with array access while on a callback channel and the list 
+            also contains remoted objects. 
+            The resolution was to use a keyed list
+            so that only the subscriber item is accessed during the call.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.Util.Wcf.WcfTracePublisher.LocalInstance">
+            <summary>
+            Returns the singleton instance for this class.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.Util.Wcf.WcfTracePublisher.BaseUrl">
+            <summary>
+            Returns the default protocol and server for this publisher.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.Util.Wcf.Extensions.NetDataContractFormatAttribute">
+            <summary>
+            Attribute applied to operation contracts to allow use of the <see cref="T:System.Runtime.Serialization.NetDataContractSerializer"/>.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.Util.Wcf.Extensions.NetDataContractFormatAttribute.AddBindingParameters(System.ServiceModel.Description.OperationDescription,System.ServiceModel.Channels.BindingParameterCollection)">
+            <summary>
+            
+            </summary>
+            <param name="description"></param>
+            <param name="parameters"></param>
+        </member>
+        <member name="M:IdeaBlade.Util.Wcf.Extensions.NetDataContractFormatAttribute.ApplyClientBehavior(System.ServiceModel.Description.OperationDescription,System.ServiceModel.Dispatcher.ClientOperation)">
+            <summary>
+            
+            </summary>
+            <param name="description"></param>
+            <param name="proxy"></param>
+        </member>
+        <member name="M:IdeaBlade.Util.Wcf.Extensions.NetDataContractFormatAttribute.ApplyDispatchBehavior(System.ServiceModel.Description.OperationDescription,System.ServiceModel.Dispatcher.DispatchOperation)">
+            <summary>
+            
+            </summary>
+            <param name="description"></param>
+            <param name="dispatch"></param>
+        </member>
+        <member name="M:IdeaBlade.Util.Wcf.Extensions.NetDataContractFormatAttribute.Validate(System.ServiceModel.Description.OperationDescription)">
+            <summary>
+            
+            </summary>
+            <param name="description"></param>
+        </member>
+        <member name="T:IdeaBlade.Util.Wcf.Extensions.NetDataContractFormatAttribute.NetDataContractSerializerOperationBehavior">
+            <summary>
+            OperationBehavior supporting use of the <see cref="T:System.Runtime.Serialization.NetDataContractSerializer"/>.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.Util.Wcf.Extensions.NetDataContractFormatAttribute.NetDataContractSerializerOperationBehavior.#ctor(System.ServiceModel.Description.OperationDescription)">
+            <summary>
+            
+            </summary>
+            <param name="operationDescription"></param>
+        </member>
+        <member name="M:IdeaBlade.Util.Wcf.Extensions.NetDataContractFormatAttribute.NetDataContractSerializerOperationBehavior.CreateSerializer(System.Type,System.String,System.String,System.Collections.Generic.IList{System.Type})">
+            <summary>
+            
+            </summary>
+            <param name="type"></param>
+            <param name="name"></param>
+            <param name="ns"></param>
+            <param name="knownTypes"></param>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.Util.Wcf.Extensions.NetDataContractFormatAttribute.NetDataContractSerializerOperationBehavior.CreateSerializer(System.Type,System.Xml.XmlDictionaryString,System.Xml.XmlDictionaryString,System.Collections.Generic.IList{System.Type})">
+            <summary>
+            
+            </summary>
+            <param name="type"></param>
+            <param name="name"></param>
+            <param name="ns"></param>
+            <param name="knownTypes"></param>
+            <returns></returns>
+        </member>
+        <member name="T:IdeaBlade.Util.Wcf.Extensions.GZipMessageEncodingBindingElement">
+            <summary>
+            This is the binding element that, when plugged into a custom binding, will enable the GZip encoder.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.Util.Wcf.Extensions.GZipMessageEncodingBindingElement.#ctor">
+            <summary>
+            Create an instance of this class, wrapping a <see cref="T:System.ServiceModel.Channels.BinaryMessageEncodingBindingElement"/>.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.Util.Wcf.Extensions.GZipMessageEncodingBindingElement.#ctor(System.ServiceModel.Channels.MessageEncodingBindingElement)">
+            <summary>
+            Create an instance of this class, wrapping the specified <see cref="T:System.ServiceModel.Channels.MessageEncodingBindingElement"/>.
+            </summary>
+            <param name="messageEncoderBindingElement"></param>
+        </member>
+        <member name="M:IdeaBlade.Util.Wcf.Extensions.GZipMessageEncodingBindingElement.CreateMessageEncoderFactory">
+            <summary>
+            Main entry point into the encoder binding element. Called by WCF to get the factory that will create the
+            message encoder
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.Util.Wcf.Extensions.GZipMessageEncodingBindingElement.Clone">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.Util.Wcf.Extensions.GZipMessageEncodingBindingElement.GetProperty``1(System.ServiceModel.Channels.BindingContext)">
+            <summary>
+            
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="context"></param>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.Util.Wcf.Extensions.GZipMessageEncodingBindingElement.BuildChannelFactory``1(System.ServiceModel.Channels.BindingContext)">
+            <summary>
+            
+            </summary>
+            <typeparam name="TChannel"></typeparam>
+            <param name="context"></param>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.Util.Wcf.Extensions.GZipMessageEncodingBindingElement.BuildChannelListener``1(System.ServiceModel.Channels.BindingContext)">
+            <summary>
+            
+            </summary>
+            <typeparam name="TChannel"></typeparam>
+            <param name="context"></param>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.Util.Wcf.Extensions.GZipMessageEncodingBindingElement.CanBuildChannelListener``1(System.ServiceModel.Channels.BindingContext)">
+            <summary>
+            
+            </summary>
+            <typeparam name="TChannel"></typeparam>
+            <param name="context"></param>
+            <returns></returns>
+        </member>
+        <member name="P:IdeaBlade.Util.Wcf.Extensions.GZipMessageEncodingBindingElement.InnerMessageEncodingBindingElement">
+            <summary>
+            Gets or set the inner <see cref="T:System.ServiceModel.Channels.MessageEncodingBindingElement"/>.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.Util.Wcf.Extensions.GZipMessageEncodingBindingElement.ReaderQuotas">
+            <summary>
+            Gets the ReaderQuotas from the inner MessageEncodingBindingElement.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.Util.Wcf.Extensions.GZipMessageEncodingBindingElement.MessageVersion">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.Util.Wcf.Extensions.GZipMessageEncodingElement">
+            <summary>
+            This class allows the GZipMessageEncodingBindingElement to be configured from a config file.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.Util.Wcf.Extensions.GZipMessageEncodingElement.#ctor">
+            <summary>
+            Create an instance of this class.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.Util.Wcf.Extensions.GZipMessageEncodingElement.ApplyConfiguration(System.ServiceModel.Channels.BindingElement)">
+            <summary>
+            Called by the WCF to apply the configuration settings to the binding element
+            </summary>
+            <param name="bindingElement"></param>
+        </member>
+        <member name="M:IdeaBlade.Util.Wcf.Extensions.GZipMessageEncodingElement.CreateBindingElement">
+            <summary>
+            Called by the WCF to create the binding element.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:IdeaBlade.Util.Wcf.Extensions.GZipMessageEncodingElement.BindingElementType">
+            <summary>
+            Called by the WCF to discover the type of binding element this config section enables.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.Util.Wcf.Extensions.GZipMessageEncodingElement.InnerMessageEncoding">
+            <summary>
+            Gets or sets the inner encoder.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.Util.Wcf.Extensions.GZipMessageEncodingElement.ReaderQuotas">
+            <summary>
+            We still need this defined as a ConfigurationProperty to hold the XmlDictionaryReaderQuotasElement.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.Util.Wcf.Extensions.GZipMessageEncodingElement.MaxArrayLength">
+            <summary>
+            Gets or sets the ReaderQuotas.MaxArrayLength value.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.Util.Wcf.Extensions.GZipMessageEncodingElement.MaxBytesPerRead">
+            <summary>
+            Gets or sets the ReaderQuotas.MaxBytesPerRead value.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.Util.Wcf.Extensions.GZipMessageEncodingElement.MaxDepth">
+            <summary>
+            Gets or sets the ReaderQuotas.MaxDepth value.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.Util.Wcf.Extensions.GZipMessageEncodingElement.MaxNameTableCharCount">
+            <summary>
+            Gets or sets the ReaderQuotas.MaxNameTableCharCount value.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.Util.Wcf.Extensions.GZipMessageEncodingElement.MaxStringContentLength">
+            <summary>
+            Gets or sets the ReaderQuotas.MaxStringContentLength value.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.Util.Wcf.Extensions.GZipMessageEncodingBindingElementImporter">
+            <summary>
+            Used to import the <see cref="T:IdeaBlade.Util.Wcf.Extensions.GZipMessageEncodingBindingElement"/>.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.Util.Wcf.Extensions.GZipMessageEncodingBindingElementImporter.#ctor">
+            <summary>
+            Create an instance of this class.
+            </summary>
+        </member>
+    </members>
+</doc>

@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>IdeaBlade.UI.WinForms.DevExpressControls.v7_3_3.Design</name>
+    </assembly>
+    <members>
+        <member name="M:IdeaBlade.UI.WinForms.DevExpressControls.Design.XtraGridBindingManagerConfigurationForm.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DevExpressControls.Design.XtraGridBindingManagerConfigurationForm.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+    </members>
+</doc>

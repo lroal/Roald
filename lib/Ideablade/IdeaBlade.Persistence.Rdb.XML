@@ -1,0 +1,1965 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>IdeaBlade.Persistence.Rdb</name>
+    </assembly>
+    <members>
+        <member name="T:IdeaBlade.Persistence.Rdb.SqlServerIdentityIdGenerator">
+            <summary>
+            <see cref="T:IdeaBlade.Persistence.IIdGenerator"/> providing intrinsic framework support for SQL Server <b>Identity</b> columns.
+            </summary>
+            <remarks>
+            This IdGenerator will automatically be used to provide a column value for any new entities having
+            <b>Identity</b> primary keys.  You do not need to call <see cref="M:IdeaBlade.Persistence.PersistenceManager.GenerateId"/>
+            for Identity columns, this key generation is done for you.
+            <para>
+            If you do not wish to use this generator for your Identity columns you will need to provide a stub
+            implementation of <see cref="T:IdeaBlade.Persistence.IIdentityIdGenerator"/>.
+            </para>
+            <para>
+            ID values are normally allocated using a DBCC command, which requires that the user ID connecting
+            to the database have privileges to run this command.  If you don't wish to grant these 
+            privileges and you are using SQL Server 2005, you can instead use a DevForce-provided stored procedure to perform the
+            allocation.  You will also need to set the <see cref="P:IdeaBlade.Rdb.RdbKey.UseSqlIdentityProc"/> flag on.
+            </para>
+            </remarks>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Rdb.SqlServerIdentityIdGenerator.#ctor">
+            <summary>
+            Creates a new instance of this class.  Internal use only.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Rdb.SqlServerIdentityIdGenerator.IsApplicable(IdeaBlade.Util.IDataSourceKey)">
+            <summary>
+            Returns whether this generator can be used with the specified data source.
+            </summary>
+            <param name="pDsKey"></param>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Rdb.SqlServerIdentityIdGenerator.GetNextTempId(IdeaBlade.Persistence.EntityColumn)">
+            <summary>
+            Returns a temporary ID value for the specified column.
+            </summary>
+            <param name="pColumn"></param>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Rdb.SqlServerIdentityIdGenerator.IsTempId(IdeaBlade.Persistence.UniqueId)">
+            <summary>
+            Returns whether the specified ID is a temporary ID.
+            </summary>
+            <param name="pUniqueId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Rdb.SqlServerIdentityIdGenerator.Reset">
+            <summary>
+            Reset temporary ID generation back to its initial state. 
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Rdb.SqlServerIdentityIdGenerator.GetRealIdMap(IdeaBlade.Persistence.UniqueIdCollection,IdeaBlade.Util.IDataSourceKey)">
+            <summary>
+            Returns a dictionary that maps temporary IDs to real IDs.
+            </summary>
+            <param name="pTempIds"></param>
+            <param name="pDataSourceKey"></param>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Rdb.SqlServerIdentityIdGenerator.GetNextIdGroup(IdeaBlade.Util.IDataSourceKey,IdeaBlade.Persistence.EntityColumn)">
+            <summary>
+            We support 2 means of allocating identity IDs - 1) the original way (in NextIdGroup)
+            which contains code to do the DBCC CheckIdent logic, and 2) using a stored procedure
+            (in NextIdGroupUsingProc) which contains the same logic but can run with elevated
+            privileges.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.Persistence.Rdb.SqlServerIdentityIdGenerator.NextIdGenerator">
+            <summary>
+            Returns the default IdGenerator used for non-Identity columns.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.Persistence.Rdb.SqlServerIdentityIdGenerator.TempIds">
+            <summary>
+            Returns the collection of temporary IDs.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.Persistence.Rdb.SqlServerIdentityIdGenerator.NextIdGroup">
+            <summary>
+            Allocate IDs the old-fashioned way.  This requires that db user have privileges to run DBCC checkident.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.Persistence.Rdb.SqlServerIdentityIdGenerator.NextIdGroupUsingProc">
+            <summary>
+            Allocate IDs using a stored procedure
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.Persistence.Rdb.SqlServerIdentityGeneratorProc">
+            <summary>
+            Internal use only.  
+            </summary>
+            <remarks>
+            Helper class used to call the usp_IdeaBlade_SqlIdentityGenerator stored procedure.
+            The stored procedure supports three operations: 1) allocation of a block of
+            IDs, 2) insertion of rows from a temp table into a "real" table, and 3) retrieval
+            of table definition information.
+            </remarks>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Rdb.SqlServerIdentityGeneratorProc.GetTempTableName(System.String)">
+            <summary>
+            Returns a temp table name for a specified table (prefixes table name with #).
+            </summary>
+            <param name="pTableName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Rdb.SqlServerIdentityGeneratorProc.CreateTempTable(System.String,System.Data.Common.DbCommand)">
+            <summary>
+            Get the table def and create a temp table.
+            </summary>
+            <param name="pTableName"></param>
+            <param name="pCommand">Must have an open connection set</param>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Rdb.SqlServerIdentityGeneratorProc.BuildTableDefOperationCommand(System.Data.Common.DbCommand)">
+            <summary>
+            Setup command to call sp to get a table definition.
+            </summary>
+            <param name="pCommand"></param>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Rdb.SqlServerIdentityGeneratorProc.BuildAllocateOperationCommand(System.Data.Common.DbCommand)">
+            <summary>
+            Setup the command to allocate a block of IDs.
+            </summary>
+            <param name="pCommand"></param>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Rdb.SqlServerIdentityGeneratorProc.DoAllocationOperation(System.Data.Common.DbCommand,System.String,System.String,System.Int32)">
+            <summary>
+            Call the stored proc to allocate the ID block.
+            </summary>
+            <param name="pCommand"></param>
+            <param name="pTableName"></param>
+            <param name="pColumnName"></param>
+            <param name="pBump"></param>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Rdb.SqlServerIdentityGeneratorProc.BuildInsertOperationCommand(System.Data.Common.DbCommand)">
+            <summary>
+            Setup the command to allocate a block of IDs.
+            </summary>
+            <param name="pCommand"></param>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Rdb.SqlServerIdentityGeneratorProc.DoInsertOperation(System.Data.Common.DbCommand,System.String,System.String,System.String)">
+            <summary>
+            Call sp to insert data in the temp table to the real table.
+            </summary>
+            <param name="pCommand"></param>
+            <param name="pTableName"></param>
+            <param name="pTempTable"></param>
+            <param name="pColumnList"></param>
+        </member>
+        <member name="T:IdeaBlade.Persistence.Rdb.RdbColumn">
+            <summary>
+            Obsolete.  Use <see cref="T:IdeaBlade.Persistence.EntityColumn"/> instead.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Rdb.RdbColumn.#ctor(System.Type,System.String,System.Type,System.Boolean)">
+            <summary>
+            Initializes a new instance of the EntityColumn class.
+            </summary>
+            <param name="pEntityType">The entity type that this column belongs to</param>
+            <param name="pColumnName">The <see cref="T:System.Data.DataTable"/> column name</param>
+            <param name="pDataType">The data type of this column</param>
+            <param name="pIsNullable">Whether this column can accept null values</param>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Rdb.RdbColumn.#ctor(System.Type,System.String,System.Type,System.Boolean,System.Boolean,System.Boolean,IdeaBlade.Persistence.DataSourceAccessType)">
+            <summary>
+            Initializes a new instance of the EntityColumn class.
+            </summary>
+            <param name="pEntityType">The entity type that this column belongs to</param>
+            <param name="pColumnName">The <see cref="T:System.Data.DataTable"/> column name</param>
+            <param name="pDataType">The data type of this column</param>
+            <param name="pIsNullable">Whether this column can accept null values</param>
+            <param name="pIsPrimaryKeyColumn">Whether this column is a primary key column</param>
+            <param name="pIsAutoIncrementing">Whether this column is autoincrementing</param>
+            <param name="pSourceAccessType">Datasource Access type</param>
+        </member>
+        <member name="T:IdeaBlade.Persistence.Rdb.IRdbQuery">
+            <summary>
+            Obsolete.  See <see cref="T:IdeaBlade.Persistence.IEntityQuery"/>.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.Persistence.Rdb.IRdbEnum">
+            <summary>
+            Obsolete.  See <see cref="T:IdeaBlade.Persistence.IEntityEnum"/>.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.Persistence.Rdb.RdbQueryClause">
+            <summary>
+            Obsolete.  Use <see cref="T:IdeaBlade.Persistence.EntityQueryClause"/> instead.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Rdb.RdbQueryClause.#ctor(IdeaBlade.Persistence.EntityColumn,IdeaBlade.Persistence.EntityQueryOp,System.Object)">
+            <summary>
+            Initializes a new instance of the RdbQueryClause class.
+            </summary>
+            <param name="pEntityColumn"></param>
+            <param name="pOperator"></param>
+            <param name="pValue"></param>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Rdb.RdbQueryClause.#ctor(System.String,IdeaBlade.Persistence.EntityQueryOp,System.Object)">
+            <summary>
+            Initializes a new instance of the RdbQueryClause class.
+            </summary>
+            <param name="pColumnName"></param>
+            <param name="pOperator"></param>
+            <param name="pValue"></param>
+        </member>
+        <member name="T:IdeaBlade.Persistence.Rdb.RdbBooleanOp">
+            <summary>
+            Obsolete.  Use <see cref="T:IdeaBlade.Persistence.EntityBooleanOp"/> instead.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Rdb.RdbBooleanOp.#ctor(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="pValue"></param>
+        </member>
+        <member name="T:IdeaBlade.Persistence.Rdb.RdbQueryOp">
+            <summary>
+            Enumerated class of valid query comparison operators used in the
+            construction of <see cref="T:IdeaBlade.Persistence.Rdb.RdbQueryClause"/>s.
+            <seealso cref="T:IdeaBlade.Persistence.EntityQueryClause"/>
+            <seealso cref="T:IdeaBlade.Persistence.EntityQuery"/>
+            <seealso cref="T:IdeaBlade.Persistence.Rdb.RdbQuery"/>
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Rdb.RdbQueryOp.#ctor(System.String,System.String,IdeaBlade.Persistence.EntityQueryOpType)">
+            <summary>
+            
+            </summary>
+            <param name="pDisplayName"></param>
+            <param name="pOperator"></param>
+            <param name="pEntityQueryOpType"></param>
+        </member>
+        <member name="T:IdeaBlade.Persistence.Rdb.RdbRelation">
+            <summary>
+            Obsolete.  Use <see cref="T:IdeaBlade.Persistence.EntityRelation"/> instead.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Rdb.RdbRelation.#ctor(IdeaBlade.Persistence.Rdb.RdbColumn[],IdeaBlade.Persistence.Rdb.RdbColumn[],System.Boolean)">
+            <overloads>Initialize a new instance of the EntityRelation class.  Will optionally
+            create a <see cref="T:System.Data.ForeignKeyConstraint"/>.
+            </overloads>
+             <summary>
+             Initialize a new instance of the EntityRelation class.
+             </summary>
+             <param name="pParentColumns">An array of parent <see cref="T:IdeaBlade.Persistence.Rdb.RdbColumn"/>'s</param>
+             <param name="pChildColumns">A corresponding array of child <see cref="T:IdeaBlade.Persistence.Rdb.RdbColumn"/>'s</param>
+             <param name="pCreateConstraint">Whether or not to create a constraint to enforce this relation</param>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Rdb.RdbRelation.#ctor(IdeaBlade.Persistence.Rdb.RdbColumn,IdeaBlade.Persistence.Rdb.RdbColumn,System.Boolean)">
+            <summary>
+            Initialize a new instance of the EntityRelation class.
+            </summary>
+            <param name="pParentColumn">A single parent <see cref="T:IdeaBlade.Persistence.Rdb.RdbColumn"/></param>
+            <param name="pChildColumn">The corresponding child <see cref="T:IdeaBlade.Persistence.Rdb.RdbColumn"/></param>
+            <param name="pCreateConstraint">Whether or not to create a constraint to enforce this relation</param>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Rdb.RdbRelation.#ctor(IdeaBlade.Persistence.Rdb.RdbColumn[],IdeaBlade.Persistence.Rdb.RdbColumn[])">
+            <summary>
+            Initialize a new instance of the EntityRelation class.
+            </summary>
+            <param name="pParentColumns">An array of parent <see cref="T:IdeaBlade.Persistence.Rdb.RdbColumn"/>'s</param>
+            <param name="pChildColumns">A corresponding array of child <see cref="T:IdeaBlade.Persistence.Rdb.RdbColumn"/>'s</param>    
+        </member>
+        <member name="M:IdeaBlade.Persistence.Rdb.RdbRelation.#ctor(IdeaBlade.Persistence.Rdb.RdbColumn,IdeaBlade.Persistence.Rdb.RdbColumn)">
+            <summary>
+            Initialize a new instance of the EntityRelation class.
+            </summary>
+            <param name="pParentColumn">A single parent <see cref="T:IdeaBlade.Persistence.Rdb.RdbColumn"/></param>
+            <param name="pChildColumn">The corresponding child <see cref="T:IdeaBlade.Persistence.Rdb.RdbColumn"/></param>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Rdb.RdbRelation.#ctor(System.Collections.IList,System.Collections.IList,System.Boolean)">
+            <summary>
+            Initialize a new instance of the EntityRelation class.
+            </summary>
+            <param name="pParentColumns">A list of parent <see cref="T:IdeaBlade.Persistence.Rdb.RdbColumn"/>'s</param>
+            <param name="pChildColumns">A corresponding list of child <see cref="T:IdeaBlade.Persistence.Rdb.RdbColumn"/>'s</param>
+            <param name="pCreateConstraint">Whether or not to create a constraint to enforce this relation</param>
+        </member>
+        <member name="T:IdeaBlade.Persistence.Rdb.IRdbEntity">
+            <summary>
+            The interface implemented by generated <see cref="T:IdeaBlade.Persistence.Entity"/> classes which are backed by a database.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.Persistence.Rdb.IRdbEntity.SqlWhereClause">
+            <summary>
+            The SQL 'where' clause used to restrict which database records are accessible via this business object.
+            </summary>
+            <remarks>The class generated by the <b>IdeaBlade DevForce Object Mapping Tool</b> uses
+            the value defined in the Current Class Properties tab as the default property value. 
+            Business object subclasses can override this property as needed.
+            <para>
+            The 'where' clause will be used, in addition to any other query-specific criteria, in every
+            retrieval of entities of this type.
+            </para>
+            <para>You do not need to include the 'where' keyword in the clause, but you must otherwise use 
+            valid SQL syntax.</para>
+            </remarks>
+        </member>
+        <member name="P:IdeaBlade.Persistence.Rdb.IRdbEntity.ForceSqlDistinct">
+            <summary>
+            Determines whether to use the 'distinct' keyword when generating the SQL select clause for objects of this type.
+            </summary>
+            <remarks>Defaults to false, but may be overridden in subclasses.</remarks>
+        </member>
+        <member name="T:IdeaBlade.Persistence.Rdb.RdbTableMappingInfo">
+            <summary>
+            <see cref="T:IdeaBlade.Persistence.TableMappingInfo"/> for entities backed by a database.
+            </summary>
+            <remarks>
+            The <b>DevForce Object Mapping Tool</b> automatically creates <b>RdbTableMappingInfo</b>
+            in your generated <see cref="T:IdeaBlade.Persistence.EntityTable"/> classes.  
+            </remarks>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Rdb.RdbTableMappingInfo.#ctor">
+            <summary>
+            Initialize a new instance of this class
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Rdb.RdbTableMappingInfo.#ctor(IdeaBlade.Persistence.EntityTable)">
+            <summary>
+            Create an instance of this class for the specified <see cref="T:IdeaBlade.Persistence.EntityTable"/>.
+            </summary>
+            <param name="pTable"></param>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Rdb.RdbTableMappingInfo.#ctor(IdeaBlade.Persistence.Rdb.RdbTableMappingInfo)">
+            <summary>
+            Copy constructor.
+            </summary>
+            <param name="pTableMappingInfo"></param>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Rdb.RdbTableMappingInfo.GetFromTable(IdeaBlade.Persistence.EntityTable)">
+            <summary>
+            Gets TableMappingInfo from an EntityTable cast as RdbTableMappingInfo
+            </summary>
+            <param name="pTable"></param>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Rdb.RdbTableMappingInfo.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            
+            </summary>
+            <param name="pInfo"></param>
+            <param name="pContext"></param>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Rdb.RdbTableMappingInfo.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            
+            </summary>
+            <param name="pInfo"></param>
+            <param name="pContext"></param>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Rdb.RdbTableMappingInfo.Clone">
+            <summary>
+            See <see cref="M:System.ICloneable.Clone"/>.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:IdeaBlade.Persistence.Rdb.RdbTableMappingInfo.SourceOwnerName">
+            <summary>
+            Gets or sets the owner / schema name of the EntityTable's source object.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.Persistence.Rdb.RdbTableMappingInfo.SourceTableName">
+            <summary>
+            Gets or sets the database object name of the EntityTable's source object.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.Persistence.Rdb.RdbTableMappingInfo.SourceColumnNames">
+            <summary>
+            Gets or sets the database column names to query in the EntityTable's source object.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.Persistence.Rdb.PassthruRdbQuery">
+            <summary>
+            Used to pass any valid SQL statement to the backend database.
+            <seealso cref="T:IdeaBlade.Persistence.PersistenceManager"/>
+            <seealso cref="T:IdeaBlade.Persistence.Entity"/>
+            <seealso cref="T:IdeaBlade.Persistence.Rdb.RdbQuery"/>
+            <seealso cref="T:IdeaBlade.Persistence.Rdb.StoredProcRdbQuery"/>
+            </summary>
+            <remarks>A <b>PassthruRdbQuery</b> can be used to retrieve <see cref="T:IdeaBlade.Persistence.Entity"/> objects from a 
+            <see cref="T:IdeaBlade.Persistence.PersistenceManager"/>.  You might want to build a query of this type instead of a standard
+            <see cref="T:IdeaBlade.Persistence.Rdb.RdbQuery"/> for performance reasons or for complex SQL statements.
+            Queries are submitted using the 
+            <see cref="M:IdeaBlade.Persistence.PersistenceManager.GetEntity(IdeaBlade.Persistence.IEntityQuery)"/>
+            and <see cref="M:IdeaBlade.Persistence.PersistenceManager.GetEntities(IdeaBlade.Persistence.IEntityQuery)"/>
+            methods.
+            <para>
+            Although intended for queries,
+            any valid SQL statement can be used.  The SQL will not be validated by the DevForce framework. 
+            </para>
+            <para>A <b>PassthruRdbQuery</b> must alway use a <see cref="T:IdeaBlade.Persistence.FetchStrategy"/>
+            of <b>DataSourceOnly</b>, and cannot be used when disconnected from the PersistenceServer.
+            </para>
+            </remarks>
+            <example><code lang="C#">
+private void SamplePassthruQuery() {
+  // Sample use of a PassthruRdbQuery
+
+  PersistenceManager pm = PersistenceManager.DefaultManager;
+
+  // Create the query.
+  PassthruRdbQuery query = new PassthruRdbQuery(typeof(Order),
+					"select top 10 * from ordersummary " +
+                    "where shippeddate &gt; orderdate + 14 " +
+                    "order by freight desc");
+  // Run the query.
+  EntityList&lt;Order&gt; orders = pm.GetEntities&lt;Order&gt;(query);
+}
+
+private void SamplePassthruQueryWithParameters() {
+  // Sample use of a PassthruRdbQuery using parameterized sql
+  
+  PersistenceManager pm = PersistenceManager.DefaultManager;
+  
+  // We're retrieving the RdbKey here so that the parameter name can be 
+  //formatted correctly. If you already know your data provider and 
+  //parameter format you can skip this step and hardcode the parameter name.
+ 
+  RdbKey key = (RdbKey) pm.GetDataSourceKey(typeof(Employee));
+  string parmName = key.AdoHelper.FormatParameterName("id");
+ 
+  // Build select statement - we'll select a single employee.
+  string passThruSelect = string.Format("select * from Employee where id = {0}", parmName);
+ 
+  // Build the parameters - be sure to use RdbParameter (esp. if using a BOS)
+  RdbParameter parm = new RdbParameter(parmName, DbType.Int32);
+  parm.Value = 1;
+ 
+  // Now create a ParameterizedSql instance
+  ParameterizedSql sql = new ParameterizedSql(passThruSelect, parm);
+ 
+  // And finally setup the passthru query and execute it
+  PassthruRdbQuery passThruQuery = new PassthruRdbQuery(typeof(Employee), sql);
+  Employee emp = pm.GetEntity&lt;Employee&gt;(passThruQuery);
+}
+
+</code></example><example><code lang="VB">
+Private Sub SamplePassthruQuery()
+  ' Sample use of a PassthruRdbQuery
+
+  Dim pm As PersistenceManager = PersistenceManager.DefaultManager
+
+  ' Create the query.
+  Dim query As New PassthruRdbQuery(GetType(Order), _
+					"select top 10 * from ordersummary " + _
+                    "where shippeddate &gt; orderdate + 14 " + _
+                    "order by freight desc)"
+  ' Run the query.
+  Dim orders As EntityList(Of Order) = pm.GetEntities(Of Order)(query)
+End Sub
+
+Private Sub SamplePassthruQueryWithParameters()
+   ' Sample use of a PassthruRdbQuery using parameterized sql
+   
+   Dim pm As PersistenceManager = PersistenceManager.DefaultManager
+
+   ' We're retrieving the RdbKey here so that the parameter name can be 
+   ' formatted correctly. If you already know your data provider and 
+   ' parameter format you can skip this step and hardcode the parameter name.
+   Dim key As RdbKey = CType(pm.GetDataSourceKey(GetType(Employee)), RdbKey)
+   Dim parmName As String = key.AdoHelper.FormatParameterName("id")
+
+   ' Build select statement - we'll select a single employee.
+   Dim passThruSelect As String = String.Format("select * from Employee where id = {0}", parmName)
+
+   ' Build the parameters - be sure to use RdbParameter (esp. if using a BOS)
+   Dim parm As New RdbParameter(parmName, DbType.Int32)
+   parm.Value = 1
+
+   ' Now create a ParameterizedSql instance
+   Dim sql As New ParameterizedSql(passThruSelect, parm)
+
+   ' And finally setup the passthru query and execute it
+   Dim passThruQuery As New PassthruRdbQuery(GetType(Employee), sql)
+   Dim emp As Employee = pm.GetEntity(Of Employee)(passThruQuery)
+End Sub 
+	</code></example>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Rdb.PassthruRdbQuery.#ctor(System.Type)">
+            <summary>
+            Initializes a new instance of the PassthruRdbQuery class. 
+            </summary>
+            <param name="pEntityType">The entity type that this query will return</param>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Rdb.PassthruRdbQuery.#ctor(System.Type,System.String)">
+            <summary>
+            Initializes a new instance of the PassthruRdbQuery class with a SQL statement.
+            </summary>
+            <param name="pEntityType">The entity type that this query will return</param>
+            <param name="pSqlSelect">The SQL string to execute</param>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Rdb.PassthruRdbQuery.#ctor(System.Type,IdeaBlade.Rdb.ParameterizedSql)">
+            <summary>
+            Initializes a new instance of the PassthruRdbQuery class with a SQL statement.
+            </summary>
+            <param name="pEntityType">The entity type that this query will return</param>
+            <param name="pParameterizedSql">The SQL string to execute</param>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Rdb.PassthruRdbQuery.Clone">
+            <summary>
+            Creates a deep copy of this PassthruRdbQuery. 
+            </summary>
+            <returns>A deep copy of this instance</returns>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Rdb.PassthruRdbQuery.Equals(System.Object)">
+            <summary>
+            See <see cref="M:System.Object.Equals(System.Object)"/>.
+            </summary>
+            <param name="pObject"></param>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Rdb.PassthruRdbQuery.GetHashCode">
+            <summary>
+            See <see cref="M:System.Object.GetHashCode"/>.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Rdb.PassthruRdbQuery.ToString">
+            <summary>
+            Returns a human readable representation of the current query.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Rdb.PassthruRdbQuery.FindRows(IdeaBlade.Persistence.PersistenceManager)">
+            <summary>
+            Internal use only.
+            </summary>
+            <param name="pHelper"></param>
+            <returns></returns>
+            <remarks>This method executes on the client side of the Persistence divide
+            to retrieve cached rows.  
+            </remarks>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Rdb.PassthruRdbQuery.Fetch(System.Data.DataSet,IdeaBlade.Util.IDataSourceKey)">
+            <summary>
+            Internal use only.
+            </summary>
+            <param name="pDataSet"></param>
+            <param name="pDataSourceKey"></param>
+            <remarks>
+            This method executes on the server side of the Persistence divide to 
+            retrieve data from the backend data source.
+            </remarks>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Rdb.PassthruRdbQuery.InQueryCache(IdeaBlade.Persistence.QueryCache)">
+            <summary>
+            Returns whether this query has been cached.
+            </summary>
+            <param name="pQueryCache"></param>
+            <returns></returns>
+            <remarks>
+            A <b>PassthruRdbQuery</b> is never cached, therefore this property always returns <c>false</c>.
+            </remarks>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Rdb.PassthruRdbQuery.AddToQueryCache(IdeaBlade.Persistence.QueryCache)">
+            <summary>
+            Adds this query to the query cache.
+            </summary>
+            <param name="pQueryCache"></param>
+            <remarks>
+            A <b>PassthruRdbQuery</b> is never cached, therefore this method returns immediately.
+            </remarks>
+        </member>
+        <member name="P:IdeaBlade.Persistence.Rdb.PassthruRdbQuery.EntityType">
+            <summary>
+            The <see cref="T:IdeaBlade.Persistence.Entity"/> type returned by this query.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.Persistence.Rdb.PassthruRdbQuery.ParameterizedSql">
+            <summary>
+            The Parameterized Sql to execute
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.Persistence.Rdb.PassthruRdbQuery.QueryStrategy">
+            <summary>
+            Gets or sets the query strategy used by this query.
+            </summary>
+            <remarks>
+            A PassthruRdbQuery may only operate against the backend database.  
+            The default <see cref="T:IdeaBlade.Persistence.MergeStrategy"/> is <b>OverwriteChanges</b>, but may be changed as
+            long as a <see cref="T:IdeaBlade.Persistence.FetchStrategy"/> of <b>DataSourceOnly</b> is used.
+            </remarks>
+            <exception cref="T:IdeaBlade.Util.IdeaBladeException">If FetchStrategy is not DataSourceOnly</exception>
+        </member>
+        <member name="P:IdeaBlade.Persistence.Rdb.PassthruRdbQuery.CommandTimeout">
+            <summary>
+            Gets or sets the wait time in seconds before terminating the attempt to execute a command and generating an error.
+            </summary>
+            <remarks>
+            A value of 0 indicates that the default timeout value for the data provider should be used - this is usually 30 seconds.
+            </remarks>
+        </member>
+        <member name="P:IdeaBlade.Persistence.Rdb.PassthruRdbQuery.FindRowsResultMode">
+            <summary>
+            Returns information regarding the behaviour of the <see cref="M:IdeaBlade.Persistence.Rdb.PassthruRdbQuery.FindRows(IdeaBlade.Persistence.PersistenceManager)"/> method call.
+            </summary>
+            <value>The FindRows result mode.</value>
+        </member>
+        <member name="T:IdeaBlade.Persistence.Rdb.RdbQuery">
+            <summary>
+            Standard mechanism for performing business object queries against entities backed by a relational data source.
+            <seealso cref="T:IdeaBlade.Persistence.PersistenceManager"/>
+            <seealso cref="T:IdeaBlade.Persistence.Entity"/>
+            <seealso cref="T:IdeaBlade.Persistence.EntityQuery"/>
+            <seealso cref="T:IdeaBlade.Persistence.Rdb.PassthruRdbQuery"/>
+            <seealso cref="T:IdeaBlade.Persistence.Rdb.StoredProcRdbQuery"/>
+            <seealso cref="T:IdeaBlade.Persistence.WS.WsQuery"/>
+            </summary>
+            <remarks>
+            Use an <b>RdbQuery</b> to build the Object Query Language (OQL) to retrieve those 
+            business objects which are backed by SQL tables and views.  
+            OQL syntax provides a SQL-agnostic, strongly-typed means of querying
+            <see cref="T:IdeaBlade.Persistence.Entity"/> objects from a <see cref="T:IdeaBlade.Persistence.PersistenceManager"/>. 
+            <para>An RdbQuery is a strongly-typed implementation of an <see cref="T:IdeaBlade.Persistence.EntityQuery"/>.
+            It supports all the features of the EntityQuery, and adds additional features such as <see cref="P:IdeaBlade.Persistence.Rdb.RdbQuery.SuppressQueryInversion"/>.
+            An RdbQuery can also always be constructed from an EntityQuery.
+            </para>
+            <para>
+            Queries are executed using the
+            <see cref="M:IdeaBlade.Persistence.PersistenceManager.GetEntity(IdeaBlade.Persistence.IEntityQuery)"/>
+            and <see cref="M:IdeaBlade.Persistence.PersistenceManager.GetEntities(IdeaBlade.Persistence.IEntityQuery)"/>
+            methods.
+            </para>
+            <para>
+            For additional information on building an <b>RdbQuery</b> see the help for <see cref="T:IdeaBlade.Persistence.EntityQuery"/>.
+            </para> 
+            </remarks>
+            <example><code lang="C#">
+[C#]
+// Sample showing some simple queries
+
+private void QueryExamples() {
+  PersistenceManager pm = PersistenceManager.DefaultManager;
+
+  RdbQuery query1, query2;
+  string msg = "Rows retrieved = {0}\nQuery = {1}";
+
+  // 1 - a query with no selection criteria
+  query1 = new RdbQuery(typeof(Order));
+  MessageBox.Show(string.Format(msg, pm.GetEntities&lt;Order&gt;(query1).Count.ToString(), GetSqlStatement(query1)));
+
+  // 2 - a query with a single "where" clause
+  query2 = new RdbQuery(typeof(Order), Order.FreightEntityColumn, EntityQueryOp.GT, 600);
+  MessageBox.Show(string.Format(msg, pm.GetEntities&lt;Order&gt;(query2).Count.ToString(), GetSqlStatement(query2)));
+
+  // 3 - add an (implicit) "AND" clause
+  query2.AddClause(Order.OrderDateEntityColumn, EntityQueryOp.GE, new DateTime(1998, 4, 2));
+  MessageBox.Show(string.Format(msg, pm.GetEntities&lt;Order&gt;(query2).Count.ToString(), GetSqlStatement(query2)));
+
+  // 4 - switch the clause to an "OR" (remember this is using RPN notation)
+  query2.AddOperator(EntityBooleanOp.Or);
+  MessageBox.Show(string.Format(msg, pm.GetEntities&lt;Order&gt;(query2).Count.ToString(), GetSqlStatement(query2)));
+
+  // 5 - add a subquery
+  RdbSubquery subQuery = query2.AddSubquery(EntityRelations.Employee_Order);
+  subQuery.AddClause(Employee.LastNameEntityColumn, RdbQueryOp.StartsWith, "D");
+  MessageBox.Show(string.Format(msg, pm.GetEntities&lt;Order&gt;(query2).Count.ToString(), GetSqlStatement(query2)));
+}
+
+private string GetSqlStatement(RdbQuery query) {
+  RdbKey key = PersistenceManager.DefaultManager.GetDataSourceKey(query.EntityType) as RdbKey;
+  RdbQuerySqlFormatter aFormatter = new RdbQuerySqlFormatter(key.AdoHelper);
+  return aFormatter.BuildSqlSelect(query).Sql;
+}
+</code></example><example><code lang="VB">
+Private Sub QueryExamples()
+  Dim pm As PersistenceManager = PersistenceManager.DefaultManager
+
+  Dim query1, query2 As RdbQuery
+  Dim msg As String = "Rows retrieved = {0}" + ControlChars.Lf + "Query = {1}"
+
+  ' 1 - a query with no selection criteria
+  query1 = New RdbQuery(GetType(Order))
+  MessageBox.Show(String.Format(msg, pm.GetEntities(Of Order)(query1).Count.ToString(), GetSqlStatement(query1)))
+
+  ' 2 - a query with a single "where" clause
+  query2 = New RdbQuery(GetType(Order), Order.FreightEntityColumn, EntityQueryOp.GT, 600)
+  MessageBox.Show(String.Format(msg, pm.GetEntities(Of Order)(query2).Count.ToString(), GetSqlStatement(query2)))
+
+  ' 3 - add an (implicit) "AND" clause
+  query2.AddClause(Order.OrderDateEntityColumn, EntityQueryOp.GE, New DateTime(1998, 4, 2))
+  MessageBox.Show(String.Format(msg, pm.GetEntities(Of Order)(query2).Count.ToString(), GetSqlStatement(query2)))
+
+  ' 4 - switch the clause to an "OR" (remember this is using RPN notation)
+  query2.AddOperator(EntityBooleanOp.Or)
+  MessageBox.Show(String.Format(msg, pm.GetEntities(Of Order)(query2).Count.ToString(), GetSqlStatement(query2)))
+
+  ' 5 - add a subquery
+  Dim subQuery As RdbSubquery = query2.AddSubquery(EntityRelations.Employee_Order)
+  subQuery.AddClause(Employee.LastNameEntityColumn, RdbQueryOp.StartsWith, "D")
+  MessageBox.Show(String.Format(msg, pm.GetEntities(Of Order)(query2).Count.ToString(), GetSqlStatement(query2)))
+End Sub
+
+Private Function GetSqlStatement(ByVal query As RdbQuery) As String
+  Dim key As RdbKey = CType(PersistenceManager.DefaultManager.GetDataSourceKey(query.EntityType), RdbKey)
+  Dim aFormatter As New RdbQuerySqlFormatter(key.AdoHelper)
+  Return aFormatter.BuildSqlSelect(query).Sql
+End Function
+   </code></example>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Rdb.RdbQuery.#ctor(System.Type)">
+            <overloads>Initializes a new instance of the RdbQuery class. </overloads>
+             <summary>
+             Initializes a new instance of the RdbQuery class for a specified Entity type.
+             </summary>
+             <param name="pEntityType">The entity type that this query will return</param>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Rdb.RdbQuery.#ctor(System.Type,IdeaBlade.Persistence.EntityColumn,IdeaBlade.Persistence.EntityQueryOp,System.Object)">
+            <summary>
+            Initializes a new instance of the RdbQuery class with a new <see cref="T:IdeaBlade.Persistence.EntityQueryClause"/>.
+            </summary>
+            <param name="pEntityType">The <see cref="T:IdeaBlade.Persistence.Entity"/> type that this query will return</param>
+            <param name="pEntityColumn">The <see cref="T:IdeaBlade.Persistence.EntityColumn"/>to query</param>
+            <param name="pOperator">The query comparison operator</param>
+            <param name="pValue">The value to be compared against the contents of the specified column</param>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Rdb.RdbQuery.#ctor(System.Type,System.String,IdeaBlade.Persistence.EntityQueryOp,System.Object)">
+            <summary>   
+            Initializes a new instance of the RdbQuery class with a new <see cref="T:IdeaBlade.Persistence.EntityQueryClause"/>.
+            </summary>
+            <param name="pEntityType">The <see cref="T:IdeaBlade.Persistence.Entity"/> type that this query will return</param>
+            <param name="pColumnName">The entity column name to query</param>
+            <param name="pOperator">The query comparison operator</param>
+            <param name="pValue">The value to be compared against the contents of the specified column</param>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Rdb.RdbQuery.#ctor(IdeaBlade.Persistence.EntityQuery)">
+            <summary>
+            Initializes a new instance of the RdbQuery class from another RdbQuery or <see cref="T:IdeaBlade.Persistence.EntityQuery"/>.
+            </summary>
+            <param name="pEntityQuery">EntityQuery to be copied</param>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Rdb.RdbQuery.AddSubquery(IdeaBlade.Persistence.EntityRelation)">
+            <summary>
+            Adds an <see cref="T:IdeaBlade.Persistence.Rdb.RdbSubquery"/> to the query.
+            </summary>
+            <param name="pEntityRelation">An <see cref="T:IdeaBlade.Persistence.EntityRelation"/> that describes how the result of this subquery
+            relates to the current entity</param>
+            <returns>The newly added <see cref="T:IdeaBlade.Persistence.Rdb.RdbSubquery"/> 
+            </returns>
+            <remarks>Additional clauses and nested subqueries may be added to the returned RdbSubquery.</remarks>
+            <example><code lang="C#">
+private void ComplexSubQuery() {
+  // A more complex query with nested subqueries.
+  string msg = "Rows retrieved = {0}\nQuery = {1}";
+  PersistenceManager pm = PersistenceManager.DefaultManager;
+  
+  // This will retrieve all orders having 'chai' product
+  RdbQuery query = new RdbQuery(typeof(Order));
+  RdbSubquery subQuery1 = query.AddSubquery(EntityRelations.Order_OrderDetail);
+  RdbSubquery subQuery2 = subQuery1.AddSubquery(EntityRelations.Product_OrderDetail);
+  subQuery2.AddClause(Product.ProductNameEntityColumn, EntityQueryOp.EQ, "Chai");
+
+  EntityList&lt;Order&gt; orders = pm.GetEntities&lt;Order&gt;(query);
+  MessageBox.Show(string.Format(msg, orders.Count.ToString(), GetSqlStatement(query)));
+}
+
+private string GetSqlStatement(RdbQuery query) {
+  RdbKey key = PersistenceManager.DefaultManager.GetDataSourceKey(query.EntityType) as RdbKey;
+  RdbQuerySqlFormatter aFormatter = new RdbQuerySqlFormatter(key.AdoHelper);
+  return aFormatter.BuildSqlSelect(query).Sql;
+}
+</code></example><example><code lang="VB">
+Private Sub ComplexSubQuery()
+  ' A more complex query with nested subqueries.
+  Dim msg As String = "Rows retrieved = {0}" + ControlChars.Lf + "Query = {1}"
+  Dim pm As PersistenceManager = PersistenceManager.DefaultManager
+
+  ' This will retrieve all orders having 'chai' product
+  Dim query As New RdbQuery(GetType(Order))
+  Dim subQuery1 As RdbSubquery = query.AddSubquery(EntityRelations.Order_OrderDetail)
+  Dim subQuery2 As RdbSubquery = subQuery1.AddSubquery(EntityRelations.Product_OrderDetail)
+  subQuery2.AddClause(Product.ProductNameEntityColumn, EntityQueryOp.EQ, "Chai")
+
+  Dim orders As EntityList(Of Order) = pm.GetEntities(Of Order)(query)
+  MessageBox.Show(String.Format(msg, orders.Count.ToString(), GetSqlStatement(query)))
+End Sub
+
+Private Function GetSqlStatement(ByVal query As RdbQuery) As String
+  Dim key As RdbKey = CType(PersistenceManager.DefaultManager.GetDataSourceKey(query.EntityType), RdbKey)
+  Dim aFormatter As New RdbQuerySqlFormatter(key.AdoHelper)
+  Return aFormatter.BuildSqlSelect(query).Sql
+End Function
+
+   </code></example>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Rdb.RdbQuery.AddSubquery(IdeaBlade.Persistence.EntityRelationLink)">
+            <summary>
+            Adds an <see cref="T:IdeaBlade.Persistence.Rdb.RdbSubquery"/> to the query.
+            </summary>
+            <param name="pEntityRelationLink">An <see cref="T:IdeaBlade.Persistence.EntityRelationLink"/> that describes how the result of this subquery
+            relates to the current entity</param>
+            <returns>The newly added <see cref="T:IdeaBlade.Persistence.Rdb.RdbSubquery"/> 
+            </returns>
+            <remarks>Additional clauses and nested subqueries may be added to the returned RdbSubquery.</remarks>
+            <example><code lang="C#">
+private void ComplexSubQuery() {
+  // A more complex query with nested subqueries.
+  string msg = "Rows retrieved = {0}\nQuery = {1}";
+  PersistenceManager pm = PersistenceManager.DefaultManager;
+  
+  // This will retrieve all orders having 'chai' product
+  RdbQuery query = new RdbQuery(typeof(Order));
+  RdbSubquery subQuery1 = query.AddSubquery(EntityRelations.Order_OrderDetail);
+  RdbSubquery subQuery2 = subQuery1.AddSubquery(EntityRelations.Product_OrderDetail);
+  subQuery2.AddClause(Product.ProductNameEntityColumn, EntityQueryOp.EQ, "Chai");
+
+  EntityList&lt;Order&gt; orders = pm.GetEntities&lt;Order&gt;(query);
+  MessageBox.Show(string.Format(msg, orders.Count.ToString(), GetSqlStatement(query)));
+}
+
+private string GetSqlStatement(RdbQuery query) {
+  RdbKey key = PersistenceManager.DefaultManager.GetDataSourceKey(query.EntityType) as RdbKey;
+  RdbQuerySqlFormatter aFormatter = new RdbQuerySqlFormatter(key.AdoHelper);
+  return aFormatter.BuildSqlSelect(query).Sql;
+}
+</code></example><example><code lang="VB">
+Private Sub ComplexSubQuery()
+  ' A more complex query with nested subqueries.
+  Dim msg As String = "Rows retrieved = {0}" + ControlChars.Lf + "Query = {1}"
+  Dim pm As PersistenceManager = PersistenceManager.DefaultManager
+
+  ' This will retrieve all orders having 'chai' product
+  Dim query As New RdbQuery(GetType(Order))
+  Dim subQuery1 As RdbSubquery = query.AddSubquery(EntityRelations.Order_OrderDetail)
+  Dim subQuery2 As RdbSubquery = subQuery1.AddSubquery(EntityRelations.Product_OrderDetail)
+  subQuery2.AddClause(Product.ProductNameEntityColumn, EntityQueryOp.EQ, "Chai")
+
+  Dim orders As EntityList(Of Order) = pm.GetEntities(Of Order)(query)
+  MessageBox.Show(String.Format(msg, orders.Count.ToString(), GetSqlStatement(query)))
+End Sub
+
+Private Function GetSqlStatement(ByVal query As RdbQuery) As String
+  Dim key As RdbKey = CType(PersistenceManager.DefaultManager.GetDataSourceKey(query.EntityType), RdbKey)
+  Dim aFormatter As New RdbQuerySqlFormatter(key.AdoHelper)
+  Return aFormatter.BuildSqlSelect(query).Sql
+End Function
+
+   </code></example>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Rdb.RdbQuery.AddSubquery(IdeaBlade.Persistence.Rdb.RdbSubquery)">
+            <summary>
+            Adds an <see cref="T:IdeaBlade.Persistence.Rdb.RdbSubquery"/> to the query.
+            </summary>
+            <param name="pRdbSubquery">The subquery to add</param>
+            <returns>The newly added <see cref="T:IdeaBlade.Persistence.Rdb.RdbSubquery"/> 
+            </returns>
+            <remarks>Additional clauses and nested subqueries may be added to the returned RdbSubquery.</remarks>
+            <example><code lang="C#">
+private void ComplexSubQuery() {
+  // A more complex query with nested subqueries.
+  string msg = "Rows retrieved = {0}\nQuery = {1}";
+  PersistenceManager pm = PersistenceManager.DefaultManager;
+  
+  // This will retrieve all orders having 'chai' product
+  RdbQuery query = new RdbQuery(typeof(Order));
+  RdbSubquery subQuery1 = query.AddSubquery(EntityRelations.Order_OrderDetail);
+  RdbSubquery subQuery2 = subQuery1.AddSubquery(EntityRelations.Product_OrderDetail);
+  subQuery2.AddClause(Product.ProductNameEntityColumn, EntityQueryOp.EQ, "Chai");
+
+  EntityList&lt;Order&gt; orders = pm.GetEntities&lt;Order&gt;(query);
+  MessageBox.Show(string.Format(msg, orders.Count.ToString(), GetSqlStatement(query)));
+}
+
+private string GetSqlStatement(RdbQuery query) {
+  RdbKey key = PersistenceManager.DefaultManager.GetDataSourceKey(query.EntityType) as RdbKey;
+  RdbQuerySqlFormatter aFormatter = new RdbQuerySqlFormatter(key.AdoHelper);
+  return aFormatter.BuildSqlSelect(query).Sql;
+}
+</code></example><example><code lang="VB">
+Private Sub ComplexSubQuery()
+  ' A more complex query with nested subqueries.
+  Dim msg As String = "Rows retrieved = {0}" + ControlChars.Lf + "Query = {1}"
+  Dim pm As PersistenceManager = PersistenceManager.DefaultManager
+
+  ' This will retrieve all orders having 'chai' product
+  Dim query As New RdbQuery(GetType(Order))
+  Dim subQuery1 As RdbSubquery = query.AddSubquery(EntityRelations.Order_OrderDetail)
+  Dim subQuery2 As RdbSubquery = subQuery1.AddSubquery(EntityRelations.Product_OrderDetail)
+  subQuery2.AddClause(Product.ProductNameEntityColumn, EntityQueryOp.EQ, "Chai")
+
+  Dim orders As EntityList(Of Order) = pm.GetEntities(Of Order)(query)
+  MessageBox.Show(String.Format(msg, orders.Count.ToString(), GetSqlStatement(query)))
+End Sub
+
+Private Function GetSqlStatement(ByVal query As RdbQuery) As String
+  Dim key As RdbKey = CType(PersistenceManager.DefaultManager.GetDataSourceKey(query.EntityType), RdbKey)
+  Dim aFormatter As New RdbQuerySqlFormatter(key.AdoHelper)
+  Return aFormatter.BuildSqlSelect(query).Sql
+End Function
+
+   </code></example>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Rdb.RdbQuery.Clone">
+            <summary>
+            Creates a copy of the current query.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Rdb.RdbQuery.Fetch(System.Data.DataSet,IdeaBlade.Util.IDataSourceKey)">
+            <summary>
+            This method is not intended to be called directly from your code.
+            </summary>
+            <remarks>
+            This method executes on the server side of the Persistence divide to 
+            retrieve data from the backend datasource.
+            </remarks>
+            <param name="pDataSet">The dataset holding fetched data</param>
+            <param name="pDataSourceKey">The data source key containing connection information for the datasource.</param>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Rdb.RdbQuery.FetchSpans(IdeaBlade.Persistence.Rdb.CanonicalSqlQuery,System.Data.DataSet,IdeaBlade.Rdb.AdoHelper,IdeaBlade.Persistence.Rdb.RdbQuerySqlFormatter)">
+            <summary/>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Rdb.RdbQuery.FetchInverted(System.Data.DataSet,IdeaBlade.Persistence.Rdb.RdbQuerySqlFormatter,IdeaBlade.Persistence.EntityQuery)">
+            <summary>
+            
+            </summary>
+            <param name="pDataSet"></param>
+            <param name="pFormatter"></param>
+            <param name="pQuery"></param>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Rdb.RdbQuery.Equals(System.Object)">
+            <summary>
+            See <see cref="M:System.Object.Equals(System.Object)"/>.
+            </summary>
+            <param name="pObject"></param>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Rdb.RdbQuery.GetHashCode">
+            <summary>
+            See <see cref="M:System.Object.GetHashCode"/>.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:IdeaBlade.Persistence.Rdb.RdbQuery.SuppressQueryInversion">
+            <summary>
+            Gets/sets a flag to suppress query inversion on this RdbQuery.  
+            </summary>
+            <remarks>
+            By default, "query inversion" is performed when
+            using a query containing subqueries.  The inversion ensures that all dependent objects are 
+            fetched into cache along with the queried entities, and often improves performance.  You may 
+            want to suppress this behavior, however, if you have many or complex subqueries whose inversion might
+            cause a performance hit, or when you know that you do not require that the dependent entities be cached.
+            <para>
+            Note: When running in Debug mode, you can use the contents of the <b>DebugLog</b> or 
+            the <b>TraceViewer</b> utility to see the text of all queries sent
+            to the database, and to see the inverted queries.  
+            </para>
+            </remarks>
+        </member>
+        <member name="P:IdeaBlade.Persistence.Rdb.RdbQuery.FindRowsResultMode">
+            <summary>
+            Returns information regarding the behaviour of the <see cref="M:IdeaBlade.Persistence.EntityQuery.FindRows(IdeaBlade.Persistence.PersistenceManager)"/> method call.
+            </summary>
+            <value>The FindRows result mode.</value>
+        </member>
+        <member name="T:IdeaBlade.Persistence.Rdb.StoredProcRdbQuery">
+            <summary>
+            Standard mechanism for retrieving business objects backed by a stored procedure.
+            <seealso cref="T:IdeaBlade.Persistence.PersistenceManager"/>
+            <seealso cref="T:IdeaBlade.Persistence.Entity"/>
+            <seealso cref="T:IdeaBlade.Persistence.Rdb.RdbQuery"/>
+            <seealso cref="T:IdeaBlade.Persistence.Rdb.PassthruRdbQuery"/>
+            </summary>
+            <remarks>
+            The <b>IdeaBlade DevForce Object Mapping Tool</b> automatically generates a <b>StoredProcRdbQuery</b> 
+            for any business object defined against a stored procedure.  You'll use this subclassed
+            query to pass parameters to the stored procedure and retrieve your business objects.
+            Queries are submitted using the
+            <see cref="M:IdeaBlade.Persistence.PersistenceManager.GetEntity(IdeaBlade.Persistence.IEntityQuery)"/>
+            and <see cref="M:IdeaBlade.Persistence.PersistenceManager.GetEntities(IdeaBlade.Persistence.IEntityQuery)"/>
+            methods.
+            <para>These queries always use a <see cref="T:IdeaBlade.Persistence.FetchStrategy"/>
+            of <b>DataSourceOnly</b>, and cannot be used when disconnected from the PersistenceServer.
+            </para>
+            <para>Business objects retrieved using a <b>StoredProcRdbQuery</b> will not be saved by a
+            <see cref="M:IdeaBlade.Persistence.PersistenceManager.SaveChanges()"/> call unless you 
+            have implemented a custom <see cref="T:IdeaBlade.Persistence.Server.IAdapterProvider"/>.
+            </para>  
+            </remarks>
+            <example><code lang="C#">
+// Sample use of a StoredProcRdbQuery
+// This assumes a stored procedure and RdbEntity named "SalesbyYear", available
+// in the IdeaBladeTutorial database.
+private void SampleStoredProcQuery() {
+   PersistenceManager pm = PersistenceManager.DefaultManager;
+   
+   // Create the query.
+   DateTime fromDate = new DateTime(1997, 1, 1);
+   DateTime toDate = new DateTime(1997, 1, 31);
+   StoredProcRdbQuery aQuery = new SalesbyYear.StoredProcRdbQuery(fromDate, toDate);
+   // Run the query.
+   EntityList&lt;SalesbyYear&gt; salesByYear = pm.GetEntities&lt;SalesbyYear&gt;(aQuery);
+}
+</code></example><example><code lang="VB">
+' Sample use of a StoredProcRdbQuery
+' This assumes a stored procedure and RdbEntity named "SalesbyYear", available
+' in the IdeaBladeTutorial database.
+Private Sub  SampleStoredProcQuery()
+   Dim pm As PersistenceManager = PersistenceManager.DefaultManager
+   
+   ' Create the query.
+   Dim fromDate As New DateTime(1997, 1, 1)
+   Dim toDate As New DateTime(1997, 1, 31)
+   Dim aQuery = New SalesbyYear.StoredProcRdbQuery(fromDate, toDate)
+   ' Run the query.          
+   Dim salesByYear As EntityList(Of SalesbyYear) = pm.GetEntities(Of SalesByYear)(aQuery)
+End Sub
+	</code></example>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Rdb.StoredProcRdbQuery.#ctor(System.String,System.String,System.Type)">
+            <summary>
+            Initializes a new instance of the StoredProcRdbQuery class.
+            </summary>
+            <param name="pOwnerName">The database owner of this procedure</param>
+            <param name="pProcedureName">The name of the stored procedure</param>
+            <param name="pEntityType">The entity type that this query will return</param>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Rdb.StoredProcRdbQuery.Clone">
+            <summary>
+            Creates a deep copy of this StoredProcRdbQuery. Parameter's are cloned if underlying parameter type
+            supports cloning
+            </summary>
+            <returns>A deep copy of this instance</returns>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Rdb.StoredProcRdbQuery.Equals(System.Object)">
+            <summary>
+            See <see cref="M:System.Object.Equals(System.Object)"/>.
+            </summary>
+            <param name="pObject"></param>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Rdb.StoredProcRdbQuery.GetHashCode">
+            <summary>
+            See <see cref="M:System.Object.GetHashCode"/>.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Rdb.StoredProcRdbQuery.ToString">
+            <summary>
+            Returns a human readable representation of the current query.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Rdb.StoredProcRdbQuery.FindRows(IdeaBlade.Persistence.PersistenceManager)">
+            <summary>
+            Internal use only.
+            </summary>
+            <param name="pHelper"></param>
+            <returns></returns>
+            <remarks>This method executes on the client side of the Persistence divide
+            to retrieve cached rows.  
+            </remarks>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Rdb.StoredProcRdbQuery.Fetch(System.Data.DataSet,IdeaBlade.Util.IDataSourceKey)">
+            <summary>
+            Internal use only. 
+            This feature is only available in certain editions of DevForce.
+            </summary>
+            <param name="pDataSet"></param>
+            <param name="pDataSourceKey"></param>
+            <remarks>
+            This method executes on the server side of the Persistence divide to 
+            retrieve data from the backend data source.
+            </remarks>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Rdb.StoredProcRdbQuery.InQueryCache(IdeaBlade.Persistence.QueryCache)">
+            <summary>
+            
+            </summary>
+            <param name="pQueryCache"></param>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Rdb.StoredProcRdbQuery.AddToQueryCache(IdeaBlade.Persistence.QueryCache)">
+            <summary>
+            
+            </summary>
+            <param name="pQueryCache"></param>
+        </member>
+        <member name="P:IdeaBlade.Persistence.Rdb.StoredProcRdbQuery.Parameters">
+            <summary>
+            Gets or sets the collection of <see cref="T:IdeaBlade.Rdb.RdbParameter"/>s used by the stored procedure.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.Persistence.Rdb.StoredProcRdbQuery.OwnerName">
+            <summary>
+            Gets or sets the name of the owner of this stored procedure.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.Persistence.Rdb.StoredProcRdbQuery.ProcedureName">
+            <summary>
+            Gets or set the name of the stored procedure.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.Persistence.Rdb.StoredProcRdbQuery.EntityType">
+            <summary>
+            The entity type returned by this query.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.Persistence.Rdb.StoredProcRdbQuery.QueryStrategy">
+            <summary>
+            Gets or sets the query strategy used by this query.
+            </summary>
+            <remarks>
+            A StoredProcRdbQuery may only operate against the backend database.
+            The default <see cref="T:IdeaBlade.Persistence.MergeStrategy"/> is <b>OverwriteChanges</b>, but may be changed as
+            long as a <see cref="T:IdeaBlade.Persistence.FetchStrategy"/> of <b>DataSourceOnly</b> is used.
+            </remarks>
+            <exception cref="T:IdeaBlade.Util.IdeaBladeException">If FetchStrategy is not DataSourceOnly</exception>
+        </member>
+        <member name="P:IdeaBlade.Persistence.Rdb.StoredProcRdbQuery.CommandTimeout">
+            <summary>
+            Gets or sets the wait time in seconds before terminating the attempt to execute a command and generating an error.
+            </summary>
+            <remarks>
+            A value of 0 indicates that the default timeout value for the data provider should be used - this is usually 30 seconds.
+            </remarks>
+        </member>
+        <member name="P:IdeaBlade.Persistence.Rdb.StoredProcRdbQuery.FindRowsResultMode">
+            <summary>
+            Returns information regarding the behaviour of the FindRows method call.
+            </summary>
+            <value>The FindRows result mode.</value>
+        </member>
+        <member name="T:IdeaBlade.Persistence.Rdb.IDbSelectCommandBuilder">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Rdb.IDbSelectCommandBuilder.UpdateDbCommand(System.Data.Common.DbCommand,IdeaBlade.Rdb.AdoHelper)">
+            <summary>
+            
+            </summary>
+            <param name="pCommand"></param>
+            <param name="pAdoHelper"></param>
+            <returns></returns>
+        </member>
+        <member name="T:IdeaBlade.Persistence.Rdb.RdbQuerySqlFormatter">
+            <summary>
+            Assists in the construction of provider-specific formatting
+            of <see cref="T:IdeaBlade.Persistence.EntityQuery"/> objects.
+            </summary>
+            <remarks>
+            Used internally by the framework.
+            </remarks>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Rdb.RdbQuerySqlFormatter.#ctor(IdeaBlade.Rdb.AdoHelper)">
+            <summary>
+            Create a new instance of the RdbQuerySqlFormatter.
+            </summary>
+            <param name="pAdoHelper"></param>
+            <remarks>
+            </remarks>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Rdb.RdbQuerySqlFormatter.#ctor(IdeaBlade.Rdb.AdoHelper,IdeaBlade.Persistence.TransactionSettings)">
+            <summary>
+            Create a new instance of the RdbQuerySqlFormatter.
+            </summary>
+            <param name="pAdoHelper"></param>
+            <param name="pSettings"></param>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Rdb.RdbQuerySqlFormatter.Dispose">
+            <summary>
+            Commit or rollback any open transaction and close and dispose connection.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Rdb.RdbQuerySqlFormatter.BuildSqlSelect(IdeaBlade.Persistence.EntityQuery)">
+            <summary>
+            Builds a database provider specific ParameterizedSql instance for the specified EntityQuery.
+            </summary>
+            <param name="pEntityQuery"></param>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Rdb.RdbQuerySqlFormatter.BuildSqlSelect(System.Type,IdeaBlade.Rdb.ParameterizedSql,System.Collections.Generic.IEnumerable{IdeaBlade.Persistence.EntityOrderBy})">
+            <summary>
+            Builds a database provider specific ParameterizedSql instance for the specified EntityType
+            and where clause.
+            </summary>
+            <param name="pEntityType"></param>
+            <param name="pWhereClause">May be null</param>
+            <param name="pOrderByClauses">May be null</param>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Rdb.RdbQuerySqlFormatter.BuildSqlSelect(IdeaBlade.Persistence.Rdb.CanonicalSqlQuery)">
+            <summary>
+            Builds a database provider specific ParameterizedSql instance for the specified CanonicalSqlQuery.
+            </summary>
+            <param name="pQuery"></param>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Rdb.RdbQuerySqlFormatter.BuildCanonicalQuery(IdeaBlade.Persistence.EntityQuery)">
+            <summary>
+            Builds a provider specific canonical query for the specified entity query.
+            </summary>
+            <param name="pEntityQuery"></param>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Rdb.RdbQuerySqlFormatter.BuildCanonicalQuery(IdeaBlade.Persistence.EntityQuery,System.Int32@)">
+            <summary>
+            Builds a provider specific canonical query for the specified entity query.
+            </summary>
+            <param name="pEntityQuery"></param>
+            <param name="pNextBindingId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Rdb.RdbQuerySqlFormatter.BuildCanonicalQuery(System.Type,IdeaBlade.Rdb.ParameterizedSql,System.Collections.Generic.IEnumerable{IdeaBlade.Persistence.EntityOrderBy})">
+            <summary>
+            Builds a provider specific canonical query for the specified entity type and where clause.
+            </summary>
+            <param name="pEntityType"></param>
+            <param name="pWhereClause">May be null</param>
+            <param name="pOrderByClauses">May be null</param>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Rdb.RdbQuerySqlFormatter.GetSubqueryWhereExpression(IdeaBlade.Persistence.EntityRelationLink,IdeaBlade.Persistence.Rdb.CanonicalSqlQuery)">
+            <summary>
+            Builds a subquery expression.
+            </summary>
+            <param name="pEntityRelationLink"></param>
+            <param name="pOuterQuery"></param>
+            <returns></returns>
+            <remarks>
+            Assumes that the results query is for the <see cref="P:IdeaBlade.Persistence.EntityRelationLink.FromType"/>
+            and that the inner query will use the "where" clause specified by the pInnerWhere parameter.
+            </remarks>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Rdb.RdbQuerySqlFormatter.Commit">
+            <summary>
+            Explicitly commit the open transaction.
+            </summary>
+            <remarks>
+            Also disposes of the transaction and connection objects.
+            </remarks>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Rdb.RdbQuerySqlFormatter.Rollback">
+            <summary>
+            Explicitly rollback the open transaction.
+            </summary>
+            <remarks>
+            Also disposes of the transaction and connection objects.
+            </remarks>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Rdb.RdbQuerySqlFormatter.Fetch(System.Type,System.Data.DataSet,IdeaBlade.Rdb.ParameterizedSql)">
+            <summary>
+            Fetch entities from the database using the parameterized Sql select.
+            This method is not intended to be used directly from your code.
+            </summary>
+            <param name="pEntityType">Entity type</param>
+            <param name="pParamSql">SQL Select statement</param>
+            <param name="pDataSet">Server side dataset used as a repository for query results</param>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Rdb.RdbQuerySqlFormatter.Fetch(System.Type,System.Data.DataSet,IdeaBlade.Rdb.ParameterizedSql,System.Int32)">
+            <summary>
+            Fetch entities from the database using the parameterized Sql select.
+            This method is not intended to be used directly from your code.
+            </summary>
+            <param name="pEntityType">Entity type</param>
+            <param name="pParamSql">SQL Select statement</param>
+            <param name="pDataSet">Server side dataset used as a repository for query results</param>
+            <param name="pCommandTimeout">Command timeout value</param>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Rdb.RdbQuerySqlFormatter.Fetch(System.Type,System.Data.DataSet,IdeaBlade.Persistence.Rdb.IDbSelectCommandBuilder)">
+            <summary>
+            Fetch entities from the database using the parameterized Sql select.
+            This method is not intended to be used directly from your code.
+            </summary>
+            <param name="pEntityType"></param>
+            <param name="pDataSet"></param>
+            <param name="pDbCommandBuilder"></param>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Rdb.RdbQuerySqlFormatter.FormatQueryClause(System.String,System.Type,IdeaBlade.Persistence.EntityQueryOp,System.Object)">
+            <summary>
+            Formats a query clause as a database provider specific ParameterizedSql instance.
+            </summary>
+            <param name="pColumnName"></param>
+            <param name="pColumnDataType"></param>
+            <param name="pOperator"></param>
+            <param name="pValue"></param>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Rdb.RdbQuerySqlFormatter.FormatQueryClause(System.String,System.Type,IdeaBlade.Persistence.EntityQueryOp,System.Object,System.Int32@)">
+            <summary>
+            Formats a query clause as a database provider specific ParameterizedSql instance.
+            </summary>
+            <param name="pColumnName"></param>
+            <param name="pColumnDataType"></param>
+            <param name="pOperator"></param>
+            <param name="pValue"></param>
+            <param name="pNextBindingId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Rdb.RdbQuerySqlFormatter.QualifyTableName(System.Type)">
+            <summary>
+            Returns the database table name for the specified EntityType, 
+            formatted for use in a SQL statement.
+            </summary>
+            <param name="pEntityType"></param>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Rdb.RdbQuerySqlFormatter.QualifyTableName(IdeaBlade.Persistence.EntityTypeInfo)">
+            <summary>
+            
+            </summary>
+            <param name="pEntityTypeInfo"></param>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Rdb.RdbQuerySqlFormatter.QualifyTableName(IdeaBlade.Persistence.EntityTable)">
+            <summary>
+            Returns the database table name for the specified EntityTable
+            formatted for use in a SQL statement.
+            </summary>
+            <param name="pEntityTable"></param>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Rdb.RdbQuerySqlFormatter.QualifyColumnName(IdeaBlade.Persistence.EntityColumn)">
+            <summary>
+            Returns the fully qualified database column name for the EntityColumn.
+            </summary>
+            <param name="pEntityColumn"></param>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Rdb.RdbQuerySqlFormatter.QualifyColumnName(IdeaBlade.Persistence.EntityColumn,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="pEntityColumn"></param>
+            <param name="pTableAlias"></param>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Rdb.RdbQuerySqlFormatter.QualifyColumnName(System.Type,System.String)">
+            <summary>
+            Returns the database table column name for the EntityType and ColumnName, 
+            formatted for use in a SQL statement. The ColumnName passed in is the business object
+            column name not the SQL column name
+            </summary>
+            <param name="pEntityType"></param>
+            <param name="pColumnName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Rdb.RdbQuerySqlFormatter.QualifyColumnName(IdeaBlade.Persistence.EntityTypeInfo,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="pEntityTypeInfo"></param>
+            <param name="pColumnName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Rdb.RdbQuerySqlFormatter.QualifyColumnName(IdeaBlade.Persistence.EntityTable,System.String)">
+            <summary>
+            Returns the fully qualified database column name for the EntityTable and ColumnName, 
+            formatted for use in a SQL statement. The ColumnName passed in is the business object
+            column name not the SQL column name
+            </summary>
+            <param name="pEntityTable"></param>
+            <param name="pColumnName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Rdb.RdbQuerySqlFormatter.QualifyColumnName(IdeaBlade.Persistence.EntityTable,System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="pEntityTable"></param>
+            <param name="pTableAlias"></param>
+            <param name="pColumnName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Rdb.RdbQuerySqlFormatter.BuildOrderByClause(IdeaBlade.Persistence.EntityTable,System.Collections.Generic.IEnumerable{IdeaBlade.Persistence.EntityOrderBy})">
+            <summary>
+            Does not create the "OrderBy" prefix
+            </summary>
+            <param name="pTable"></param>
+            <param name="pOrderByClauses"></param>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Rdb.RdbQuerySqlFormatter.GetSimpleExpression(IdeaBlade.Persistence.EntityTypeInfo,IdeaBlade.Persistence.EntityQueryClause,System.Int32@)">
+            <summary>
+            Converts an <see cref="T:IdeaBlade.Persistence.EntityQueryClause"/> into a provider-specific SQL statement.
+            </summary>
+            <param name="pEntityTypeInfo"></param>
+            <param name="pClause"></param>
+            <param name="pNextBindingId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Rdb.RdbQuerySqlFormatter.GetSubqueryExpression(IdeaBlade.Persistence.EntitySubquery,System.Int32@)">
+            <summary>
+            Converts an <see cref="T:IdeaBlade.Persistence.EntitySubquery"/> into a provider-specific SQL statement.
+            </summary>
+            <param name="pEntitySubquery"></param>
+            <param name="pNextBindingId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Rdb.RdbQuerySqlFormatter.ProcessBinaryOperator(IdeaBlade.Persistence.EntityBooleanOp,IdeaBlade.Rdb.ParameterizedSql,IdeaBlade.Rdb.ParameterizedSql)">
+            <summary>
+            
+            </summary>
+            <param name="pOperator"></param>
+            <param name="pClause1"></param>
+            <param name="pClause2"></param>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Rdb.RdbQuerySqlFormatter.ProcessUnaryOperator(IdeaBlade.Persistence.EntityBooleanOp,IdeaBlade.Rdb.ParameterizedSql)">
+            <summary>
+            
+            </summary>
+            <param name="pOperator"></param>
+            <param name="pClause1"></param>
+            <returns></returns>
+        </member>
+        <member name="P:IdeaBlade.Persistence.Rdb.RdbQuerySqlFormatter.AdoHelper">
+            <summary>
+            Gets the <see cref="P:IdeaBlade.Persistence.Rdb.RdbQuerySqlFormatter.AdoHelper"/> used by this formatter.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.Persistence.Rdb.RdbQuerySqlFormatter.ProviderHelper">
+            <summary>
+            Gets the AdoProviderHelper for this instance.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.Persistence.Rdb.PagedRdbQuery">
+            <summary>
+            Used to return paged results from execution of an <see cref="T:IdeaBlade.Persistence.Rdb.RdbQuery"/>.
+            </summary>
+            <remarks>
+            By default, an <see cref="T:IdeaBlade.Persistence.Rdb.RdbQuery"/> or <see cref="T:IdeaBlade.Persistence.EntityQuery"/> will return all entities meeting the 
+            query criteria when a <see cref="M:IdeaBlade.Persistence.PersistenceManager.GetEntities(IdeaBlade.Persistence.IEntityQuery)"/> method is executed.  Use the
+            <b>PagedRdbQuery</b> to instead return entities in "pages" of a specified size.
+            <para>
+            Construct a PagedRdbQuery from another query, setting the <see cref="P:IdeaBlade.Persistence.Rdb.PagedRdbQuery.PageSize"/> wanted.  Using <see cref="M:IdeaBlade.Persistence.Rdb.PagedRdbQuery.NextPage"/>,
+            <see cref="M:IdeaBlade.Persistence.Rdb.PagedRdbQuery.PrevPage"/> and <see cref="P:IdeaBlade.Persistence.Rdb.PagedRdbQuery.CurrentPage"/> you can then specify the result page to be 
+            returned when the PagedRdbQuery is executed.
+            </para>
+            </remarks>
+            <example><code lang="C#">
+public void SamplePagedQuery() {
+   PersistenceManager pm = PersistenceManager.DefaultManager;
+
+   // Query orders in descending date sequence.
+   RdbQuery aQuery = new RdbQuery(typeof(Order));
+   aQuery.AddOrderBy(Order.OrderDateEntityColumn, ListSortDirection.Descending);
+
+   // Build a paged query to retrieve 10 items at a time.
+   PagedRdbQuery pagedQuery = new PagedRdbQuery(aQuery);
+   pagedQuery.PageSize = 10;
+
+   while (true) {
+      EntityList&lt;Order&gt; orders = pm.GetEntities&lt;Order&gt;(pagedQuery);
+      System.Diagnostics.Debug.WriteLine("Current page = " + pagedQuery.CurrentPage.ToString());
+      System.Diagnostics.Debug.WriteLine("Order count for this page = " + orders.Count.ToString());
+      foreach (Order anOrder in orders) {
+         System.Diagnostics.Debug.WriteLine(" Order id = " + anOrder.Id.ToString());
+      }
+      if (pagedQuery.IsLastPage) break;
+	  // Advance the query.
+      pagedQuery.NextPage();
+   }
+}
+</code></example><example><code lang="VB">
+Public Sub SamplePagedQuery()
+   Dim pm As PersistenceManager = PersistenceManager.DefaultManager
+
+   ' Query orders in descending date sequence.
+   Dim aQuery As New RdbQuery(GetType(Order))
+   aQuery.AddOrderBy(Order.OrderDateEntityColumn, ListSortDirection.Descending)
+
+   ' Build a paged query to retrieve 10 items at a time.
+   Dim pagedQuery As New PagedRdbQuery(aQuery)
+   pagedQuery.PageSize = 10
+
+   While True
+      Dim orders As EntityList(Of Order) = pm.GetEntities(Of Order)(pagedQuery)
+      System.Diagnostics.Debug.WriteLine(("Current page = " + pagedQuery.CurrentPage.ToString()))
+      System.Diagnostics.Debug.WriteLine(("Order count for this page = " + orders.Count.ToString()))
+      For Each anOrder As Order In orders
+         System.Diagnostics.Debug.WriteLine((" Order id = " + anOrder.Id.ToString()))
+      Next anOrder
+      If pagedQuery.IsLastPage Then Exit While
+      ' Advance the query.
+      pagedQuery.NextPage()
+   End While
+End Sub
+   </code></example>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Rdb.PagedRdbQuery.#ctor(IdeaBlade.Persistence.EntityQuery)">
+            <summary>
+            Initializes a new instance of the PagedRdbQuery class from another <see cref="T:IdeaBlade.Persistence.Rdb.RdbQuery"/> or <see cref="T:IdeaBlade.Persistence.EntityQuery"/>.
+            </summary>
+            <param name="pEntityQuery">EntityQuery to be wrapped as a paged query</param>
+            <remarks>
+            The <see cref="T:IdeaBlade.Persistence.EntityQuery"/> passed will be converted to an <see cref="T:IdeaBlade.Persistence.Rdb.RdbQuery"/>, therefore the 
+            <b>PagedRdbQuery</b> may not be used with non-database-backed data sources.
+            Any changes to the <paramref name="pEntityQuery"/> made after the PagedRdbQuery
+            is constructed will not be used by the PagedRdbQuery.
+            <para>
+            If the <paramref name="pEntityQuery"/> contains a <see cref="P:IdeaBlade.Persistence.EntityQuery.Top"/> property then that value will
+            be used as the <see cref="P:IdeaBlade.Persistence.Rdb.PagedRdbQuery.PageSize"/>; otherwise the <see cref="P:IdeaBlade.Persistence.Rdb.PagedRdbQuery.DefaultPageSize"/> will be used.
+            </para>
+            <para>
+            If the <paramref name="pEntityQuery"/> doesn't contain a <see cref="T:IdeaBlade.Persistence.EntityOrderBy"/> clause then the primary 
+            key column(s) will be used.  Also, all specified OrderBy columns should not contain NULL values as they can 
+            not be used to perform proper page order comparisons.  Thus, their respective data rows will be omitted 
+            altogether from the <see cref="T:IdeaBlade.Persistence.Rdb.PagedRdbQuery"/>.  
+            </para>
+            </remarks>
+            <exception cref="T:System.ArgumentNullException">An EntityQuery is required</exception>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Rdb.PagedRdbQuery.NextPage">
+            <summary>
+            The next query executed will be for the page after the current one.
+            </summary>
+            <remarks>
+            Calling <b>NextPage</b> does not automatically advance the result set; instead the 
+            next execution of the <b>PagedRdbQuery</b> will retrieve the next page of items.
+            </remarks>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Rdb.PagedRdbQuery.PrevPage">
+            <summary>
+            The next query executed will be for the page before the current one.
+            </summary>
+            <remarks>
+            Calling <b>PrevPage</b> indicates that the 
+            next execution of the <b>PagedRdbQuery</b> will retrieve the previous page of items.
+            </remarks>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Rdb.PagedRdbQuery.Reset">
+            <summary>
+            Resets the query - all previously calculated page tops are cleared and the <see cref="P:IdeaBlade.Persistence.Rdb.PagedRdbQuery.CurrentPage"/> is
+            set to 1.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Rdb.PagedRdbQuery.Fetch(System.Data.DataSet,IdeaBlade.Util.IDataSourceKey)">
+            <summary>
+            This method is not intended to be called directly from your code.
+            </summary>
+            <remarks>
+            This method executes on the server side of the Persistence divide to 
+            retrieve data from the backend datasource.
+            </remarks>
+            <param name="pDataSet">The dataset holding fetched data</param>
+            <param name="pDataSourceKey">The data source key containing connection information for the datasource.</param>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Rdb.PagedRdbQuery.FindRows(IdeaBlade.Persistence.PersistenceManager)">
+            <summary>
+            This method is not intended to be called directly from your code.
+            </summary>
+            <remarks>
+            This method executes on the client side of the Persistence divide to 
+            retrieve cached rows.  
+            </remarks>
+            <param name="pPersistenceManager"></param>
+            <returns>An array of strongly typed DataRows (Entities) from the cache</returns>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Rdb.PagedRdbQuery.InQueryCache(IdeaBlade.Persistence.QueryCache)">
+            <summary>
+            Determines whether this query is in the specified <see cref="T:IdeaBlade.Persistence.QueryCache"/> within a PersistenceManager.
+            </summary>
+            <param name="pQueryCache"></param>
+            <returns></returns>
+            <remarks>
+            Used internally by the DevForce framework.
+            </remarks>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Rdb.PagedRdbQuery.AddToQueryCache(IdeaBlade.Persistence.QueryCache)">
+            <summary>
+            Adds this query to the specified <see cref="T:IdeaBlade.Persistence.QueryCache"/>.
+            </summary>
+            <param name="pQueryCache"></param>
+            <remarks>
+            Used internally by the DevForce framework.
+            </remarks>
+        </member>
+        <member name="P:IdeaBlade.Persistence.Rdb.PagedRdbQuery.DefaultPageSize">
+            <summary>
+            Gets or sets the default page size.
+            </summary>
+            <remarks>
+            If not set, the default size is 25 items per page.
+            <para>
+            If the <see cref="P:IdeaBlade.Persistence.Rdb.PagedRdbQuery.PageSize"/> is not set, it will default to this value.
+            </para>
+            </remarks>
+            <exception cref="T:System.ArgumentException">Thrown if the page size is less than 1 or greater than 10,000.</exception>
+        </member>
+        <member name="P:IdeaBlade.Persistence.Rdb.PagedRdbQuery.CurrentPage">
+            <summary>
+            Gets or sets the current page number.
+            </summary>
+            <remarks>
+            If you set this value, the next execution of the <b>PagedRdbQuery</b>
+            will return results for the page indicated.
+            </remarks>
+        </member>
+        <member name="P:IdeaBlade.Persistence.Rdb.PagedRdbQuery.IsFirstPage">
+            <summary>
+            Returns <c>true</c> if the <see cref="P:IdeaBlade.Persistence.Rdb.PagedRdbQuery.CurrentPage"/> is the first page.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.Persistence.Rdb.PagedRdbQuery.IsLastPage">
+            <summary>
+            Returns <c>true</c> if the <see cref="P:IdeaBlade.Persistence.Rdb.PagedRdbQuery.CurrentPage"/> is the last page.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.Persistence.Rdb.PagedRdbQuery.PageSize">
+            <summary>
+            Gets or sets the number of items in a page.
+            </summary>
+            <remarks>
+            A <b>PageSize</b> of 0 indicates that the <see cref="P:IdeaBlade.Persistence.Rdb.PagedRdbQuery.DefaultPageSize"/> will be used.
+            </remarks>
+            <exception cref="T:System.ArgumentException">PageSize must be between 0 and 10000</exception>
+        </member>
+        <member name="P:IdeaBlade.Persistence.Rdb.PagedRdbQuery.PagesShouldOverlap">
+            <summary>
+            Gets or sets whether the last item on the current page will be the first item on the next page.
+            </summary>
+            <remarks>
+            Defaults to <c>true</c>.
+            </remarks>
+        </member>
+        <member name="P:IdeaBlade.Persistence.Rdb.PagedRdbQuery.EntityType">
+            <summary>
+            Gets the <see cref="T:IdeaBlade.Persistence.Entity"/> type returned by this query.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.Persistence.Rdb.PagedRdbQuery.QueryStrategy">
+            <summary>
+            Gets or sets the fetch and merge strategies of the query.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.Persistence.Rdb.PagedRdbQuery.CommandTimeout">
+            <summary>
+            Gets or sets the wait time in seconds before terminating the attempt to execute a command and generating an error.
+            </summary>
+            <remarks>
+            A value of 0 indicates that the default timeout value for the data provider should be used - this is usually 30 seconds.
+            </remarks>
+        </member>
+        <member name="P:IdeaBlade.Persistence.Rdb.PagedRdbQuery.FindRowsResultMode">
+            <summary>
+            Returns information regarding the behaviour of the <see cref="M:IdeaBlade.Persistence.Rdb.PagedRdbQuery.FindRows(IdeaBlade.Persistence.PersistenceManager)"/> method call.
+            </summary>
+            <value>The FindRows result mode.</value>
+        </member>
+        <member name="T:IdeaBlade.Persistence.Rdb.CanonicalSqlQuery">
+            <summary>
+            Standardized query information used internally by the DevForce framework.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Rdb.CanonicalSqlQuery.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Rdb.CanonicalSqlQuery.#ctor(IdeaBlade.Persistence.Rdb.CanonicalSqlQuery)">
+            <summary>
+            Copy constructor
+            </summary>
+            <param name="pCq"></param>
+        </member>
+        <member name="P:IdeaBlade.Persistence.Rdb.CanonicalSqlQuery.EntityType">
+            <summary>
+            Gets or sets the Type of the Entity to be queried.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.Persistence.Rdb.CanonicalSqlQuery.Distinct">
+            <summary>
+            Gets or sets whether a distinct operator is used to remove duplicate results.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.Persistence.Rdb.CanonicalSqlQuery.Top">
+            <summary>
+            Gets or sets whether a top operator is used.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.Persistence.Rdb.CanonicalSqlQuery.ColumnNames">
+            <summary>
+            Gets or sets a comma-delimited list of column names.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.Persistence.Rdb.CanonicalSqlQuery.TableName">
+            <summary>
+            Gets or sets the table queried.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.Persistence.Rdb.CanonicalSqlQuery.WhereClause">
+            <summary>
+            Gets or sets the where clause.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.Persistence.Rdb.CanonicalSqlQuery.OrderByClause">
+            <summary>
+            Gets or sets the order by clause.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.Persistence.Rdb.IRdbTable">
+            <summary>
+            Marker interface implemented by generated <see cref="T:IdeaBlade.Persistence.EntityTable"/> classes which are backed by a database.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.Persistence.Rdb.RdbSubquery">
+             <summary>
+             The mechanism through which one query can reference the results of another query
+             to form a join operation in the DevForce Object Query Language.
+             <seealso cref="T:IdeaBlade.Persistence.EntityRelation"/>
+             <seealso cref="T:IdeaBlade.Persistence.Rdb.RdbQuery"/>
+             </summary>
+             <remarks>
+             An <b>RdbSubquery</b> is a strongly-typed implementation of an <see cref="T:IdeaBlade.Persistence.EntitySubquery"/>.
+             Use the RdbSubquery when building complex queries with an <see cref="T:IdeaBlade.Persistence.Rdb.RdbQuery"/> 
+             to retrieve business objects which are backed by SQL tables and views.  
+            </remarks>
+             <example><code lang="C#">
+private void ComplexSubQueryExample() {
+
+  string msg = "Rows retrieved = {0}\nQuery = {1}";
+  PersistenceManager pm = PersistenceManager.DefaultManager;
+
+  // This will retrieve all orders having 'chai' product, with order qty &gt; 5
+  RdbQuery query = new RdbQuery(typeof(Order));
+
+  RdbSubquery subQuery1 = new RdbSubquery(EntityRelations.Order_OrderDetail.ToChild);
+  subQuery1.AddClause(OrderDetail.QuantityEntityColumn, EntityQueryOp.GT, 5);
+
+  RdbSubquery subQuery2 = new RdbSubquery(EntityRelations.Product_OrderDetail.ToParent);
+  subQuery2.AddClause(Product.ProductNameEntityColumn, EntityQueryOp.EQ, "Chai");
+
+  subQuery1.AddSubquery(subQuery2);
+  query.AddSubquery(subQuery1);
+
+  EntityList&lt;Order&gt; orders = pm.GetEntities&lt;Order&gt;(query);
+  MessageBox.Show(string.Format(msg, orders.Count.ToString(), GetSqlStatement(query)));
+}
+
+private string GetSqlStatement(RdbQuery query) {
+  RdbKey key = PersistenceManager.DefaultManager.GetDataSourceKey(query.EntityType) as RdbKey;
+  RdbQuerySqlFormatter aFormatter = new RdbQuerySqlFormatter(key.AdoHelper);
+  return aFormatter.BuildSqlSelect(query).Sql;
+}
+</code></example><example><code lang="VB">
+Private Sub ComplexSubQueryExample()
+   Dim msg As String = "Rows retrieved = {0}" + ControlChars.Lf + "Query = {1}"
+   Dim pm As PersistenceManager = PersistenceManager.DefaultManager
+   
+   ' This will retrieve all orders having 'chai' product, with order qty &gt; 5
+   Dim query As New RdbQuery(GetType(Order))
+   
+   Dim subQuery1 As New RdbSubquery(EntityRelations.Order_OrderDetail.ToChild)
+   subQuery1.AddClause(OrderDetail.QuantityEntityColumn, EntityQueryOp.GT, 5)
+   
+   Dim subQuery2 As New RdbSubquery(EntityRelations.Product_OrderDetail.ToParent)
+   subQuery2.AddClause(Product.ProductNameEntityColumn, EntityQueryOp.EQ, "Chai")
+   
+   subQuery1.AddSubquery(subQuery2)
+   query.AddSubquery(subQuery1)
+
+   Dim orders As EntityList(Of Order) = pm.GetEntities(Of Order)(query)
+   MessageBox.Show(String.Format(msg, orders.Count.ToString(), GetSqlStatement(query)))
+End Sub 
+
+Private Function GetSqlStatement(ByVal query As RdbQuery) As String
+  Dim key As RdbKey = CType(PersistenceManager.DefaultManager.GetDataSourceKey(query.EntityType), RdbKey)
+  Dim aFormatter As New RdbQuerySqlFormatter(key.AdoHelper)
+  Return aFormatter.BuildSqlSelect(query).Sql
+End Function
+	</code></example>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Rdb.RdbSubquery.#ctor(IdeaBlade.Persistence.EntityRelationLink)">
+            <overloads>Initializes a new instance of the RdbSubquery class. </overloads>
+             <summary>
+             Initializes a new instance of the RdbSubquery class.
+             </summary>
+             <param name="pEntityRelationLink">A relationship link</param>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Rdb.RdbSubquery.#ctor(IdeaBlade.Persistence.EntityRelation,IdeaBlade.Persistence.QueryDirection)">
+            <summary>
+            Obsolete.  Use <see cref="M:IdeaBlade.Persistence.Rdb.RdbSubquery.#ctor(IdeaBlade.Persistence.EntityRelationLink)"/> instead.
+            </summary>
+            <param name="pEntityRelation"></param>
+            <param name="pQueryDirection"></param>
+            <remarks>
+            An <see cref="T:IdeaBlade.Persistence.EntityRelationLink"/> can be accessed via 
+            either the EntityRelation <see cref="P:IdeaBlade.Persistence.EntityRelation.ToChild"/> or 
+            <see cref="P:IdeaBlade.Persistence.EntityRelation.ToParent"/> properties.
+            </remarks>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Rdb.RdbSubquery.#ctor(IdeaBlade.Persistence.Rdb.RdbSubquery)">
+            <summary>
+            Protected copy constructor.
+            </summary>
+            <param name="pEntitySubquery">Subquery to be copied</param>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Rdb.RdbSubquery.AddSubquery(IdeaBlade.Persistence.EntityRelation)">
+            <summary>
+            Adds an <see cref="T:IdeaBlade.Persistence.Rdb.RdbSubquery"/> to the subquery.
+            </summary>
+            <param name="pEntityRelation">An <see cref="T:IdeaBlade.Persistence.EntityRelation"/> that describes how the result of this subquery
+            relates to the current entity</param>
+            <returns>The newly added <see cref="T:IdeaBlade.Persistence.Rdb.RdbSubquery"/> 
+            </returns>
+            <remarks>Additional clauses and nested subqueries may be added to the returned RdbSubquery.</remarks>
+            <example><code lang="C#">
+private void AddSubQueryExample() {
+  // A more complex query with nested subqueries.
+  string msg = "Rows retrieved = {0}\nQuery = {1}";
+  PersistenceManager pm = PersistenceManager.DefaultManager;
+  
+  // This will retrieve all orders having 'chai' product
+  RdbQuery query = new RdbQuery(typeof(Order));
+  RdbSubquery subQuery1 = query.AddSubquery(EntityRelations.Order_OrderDetail);
+  RdbSubquery subQuery2 = subQuery1.AddSubquery(EntityRelations.Product_OrderDetail);
+  subQuery2.AddClause(Product.ProductNameEntityColumn, EntityQueryOp.EQ, "Chai");
+
+  EntityList&lt;Order&gt; orders = pm.GetEntities&lt;Order&gt;(query);
+  MessageBox.Show(string.Format(msg, orders.Count.ToString(), GetSqlStatement(query)));
+}
+
+private string GetSqlStatement(RdbQuery query) {
+  RdbKey key = PersistenceManager.DefaultManager.GetDataSourceKey(query.EntityType) as RdbKey;
+  RdbQuerySqlFormatter aFormatter = new RdbQuerySqlFormatter(key.AdoHelper);
+  return aFormatter.BuildSqlSelect(query).Sql;
+}
+</code></example><example><code lang="VB">
+Private Sub AddSubQueryExample()
+  ' A more complex query with nested subqueries.
+  Dim msg As String = "Rows retrieved = {0}" + ControlChars.Lf + "Query = {1}"
+  Dim pm As PersistenceManager = PersistenceManager.DefaultManager
+
+  ' This will retrieve all orders having 'chai' product
+  Dim query As New RdbQuery(GetType(Order))
+  Dim subQuery1 As RdbSubquery = query.AddSubquery(EntityRelations.Order_OrderDetail)
+  Dim subQuery2 As RdbSubquery = subQuery1.AddSubquery(EntityRelations.Product_OrderDetail)
+  subQuery2.AddClause(Product.ProductNameEntityColumn, EntityQueryOp.EQ, "Chai")
+
+  Dim orders As EntityList(Of Order) = pm.GetEntities(Of Order)(query)
+  MessageBox.Show(String.Format(msg, orders.Count.ToString(), GetSqlStatement(query)))
+End Sub
+
+Private Function GetSqlStatement(ByVal query As RdbQuery) As String
+  Dim key As RdbKey = CType(PersistenceManager.DefaultManager.GetDataSourceKey(query.EntityType), RdbKey)
+  Dim aFormatter As New RdbQuerySqlFormatter(key.AdoHelper)
+  Return aFormatter.BuildSqlSelect(query).Sql
+End Function
+
+   </code></example>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Rdb.RdbSubquery.AddSubquery(IdeaBlade.Persistence.EntityRelationLink)">
+            <summary>
+            Adds an <see cref="T:IdeaBlade.Persistence.Rdb.RdbSubquery"/> to the subquery.
+            </summary>
+            <param name="pEntityRelationLink">An <see cref="T:IdeaBlade.Persistence.EntityRelationLink"/> that describes how the result of this subquery
+            relates to the current entity</param>
+            <returns>The newly added <see cref="T:IdeaBlade.Persistence.Rdb.RdbSubquery"/> 
+            </returns>
+            <remarks>Additional clauses and nested subqueries may be added to the returned RdbSubquery.</remarks>
+            <example><code lang="C#">
+private void AddSubQueryExample() {
+  // A more complex query with nested subqueries.
+  string msg = "Rows retrieved = {0}\nQuery = {1}";
+  PersistenceManager pm = PersistenceManager.DefaultManager;
+  
+  // This will retrieve all orders having 'chai' product
+  RdbQuery query = new RdbQuery(typeof(Order));
+  RdbSubquery subQuery1 = query.AddSubquery(EntityRelations.Order_OrderDetail);
+  RdbSubquery subQuery2 = subQuery1.AddSubquery(EntityRelations.Product_OrderDetail);
+  subQuery2.AddClause(Product.ProductNameEntityColumn, EntityQueryOp.EQ, "Chai");
+
+  EntityList&lt;Order&gt; orders = pm.GetEntities&lt;Order&gt;(query);
+  MessageBox.Show(string.Format(msg, orders.Count.ToString(), GetSqlStatement(query)));
+}
+
+private string GetSqlStatement(RdbQuery query) {
+  RdbKey key = PersistenceManager.DefaultManager.GetDataSourceKey(query.EntityType) as RdbKey;
+  RdbQuerySqlFormatter aFormatter = new RdbQuerySqlFormatter(key.AdoHelper);
+  return aFormatter.BuildSqlSelect(query).Sql;
+}
+</code></example><example><code lang="VB">
+Private Sub AddSubQueryExample()
+  ' A more complex query with nested subqueries.
+  Dim msg As String = "Rows retrieved = {0}" + ControlChars.Lf + "Query = {1}"
+  Dim pm As PersistenceManager = PersistenceManager.DefaultManager
+
+  ' This will retrieve all orders having 'chai' product
+  Dim query As New RdbQuery(GetType(Order))
+  Dim subQuery1 As RdbSubquery = query.AddSubquery(EntityRelations.Order_OrderDetail)
+  Dim subQuery2 As RdbSubquery = subQuery1.AddSubquery(EntityRelations.Product_OrderDetail)
+  subQuery2.AddClause(Product.ProductNameEntityColumn, EntityQueryOp.EQ, "Chai")
+
+  Dim orders As EntityList(Of Order) = pm.GetEntities(Of Order)(query)
+  MessageBox.Show(String.Format(msg, orders.Count.ToString(), GetSqlStatement(query)))
+End Sub
+
+Private Function GetSqlStatement(ByVal query As RdbQuery) As String
+  Dim key As RdbKey = CType(PersistenceManager.DefaultManager.GetDataSourceKey(query.EntityType), RdbKey)
+  Dim aFormatter As New RdbQuerySqlFormatter(key.AdoHelper)
+  Return aFormatter.BuildSqlSelect(query).Sql
+End Function
+
+   </code></example>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Rdb.RdbSubquery.AddSubquery(IdeaBlade.Persistence.EntitySubquery)">
+            <summary>
+            Adds an <see cref="T:IdeaBlade.Persistence.Rdb.RdbSubquery"/> to the subquery.
+            </summary>
+            <param name="pRdbSubquery">The subquery to add</param>
+            <returns>The newly added <see cref="T:IdeaBlade.Persistence.Rdb.RdbSubquery"/> 
+            </returns>
+            <remarks>Additional clauses and nested subqueries may be added to the returned RdbSubquery.</remarks>
+            <example><code lang="C#">
+private void AddSubQueryExample() {
+  // A more complex query with nested subqueries.
+  string msg = "Rows retrieved = {0}\nQuery = {1}";
+  PersistenceManager pm = PersistenceManager.DefaultManager;
+  
+  // This will retrieve all orders having 'chai' product
+  RdbQuery query = new RdbQuery(typeof(Order));
+  RdbSubquery subQuery1 = query.AddSubquery(EntityRelations.Order_OrderDetail);
+  RdbSubquery subQuery2 = subQuery1.AddSubquery(EntityRelations.Product_OrderDetail);
+  subQuery2.AddClause(Product.ProductNameEntityColumn, EntityQueryOp.EQ, "Chai");
+
+  EntityList&lt;Order&gt; orders = pm.GetEntities&lt;Order&gt;(query);
+  MessageBox.Show(string.Format(msg, orders.Count.ToString(), GetSqlStatement(query)));
+}
+
+private string GetSqlStatement(RdbQuery query) {
+  RdbKey key = PersistenceManager.DefaultManager.GetDataSourceKey(query.EntityType) as RdbKey;
+  RdbQuerySqlFormatter aFormatter = new RdbQuerySqlFormatter(key.AdoHelper);
+  return aFormatter.BuildSqlSelect(query).Sql;
+}
+</code></example><example><code lang="VB">
+Private Sub AddSubQueryExample()
+  ' A more complex query with nested subqueries.
+  Dim msg As String = "Rows retrieved = {0}" + ControlChars.Lf + "Query = {1}"
+  Dim pm As PersistenceManager = PersistenceManager.DefaultManager
+
+  ' This will retrieve all orders having 'chai' product
+  Dim query As New RdbQuery(GetType(Order))
+  Dim subQuery1 As RdbSubquery = query.AddSubquery(EntityRelations.Order_OrderDetail)
+  Dim subQuery2 As RdbSubquery = subQuery1.AddSubquery(EntityRelations.Product_OrderDetail)
+  subQuery2.AddClause(Product.ProductNameEntityColumn, EntityQueryOp.EQ, "Chai")
+
+  Dim orders As EntityList(Of Order) = pm.GetEntities(Of Order)(query)
+  MessageBox.Show(String.Format(msg, orders.Count.ToString(), GetSqlStatement(query)))
+End Sub
+
+Private Function GetSqlStatement(ByVal query As RdbQuery) As String
+  Dim key As RdbKey = CType(PersistenceManager.DefaultManager.GetDataSourceKey(query.EntityType), RdbKey)
+  Dim aFormatter As New RdbQuerySqlFormatter(key.AdoHelper)
+  Return aFormatter.BuildSqlSelect(query).Sql
+End Function
+
+   </code></example>
+        </member>
+    </members>
+</doc>

@@ -1,0 +1,104 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>IdeaBlade.Asp</name>
+    </assembly>
+    <members>
+        <member name="T:IdeaBlade.Asp.AspDataSource">
+            <summary>Web Forms data source control for objects.</summary>
+            <remarks>Intended for Web data binding with IdeaBlade entities.</remarks>
+        </member>
+        <member name="M:IdeaBlade.Asp.AspDataSource.GetView(System.String)">
+            <summary>Return the named view for this Datasource. There is only one, named "Default".</summary>
+            <param name="viewName">Name of the view to return; ignored because always returns "Default" view.</param>
+            <returns>The lone DataSourceView, "Default".</returns>
+            <remarks>Only one view, named "Default".</remarks>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:IdeaBlade.Asp.AspDataSource.GetAdapterManager" -->
+        <!-- Badly formed XML comment ignored for member "P:IdeaBlade.Asp.AspDataSource.AdapterManagerTypeName" -->
+        <!-- Badly formed XML comment ignored for member "P:IdeaBlade.Asp.AspDataSource.AdapterManagerAssemblyName" -->
+        <member name="P:IdeaBlade.Asp.AspDataSource.EntityTypeName">
+            <summary>Get the business object type name (e.g.,"Employee").</summary>
+            <value>Full type name of the business class.</value>
+        </member>
+        <member name="P:IdeaBlade.Asp.EntityAdapterManager.PersistenceManager">
+            <summary>
+            Gets or Sets the Persistence Manager of the entity
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.Asp.EntityAdapterManager.EntityType">
+            <summary>
+            Gets or Sets the Type of the entity
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.Asp.AspDataSourceView">
+            <summary>DataSourceView object that manages Web data binding for a list of objects.</summary>
+            <remarks>
+            Designed specifically to assist in Web data binding to IdeaBlade entities.
+            </remarks>
+        </member>
+        <member name="M:IdeaBlade.Asp.AspDataSourceView.#ctor(IdeaBlade.Asp.AspDataSource,System.String)">
+            <summary>Ctor</summary>
+            <param name="pOwner">The AspDataSource object that owns this view.</param>
+            <param name="pViewName">The name of the view.</param>
+        </member>
+        <member name="M:IdeaBlade.Asp.AspDataSourceView.ExecuteSelect(System.Web.UI.DataSourceSelectArguments)">
+            <summary>Invoke function to retrieve (select) objects.</summary>
+            <param name="pSelectArgs">Optional selection arguments from the page.</param>
+            <returns>The selected objects but could be the count of selection results.</returns>
+        </member>
+        <member name="M:IdeaBlade.Asp.AspDataSourceView.ExecuteInsert(System.Collections.IDictionary)">
+            <summary>Invoke function to create (insert) new object.</summary>
+            <param name="pNewValues">Dictionary of {property name, value} pairs to load into the new object.</param>
+            <returns>Number of objects inserted. Usually 1 if succeeds; 0 if failed.</returns>
+        </member>
+        <member name="M:IdeaBlade.Asp.AspDataSourceView.ExecuteUpdate(System.Collections.IDictionary,System.Collections.IDictionary,System.Collections.IDictionary)">
+            <summary>Invoke function to update an existing object.</summary>
+            <param name="pKeys">{property name, value} pairs of the keys for locating the object.</param>
+            <param name="pNewValues">{property name, value} pairs to update the object.</param>
+            <param name="pOldValues">Corresponding {property name, value} pairs with the original data.</param>
+            <returns>Number of objects updated. Usually 1 if succeeds; 0 if failed.</returns>
+        </member>
+        <member name="M:IdeaBlade.Asp.AspDataSourceView.ExecuteDelete(System.Collections.IDictionary,System.Collections.IDictionary)">
+            <summary>Invoke function to delete an object.</summary>
+            <param name="pKeys">{property name, value} pairs of the keys for locating the object.</param>
+            <param name="pOldValues">Corresponding {property name, value} pairs with the original data.</param>
+            <returns>Number of objects deleted. Usually 1 if succeeds; 0 if failed.</returns>
+            <remarks>
+            Typically retrievies an existing entity and deletes it,
+            committing the deletion to the persistent data store if the entity was not new.
+            <para>
+            The Deleter function typically catches and handles its own exceptions, 
+            communicating to the page as necessary.
+            </para>
+            </remarks>
+        </member>
+        <member name="P:IdeaBlade.Asp.AspDataSourceView.EntityTypeName">
+            <summary>Get the data source Entity type name (e.g.,"Project.Model.Customer").</summary>
+            <value>Full type name of the business class.</value>
+            
+        </member>
+        <member name="P:IdeaBlade.Asp.AspDataSourceView.OwnerDataSource">
+            <summary>Get DataSourceControl that owns this view.</summary>
+        </member>
+        <member name="P:IdeaBlade.Asp.AspDataSourceView.CanPage">
+            <summary>
+            Get if the view supports paging of the data.
+            Always <see langword="false"/>.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.Asp.AspDataSourceView.CanRetrieveTotalRowCount">
+            <summary>
+            Get if view can retrieve total number of objects. 
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.Asp.AspDataSourceView.CanSort">
+            <summary>
+            Get or set if view supports sorting of the objects. 
+            </summary>
+            <remarks>Indicates if the view supports sorting at all.
+            Whether one can sort on every field or even how to sort
+            is handled by the Selecter function.</remarks>
+        </member>
+    </members>
+</doc>

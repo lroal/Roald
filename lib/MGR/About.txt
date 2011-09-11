@@ -1,0 +1,1 @@
+liten dll som gir custom timeglass i form av "ventesirkler" 

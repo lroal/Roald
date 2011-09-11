@@ -1,0 +1,407 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>DevExpress.XtraScheduler.v8.2.iCalendarExchange</name>
+    </assembly>
+    <members>
+        <member name="T:DevExpress.XtraScheduler.iCalendar.iCalendarStructureCreatedEventHandler">
+
+            <summary>
+                <para>Represents a method that will handle the <see cref="E:DevExpress.XtraScheduler.iCalendar.iCalendarImporter.CalendarStructureCreated"/> and <see cref="E:DevExpress.XtraScheduler.iCalendar.iCalendarExporter.CalendarStructureCreated"/> events. 
+</para>
+            </summary>
+
+        </member>
+        <member name="M:DevExpress.XtraScheduler.iCalendar.iCalendarStructureCreatedEventHandler.Invoke(System.Object,DevExpress.XtraScheduler.iCalendar.iCalendarStructureCreatedEventArgs)">
+            <summary>
+                <para>Represents a method that will handle the <see cref="E:DevExpress.XtraScheduler.iCalendar.iCalendarImporter.CalendarStructureCreated"/> and <see cref="E:DevExpress.XtraScheduler.iCalendar.iCalendarExporter.CalendarStructureCreated"/> events. 
+</para>
+            </summary>
+            <param name="sender">
+		The event source. This parameter identifies the <see cref="T:DevExpress.XtraScheduler.iCalendar.iCalendarImporter"/> or <see cref="T:DevExpress.XtraScheduler.iCalendar.iCalendarExporter"/> which raised the event.
+
+            </param>
+            <param name="e">
+		A <see cref="T:DevExpress.XtraScheduler.iCalendar.iCalendarStructureCreatedEventArgs"/> object containing event data.
+
+            </param>
+
+
+        </member>
+        <member name="T:DevExpress.XtraScheduler.iCalendar.iCalendarStructureCreatedEventArgs">
+
+            <summary>
+                <para>Provides data for the <see cref="E:DevExpress.XtraScheduler.iCalendar.iCalendarImporter.CalendarStructureCreated"/> and <see cref="E:DevExpress.XtraScheduler.iCalendar.iCalendarExporter.CalendarStructureCreated"/> events.
+</para>
+            </summary>
+
+        </member>
+        <member name="M:DevExpress.XtraScheduler.iCalendar.iCalendarStructureCreatedEventArgs.#ctor(DevExpress.XtraScheduler.iCalendar.Components.iCalendarContainer)">
+            <summary>
+                <para>Initializes a new instance of the iCalendarStructureCreatedEventArgs class with the specified settings.
+</para>
+            </summary>
+            <param name="calendars">
+		An object containing iCalendar objects.
+
+            </param>
+
+
+        </member>
+        <member name="P:DevExpress.XtraScheduler.iCalendar.iCalendarStructureCreatedEventArgs.Calendars">
+            <summary>
+                <para>Provides access to the calendar structures conforming to the iCalendar specification.
+
+</para>
+            </summary>
+            <value>An object that holds the calendars.
+</value>
+
+
+        </member>
+        <member name="T:DevExpress.XtraScheduler.iCalendar.iCalendarException">
+
+            <summary>
+                <para>Represents errors that occur during iCalendar data exchange.
+</para>
+            </summary>
+
+        </member>
+        <member name="M:DevExpress.XtraScheduler.iCalendar.iCalendarException.#ctor(System.String)">
+            <summary>
+                <para>Initializes a new instance of the iCalendarException class with the specified message string.
+</para>
+            </summary>
+            <param name="message">
+		A string representing a message associated with a specific problem in iCalendar data exchange.
+
+
+            </param>
+
+
+        </member>
+        <member name="M:DevExpress.XtraScheduler.iCalendar.iCalendarException.#ctor">
+            <summary>
+                <para>Initializes a new instance of the iCalendarException class with default settings.
+</para>
+            </summary>
+
+
+        </member>
+        <member name="T:DevExpress.XtraScheduler.iCalendar.iCalendarEventImportException">
+
+            <summary>
+                <para>Represents errors that occur during iCalendar data import.
+</para>
+            </summary>
+
+        </member>
+        <member name="M:DevExpress.XtraScheduler.iCalendar.iCalendarEventImportException.#ctor(DevExpress.XtraScheduler.iCalendar.Components.VEventCollection)">
+            <summary>
+                <para>Initializes a new instance of the iCalendarEventImportException class with the specified settings.
+</para>
+            </summary>
+            <param name="events">
+		A <see cref="T:DevExpress.XtraScheduler.iCalendar.Components.VEventCollection"/> object representing a collection of event calendar components defined by <b>iCalendar</b> standard.
+
+            </param>
+
+
+        </member>
+        <member name="P:DevExpress.XtraScheduler.iCalendar.iCalendarEventImportException.Events">
+            <summary>
+                <para>Provides access to an event collection containing events which raised an exception.
+
+</para>
+            </summary>
+            <value>A <see cref="T:DevExpress.XtraScheduler.iCalendar.Components.VEventCollection"/> object representing a collection of calendar event components.
+</value>
+
+
+        </member>
+        <member name="T:DevExpress.XtraScheduler.iCalendar.iCalendarAppointmentExportingEventArgs">
+
+            <summary>
+                <para>Provides data for the <see cref="E:DevExpress.XtraScheduler.Exchange.AppointmentExporter.AppointmentExporting"/> event of the <see cref="T:DevExpress.XtraScheduler.iCalendar.iCalendarExporter"/>.
+</para>
+            </summary>
+
+        </member>
+        <member name="M:DevExpress.XtraScheduler.iCalendar.iCalendarAppointmentExportingEventArgs.#ctor(DevExpress.XtraScheduler.Appointment,DevExpress.XtraScheduler.iCalendar.Components.VEvent)">
+            <summary>
+                <para>Initializes a new instance of the iCalendarAppointmentExportingEventArgs class with the specified settings.
+</para>
+            </summary>
+            <param name="apt">
+		An <see cref="T:DevExpress.XtraScheduler.Appointment"/> object representing an event in XtraScheduler.
+
+            </param>
+            <param name="ev">
+		A <see cref="T:DevExpress.XtraScheduler.iCalendar.Components.VEvent"/> object representing an event calendar component defined by the <b>iCalendar</b> standard.
+
+            </param>
+
+
+        </member>
+        <member name="P:DevExpress.XtraScheduler.iCalendar.iCalendarAppointmentExportingEventArgs.VEvent">
+            <summary>
+                <para>Provides access to the event calendar component conforming to the iCalendar standard.
+
+</para>
+            </summary>
+            <value>A <see cref="T:DevExpress.XtraScheduler.iCalendar.Components.VEvent"/> class instance representing an event calendar component.
+</value>
+
+
+        </member>
+        <member name="T:DevExpress.XtraScheduler.iCalendar.iCalendarAppointmentExportedEventArgs">
+
+            <summary>
+                <para>Provides data for the <see cref="E:DevExpress.XtraScheduler.Exchange.AppointmentExporter.AppointmentExported"/> event of the <see cref="T:DevExpress.XtraScheduler.iCalendar.iCalendarExporter"/>.
+</para>
+            </summary>
+
+        </member>
+        <member name="M:DevExpress.XtraScheduler.iCalendar.iCalendarAppointmentExportedEventArgs.#ctor(DevExpress.XtraScheduler.Appointment,DevExpress.XtraScheduler.iCalendar.Components.VEvent)">
+            <summary>
+                <para>Initializes a new instance of the iCalendarAppointmentExportedEventArgs class with the specified settings.
+</para>
+            </summary>
+            <param name="apt">
+		An <see cref="T:DevExpress.XtraScheduler.Appointment"/> object representing an event in XtraScheduler.
+
+            </param>
+            <param name="ev">
+		A <see cref="T:DevExpress.XtraScheduler.iCalendar.Components.VEvent"/> object representing an event calendar component defined by the <b>iCalendar</b> standard.
+
+            </param>
+
+
+        </member>
+        <member name="P:DevExpress.XtraScheduler.iCalendar.iCalendarAppointmentExportedEventArgs.VEvent">
+            <summary>
+                <para>Provides access to the event calendar component conforming to the iCalendar standard.
+
+</para>
+            </summary>
+            <value>A <see cref="T:DevExpress.XtraScheduler.iCalendar.Components.VEvent"/> class instance representing an event calendar component.
+</value>
+
+
+        </member>
+        <member name="T:DevExpress.XtraScheduler.iCalendar.iCalendarAppointmentImportedEventArgs">
+
+            <summary>
+                <para>Provides data for the <see cref="E:DevExpress.XtraScheduler.Exchange.AppointmentImporter.AppointmentImported"/> event of the <see cref="T:DevExpress.XtraScheduler.iCalendar.iCalendarImporter"/>.
+</para>
+            </summary>
+
+        </member>
+        <member name="M:DevExpress.XtraScheduler.iCalendar.iCalendarAppointmentImportedEventArgs.#ctor(DevExpress.XtraScheduler.Appointment,DevExpress.XtraScheduler.iCalendar.Components.VEvent)">
+            <summary>
+                <para>Initializes a new instance of the iCalendarAppointmentImportedEventArgs class with the specified settings.
+</para>
+            </summary>
+            <param name="apt">
+		An <see cref="T:DevExpress.XtraScheduler.Appointment"/> object representing an event in XtraScheduler.
+
+            </param>
+            <param name="ev">
+		A <see cref="T:DevExpress.XtraScheduler.iCalendar.Components.VEvent"/> object representing an event calendar component defined by the <b>iCalendar</b> standard.
+
+            </param>
+
+
+        </member>
+        <member name="P:DevExpress.XtraScheduler.iCalendar.iCalendarAppointmentImportedEventArgs.VEvent">
+            <summary>
+                <para>Provides access to the event calendar component conforming to the iCalendar standard.
+
+</para>
+            </summary>
+            <value>A <see cref="T:DevExpress.XtraScheduler.iCalendar.Components.VEvent"/> class instance representing an event calendar component.
+</value>
+
+
+        </member>
+        <member name="T:DevExpress.XtraScheduler.iCalendar.iCalendarExporter">
+
+            <summary>
+                <para>Represents an object that transforms Scheduler appointments into the event calendar components in iCalendar format.
+</para>
+            </summary>
+
+        </member>
+        <member name="M:DevExpress.XtraScheduler.iCalendar.iCalendarExporter.#ctor(DevExpress.XtraScheduler.SchedulerStorageBase)">
+            <summary>
+                <para>Initializes a new instance of the iCalendarExporter class with the specified storage.
+</para>
+            </summary>
+            <param name="storage">
+		A <see cref="T:DevExpress.XtraScheduler.SchedulerStorageBase"/> object representing a storage for appointments being exported.
+
+            </param>
+
+
+        </member>
+        <member name="M:DevExpress.XtraScheduler.iCalendar.iCalendarExporter.#ctor(DevExpress.XtraScheduler.SchedulerStorageBase,DevExpress.XtraScheduler.AppointmentBaseCollection)">
+            <summary>
+                <para>Initializes a new instance of the iCalendarExporter class with the specified parameters. 
+</para>
+            </summary>
+            <param name="storage">
+		A <see cref="T:DevExpress.XtraScheduler.SchedulerStorageBase"/> object representing the appointments strorage used for lookups.
+
+            </param>
+            <param name="appointments">
+		An <see cref="T:DevExpress.XtraScheduler.AppointmentBaseCollection"/> object, representing a collection of appointments intended for export.
+
+            </param>
+
+
+        </member>
+        <member name="P:DevExpress.XtraScheduler.iCalendar.iCalendarExporter.Appointments">
+            <summary>
+                <para>Gets or sets appointments for export.
+</para>
+            </summary>
+            <value>An <see cref="T:DevExpress.XtraScheduler.AppointmentBaseCollection"/> object representing a collection of appointments intended for export.
+</value>
+
+
+        </member>
+        <member name="E:DevExpress.XtraScheduler.iCalendar.iCalendarExporter.CalendarStructureCreated">
+            <summary>
+                <para>Fires when the calendar object conforming to the iCalendar specification is created.
+
+</para>
+            </summary>
+
+
+        </member>
+        <member name="P:DevExpress.XtraScheduler.iCalendar.iCalendarExporter.CustomPropertyIndentifier">
+            <summary>
+                <para>Gets or sets a short prefix text used to construct the names for properties not included in the iCalendar standard.
+
+</para>
+            </summary>
+            <value>A string, representing a token for non-standard iCalendar properties.
+</value>
+
+
+        </member>
+        <member name="P:DevExpress.XtraScheduler.iCalendar.iCalendarExporter.ProductIdentifier">
+            <summary>
+                <para>Gets or sets the identifier for the product that created the iCalendar object.
+</para>
+            </summary>
+            <value>A string usually containing company name, product name and language-specific information separated by slashes.
+</value>
+
+
+        </member>
+        <member name="T:DevExpress.XtraScheduler.iCalendar.iCalendarImporter">
+
+            <summary>
+                <para>Represents an object that transforms the event calendar components in iCalendar format  into Scheduler appointments.
+</para>
+            </summary>
+
+        </member>
+        <member name="M:DevExpress.XtraScheduler.iCalendar.iCalendarImporter.#ctor(DevExpress.XtraScheduler.SchedulerStorageBase)">
+            <summary>
+                <para>Initializes a new instance of the iCalendarImporter class with the specified storage.
+</para>
+            </summary>
+            <param name="storage">
+		A <see cref="T:DevExpress.XtraScheduler.SchedulerStorageBase"/> object representing a storage for imported events.
+
+            </param>
+
+
+        </member>
+        <member name="E:DevExpress.XtraScheduler.iCalendar.iCalendarImporter.CalendarStructureCreated">
+            <summary>
+                <para>Fires when the calendar object conforming to the iCalendar specification is created.
+
+</para>
+            </summary>
+
+
+        </member>
+        <member name="P:DevExpress.XtraScheduler.iCalendar.iCalendarImporter.CustomPropertyIndentifier">
+            <summary>
+                <para>Gets or sets a short prefix text used to construct the names for properties not included in the iCalendar standard.
+
+</para>
+            </summary>
+            <value>A string, representing a token for non-standard iCalendar properties.
+</value>
+
+
+        </member>
+        <member name="M:DevExpress.XtraScheduler.iCalendar.iCalendarImporter.ProcessCalendars(DevExpress.XtraScheduler.iCalendar.Components.iCalendarContainer)">
+            <summary>
+                <para>Handles all calendars through a set of procedures to create corresponding appointments in the storage.
+</para>
+            </summary>
+            <param name="calendars">
+		An object that holds the calendars.
+
+            </param>
+
+
+        </member>
+        <member name="T:DevExpress.XtraScheduler.iCalendar.iCalendarErrorType">
+
+            <summary>
+                <para>Lists error types specific for iCalendar data exchange.
+</para>
+            </summary>
+
+        </member>
+        <member name="F:DevExpress.XtraScheduler.iCalendar.iCalendarErrorType.NotValidFile">
+            <summary>
+                <para>Indicates that the file supplied is not a valid iCalendar file.
+</para>
+            </summary>
+
+
+        </member>
+        <member name="T:DevExpress.XtraScheduler.iCalendar.iCalendarAppointmentImportingEventArgs">
+
+            <summary>
+                <para>Provides data for the <see cref="E:DevExpress.XtraScheduler.Exchange.AppointmentImporter.AppointmentImporting"/> event of the <see cref="T:DevExpress.XtraScheduler.iCalendar.iCalendarImporter"/>.
+</para>
+            </summary>
+
+        </member>
+        <member name="M:DevExpress.XtraScheduler.iCalendar.iCalendarAppointmentImportingEventArgs.#ctor(DevExpress.XtraScheduler.Appointment,DevExpress.XtraScheduler.iCalendar.Components.VEvent)">
+            <summary>
+                <para>Initializes a new instance of the iCalendarAppointmentImportingEventArgs class with the specified settings.
+</para>
+            </summary>
+            <param name="apt">
+		An <see cref="T:DevExpress.XtraScheduler.Appointment"/> object representing an event in XtraScheduler.
+
+            </param>
+            <param name="ev">
+		A <see cref="T:DevExpress.XtraScheduler.iCalendar.Components.VEvent"/> object representing an event calendar component defined by the <b>iCalendar</b> standard.
+
+            </param>
+
+
+        </member>
+        <member name="P:DevExpress.XtraScheduler.iCalendar.iCalendarAppointmentImportingEventArgs.VEvent">
+            <summary>
+                <para>Provides access to the event calendar component conforming to the iCalendar standard.
+
+</para>
+            </summary>
+            <value>A <see cref="T:DevExpress.XtraScheduler.iCalendar.Components.VEvent"/> class instance representing an event calendar component.
+</value>
+
+
+        </member>
+    </members>
+</doc>

@@ -1,0 +1,1658 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>IdeaBlade.UI.WinForms.InfragisticsControls.v7_2</name>
+    </assembly>
+    <members>
+        <member name="T:IdeaBlade.UI.WinForms.InfragisticsControls.UltraCurrencyEditorColumnBinder">
+            <summary>
+              Binder for a UltraCurrencyEditor control used in a GridColumn.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.UI.WinForms.InfragisticsControls.UltraGridColumnBinder">
+            <summary>
+              Base class that understands how to bind to an Infragistics control in a GridColumn.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.InfragisticsControls.UltraGridColumnBinder.GetColumnEdit">
+            <summary>
+              Get the controlbase item for the preferred control type.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.InfragisticsControls.UltraGridColumnBinder.BindColumn(IdeaBlade.UI.WinForms.InfragisticsControls.UltraGridBindingDescriptor)">
+            <summary>
+              Binds a GridColumn to a ViewDescriptor.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.InfragisticsControls.UltraGridColumnBinder.SetColumnEditability(Infragistics.Win.UltraWinGrid.UltraGridColumn,IdeaBlade.UI.Editability)">
+            <summary>
+              Sets the column editability.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.InfragisticsControls.UltraGridColumnBinder.BinderMap">
+            <summary>
+              Get the map that manages this binder.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.InfragisticsControls.UltraGridColumnBinder.ReadOnlyBackColor">
+            <summary>
+              Gets or sets the background color of a disable control.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.InfragisticsControls.UltraGridColumnBinder.ColorHandlingEnabled">
+            <summary>
+              Gets whether or not this binder sets colors for disabled controls.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.InfragisticsControls.UltraCurrencyEditorColumnBinder.GetBaseFitness(IdeaBlade.UI.IDataConverter)">
+            <summary>
+              Returns the fitness of using this binder for the specified converter.
+              See <see cref="T:IdeaBlade.UI.WinForms.UIFitness"/>.
+            </summary>
+            <param name="pConverter">
+              Converter that specifies formatting, syntactic, and semantic validation.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.InfragisticsControls.UltraCurrencyEditorColumnBinder.GetColumnEdit">
+            <summary>
+              Get the TextEditorControlBase for the preferred control type.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.InfragisticsControls.UltraCurrencyEditorColumnBinder.BindColumn(IdeaBlade.UI.WinForms.InfragisticsControls.UltraGridBindingDescriptor)">
+            <summary>
+              Sets the properties on a GridColumn from a ViewDescriptor.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.InfragisticsControls.UltraCurrencyEditorColumnBinder.ControlType">
+            <summary>
+              The base type of control this binder works with.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.UI.WinForms.InfragisticsControls.UltraColorPickerColumnBinder">
+            <summary>
+              Binder for a UltraColorPicker control used in a GridColumn.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.InfragisticsControls.UltraColorPickerColumnBinder.GetBaseFitness(IdeaBlade.UI.IDataConverter)">
+            <summary>
+              Returns the fitness of using this binder for the specified converter.
+              See <see cref="T:IdeaBlade.UI.WinForms.UIFitness"/>.
+            </summary>
+            <param name="pConverter">
+              Converter that specifies formatting, syntactic, and semantic validation.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.InfragisticsControls.UltraColorPickerColumnBinder.GetColumnEdit">
+            <summary>
+              Get the TextEditorControlBase for the preferred control type.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.InfragisticsControls.UltraColorPickerColumnBinder.BindColumn(IdeaBlade.UI.WinForms.InfragisticsControls.UltraGridBindingDescriptor)">
+            <summary>
+              Sets the properties on a GridColumn from a ViewDescriptor.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.InfragisticsControls.UltraColorPickerColumnBinder.ControlType">
+            <summary>
+              The base type of control this binder works with.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.UI.WinForms.InfragisticsControls.UltraCalendarComboDataBinder">
+            <summary>
+              Binder for a UltraCalendarCombo control.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.UI.WinForms.InfragisticsControls.UltraControlDataBinder">
+            <summary>
+              Base class that understands how to bind to a Infragistics control.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.InfragisticsControls.UltraControlDataBinder.InitializeControl(System.Windows.Forms.Control,IdeaBlade.UI.ViewDescriptor)">
+            <summary>
+              Initializes the properties of a control before being bound.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.InfragisticsControls.UltraControlDataBinder.BindingPropertyName">
+            <summary>
+              Property on the control that is set during binding.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.InfragisticsControls.UltraCalendarComboDataBinder.GetBaseFitness(IdeaBlade.UI.IDataConverter)">
+            <summary>
+              Returns the fitness of using this binder for the specified converter.
+              See <see cref="T:IdeaBlade.UI.WinForms.UIFitness"/>.
+            </summary>
+            <param name="pConverter">
+              Converter that specifies formatting, syntactic, and semantic validation.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.InfragisticsControls.UltraCalendarComboDataBinder.SetControlEditability(System.Windows.Forms.Control,IdeaBlade.UI.Editability)">
+            <summary>
+              Configures the control to best match the editability requirement.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.InfragisticsControls.UltraCalendarComboDataBinder.ControlType">
+            <summary>
+              The base type of control this binder works with.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.UI.WinForms.InfragisticsControls.UltraMaskedEditColumnBinder">
+            <summary>
+              Binder for a UltraMaskedEdit control used in a GridColumn.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.InfragisticsControls.UltraMaskedEditColumnBinder.GetBaseFitness(IdeaBlade.UI.IDataConverter)">
+            <summary>
+              Returns the fitness of using this binder for the specified converter.
+              See <see cref="T:IdeaBlade.UI.WinForms.UIFitness"/>.
+            </summary>
+            <param name="pConverter">
+              Converter that specifies formatting, syntactic, and semantic validation.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.InfragisticsControls.UltraMaskedEditColumnBinder.GetColumnEdit">
+            <summary>
+              Get the TextEditorControlBase for the preferred control type.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.InfragisticsControls.UltraMaskedEditColumnBinder.BindColumn(IdeaBlade.UI.WinForms.InfragisticsControls.UltraGridBindingDescriptor)">
+            <summary>
+              Sets the properties on a GridColumn from a ViewDescriptor.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.InfragisticsControls.UltraMaskedEditColumnBinder.ControlType">
+            <summary>
+              The base type of control this binder works with.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.UI.WinForms.InfragisticsControls.UltraGridBindingDescriptorCollection">
+            <summary>
+              A strongly typed collection of UltraGridBindings.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.InfragisticsControls.UltraGridBindingDescriptorCollection.#ctor">
+            <summary>
+              Constructs an UltraGridBindingDescriptorCollection.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.InfragisticsControls.UltraGridBindingDescriptorCollection.Add(System.String,System.String)">
+            <summary>
+              Adds a binding using the specified property path.
+            </summary>
+            <param name="pColumnTitle">
+              Title of the UltraGridColumn.
+            </param>
+            <param name="pPropertyPath">
+              Period delimited path of the property. e.g. "BirthDate" or "Address.City"
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.InfragisticsControls.UltraGridBindingDescriptorCollection.Add(System.String,System.String,IdeaBlade.UI.IDataConverter)">
+            <summary>
+              Adds a binding using the specified property path.
+            </summary>
+            <param name="pColumnTitle">
+              Title of the UltraGridColumn.
+            </param>
+            <param name="pPropertyPath">
+              Period delimited path of the property. e.g. "BirthDate" or "Address.City"
+            </param>
+            <param name="pConverter">
+              Converter that specifies formatting, syntactic, and semantic validation.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.InfragisticsControls.UltraGridBindingDescriptorCollection.Add(System.String,System.String,System.Type)">
+            <summary>
+              Adds a binding using the specified property path.
+            </summary>
+            <param name="pColumnTitle">
+              Title of the UltraGridColumn.
+            </param>
+            <param name="pPropertyPath">
+              Period delimited path of the property. e.g. "BirthDate" or "Address.City"
+            </param>
+            <param name="pControlType">
+              Type of control to used to edit data in a UltraGridColumn.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.InfragisticsControls.UltraGridBindingDescriptorCollection.Add(System.String,System.String,IdeaBlade.UI.IDataConverter,System.Type)">
+            <summary>
+              Adds a binding using the specified property path.
+            </summary>
+            <param name="pColumnTitle">
+              Title of the UltraGridColumn.
+            </param>
+            <param name="pPropertyPath">
+              Period delimited path of the property. e.g. "BirthDate" or "Address.City"
+            </param>
+            <param name="pConverter">
+              Converter that specifies formatting, syntactic, and semantic validation.
+            </param>
+            <param name="pControlType">
+              Type of control to used to edit data in a UltraGridColumn.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.InfragisticsControls.UltraGridBindingDescriptorCollection.Add(IdeaBlade.UI.ViewDescriptor)">
+            <summary>
+              Adds a binding using the specified ViewDescriptor.
+            </summary>
+            <param name="pViewDescriptor">
+              ViewDescriptor describing the bound property and conversion information.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.InfragisticsControls.UltraGridBindingDescriptorCollection.Add(IdeaBlade.UI.ViewDescriptor,System.Type)">
+            <summary>
+              Adds a binding using the specified ViewDescriptor.
+            </summary>
+            <param name="pViewDescriptor">
+              ViewDescriptor describing the bound property and conversion information.
+            </param>
+            <param name="pControlType">
+              Type of control to used to edit data in a UltraGridColumn.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.InfragisticsControls.UltraGridBindingDescriptorCollection.Add(IdeaBlade.UI.WinForms.InfragisticsControls.UltraGridBindingDescriptor)">
+            <summary>
+              Adds an UltraGridBindingDescriptor to the collection.
+            </summary>
+            <param name="pDescriptor">
+              The UltraGridBindingDescriptor to add.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.InfragisticsControls.UltraGridBindingDescriptorCollection.Get(Infragistics.Win.UltraWinGrid.UltraGridColumn)">
+            <summary>
+              Get the UltraGridBindingDescriptor for the corresponding UltraGridColumn.
+            </summary>
+            <param name="pColumn">
+              UltraGridColumn of interest.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.InfragisticsControls.UltraGridBindingDescriptorCollection.Get(System.String)">
+            <summary>
+              Get the UltraGridBindingDescriptor for the corresponding property path.
+              If multiple columns bind to the same property, returns the first one found.
+            </summary>
+            <param name="pPropertyPath">
+              Period delimited path of the property. e.g. "BirthDate" or "Address.City"
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.InfragisticsControls.UltraGridBindingDescriptorCollection.Remove(IdeaBlade.UI.WinForms.InfragisticsControls.UltraGridBindingDescriptor)">
+            <summary>
+              Removes the specified UltraGridBindingDescriptor.
+            </summary>
+            <param name="pDescriptor">
+              UltraGridBindingDescriptor to remove.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.InfragisticsControls.UltraGridBindingDescriptorCollection.Remove(Infragistics.Win.UltraWinGrid.UltraGridColumn)">
+            <summary>
+              Removes the specified UltraGridBindingDescriptor for the corresponding UltraGridColumn.
+            </summary>
+            <param name="pColumn">
+              Control of interest.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.InfragisticsControls.UltraGridBindingDescriptorCollection.Remove(System.String)">
+            <summary>
+              Removes the UltraGridBindingDescriptor for the corresponding property path.
+              If multiple controls bind to the same property, returns the first one found.
+            </summary>
+            <param name="pPropertyPath">
+              Period delimited path of the property. e.g. "BirthDate" or "Address.City"
+            </param>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.InfragisticsControls.UltraGridBindingDescriptorCollection.Item(System.Int32)">
+            <summary>
+              Get the UltraGridBindingDescriptor at the specified index.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.InfragisticsControls.UltraGridBindingDescriptorCollection.CollectionType">
+            <summary>
+              Type of object this collection accepts.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.UI.WinForms.InfragisticsControls.UltraControlConfigurator">
+            <summary>
+              
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.InfragisticsControls.UltraControlConfigurator.CanConfigureControl(System.Type)">
+            <summary>
+            
+            </summary>
+            <param name="pControlType"></param>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.InfragisticsControls.UltraControlConfigurator.ConfigureControl(System.Windows.Forms.Control,System.Type)">
+            <summary>
+            
+            </summary>
+            <param name="pControl"></param>
+            <param name="pDataType"></param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.InfragisticsControls.UltraControlConfigurator.IsListControlType(System.Type)">
+            <summary>
+            
+            </summary>
+            <param name="pControlType"></param>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.InfragisticsControls.UltraControlConfigurator.GetAssemblyReferenceNames(System.Type)">
+            <summary>
+            
+            </summary>
+            <param name="pControlType"></param>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.InfragisticsControls.UltraControlConfigurator.ConfigureLabel(System.Windows.Forms.Control)">
+            <summary>
+            
+            </summary>
+            <param name="pLabel"></param>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.InfragisticsControls.UltraControlConfigurator.PreferredLabelType">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.UI.WinForms.InfragisticsControls.UltraDateTimeEditorDataBinder">
+            <summary>
+              Binder for a UltraDateTimeEditor control.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.InfragisticsControls.UltraDateTimeEditorDataBinder.GetBaseFitness(IdeaBlade.UI.IDataConverter)">
+            <summary>
+              Returns the fitness of using this binder for the specified converter.
+              See <see cref="T:IdeaBlade.UI.WinForms.UIFitness"/>.
+            </summary>
+            <param name="pConverter">
+              Converter that specifies formatting, syntactic, and semantic validation.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.InfragisticsControls.UltraDateTimeEditorDataBinder.InitializeControl(System.Windows.Forms.Control,IdeaBlade.UI.ViewDescriptor)">
+            <summary>
+              Initializes the properties of a control before being bound.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.InfragisticsControls.UltraDateTimeEditorDataBinder.SetControlEditability(System.Windows.Forms.Control,IdeaBlade.UI.Editability)">
+            <summary>
+              Configures the control to best match the editability requirement.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.InfragisticsControls.UltraDateTimeEditorDataBinder.ControlType">
+            <summary>
+              The base type of control this binder works with.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.UI.WinForms.InfragisticsControls.UltraPictureBoxDataBinder">
+            <summary>
+              Binder for a UltraPictureBoxDataBinder control.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.InfragisticsControls.UltraPictureBoxDataBinder.GetBaseFitness(IdeaBlade.UI.IDataConverter)">
+            <summary>
+              Returns the fitness of using this binder for the specified converter.
+              See <see cref="T:IdeaBlade.UI.WinForms.UIFitness"/>.
+            </summary>
+            <param name="pConverter">
+              Converter that specifies formatting, syntactic, and semantic validation.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.InfragisticsControls.UltraPictureBoxDataBinder.InitializeControl(System.Windows.Forms.Control,IdeaBlade.UI.ViewDescriptor)">
+            <summary>
+              Initializes the properties of a control before being bound.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.InfragisticsControls.UltraPictureBoxDataBinder.SetControlEditability(System.Windows.Forms.Control,IdeaBlade.UI.Editability)">
+            <summary>
+              Configures the control to best match the editability requirement.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.InfragisticsControls.UltraPictureBoxDataBinder.ControlType">
+            <summary>
+              The base type of control this binder works with.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.InfragisticsControls.UltraPictureBoxDataBinder.BindingPropertyName">
+            <summary>
+              Property on the control that is set during binding.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.UI.WinForms.InfragisticsControls.UltraTextEditorColumnBinder">
+            <summary>
+              Binder for a UltraTextEditor control used in a GridColumn.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.InfragisticsControls.UltraTextEditorColumnBinder.GetBaseFitness(IdeaBlade.UI.IDataConverter)">
+            <summary>
+              Returns the fitness of using this binder for the specified converter.
+              See <see cref="T:IdeaBlade.UI.WinForms.UIFitness"/>.
+            </summary>
+            <param name="pConverter">
+              Converter that specifies formatting, syntactic, and semantic validation.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.InfragisticsControls.UltraTextEditorColumnBinder.GetColumnEdit">
+            <summary>
+              Get the TextEditorControlBase for the preferred control type.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.InfragisticsControls.UltraTextEditorColumnBinder.BindColumn(IdeaBlade.UI.WinForms.InfragisticsControls.UltraGridBindingDescriptor)">
+            <summary>
+              Sets the properties on a GridColumn from a ViewDescriptor.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.InfragisticsControls.UltraTextEditorColumnBinder.ControlType">
+            <summary>
+              The base type of control this binder works with.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.UI.WinForms.InfragisticsControls.UltraMaskedEditDataBinder">
+            <summary>
+              Binder for a UltraMaskedEdit control.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.InfragisticsControls.UltraMaskedEditDataBinder.GetBaseFitness(IdeaBlade.UI.IDataConverter)">
+            <summary>
+              Returns the fitness of using this binder for the specified converter.
+              See <see cref="T:IdeaBlade.UI.WinForms.UIFitness"/>.
+            </summary>
+            <param name="pConverter">
+              Converter that specifies formatting, syntactic, and semantic validation.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.InfragisticsControls.UltraMaskedEditDataBinder.InitializeControl(System.Windows.Forms.Control,IdeaBlade.UI.ViewDescriptor)">
+            <summary>
+              Initializes the properties of a control before being bound.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.InfragisticsControls.UltraMaskedEditDataBinder.SetControlEditability(System.Windows.Forms.Control,IdeaBlade.UI.Editability)">
+            <summary>
+              Configures the control to best match the editability requirement.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.InfragisticsControls.UltraMaskedEditDataBinder.ControlType">
+            <summary>
+              The base type of control this binder works with.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.UI.WinForms.InfragisticsControls.UltraDataFilter">
+            <summary>
+            Provides custom data conversions between Display (user), Editor, and Owner (data source).
+            Mainly used by custom DataConverters.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.InfragisticsControls.UltraDataFilter.#ctor(IdeaBlade.UI.WinForms.InfragisticsControls.UltraGridBindingManager)">
+            <summary>
+            Constructs an UltraDataFilter for the specified UltraGridBindingManager.
+            </summary>
+            <param name="pBindingManager">target UltraGridBindingManager</param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.InfragisticsControls.UltraDataFilter.Convert(Infragistics.Win.EditorDataFilterConvertArgs)">
+            <summary>
+            Converts data between Display (user), Editor, and Owner (data source).
+            </summary>
+            <param name="pConvertArgs">Input arguments</param>
+            <returns>Converted data</returns>
+        </member>
+        <member name="T:IdeaBlade.UI.WinForms.InfragisticsControls.UltraColorPickerDataBinder">
+            <summary>
+              Binder for a UltraColorPicker control.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.InfragisticsControls.UltraColorPickerDataBinder.GetBaseFitness(IdeaBlade.UI.IDataConverter)">
+            <summary>
+              Returns the fitness of using this binder for the specified converter.
+              See <see cref="T:IdeaBlade.UI.WinForms.UIFitness"/>.
+            </summary>
+            <param name="pConverter">
+              Converter that specifies formatting, syntactic, and semantic validation.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.InfragisticsControls.UltraColorPickerDataBinder.SetControlEditability(System.Windows.Forms.Control,IdeaBlade.UI.Editability)">
+            <summary>
+              Configures the control to best match the editability requirement.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.InfragisticsControls.UltraColorPickerDataBinder.ControlType">
+            <summary>
+              The base type of control this binder works with.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.InfragisticsControls.UltraColorPickerDataBinder.BindingPropertyName">
+            <summary>
+              Property on the control that is set during binding.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.UI.WinForms.InfragisticsControls.UltraOptionSetColumnBinder">
+            <summary>
+              Binder for a UltraOptionSet control used in a GridColumn.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.InfragisticsControls.UltraOptionSetColumnBinder.GetBaseFitness(IdeaBlade.UI.IDataConverter)">
+            <summary>
+              Returns the fitness of using this binder for the specified converter.
+              See <see cref="T:IdeaBlade.UI.WinForms.UIFitness"/>.
+            </summary>
+            <param name="pConverter">
+              Converter that specifies formatting, syntactic, and semantic validation.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.InfragisticsControls.UltraOptionSetColumnBinder.GetColumnEdit">
+            <summary>
+              Get the TextEditorControlBase for the preferred control type.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.InfragisticsControls.UltraOptionSetColumnBinder.BindColumn(IdeaBlade.UI.WinForms.InfragisticsControls.UltraGridBindingDescriptor)">
+            <summary>
+              Sets the properties on a GridColumn from a ViewDescriptor.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.InfragisticsControls.UltraOptionSetColumnBinder.ControlType">
+            <summary>
+              The base type of control this binder works with.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.UI.WinForms.InfragisticsControls.UltraCurrencyEditorDataBinder">
+            <summary>
+              Binder for a UltraCurrencyEditor control.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.InfragisticsControls.UltraCurrencyEditorDataBinder.GetBaseFitness(IdeaBlade.UI.IDataConverter)">
+            <summary>
+              Returns the fitness of using this binder for the specified converter.
+              See <see cref="T:IdeaBlade.UI.WinForms.UIFitness"/>.
+            </summary>
+            <param name="pConverter">
+              Converter that specifies formatting, syntactic, and semantic validation.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.InfragisticsControls.UltraCurrencyEditorDataBinder.InitializeControl(System.Windows.Forms.Control,IdeaBlade.UI.ViewDescriptor)">
+            <summary>
+              Initializes the properties of a control before being bound.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.InfragisticsControls.UltraCurrencyEditorDataBinder.SetControlEditability(System.Windows.Forms.Control,IdeaBlade.UI.Editability)">
+            <summary>
+              Configures the control to best match the editability requirement.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.InfragisticsControls.UltraCurrencyEditorDataBinder.ControlType">
+            <summary>
+              The base type of control this binder works with.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.InfragisticsControls.UltraCurrencyEditorDataBinder.BindingPropertyName">
+            <summary>
+              Property on the control that is set during binding.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.UI.WinForms.InfragisticsControls.UltraComboEditorColumnBinder">
+            <summary>
+              Binder for a UltraComboEditor control used in a GridColumn.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.InfragisticsControls.UltraComboEditorColumnBinder.GetBaseFitness(IdeaBlade.UI.IDataConverter)">
+            <summary>
+              Returns the fitness of using this binder for the specified converter.
+              See <see cref="T:IdeaBlade.UI.WinForms.UIFitness"/>.
+            </summary>
+            <param name="pConverter">
+              Converter that specifies formatting, syntactic, and semantic validation.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.InfragisticsControls.UltraComboEditorColumnBinder.GetColumnEdit">
+            <summary>
+              Get the TextEditorControlBase for the preferred control type.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.InfragisticsControls.UltraComboEditorColumnBinder.BindColumn(IdeaBlade.UI.WinForms.InfragisticsControls.UltraGridBindingDescriptor)">
+            <summary>
+              Sets the properties on a GridColumn from a ViewDescriptor.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.InfragisticsControls.UltraComboEditorColumnBinder.ControlType">
+            <summary>
+              The base type of control this binder works with.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.UI.WinForms.InfragisticsControls.UltraCalendarComboColumnBinder">
+            <summary>
+              Binder for a UltraCalendarCombo control used in a GridColumn.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.InfragisticsControls.UltraCalendarComboColumnBinder.GetBaseFitness(IdeaBlade.UI.IDataConverter)">
+            <summary>
+              Returns the fitness of using this binder for the specified converter.
+              See <see cref="T:IdeaBlade.UI.WinForms.UIFitness"/>.
+            </summary>
+            <param name="pConverter">
+              Converter that specifies formatting, syntactic, and semantic validation.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.InfragisticsControls.UltraCalendarComboColumnBinder.GetColumnEdit">
+            <summary>
+              Get the TextEditorControlBase for the preferred control type.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.InfragisticsControls.UltraCalendarComboColumnBinder.BindColumn(IdeaBlade.UI.WinForms.InfragisticsControls.UltraGridBindingDescriptor)">
+            <summary>
+              Sets the properties on a GridColumn from a ViewDescriptor.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.InfragisticsControls.UltraCalendarComboColumnBinder.ControlType">
+            <summary>
+              The base type of control this binder works with.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.UI.WinForms.InfragisticsControls.UltraNumericEditorDataBinder">
+            <summary>
+              Binder for a UltraNumericEditor control.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.InfragisticsControls.UltraNumericEditorDataBinder.GetBaseFitness(IdeaBlade.UI.IDataConverter)">
+            <summary>
+              Returns the fitness of using this binder for the specified converter.
+              See <see cref="T:IdeaBlade.UI.WinForms.UIFitness"/>.
+            </summary>
+            <param name="pConverter">
+              Converter that specifies formatting, syntactic, and semantic validation.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.InfragisticsControls.UltraNumericEditorDataBinder.SetControlEditability(System.Windows.Forms.Control,IdeaBlade.UI.Editability)">
+            <summary>
+              Configures the control to best match the editability requirement.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.InfragisticsControls.UltraNumericEditorDataBinder.InitializeControl(System.Windows.Forms.Control,IdeaBlade.UI.ViewDescriptor)">
+            <summary>
+              Initializes the properties of a control before being bound.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.InfragisticsControls.UltraNumericEditorDataBinder.ControlType">
+            <summary>
+              The base type of control this binder works with.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.UI.WinForms.InfragisticsControls.UltraCheckEditorDataBinder">
+            <summary>
+              Binder for a UltraCheckEditor control.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.InfragisticsControls.UltraCheckEditorDataBinder.GetBaseFitness(IdeaBlade.UI.IDataConverter)">
+            <summary>
+              Returns the fitness of using this binder for the specified converter.
+              See <see cref="T:IdeaBlade.UI.WinForms.UIFitness"/>.
+            </summary>
+            <param name="pConverter">
+              Converter that specifies formatting, syntactic, and semantic validation.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.InfragisticsControls.UltraCheckEditorDataBinder.InitializeControl(System.Windows.Forms.Control,IdeaBlade.UI.ViewDescriptor)">
+            <summary>
+            Initializes the properties of a control before being bound.
+            </summary>
+            <remarks>
+            The logic for initializing whether the control should support three states is as follows:
+            <list>
+            <item>If the developer uses the DefaultConverter's defaults, then the control's ThreeState value is used.</item>
+            <item>If the developer modifies the DefaultConverter's Editability, then the converter's Editability overrides the control.</item>
+            <item>If the developer selects the ThreeStateConverter and uses the converter's defaults,
+            then the converter's ThreeState value is used.</item>
+            <item>If the developer selects the ThreeStateConverter, keeps Editability.Optional, and modifies the ThreeState,
+            then the converter's ThreeState value is used.</item>
+            <item>If the developer selects the ThreeStateConverter and modifies the Editability, 
+            then the converter's Editability overrides its ThreeState.</item> 
+            </list>
+            </remarks>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.InfragisticsControls.UltraCheckEditorDataBinder.ControlType">
+            <summary>
+              The base type of control this binder works with.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.InfragisticsControls.UltraCheckEditorDataBinder.BindingPropertyName">
+            <summary>
+              Property on the control that is set during binding.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.UI.WinForms.InfragisticsControls.Properties.Resources">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.InfragisticsControls.Properties.Resources.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.InfragisticsControls.Properties.Resources.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.UI.WinForms.InfragisticsControls.UltraCalculatorDataBinder">
+            <summary>
+              Binder for a UltraCalculator control.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.InfragisticsControls.UltraCalculatorDataBinder.GetBaseFitness(IdeaBlade.UI.IDataConverter)">
+            <summary>
+              Returns the fitness of using this binder for the specified converter.
+              See <see cref="T:IdeaBlade.UI.WinForms.UIFitness"/>.
+            </summary>
+            <param name="pConverter">
+              Converter that specifies formatting, syntactic, and semantic validation.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.InfragisticsControls.UltraCalculatorDataBinder.InitializeControl(System.Windows.Forms.Control,IdeaBlade.UI.ViewDescriptor)">
+            <summary>
+              Initializes the properties of a control before being bound.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.InfragisticsControls.UltraCalculatorDataBinder.SetControlEditability(System.Windows.Forms.Control,IdeaBlade.UI.Editability)">
+            <summary>
+              Configures the control to best match the editability requirement.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.InfragisticsControls.UltraCalculatorDataBinder.ControlType">
+            <summary>
+              The base type of control this binder works with.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.InfragisticsControls.UltraCalculatorDataBinder.BindingPropertyName">
+            <summary>
+              Property on the control that is set during binding.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.UI.WinForms.InfragisticsControls.UltraPictureBoxColumnBinder">
+            <summary>
+              Binder for a UltraPictureBox control used in a GridColumn.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.InfragisticsControls.UltraPictureBoxColumnBinder.GetBaseFitness(IdeaBlade.UI.IDataConverter)">
+            <summary>
+              Returns the fitness of using this binder for the specified converter.
+              See <see cref="T:IdeaBlade.UI.WinForms.UIFitness"/>.
+            </summary>
+            <param name="pConverter">
+              Converter that specifies formatting, syntactic, and semantic validation.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.InfragisticsControls.UltraPictureBoxColumnBinder.GetColumnEdit">
+            <summary>
+              Get the UltraPictureBox Control Base for the preferred control type.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.InfragisticsControls.UltraPictureBoxColumnBinder.BindColumn(IdeaBlade.UI.WinForms.InfragisticsControls.UltraGridBindingDescriptor)">
+            <summary>
+              Sets the properties on a GridColumn from a ViewDescriptor.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.InfragisticsControls.UltraPictureBoxColumnBinder.ControlType">
+            <summary>
+              The base type of control this binder works with.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.InfragisticsControls.UltraSentinelPropertyDescriptor.#ctor(System.String,System.Type)">
+            <summary>
+            Constructs a new instance of the class
+            </summary>
+            <param name="pName"></param>
+            <param name="pComponentType"></param>
+        </member>
+        <member name="T:IdeaBlade.UI.WinForms.InfragisticsControls.UltraLabelDataBinder">
+            <summary>
+              Binder for a UltraLabel control.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.InfragisticsControls.UltraLabelDataBinder.GetBaseFitness(IdeaBlade.UI.IDataConverter)">
+            <summary>
+              Returns the fitness of using this binder for the specified converter.
+              See <see cref="T:IdeaBlade.UI.WinForms.UIFitness"/>.
+            </summary>
+            <param name="pConverter">
+              Converter that specifies formatting, syntactic, and semantic validation.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.InfragisticsControls.UltraLabelDataBinder.InitializeControl(System.Windows.Forms.Control,IdeaBlade.UI.ViewDescriptor)">
+            <summary>
+              Initializes the properties of a control before being bound.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.InfragisticsControls.UltraLabelDataBinder.SetControlEditability(System.Windows.Forms.Control,IdeaBlade.UI.Editability)">
+            <summary>
+              Configures the control to best match the editability requirement.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.InfragisticsControls.UltraLabelDataBinder.ControlType">
+            <summary>
+              The base type of control this binder works with.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.InfragisticsControls.UltraLabelDataBinder.BindingPropertyName">
+            <summary>
+              Property on the control that is set during binding.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.UI.WinForms.InfragisticsControls.UltraFns">
+            <summary>
+            Summary description for UltraFns.
+            </summary>
+        </member>
+        <member name="F:IdeaBlade.UI.WinForms.InfragisticsControls.UltraFns.NullValueText">
+            <summary> Allow developer to specify NULL text </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.InfragisticsControls.UltraFns.UpdateAdaptiveList(System.Collections.IList,IdeaBlade.UI.ListConverter)">
+            <summary>
+            
+            </summary>
+            <param name="pList"></param>
+            <param name="pListConverter"></param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.InfragisticsControls.UltraFns.ValueListKey(IdeaBlade.UI.ListConverter)">
+            <summary> For internal use only. </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.InfragisticsControls.UltraFns.GetValueList(Infragistics.Win.ValueListItemsCollection,IdeaBlade.UI.ListConverter,System.Boolean)">
+            <summary> For internal use only. </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.InfragisticsControls.UltraFns.GetValueList(IdeaBlade.UI.ListConverter,System.Boolean)">
+            <summary> For internal use only. </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.InfragisticsControls.UltraFns.BuildValueList(Infragistics.Win.ValueListItemsCollection,IdeaBlade.UI.ListConverter,System.Boolean)">
+            <summary> For internal use only. </summary>
+        </member>
+        <member name="T:IdeaBlade.UI.WinForms.InfragisticsControls.UltraComboDataBinder">
+            <summary>
+              Binder for a UltraCombo control.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.InfragisticsControls.UltraComboDataBinder.GetBaseFitness(IdeaBlade.UI.IDataConverter)">
+            <summary>
+              Returns the fitness of using this binder for the specified converter.
+              See <see cref="T:IdeaBlade.UI.WinForms.UIFitness"/>.
+            </summary>
+            <param name="pConverter">
+              Converter that specifies formatting, syntactic, and semantic validation.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.InfragisticsControls.UltraComboDataBinder.SetControlEditability(System.Windows.Forms.Control,IdeaBlade.UI.Editability)">
+            <summary>
+              Configures the control to best match the editability requirement.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.InfragisticsControls.UltraComboDataBinder.InitializeControl(System.Windows.Forms.Control,IdeaBlade.UI.ViewDescriptor)">
+            <summary>
+              Initializes the properties of a control before being bound.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.InfragisticsControls.UltraComboDataBinder.ControlType">
+            <summary>
+              The base type of control this binder works with.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.UI.WinForms.InfragisticsControls.UltraButtonColumnBinder">
+            <summary>
+              Binder for a UltraCheckEditor control used in a GridColumn.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.InfragisticsControls.UltraButtonColumnBinder.GetBaseFitness(IdeaBlade.UI.IDataConverter)">
+            <summary>
+              Returns the fitness of using this binder for the specified converter.
+              See <see cref="T:IdeaBlade.UI.WinForms.UIFitness"/>.
+            </summary>
+            <param name="pConverter">
+              Converter that specifies formatting, syntactic, and semantic validation.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.InfragisticsControls.UltraButtonColumnBinder.GetColumnEdit">
+            <summary>
+              Get the UltraButton for the preferred control type.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.InfragisticsControls.UltraButtonColumnBinder.BindColumn(IdeaBlade.UI.WinForms.InfragisticsControls.UltraGridBindingDescriptor)">
+            <summary>
+              Sets the properties on a GridColumn from a ViewDescriptor.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.InfragisticsControls.UltraButtonColumnBinder.ControlType">
+            <summary>
+              The base type of control this binder works with.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.UI.WinForms.InfragisticsControls.UltraGridBinderMap">
+            <summary>
+            Maps controls and UltraGridColumnBinders to each other.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.InfragisticsControls.UltraGridBinderMap.GetDataBinder(IdeaBlade.UI.IDataConverter)">
+            <summary>
+              Gets the UltraGridColumnBinder that is the best fit for the specified converter.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.InfragisticsControls.UltraGridBinderMap.GetDataBinder(System.Type)">
+            <summary>
+              Gets the UltraGridColumnBinder for the specified control type.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.InfragisticsControls.UltraGridBinderMap.GetDataBinderOfType(System.Type)">
+            <summary>
+              Get the UltraGridColumnBinder of the specified binder type.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.InfragisticsControls.UltraGridBinderMap.AdjustFitness(System.Type,System.Double)">
+            <summary>
+              Adjusts the fitness for a binder.
+              Typically used to set a bias for a set of controls such as Infragistics.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.InfragisticsControls.UltraGridBinderMap.GetBinder(System.Type)">
+            <summary>
+              Get the binder for the specified control type.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.InfragisticsControls.UltraGridBinderMap.ControlTypes">
+            <summary>
+              Get a list of the control types that are mapped.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.InfragisticsControls.UltraGridBinderMap.Binders">
+            <summary>
+              Get a list of the binders that are mapped.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.InfragisticsControls.UltraGridBinderMap.Instance">
+            <summary>
+              Gets the singleton instance of the UltraGridBinderMap.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.UI.WinForms.InfragisticsControls.InputMaskConverter">
+            <summary>
+              The InputMaskConverter class is used to parse, format, and validate numbers with the Infragistics InputMask controls.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.InfragisticsControls.InputMaskConverter.#ctor(System.Type)">
+            <summary>
+              Constructs a InputMaskConverter with optional editability and default format.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.InfragisticsControls.InputMaskConverter.#ctor(System.Type,IdeaBlade.UI.Editability)">
+            <summary>
+              Constructs a InputMaskConverter with a default format string.
+            </summary>
+            <param name="pDataType">
+              Underlying data type used to represent the number.
+            </param>
+            <param name="pEditability">
+              Editability of the field.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.InfragisticsControls.InputMaskConverter.#ctor(System.Type,IdeaBlade.UI.Editability,System.String)">
+            <summary>
+              Constructs a InputMaskConverter with a default format string.
+            </summary>
+            <param name="pDataType">
+              Underlying data type used to represent the number.
+            </param>
+            <param name="pEditability">
+              Editability of the field.
+            </param>
+            <param name="pInputMask"></param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.InfragisticsControls.InputMaskConverter.#ctor(System.Type,System.String)">
+            <summary>
+              Constructs a InputMaskConverter with optional editability.
+            </summary>
+            <param name="pDataType">
+              Underlying data type used to represent the number.
+            </param>
+            <param name="pInputMask">
+              Format string for the number.
+              Same format as ToString() called upon the corresponding data type.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.InfragisticsControls.InputMaskConverter.#ctor(System.Type,IdeaBlade.UI.Editability,System.String,Infragistics.Win.UltraWinEditors.NumericType)">
+            <summary>
+              Constructs a InputMaskConverter.
+            </summary>
+            <param name="pDataType">
+              Underlying data type used to represent the number.
+            </param>
+            <param name="pEditability">
+              Editability of the field.
+            </param>
+            <param name="pInputMask">
+              Format string for the number.
+              Same format as ToString() called upon the corresponding data type.    
+            </param>
+            <param name="pNumericType"></param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.InfragisticsControls.InputMaskConverter.ParseCore(System.Type,System.Object)">
+            <summary>
+              Parses the numeric value.
+              See DataConverter.<see cref="M:IdeaBlade.UI.DataConverter.Parse(System.Type,System.Object)"/>
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.InfragisticsControls.InputMaskConverter.FormatCore(System.Type,System.Object)">
+            <summary>
+              Formats the numeric value.
+              See DataConverter.<see cref="M:IdeaBlade.UI.DataConverter.Format(System.Type,System.Object)"/>
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.InfragisticsControls.InputMaskConverter.InitializeFrom(System.ComponentModel.PropertyDescriptor)">
+            <summary>
+              Initializes this converter from a propertyDescriptor.
+            </summary>
+            <param name="pDescriptor">
+              The PropertyDescriptor used for initialization.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.InfragisticsControls.InputMaskConverter.Parse(System.String,System.Type,System.String)">
+            <summary>
+              Parses the number.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.InfragisticsControls.InputMaskConverter.Format(System.Object,System.Type,System.String)">
+            <summary>
+              Formats the number.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.InfragisticsControls.InputMaskConverter.GetDefaultFormat(System.Type)">
+            <summary>
+              Gets the default format string for a numeric datatype.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.InfragisticsControls.InputMaskConverter.InputMask">
+            <summary>
+              Gets or sets the format string used to format the number.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.InfragisticsControls.InputMaskConverter.MaskDataMode">
+            <summary>
+              Gets or sets a value that determines how cell values for a column will be stored by the data source when data masking is enabled.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.InfragisticsControls.InputMaskConverter.MaskDisplayMode">
+            <summary>
+              Gets or sets a value that determines cell values will be displayed when the cells are not in edit mode and data masking is enabled.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.InfragisticsControls.InputMaskConverter.MaskClipMode">
+            <summary>
+              Gets or sets a value that determines how cell values for a column will be copied to the clipboard when data masking is in enabled.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.InfragisticsControls.InputMaskConverter.NumericType">
+            <summary>
+              Gets or sets the format string used to format the number.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.UI.WinForms.InfragisticsControls.UltraCalculatorDropDownDataBinder">
+            <summary>
+              Binder for a UltraCalculatorDropDown control.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.InfragisticsControls.UltraCalculatorDropDownDataBinder.GetBaseFitness(IdeaBlade.UI.IDataConverter)">
+            <summary>
+              Returns the fitness of using this binder for the specified converter.
+              See <see cref="T:IdeaBlade.UI.WinForms.UIFitness"/>.
+            </summary>
+            <param name="pConverter">
+              Converter that specifies formatting, syntactic, and semantic validation.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.InfragisticsControls.UltraCalculatorDropDownDataBinder.InitializeControl(System.Windows.Forms.Control,IdeaBlade.UI.ViewDescriptor)">
+            <summary>
+              Initializes the properties of a control before being bound.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.InfragisticsControls.UltraCalculatorDropDownDataBinder.SetControlEditability(System.Windows.Forms.Control,IdeaBlade.UI.Editability)">
+            <summary>
+              Configures the control to best match the editability requirement.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.InfragisticsControls.UltraCalculatorDropDownDataBinder.ControlType">
+            <summary>
+              The base type of control this binder works with.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.UI.WinForms.InfragisticsControls.UltraOptionSetDataBinder">
+            <summary>
+              Binder for a UltraOptionSet control.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.InfragisticsControls.UltraOptionSetDataBinder.GetBaseFitness(IdeaBlade.UI.IDataConverter)">
+            <summary>
+              Returns the fitness of using this binder for the specified converter.
+              See <see cref="T:IdeaBlade.UI.WinForms.UIFitness"/>.
+            </summary>
+            <param name="pConverter">
+              Converter that specifies formatting, syntactic, and semantic validation.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.InfragisticsControls.UltraOptionSetDataBinder.InitializeControl(System.Windows.Forms.Control,IdeaBlade.UI.ViewDescriptor)">
+            <summary>
+              Initializes the properties of a control before being bound.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.InfragisticsControls.UltraOptionSetDataBinder.ControlType">
+            <summary>
+              The base type of control this binder works with.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.UI.WinForms.InfragisticsControls.UltraGridBindingDescriptor">
+            <summary>
+              Binding used to bind to an UltraGrid.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.InfragisticsControls.UltraGridBindingDescriptor.#ctor(IdeaBlade.UI.ViewDescriptor)">
+            <summary>
+              Constructs an UltraGridBindingDescriptor.
+            </summary>
+            <param name="pViewDescriptor">
+              ViewDescriptor describing the bound property and conversion information.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.InfragisticsControls.UltraGridBindingDescriptor.#ctor(System.Type,IdeaBlade.UI.ViewDescriptor)">
+            <summary>
+              Constructs an UltraGridBindingDescriptor.
+            </summary>
+            <param name="pControlType">
+              Type of control to used to edit data in a UltraGridColumn.
+            </param>
+            <param name="pViewDescriptor">
+              ViewDescriptor describing the bound property and conversion information.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.InfragisticsControls.UltraGridBindingDescriptor.#ctor(System.String,System.Type,System.String)">
+            <summary>
+              Constructs an UltraGridBinding.
+            </summary>
+            <param name="pColumnTitle">
+              Title of the UltraGridColumn.
+            </param>
+            <param name="pObjectType">
+              Type of the object that the property exists on.  e.g. typeof(Employee)
+            </param>
+            <param name="pPropertyPath">
+              Period delimited path of the property. e.g. "BirthDate" or "Address.City"
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.InfragisticsControls.UltraGridBindingDescriptor.#ctor(System.String,System.Type,System.String,System.Type)">
+            <summary>
+              Constructs an UltraGridBindingDescriptor.
+            </summary>
+            <param name="pColumnTitle">
+              Title of the UltraGridColumn.
+            </param>
+            <param name="pObjectType">
+              Type of the object that the property exists on.  e.g. typeof(Employee)
+            </param>
+            <param name="pPropertyPath">
+              Period delimited path of the property. e.g. "BirthDate" or "Address.City"
+            </param>
+            <param name="pControlType">
+              Type of control to used to edit data in a UltraGridColumn.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.InfragisticsControls.UltraGridBindingDescriptor.#ctor(System.String,System.Type,System.String,IdeaBlade.UI.IDataConverter)">
+            <summary>
+              Constructs an UltraGridBindingDescriptor.
+            </summary>
+            <param name="pColumnTitle">
+              Title of the UltraGridColumn.
+            </param>
+            <param name="pObjectType">
+              Type of the object that the property exists on.  e.g. typeof(Employee)
+            </param>
+            <param name="pPropertyPath">
+              Period delimited path of the property. e.g. "BirthDate" or "Address.City"
+            </param>
+            <param name="pConverter">
+              Converter that specifies formatting, syntactic, and semantic validation.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.InfragisticsControls.UltraGridBindingDescriptor.#ctor(System.String,System.Type,System.String,IdeaBlade.UI.IDataConverter,System.Type)">
+            <summary>
+              Constructs an UltraGridBindingDescriptor.
+            </summary>
+            <param name="pColumnTitle">
+              Title of the UltraGridColumn.
+            </param>
+            <param name="pObjectType">
+              Type of the object that the property exists on.  e.g. typeof(Employee)
+            </param>
+            <param name="pPropertyPath">
+              Period delimited path of the property. e.g. "BirthDate" or "Address.City"
+            </param>
+            <param name="pConverter">
+              Converter that specifies formatting, syntactic, and semantic validation.
+            </param>
+            <param name="pControlType">
+              Type of control to used to edit data in a UltraGridColumn.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.InfragisticsControls.UltraGridBindingDescriptor.RefreshCore">
+            <summary>
+              Refreshes the binding with the current properties.
+              Typically used when some aspect of the converter changes.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.InfragisticsControls.UltraGridBindingDescriptor.Column">
+            <summary>
+              Gets the UltraGridColumn for this binding.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.UI.WinForms.InfragisticsControls.UltraDateTimeEditorColumnBinder">
+            <summary>
+              Binder for a UltraDateTimeEditor control used in a GridColumn.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.InfragisticsControls.UltraDateTimeEditorColumnBinder.GetBaseFitness(IdeaBlade.UI.IDataConverter)">
+            <summary>
+              Returns the fitness of using this binder for the specified converter.
+              See <see cref="T:IdeaBlade.UI.WinForms.UIFitness"/>.
+            </summary>
+            <param name="pConverter">
+              Converter that specifies formatting, syntactic, and semantic validation.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.InfragisticsControls.UltraDateTimeEditorColumnBinder.GetColumnEdit">
+            <summary>
+              Get the TextEditorControlBase for the preferred control type.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.InfragisticsControls.UltraDateTimeEditorColumnBinder.BindColumn(IdeaBlade.UI.WinForms.InfragisticsControls.UltraGridBindingDescriptor)">
+            <summary>
+              Sets the properties on a GridColumn from a ViewDescriptor.
+            </summary>5
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.InfragisticsControls.UltraDateTimeEditorColumnBinder.ControlType">
+            <summary>
+              The base type of control this binder works with.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.UI.WinForms.InfragisticsControls.UltraComboEditorDataBinder">
+            <summary>
+              Binder for a UltraComboEditor control.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.InfragisticsControls.UltraComboEditorDataBinder.GetBaseFitness(IdeaBlade.UI.IDataConverter)">
+            <summary>
+              Returns the fitness of using this binder for the specified converter.
+              See <see cref="T:IdeaBlade.UI.WinForms.UIFitness"/>.
+            </summary>
+            <param name="pConverter">
+              Converter that specifies formatting, syntactic, and semantic validation.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.InfragisticsControls.UltraComboEditorDataBinder.InitializeControl(System.Windows.Forms.Control,IdeaBlade.UI.ViewDescriptor)">
+            <summary>
+            
+            </summary>
+            <param name="pControl"></param>
+            <param name="pDescriptor"></param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.InfragisticsControls.UltraComboEditorDataBinder.SetControlEditability(System.Windows.Forms.Control,IdeaBlade.UI.Editability)">
+            <summary>
+              Configures the control to best match the editability requirement.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.InfragisticsControls.UltraComboEditorDataBinder.ControlType">
+            <summary>
+              The base type of control this binder works with.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.UI.WinForms.InfragisticsControls.UltraCheckEditorColumnBinder">
+            <summary>
+              Binder for a UltraCheckEditor control used in a GridColumn.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.InfragisticsControls.UltraCheckEditorColumnBinder.GetBaseFitness(IdeaBlade.UI.IDataConverter)">
+            <summary>
+              Returns the fitness of using this binder for the specified converter.
+              See <see cref="T:IdeaBlade.UI.WinForms.UIFitness"/>.
+            </summary>
+            <param name="pConverter">
+              Converter that specifies formatting, syntactic, and semantic validation.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.InfragisticsControls.UltraCheckEditorColumnBinder.GetColumnEdit">
+            <summary>
+              Get the TextEditorControlBase for the preferred control type.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.InfragisticsControls.UltraCheckEditorColumnBinder.BindColumn(IdeaBlade.UI.WinForms.InfragisticsControls.UltraGridBindingDescriptor)">
+            <summary>
+            Sets the properties on a GridColumn from a ViewDescriptor.
+            </summary>
+            <remarks>
+            Logic for initializing whether the column should support three states is as follows:
+            <list>
+            <item>If the developer uses the DefaultConverter's defaults, then the column's style value is used.</item>
+            <item>If the developer modifies the DefaultConverter's Editability, then the converter's Editability overrides the column.</item>
+            <item>If the developer selects the ThreeStateConverter and uses the converter's defaults,
+            then the converter's ThreeState value is used.</item>
+            <item>If the developer selects the ThreeStateConverter, keeps Editability.Optional, and modifies the ThreeState,
+            then the converter's ThreeState value is used.</item>
+            <item>If the developer selects the ThreeStateConverter and modifies the Editability, 
+            then the converter's Editability overrides its ThreeState.</item> 
+            </list>
+            </remarks>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.InfragisticsControls.UltraCheckEditorColumnBinder.ControlType">
+            <summary>
+              The base type of control this binder works with.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.UI.WinForms.InfragisticsControls.NamespaceDoc">
+            <summary>
+              Contains a set of data binding classes specific to the Infragistics
+              user interface component vendor.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.UI.WinForms.InfragisticsControls.UltraCalculatorDropDownColumnBinder">
+            <summary>
+              Binder for a UltraCalculatorDropDown control used in a GridColumn.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.InfragisticsControls.UltraCalculatorDropDownColumnBinder.GetBaseFitness(IdeaBlade.UI.IDataConverter)">
+            <summary>
+              Returns the fitness of using this binder for the specified converter.
+              See <see cref="T:IdeaBlade.UI.WinForms.UIFitness"/>.
+            </summary>
+            <param name="pConverter">
+              Converter that specifies formatting, syntactic, and semantic validation.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.InfragisticsControls.UltraCalculatorDropDownColumnBinder.GetColumnEdit">
+            <summary>
+              Get the TextEditorControlBase for the preferred control type.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.InfragisticsControls.UltraCalculatorDropDownColumnBinder.BindColumn(IdeaBlade.UI.WinForms.InfragisticsControls.UltraGridBindingDescriptor)">
+            <summary>
+              Sets the properties on a GridColumn from a ViewDescriptor.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.InfragisticsControls.UltraCalculatorDropDownColumnBinder.ControlType">
+            <summary>
+              The base type of control this binder works with.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.UI.WinForms.InfragisticsControls.UltraTextEditorDataBinder">
+            <summary>
+              Binder for a UltraTextEditor control.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.InfragisticsControls.UltraTextEditorDataBinder.GetBaseFitness(IdeaBlade.UI.IDataConverter)">
+            <summary>
+              Returns the fitness of using this binder for the specified converter.
+              See <see cref="T:IdeaBlade.UI.WinForms.UIFitness"/>.
+            </summary>
+            <param name="pConverter">
+              Converter that specifies formatting, syntactic, and semantic validation.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.InfragisticsControls.UltraTextEditorDataBinder.InitializeControl(System.Windows.Forms.Control,IdeaBlade.UI.ViewDescriptor)">
+            <summary>
+              Initializes the properties of a control before being bound.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.InfragisticsControls.UltraTextEditorDataBinder.SetControlEditability(System.Windows.Forms.Control,IdeaBlade.UI.Editability)">
+            <summary>
+              Configures the control to best match the editability requirement.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.InfragisticsControls.UltraTextEditorDataBinder.ControlType">
+            <summary>
+              The base type of control this binder works with.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.InfragisticsControls.UltraTextEditorDataBinder.BindingPropertyName">
+            <summary>
+              Property on the control that is set during binding.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.UI.WinForms.InfragisticsControls.UltraNumericEditorColumnBinder">
+            <summary>
+              Binder for a UltraNumericEditor control used in a GridColumn.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.InfragisticsControls.UltraNumericEditorColumnBinder.GetBaseFitness(IdeaBlade.UI.IDataConverter)">
+            <summary>
+              Returns the fitness of using this binder for the specified converter.
+              See <see cref="T:IdeaBlade.UI.WinForms.UIFitness"/>.
+            </summary>
+            <param name="pConverter">
+              Converter that specifies formatting, syntactic, and semantic validation.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.InfragisticsControls.UltraNumericEditorColumnBinder.GetColumnEdit">
+            <summary>
+              Get the TextEditorControlBase for the preferred control type.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.InfragisticsControls.UltraNumericEditorColumnBinder.ControlType">
+            <summary>
+              The base type of control this binder works with.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.UI.WinForms.InfragisticsControls.UltraGridBindingManager">
+            <summary>
+              Manages the data binding between a list of business objects and an Infragistics UltraGrid.
+            </summary>
+            <remarks>
+            The <see cref="P:IdeaBlade.UI.WinForms.BindingManager.BoundType"/> determines the type of business object to be managed. 
+            The <see cref="P:IdeaBlade.UI.WinForms.BindingManager.BindingSource"/> is the <see cref="T:System.Windows.Forms.BindingSource"/>
+            that contains one or more business objects of the BoundType.
+            Use the <see cref="P:IdeaBlade.UI.WinForms.InfragisticsControls.UltraGridBindingManager.Descriptors"/> property to add <see cref="T:IdeaBlade.UI.WinForms.InfragisticsControls.UltraGridBindingDescriptor">UltraGridBindingDescriptors</see>
+            to bind columns in the UltraGrid to business object properties.  The <see cref="P:IdeaBlade.UI.WinForms.InfragisticsControls.UltraGridBindingManager.UltraGrid"/> is the grid control
+            used to display the data.  When creating a master-detail or multi-hierarchical grid, use the <see cref="M:IdeaBlade.UI.WinForms.InfragisticsControls.UltraGridBindingManager.AddRelationBand(IdeaBlade.UI.WinForms.InfragisticsControls.UltraGridBindingManager,System.String,System.String)"/>
+            method to create each UltraGridBand and establish the nested relationship.
+            <para>When using the <b>UltraGridBindingManager</b> it is not necessary for you to set the UltraGrid's DataSource
+            and DataMember properties, since the bindings will be managed by DevForce.  
+            </para>
+            </remarks>
+            <example><code lang="C#">
+
+private void SimpleGridBinding() {
+  PersistenceManager pm = PersistenceManager.DefaultManager;
+
+  // setup bindings 
+  UltraGridBindingManager mgr = new UltraGridBindingManager(mUltraGrid, typeof(Customer));
+  mgr.Descriptors.Add("Customer", "CompanyName");
+  mgr.Descriptors.Add("Contact", "ContactName");
+  mgr.Descriptors.Add("Phone", "Phone");
+  mgr.Descriptors.Add("City", "City");
+
+  // get some data
+  mgr.BindingSource.DataSource = pm.GetEntities&lt;Customer&gt;();
+}
+
+	</code></example><example><code lang="VB">
+
+Private Sub SimpleGridBinding()
+   Dim pm As PersistenceManager = PersistenceManager.DefaultManager
+
+   ' setup bindings 
+   Dim mgr As New UltraGridBindingManager(mUltraGrid, GetType(Customer))
+   mgr.Descriptors.Add("Customer", "CompanyName")
+   mgr.Descriptors.Add("Contact", "ContactName")
+   mgr.Descriptors.Add("Phone", "Phone")
+   mgr.Descriptors.Add("City", "City")
+
+   ' get some data
+   mgr.BindingSource.DataSource = pm.GetEntities(Of Customer)()
+End Sub
+	</code></example>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.InfragisticsControls.UltraGridBindingManager.#ctor">
+            <summary>
+            Constructs an UltraGridBindingManager with a default data source.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.InfragisticsControls.UltraGridBindingManager.#ctor(System.Type)">
+            <summary>
+            Constructs an UltraGridBindingManager for the specified BoundType.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.InfragisticsControls.UltraGridBindingManager.#ctor(Infragistics.Win.UltraWinGrid.UltraGrid,System.Type)">
+            <summary>
+            Constructs an UltraGridBindingManager for the specified UltraGrid and BoundType.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.InfragisticsControls.UltraGridBindingManager.#ctor(Infragistics.Win.UltraWinGrid.UltraGrid,System.Windows.Forms.BindingSource)">
+            <summary>
+            Constructs an UltraGridBindingManager for the specified UltraGrid and binding source.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.InfragisticsControls.UltraGridBindingManager.AddRelationBand(IdeaBlade.UI.WinForms.InfragisticsControls.UltraGridBindingManager,System.String,System.String)">
+             <summary>
+             Adds an UltraGridBand to create a nested grid.
+             </summary>
+             <param name="pRelatedChildManager">Binding Manager for the child grid</param>
+             <param name="pRelationDisplayName">Display name of the relation.</param>
+             <param name="pPropertyPath">Property path</param>
+            <remarks>
+            </remarks>
+             <example><code lang="C#">
+
+private void MasterDetailGridBinding() {
+
+  // Sample 3-level display of customers, orders and order details
+
+  BindingSource bindingSource = new BindingSource();
+  bindingSource.DataSource = typeof(Customer);
+
+  UltraGridBindingManager mgrMaster = new UltraGridBindingManager(mUltraGrid, bindingSource);
+  mgrMaster.Descriptors.Add("Customer", "CompanyName");
+  mgrMaster.Descriptors.Add("Contact", "ContactName");
+  mgrMaster.Descriptors.Add("Phone", "Phone");
+  mgrMaster.Descriptors.Add("City", "City");
+  mgrMaster.AssociatedBand.Header.Caption = "Customers";
+
+  UltraGridBindingManager mgrChild = new UltraGridBindingManager(typeof(Order));
+  mgrChild.Descriptors.Add("#", "Id");
+  mgrChild.Descriptors.Add("Order Date", "OrderDate");
+  mgrChild.Descriptors.Add("Freight", "Freight");
+  mgrMaster.AddRelationBand(mgrChild, "Orders", "Orders");
+  mgrChild.AssociatedBand.HeaderVisible = true;
+      
+  UltraGridBindingManager mgrDetail = new UltraGridBindingManager(typeof(OrderDetail));
+  mgrDetail.Descriptors.Add("Product", "Product.ProductName");
+  mgrDetail.Descriptors.Add("Qty", "Quantity");
+  mgrDetail.Descriptors.Add("Price", "UnitPrice");
+  mgrChild.AddRelationBand(mgrDetail, "Details", "OrderDetails");
+  mgrDetail.AssociatedBand.HeaderVisible = true;
+
+  // Get some data
+  bindingSource.DataSource = PersistenceManager.DefaultManager.GetEntities&lt;Customer&gt;();
+}
+
+	</code></example><example><code lang="VB">
+
+Private Sub MasterDetailGridBinding()
+
+   ' Sample 3-level display of customers, orders and order details
+   Dim bindingSource As New BindingSource()
+   bindingSource.DataSource = GetType(Customer)
+
+   Dim mgrMaster As New UltraGridBindingManager(mUltraGrid, bindingSource)
+   mgrMaster.Descriptors.Add("Customer", "CompanyName")
+   mgrMaster.Descriptors.Add("Contact", "ContactName")
+   mgrMaster.Descriptors.Add("Phone", "Phone")
+   mgrMaster.Descriptors.Add("City", "City")
+   mgrMaster.AssociatedBand.Header.Caption = "Customers"
+
+   Dim mgrChild As New UltraGridBindingManager(GetType(Order))
+   mgrChild.Descriptors.Add("#", "Id")
+   mgrChild.Descriptors.Add("Order Date", "OrderDate")
+   mgrChild.Descriptors.Add("Freight", "Freight")
+   mgrMaster.AddRelationBand(mgrChild, "Orders", "Orders")
+   mgrChild.AssociatedBand.HeaderVisible = True
+
+   Dim mgrDetail As New UltraGridBindingManager(GetType(OrderDetail))
+   mgrDetail.Descriptors.Add("Product", "Product.ProductName")
+   mgrDetail.Descriptors.Add("Qty", "Quantity")
+   mgrDetail.Descriptors.Add("Price", "UnitPrice")
+   mgrChild.AddRelationBand(mgrDetail, "Details", "OrderDetails")
+   mgrDetail.AssociatedBand.HeaderVisible = True
+
+   ' Get some data
+   bindingSource.DataSource = PersistenceManager.DefaultManager.GetEntities(Of Customer)()
+End Sub
+	</code></example>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.InfragisticsControls.UltraGridBindingManager.OnBindingSourceChanged">
+            <summary>
+            Re-bind processing used when the binding source changes.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.InfragisticsControls.UltraGridBindingManager.CreateBindingDescriptorCollection">
+            <summary>
+              Creates the strongly typed binding descriptor collection.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.InfragisticsControls.UltraGridBindingManager.BindCore(IdeaBlade.UI.WinForms.BindingDescriptor)">
+            <summary>
+              Binds the property in the descriptor to the current UltraGridBand.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.InfragisticsControls.UltraGridBindingManager.UnbindCore(IdeaBlade.UI.WinForms.BindingDescriptor)">
+            <summary>
+             Unbinds the descriptor and removes the column from the grid if the
+            BindCore operation added it.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.InfragisticsControls.UltraGridBindingManager.EnsureContiguousVisibleColumnPositions">
+            <summary>
+            Ensure that all visible columns all have earlier visible positions that invisible
+            columns (hidden).
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.InfragisticsControls.UltraGridBindingManager.EndInit">
+            <summary>
+              Signals the object that initialization is complete.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.InfragisticsControls.UltraGridBindingManager.UltraGrid">
+            <summary>
+              Gets or sets the UltraGrid.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.InfragisticsControls.UltraGridBindingManager.Descriptors">
+            <summary>
+              Gets the collection of bindings managed by this BindingManager.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.InfragisticsControls.UltraGridBindingManager.BoundControl">
+            <summary>
+             Returns the bound UltraGridControl.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.InfragisticsControls.UltraGridBindingManager.AssociatedBand">
+            <summary>
+            Gets the UltraGridBand corresponding to this manager. 
+            </summary>
+            <remarks>
+            Do not cache this value as it may change when the grid's datasource is changed.
+            </remarks>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.InfragisticsControls.UltraGridBindingManager.BandLevel">
+            <summary>
+            Gets the Band level that the grid binding manager represents.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.InfragisticsControls.UltraGridBindingManager.IsRelationBand">
+            <summary>
+            Returns true if this is a manager that represents a relation property, or a child band.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.InfragisticsControls.UltraGridBindingManager.DataFilter">
+            <summary>
+            Gets the DataFilter that the grid binding manager uses to connect all custom data converters.
+            </summary>
+        </member>
+    </members>
+</doc>

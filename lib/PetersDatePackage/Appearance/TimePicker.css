@@ -1,0 +1,87 @@
+.TPTimePicker
+{
+   border-right: gray 1px solid;
+   border-top: gray 1px solid;
+   border-left: gray 1px solid;
+   border-bottom: gray 1px solid;
+   font-family: Arial;
+   font-size: 8pt;
+   background-color: white;
+}
+
+.TPTimePicker TABLE
+{
+   font-family: Arial;
+   font-size: 8pt;
+   background-color: transparent;
+}
+.TPTimePicker A
+{
+   color:black;
+   text-decoration:none;
+}
+
+.TPTimeSpan
+{
+   cursor: pointer; /* w3c cursor */
+   cursor: hand; /* IE cursor */
+}
+
+.TPSelectedTimeSpan
+{
+   background-color: gold;
+   cursor: pointer;
+   cursor: hand;
+}
+
+
+.TPFiller
+{
+   color: gray;
+}
+
+.TPTitle
+{
+   border-top: black 1px solid;
+   border-bottom: black 1px solid;
+   background-color: lightblue;
+}
+.TPHeader
+{
+   background-color:transparent;
+}
+.TPFooterButton
+{
+   border-right: #E0E0E0 thin outset; /* = lightgray */
+   border-top: #E0E0E0 thin outset;
+   border-left: #E0E0E0 thin outset;
+   color: black;
+   border-bottom: #E0E0E0 thin outset;
+   background-color: lightblue;
+   font-size: 8pt;
+   font-family: Arial;
+   cursor: pointer;
+   cursor: hand;
+}
+
+.TPFooterButtonPressed
+{
+   border-right: #E0E0E0 thin inset; /* = lightgray */
+   border-top: #E0E0E0 thin inset;
+   border-left: #E0E0E0 thin inset;
+   border-bottom: #E0E0E0 thin inset;
+   background-color: lightblue;
+   color: black;
+   font-size: 8pt;
+   font-family: Arial;
+   cursor: pointer;
+   cursor: hand;
+}
+
+.TPTogglePicker
+{
+}
+
+.TPTogglePickerPressed
+{
+}

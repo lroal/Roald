@@ -1,0 +1,512 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Microsoft.Practices.Mobile.ConnectionMonitor</name>
+    </assembly>
+    <members>
+        <member name="T:Microsoft.Practices.Mobile.ConnectionMonitor.Configuration.ConnectionItemElementCollection">
+            <summary>
+            Helper class to get the connection monitor section from the configuration.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Practices.Mobile.ConnectionMonitor.StateChangedEventArgs">
+            <summary>
+            	Arguments with connectivity information for an event fired
+            	when the connection status has changed.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Practices.Mobile.ConnectionMonitor.StateChangedEventArgs.#ctor(System.Boolean,System.String)">
+            <summary>
+            	Constructor
+            </summary>
+            <param name="isConnected">
+            	The current connection status.
+            </param>
+            <param name="networkName">
+            	The active network name.
+            </param>
+        </member>
+        <member name="P:Microsoft.Practices.Mobile.ConnectionMonitor.StateChangedEventArgs.IsConnected">
+            <summary>
+            Gets the new connection status when the event has been fired.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Practices.Mobile.ConnectionMonitor.StateChangedEventArgs.NetworkName">
+            <summary>
+            Gets the current network name when the event has been fired.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Practices.Mobile.ConnectionMonitor.ConnectionMonitorFactory.CreateFromConfiguration">
+            <summary>
+            This factory method initializes the ConnectionMonitor single instance adding networks acording to the 
+            native Connection Manager API and connections from the deafault configuration section
+            "Connections".
+            </summary>
+            <returns>The ConnectionMonitor instance.</returns>
+        </member>
+        <member name="M:Microsoft.Practices.Mobile.ConnectionMonitor.ConnectionMonitorFactory.CreateFromConfiguration(System.String)">
+            <summary>
+            	This factory method initializes the ConnectionMonitor single instance adding networks acording to the 
+            	native Connection Manager API and connections from the supplied configuration section
+            	name.
+            </summary>
+            <param name="sectionName">
+            	Name of the section in the configuration file (App.config), wich contains the different
+            	types of connection
+            </param>
+            <returns>The ConnectionMonitor instance.</returns>
+        </member>
+        <member name="P:Microsoft.Practices.Mobile.ConnectionMonitor.ConnectionMonitorFactory.Instance">
+            <summary>
+            Provides access to the single instance of the ConnectionMonitor.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Practices.Mobile.ConnectionMonitor.Guard">
+            <summary>
+            Common guard clauses
+            </summary>
+        </member>
+        <member name="M:Microsoft.Practices.Mobile.ConnectionMonitor.Guard.ArgumentNotNull(System.Object,System.String)">
+            <summary>
+            Checks an argument to ensure it isn't null
+            </summary>
+            <param name="argumentValue">The argument value to check.</param>
+            <param name="argumentName">The name of the argument.</param>
+        </member>
+        <member name="T:Microsoft.Practices.Mobile.ConnectionMonitor.Implementations.NativeConnectionType">
+            <summary>
+            Enumerate the posible connection types for default implementation.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Practices.Mobile.ConnectionMonitor.Configuration.ConnectionSettingsSection">
+            <summary>
+            Helper class to get the connection monitor section from the configuration.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Practices.Mobile.ConnectionMonitor.Configuration.ConnectionSettingsSection.ConnectionItems">
+            <summary>
+            Get the connection Items.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Practices.Mobile.ConnectionMonitor.ConnectionCollection">
+            <summary>
+            	This class is a collection of connections. 
+            	It's wired to a ConnectionMonitor object.
+            	When a connection is added the monitor can handle the insertion.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Practices.Mobile.ConnectionMonitor.ConnectionCollection.#ctor(Microsoft.Practices.Mobile.ConnectionMonitor.ConnectionMonitor)">
+            <summary>
+            Constructor of the ConnectionCollection class.
+            It sets the ConnectioMonitor reference.
+            </summary>
+            <param name="monitor">
+            	ConnectionMonitor to wire up the connections.
+            </param>
+        </member>
+        <member name="T:Microsoft.Practices.Mobile.ConnectionMonitor.Implementations.DesktopConnection">
+            <summary>
+            	Concrete <see cref="!:ApiConnection"/> implementation for desktop
+            	connections (as DTPT)
+            </summary>
+        </member>
+        <member name="T:Microsoft.Practices.Mobile.ConnectionMonitor.Implementations.SystemStateConnectionBase">
+            <summary>
+            	This abstract class implements an API - based connection type
+            	without the SystemProperty and the connection type to implement.
+            </summary>
+            <remarks>
+            	This class uses the SystemState managed API to monitor the connection status
+            	change, and also uses the <see cref="T:Microsoft.Practices.Mobile.ConnectionMonitor.Implementations.ConnectionMonitorNativeHelper"/> class which is a native API 
+            	wrapper to get the network list and the active network for this connection.
+            	The concrete implementations should provide the SystemProperty to monitor and 
+            	the expected connection type from the API wrapper.
+            </remarks>
+        </member>
+        <member name="T:Microsoft.Practices.Mobile.ConnectionMonitor.Connection">
+            <summary>
+            	This abstract class represents the connection type interface.
+            </summary>
+            <remarks>
+            	Concrete implementations should provide connection status and
+            	current Network name when get connected or disconnected firing a 
+            	StateChanged event.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.Practices.Mobile.ConnectionMonitor.Connection.RaiseStateChanged(Microsoft.Practices.Mobile.ConnectionMonitor.StateChangedEventArgs)">
+            <summary>
+            	This method raises the StateChanged event from a connection concrete 
+            	implementation.
+            </summary>
+            <param name="arg">
+            	Status change information in an <see cref="T:Microsoft.Practices.Mobile.ConnectionMonitor.StateChangedEventArgs"/> object.
+            </param>
+        </member>
+        <member name="M:Microsoft.Practices.Mobile.ConnectionMonitor.Connection.#ctor(System.String,System.UInt32)">
+            <summary>
+            	Default functionality for constructors of concrete derived classes of the <see cref="T:Microsoft.Practices.Mobile.ConnectionMonitor.Connection"/> class.
+            </summary>
+            <param name="connectionTypeName">
+            	Provides the connection type name for the connection type object.
+            </param>
+            <param name="price">
+            	Provides the price for the connection type object.
+            </param>
+        </member>
+        <member name="M:Microsoft.Practices.Mobile.ConnectionMonitor.Connection.UpdateStatus">
+            <summary>
+            	Update the StateChanged event subscribers if the connection is already connected.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Practices.Mobile.ConnectionMonitor.Connection.GetNetworkName">
+            <summary>
+            	Get the current network name from the connection from the concrete implementations.
+            </summary>
+            <returns>
+            	A string with the current network name if the connection is connected, 
+            	or an empty string if it's not.
+            </returns>
+        </member>
+        <member name="M:Microsoft.Practices.Mobile.ConnectionMonitor.Connection.GetDetailedInfoString">
+            <summary>
+                Returns a string containing detailed information about the connection 
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="E:Microsoft.Practices.Mobile.ConnectionMonitor.Connection.StateChanged">
+            <summary>
+            	Event fired when something in the connection status has changed.
+            </summary>
+            <remarks>
+            	After subscribing to this event, the <see cref="M:Microsoft.Practices.Mobile.ConnectionMonitor.Connection.UpdateStatus"/> method
+            	should be called to get the initial status from the connection type
+            	if it's already connected (firing this event).
+            </remarks>
+        </member>
+        <member name="P:Microsoft.Practices.Mobile.ConnectionMonitor.Connection.ConnectionTypeName">
+            <summary>
+            	String containing the connection type name.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Practices.Mobile.ConnectionMonitor.Connection.Price">
+            <summary>
+            	Pricing information for the connection.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Practices.Mobile.ConnectionMonitor.Connection.IsConnected">
+            <summary>
+            	Get the connection status for the connection type.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Practices.Mobile.ConnectionMonitor.Implementations.SystemStateConnectionBase.#ctor(System.String,System.UInt32,Microsoft.Practices.Mobile.ConnectionMonitor.Implementations.NativeConnectionType,Microsoft.WindowsMobile.Status.SystemProperty)">
+            <summary>
+            	Default logic for the construction of concrete classes derived from the <see cref="!:ApiConnection"/> 
+            	abstract class.
+            </summary>
+            <param name="connectionType">
+            	Provides the connection type name for the connection type object.
+            </param>
+            <param name="price">
+            	Provides the price for the connection type object.
+            </param>
+            <param name="connType">
+            	<see cref="!:ConnMonitorApi.CurrentConnectionType"/> expected from the wrapper class
+            	when the connection gets connected and the networkname is retrieved.
+            </param>
+            <param name="systemProperty">
+            	SystemProperty which must be monitored by the ApiConnection to fire 
+            	the status changed event and the connected status.
+            </param>
+        </member>
+        <member name="M:Microsoft.Practices.Mobile.ConnectionMonitor.Implementations.SystemStateConnectionBase.GetNetworkName">
+            <summary>
+            	Gets the network name for the connection.
+            </summary>
+            <returns>String with the network name for the connection. If it's not connected returns an empty string.</returns>
+        </member>
+        <member name="M:Microsoft.Practices.Mobile.ConnectionMonitor.Implementations.SystemStateConnectionBase.GetDetailedInfoString">
+            <summary>
+            	Gets detailed info about the connection status.
+            </summary>
+            <returns>
+            	String with detailed connection status information.
+            </returns>
+        </member>
+        <member name="M:Microsoft.Practices.Mobile.ConnectionMonitor.Implementations.SystemStateConnectionBase.Dispose">
+            <summary>
+            Disposes the resources used by the connection object.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Practices.Mobile.ConnectionMonitor.Implementations.SystemStateConnectionBase.IsConnected">
+            <summary>
+            	Get the connection status for the connection type.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Practices.Mobile.ConnectionMonitor.Implementations.DesktopConnection.#ctor(System.String,System.UInt32)">
+            <summary>
+            	Constructor for the <see cref="T:Microsoft.Practices.Mobile.ConnectionMonitor.Implementations.DesktopConnection"/> class.
+            </summary>
+            <param name="connectionType">
+            	Provides the connection type name for the connection type object.
+            </param>
+            <param name="price">
+            	Provides the price for the connection type object.
+            </param>
+        </member>
+        <member name="T:Microsoft.Practices.Mobile.ConnectionMonitor.Implementations.ConnectionMonitorException">
+            <summary>
+            Exception thrown by the ConnectionMonitor getting connectivity information.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Practices.Mobile.ConnectionMonitor.Implementations.ConnectionMonitorException.#ctor(System.String,System.Int32)">
+            <summary>
+            Constructor for the ConnectionMonitorException class.
+            </summary>
+            <param name="message">Exception message.</param>
+            <param name="hResult">Native HResult value if the exception has been thrown because a native API error.</param>
+        </member>
+        <member name="T:Microsoft.Practices.Mobile.ConnectionMonitor.ConnectionMonitor">
+            <summary>
+            	This class has the responsibility to manage the connections and networks, and
+            	the connected status of the device.
+            </summary>
+            <remarks>
+            	The monitor has a connections collection.
+            	It wires the added connections to get the connection status changes
+            	and you can get the current Network from a connected connection.
+            	It also publishes the connection status of the device through the <see cref="P:Microsoft.Practices.Mobile.ConnectionMonitor.ConnectionMonitor.IsConnected"/>
+            	property, and an <see cref="E:Microsoft.Practices.Mobile.ConnectionMonitor.ConnectionMonitor.ConnectionStatusChanged"/> event to inform the subscribers when
+            	the connectivity status has changed in any of the registered connections.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.Practices.Mobile.ConnectionMonitor.ConnectionMonitor.#ctor">
+            <summary>
+            Constructor of the <see cref="T:Microsoft.Practices.Mobile.ConnectionMonitor.ConnectionMonitor"/> class.
+            </summary>
+        </member>
+        <member name="E:Microsoft.Practices.Mobile.ConnectionMonitor.ConnectionMonitor.ConnectionStatusChanged">
+            <summary>
+            This event is fired when the connectivity status has changed.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Practices.Mobile.ConnectionMonitor.ConnectionMonitor.Connections">
+            <summary>
+            Get the connections collection.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Practices.Mobile.ConnectionMonitor.ConnectionMonitor.ActiveConnections">
+            <summary>
+            Get active connections.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Practices.Mobile.ConnectionMonitor.ConnectionMonitor.IsConnected">
+            <summary>
+            Gets if the device is connected according to the ConnectionMonitor connections.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Practices.Mobile.ConnectionMonitor.Implementations.CellConnection">
+            <summary>
+            	Concrete <see cref="!:ApiConnection"/> implementation for cellular
+            	connections (GPRS, 1X, EDGE, etc.)
+            </summary>
+        </member>
+        <member name="M:Microsoft.Practices.Mobile.ConnectionMonitor.Implementations.CellConnection.#ctor(System.String,System.UInt32)">
+            <summary>
+            	Constructor for the <see cref="T:Microsoft.Practices.Mobile.ConnectionMonitor.Implementations.CellConnection"/> class.
+            </summary>
+            <param name="connectionType">
+            	Provides the connection type name for the connection type object.
+            </param>
+            <param name="price">
+            	Provides the price for the connection type object.
+            </param>
+        </member>
+        <member name="T:Microsoft.Practices.Mobile.ConnectionMonitor.Implementations.ConnectionMonitorNativeHelper">
+            <summary>
+            	This class is a native API wrapper for two native APIs:
+            				- ConnMgrEnumDestinations
+            				- ConnMgrQueryDetailedStatus
+            	These APIs are part of the Windows Mobile 5.0 Connection Manager functions.
+            	This class uses this native functions to get the network list (exposed as
+            	<see cref="M:Microsoft.Practices.Mobile.ConnectionMonitor.Implementations.ConnectionMonitorNativeHelper.GetNetworkList"/>) and to get the current connection and 
+            	network (exposed as <see cref="!:GetCurrentConnectionType"/>).
+            </summary>
+        </member>
+        <member name="M:Microsoft.Practices.Mobile.ConnectionMonitor.Implementations.ConnectionMonitorNativeHelper.GetCurrentNetworkNameForConnection(Microsoft.Practices.Mobile.ConnectionMonitor.Implementations.NativeConnectionType)">
+            <summary>
+            	Get the current connection type and network.
+            </summary>
+            <param name="type">
+            	Out parameter to get the current connection type.
+            </param>
+            <param name="currentNetworkName">
+            	Out parameter to get the current network name.
+            </param>
+        </member>
+        <member name="M:Microsoft.Practices.Mobile.ConnectionMonitor.Implementations.ConnectionMonitorNativeHelper.GetCurrentNetworkNameForConnection(Microsoft.Practices.Mobile.ConnectionMonitor.Implementations.NativeConnectionType,System.Boolean)">
+            <summary>
+            	Get the current connection type and network.
+            </summary>
+            <param name="type">
+            	Out parameter to get the current connection type.
+            </param>
+            <param name="currentNetworkName">
+            	Out parameter to get the current network name.
+            </param>
+            <param name="throwOnError">
+                Indicates if an exception should be thrown on errors. Otherwise String.Empty is returned.
+            </param>
+        </member>
+        <member name="M:Microsoft.Practices.Mobile.ConnectionMonitor.Implementations.ConnectionMonitorNativeHelper.GetNetworkList">
+            <summary>
+            Get the destination networks list.
+            </summary>
+            <returns>
+            	A list of strings with the network names.
+            </returns>
+        </member>
+        <member name="M:Microsoft.Practices.Mobile.ConnectionMonitor.Implementations.ConnectionMonitorNativeHelper.GetConnectionDetailedStatusText(Microsoft.Practices.Mobile.ConnectionMonitor.Implementations.NativeConnectionType)">
+            <summary>
+            	Gets an string with detailed information about the status of the given
+            	native connection type.
+            </summary>
+            <param name="type">NativeConnectionType to get the detailed status information string.</param>
+            <returns>
+            	String with detailed connection status information.
+            </returns>
+        </member>
+        <member name="T:Microsoft.Practices.Mobile.ConnectionMonitor.Implementations.NicConnection">
+            <summary>
+            	Concrete <see cref="!:ApiConnection"/> implementation for Network Interface 
+            	Card connections (Ethernet card, WiFi, etc.)
+            </summary>
+        </member>
+        <member name="M:Microsoft.Practices.Mobile.ConnectionMonitor.Implementations.NicConnection.#ctor(System.String,System.UInt32)">
+            <summary>
+            	Constructor for the <see cref="T:Microsoft.Practices.Mobile.ConnectionMonitor.Implementations.NicConnection"/> class.
+            </summary>
+            <param name="connectionType">
+            	Provides the connection type name for the connection type object.
+            </param>
+            <param name="price">
+            	Provides the price for the connection type object.
+            </param>
+        </member>
+        <member name="T:Microsoft.Practices.Mobile.ConnectionMonitor.Configuration.ConnectionItemElement">
+            <summary>
+            Helper class to get the connection monitor section from the configuration.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Practices.Mobile.ConnectionMonitor.Configuration.ConnectionItemElement.Type">
+            <summary>
+            String with the connection Type.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Practices.Mobile.ConnectionMonitor.Configuration.ConnectionItemElement.Price">
+            <summary>
+            Numeric value with the connection price.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Practices.Mobile.ConnectionMonitor.Properties.Resources">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Practices.Mobile.ConnectionMonitor.Properties.Resources.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Practices.Mobile.ConnectionMonitor.Properties.Resources.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Practices.Mobile.ConnectionMonitor.Properties.Resources.DestNetworkName">
+            <summary>
+              Looks up a localized string similar to DestNetworkName: .
+            </summary>
+        </member>
+        <member name="P:Microsoft.Practices.Mobile.ConnectionMonitor.Properties.Resources.DetailedInfoTitle">
+            <summary>
+              Looks up a localized string similar to Detailed Information.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Practices.Mobile.ConnectionMonitor.Properties.Resources.DetailedInfoTitle2">
+            <summary>
+              Looks up a localized string similar to ********************.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Practices.Mobile.ConnectionMonitor.Properties.Resources.DetailedStatusAdapterName">
+            <summary>
+              Looks up a localized string similar to AdapterName: {0}.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Practices.Mobile.ConnectionMonitor.Properties.Resources.DetailedStatusConnectionStatus">
+            <summary>
+              Looks up a localized string similar to ConnectionStatus: {0}.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Practices.Mobile.ConnectionMonitor.Properties.Resources.DetailedStatusFlags">
+            <summary>
+              Looks up a localized string similar to Flags: {0}.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Practices.Mobile.ConnectionMonitor.Properties.Resources.DetailedStatusGuidDestNet">
+            <summary>
+              Looks up a localized string similar to GuidDestNet: {0}.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Practices.Mobile.ConnectionMonitor.Properties.Resources.DetailedStatusGuidSourceNet">
+            <summary>
+              Looks up a localized string similar to GuidSourceNet: {0}.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Practices.Mobile.ConnectionMonitor.Properties.Resources.DetailedStatusIPAddressInfo">
+            <summary>
+              Looks up a localized string similar to IPAddressInfo: {0}.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Practices.Mobile.ConnectionMonitor.Properties.Resources.DetailedStatusLastConnectionTime">
+            <summary>
+              Looks up a localized string similar to LastConnectionTime: {0}/{1}/{2}-{3}:{4}:{5}.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Practices.Mobile.ConnectionMonitor.Properties.Resources.DetailedStatusSecure">
+            <summary>
+              Looks up a localized string similar to Secure: {0}.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Practices.Mobile.ConnectionMonitor.Properties.Resources.DetailedStatusSignalQuality">
+            <summary>
+              Looks up a localized string similar to SignalQuality: {0}.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Practices.Mobile.ConnectionMonitor.Properties.Resources.DetailedStatusSubtype">
+            <summary>
+              Looks up a localized string similar to Subtype: {0}.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Practices.Mobile.ConnectionMonitor.Properties.Resources.ExceptionDetailedStatusQueryFailed">
+            <summary>
+              Looks up a localized string similar to ConnMonitorQueryDetailedStatus has failed. HResult = {0}.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Practices.Mobile.ConnectionMonitor.Properties.Resources.ExceptionGetStringFromIPFailed">
+            <summary>
+              Looks up a localized string similar to GetStringFromIPInfo has failed. HResult = {0}.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Practices.Mobile.ConnectionMonitor.Properties.Resources.InstanceNotInitialized">
+            <summary>
+              Looks up a localized string similar to The connection monitor instance should be initialized first..
+            </summary>
+        </member>
+        <member name="P:Microsoft.Practices.Mobile.ConnectionMonitor.Properties.Resources.LineSeparator">
+            <summary>
+              Looks up a localized string similar to -------------------------------------\r\n.
+            </summary>
+        </member>
+    </members>
+</doc>

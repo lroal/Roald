@@ -1,0 +1,1330 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>IdeaBlade.Rdb</name>
+    </assembly>
+    <members>
+        <member name="T:IdeaBlade.Rdb.RdbParameter">
+            <summary>
+            Represents a database-independent data parameter.
+            </summary>
+            <remarks>
+            An <b>RdbParameter</b> is essentially a <see cref="T:System.Data.Common.DbParameter"/> that is marshalled by
+            value rather by reference when passed to a remote Business Object Server.  The remoting channel
+            used by the client does not allow two-way communication with the remote server, which a
+            DbParameter as a MarshalByRefObject requires.
+            <para>
+            Use an <b>RdbParameter</b> when adding parameters to a <b>StoredProcRdbQuery</b> or
+            <b>PassthruRdbQuery</b>.
+            </para>
+            </remarks>
+        </member>
+        <member name="M:IdeaBlade.Rdb.RdbParameter.#ctor(System.String,System.Data.DbType)">
+            <summary>
+            Initialize a new instance of the RdbParameter.
+            </summary>
+            <param name="pName"></param>
+            <param name="pDbType"></param>
+        </member>
+        <member name="M:IdeaBlade.Rdb.RdbParameter.#ctor(System.String,System.Object)">
+            <summary>
+            Initialize a new instance of the RdbParameter.
+            </summary>
+            <param name="pName"></param>
+            <param name="pProviderSpecificDbType"></param>
+        </member>
+        <member name="M:IdeaBlade.Rdb.RdbParameter.#ctor(System.String,System.Data.DbType,System.Int32)">
+            <summary>
+            Initialize a new instance of the RdbParameter.
+            </summary>
+            <param name="pName"></param>
+            <param name="pDbType"></param>
+            <param name="pSize"></param>
+        </member>
+        <member name="M:IdeaBlade.Rdb.RdbParameter.#ctor(IdeaBlade.Rdb.RdbParameter)">
+            <summary>
+            Copy Constructor.
+            </summary>
+            <param name="pParameter"></param>
+        </member>
+        <member name="P:IdeaBlade.Rdb.RdbParameter.ProviderSpecificDbType">
+            <summary>
+            Gets or sets the provider-specific DbType.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.Rdb.RdbParameter.Size">
+            <summary>
+            Gets or sets the maximum size, in bytes, of parameter data.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.Rdb.RdbParameter.System#Data#IDbDataParameter#Precision">
+            <summary>
+            Gets or sets the maximum number of digits for parameter data.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.Rdb.RdbParameter.System#Data#IDbDataParameter#Scale">
+            <summary>
+            Gets or sets the number of decimal places for parameter data.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.Rdb.ParameterizedSql">
+            <summary>
+            Represents a Sql statement with parameters.
+            </summary>
+            <remarks>
+            Each instance holds a Sql statement with parameter placeholders and their associated parameters.
+            The Sql statement placeholders identify parameters in the manner specific to the
+            database to which this Sql will be applied.
+            <para>The <see cref="P:IdeaBlade.Rdb.ParameterizedSql.Parameters"/> property returns a collection of associated parameters, 
+            each an instance of an <see cref="T:System.Data.IDbDataParameter"/>.
+            The collection cannot be changed after creating an instance of ParameterizedSql;
+            one cannot add or remove or substitute parameters.
+            But the values of the parameters in the collection can be changed.</para>
+            <para>
+            If building a <b>ParameterizedSql</b> with parameters for a client-side <b>PassthruRdbQuery</b>
+            which will execute on a remote Business Object Server, be sure to use <see cref="T:IdeaBlade.Rdb.RdbParameter"/> objects
+            instead of provider-specific <see cref="T:System.Data.Common.DbParameter"/> objects.  Parameters extending <see cref="T:System.Data.Common.DbParameter"/>
+            are remotable objects and cause unnecessary client-server communication.
+            </para>
+            </remarks>
+        </member>
+        <member name="F:IdeaBlade.Rdb.ParameterizedSql.Empty">
+            <summary>Get the Empty parameterized Sql instance.</summary>
+        </member>
+        <member name="M:IdeaBlade.Rdb.ParameterizedSql.#ctor(IdeaBlade.Rdb.ParameterizedSql)">
+            <summary>
+            Copy constructor
+            </summary>
+            <param name="pParamSql"></param>
+        </member>
+        <member name="M:IdeaBlade.Rdb.ParameterizedSql.#ctor(System.String)">
+            <summary>Construct parameterized Sql instance with no parameters.</summary>
+            <param name="pSql">A Sql string with no parameter placeholders.</param>
+        </member>
+        <member name="M:IdeaBlade.Rdb.ParameterizedSql.#ctor(System.String,System.Data.IDbDataParameter)">
+            <summary>Construct parameterized Sql instance with one parameter.</summary>
+            <param name="pSql">A Sql string, possibly with one parameter placeholder.</param>
+            <param name="pParameter">The parameter to substitute into the  parameter place holder.</param>
+        </member>
+        <member name="M:IdeaBlade.Rdb.ParameterizedSql.#ctor(System.String,System.Collections.Generic.ICollection{System.Data.IDbDataParameter}[])">
+            <summary>Construct parameterized Sql instance with parameters.</summary>
+            <param name="pSql">A Sql string with parameter placeholders.</param>
+            <param name="pParameterCollections">The parameters for each of the parameter placeholders.</param>
+        </member>
+        <member name="M:IdeaBlade.Rdb.ParameterizedSql.ToString">
+            <summary>Returns the string representation of the Parameterized query.</summary>
+        </member>
+        <member name="P:IdeaBlade.Rdb.ParameterizedSql.Sql">
+            <summary>Get the Sql expression.</summary>
+        </member>
+        <member name="P:IdeaBlade.Rdb.ParameterizedSql.Parameters">
+            <summary>Get the parameters.</summary>
+            <remarks>You cannot add or remove parameters although you can change values 
+            of the individual parameters in the list.</remarks>
+        </member>
+        <member name="T:IdeaBlade.Rdb.AdoProviderHelper">
+            <summary>
+            An abstract (MustInherit in Visual Basic) class that provides a factory structure interface for any database-specific 
+            provider functionality.
+            <seealso cref="T:IdeaBlade.Rdb.AdoHelper"/>
+            </summary>
+            <remarks>
+            An <see cref="T:IdeaBlade.Rdb.OleDbProviderHelper"/>, <see cref="T:IdeaBlade.Rdb.SqlServerProviderHelper"/> and <see cref="T:IdeaBlade.Rdb.OracleProviderHelper"/>
+            are provided with the DevForce framework.  You can implement a custom provider helper if necessary, and place the
+            assembly name in the <see cref="P:IdeaBlade.Rdb.RdbKey.ProbeAssemblyNames"/> list for the RdbKey in <b>IdeaBlade.ibconfig</b>.
+            </remarks>
+        </member>
+        <member name="M:IdeaBlade.Rdb.AdoProviderHelper.GetDatabaseDriver(System.String)">
+            <summary>
+            Retrieve the <see cref="T:IdeaBlade.Rdb.DatabaseDriver"/> for a connection string.
+            </summary>
+            <param name="pConnectionString"></param>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.Rdb.AdoProviderHelper.CreateConnection">
+            <summary>
+            Creates a provider-specific connection to the database.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.Rdb.AdoProviderHelper.CreateDbDataAdapter">
+            <summary>
+            Creates a new provider-specific DbDataAdapter.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.Rdb.AdoProviderHelper.MapDbParameterType(System.Data.DbType)">
+            <summary>
+            Allows mapping of provider-specific DbParameter DbTypes to other DbTypes.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.Rdb.AdoProviderHelper.CreateDbParameter">
+            <summary>
+            Creates a new provider-specific DbParameter.
+            </summary>
+            <returns>A new provider independent DbParameter</returns>
+        </member>
+        <member name="M:IdeaBlade.Rdb.AdoProviderHelper.CreateDbParameter(System.String,System.Data.DbType)">
+            <summary>
+            Creates a new provider-specific DbParameter of the specified name and type.
+            </summary>
+            <param name="pName"></param>
+            <param name="pDbType"></param>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.Rdb.AdoProviderHelper.CreateDbParameter(System.Data.IDbDataParameter)">
+            <summary>
+            Creates a new provider-specific DbParameter from a provider independent IDbDataParameter.
+            </summary>
+            <returns>A new provider-specific DbParameter</returns>
+        </member>
+        <member name="M:IdeaBlade.Rdb.AdoProviderHelper.CreateDbParameter(System.Data.DataColumn,System.String,System.String)">
+            <summary>
+            Creates a new provider-specific DbParameter.
+            </summary>
+            <param name="pColumn">The DataColumn that this parameter should be associated with
+            (used to determine the correct datatype for the parameter)</param>
+            <param name="pSourceColumnName">The SQL column name</param>
+            <param name="pParameterName">A user-specified name for this parameter. If this argument
+            is null, the method will name the parameter based on the data column name"/></param>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.Rdb.AdoProviderHelper.FormatParameterName(System.String)">
+            <summary>
+            Formats a parameter name for a specific provider. 
+            </summary>
+            <remarks>
+            This parameter name is what will be returned by the 
+            "Name" property of a provider-specific DbParameter.
+            </remarks>
+            <param name="pParameterName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.Rdb.AdoProviderHelper.UnformatParameterName(System.String)">
+            <summary>
+            Removes any provider-specific prefix from a parameter name.
+            </summary>
+            <param name="pParameterName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.Rdb.AdoProviderHelper.DeriveParameters(System.Data.IDbCommand)">
+            <summary>
+            Derives the parameters for a stored procedure command object.
+            </summary>
+            <param name="pCommand"></param>
+        </member>
+        <member name="M:IdeaBlade.Rdb.AdoProviderHelper.QualifyParameter(System.Data.IDbDataParameter,System.Data.DataRow)">
+            <summary>
+            Qualifies the properties of the IDbDataParameter using schema information.
+            </summary>
+            <param name="pParameter"></param>
+            <param name="pSchemaRow"></param>
+        </member>
+        <member name="M:IdeaBlade.Rdb.AdoProviderHelper.EscapeLike(System.String)">
+            <summary>
+            Returns a properly formatted 'LIKE' clause.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.Rdb.AdoProviderHelper.FormatIdentifier(System.String)">
+            <summary>
+            Returns a correctly-formatted database object name.
+            </summary>
+            <remarks>
+            The identifier is "wrapped" by the <see cref="P:IdeaBlade.Rdb.AdoProviderHelper.IdentifierPrefix"/> and <see cref="P:IdeaBlade.Rdb.AdoProviderHelper.IdentifierSuffix"/>.
+            </remarks>
+            <param name="pIdentifier">Database object name or name particle such as owner, table, or column name.</param>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.Rdb.AdoProviderHelper.FormatIdentifier(System.String,System.String)">
+            <summary>
+            Returns a correctly-formatted 2-part database object name.
+            </summary>
+            <param name="pIdentifier1">Typically the owner name; may be null or empty string.</param>
+            <param name="pIdentifier2">Typically a table or column name.</param>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.Rdb.AdoProviderHelper.FormatIdentifier(System.String,System.String,System.String)">
+            <summary>
+            Returns a correctly-formatted 3-part database object name.
+            </summary>
+            <param name="pIdentifier1">Typically the database name; may be null or empty string.></param>
+            <param name="pIdentifier2">Typically the owner name; may be null or empty string.</param>
+            <param name="pIdentifier3">Typically a table or column name.</param>
+            <returns></returns>
+        </member>
+        <member name="P:IdeaBlade.Rdb.AdoProviderHelper.DataProvider">
+            <summary>
+            Returns the name of the Data Provider used by the helper.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:IdeaBlade.Rdb.AdoProviderHelper.ProviderFactory">
+            <summary>
+            Gets the DbProviderFactory for the Data Provider.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.Rdb.AdoProviderHelper.CommandBuilder">
+            <summary>
+            Gets the DbCommandBuilder for the provider.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.Rdb.AdoProviderHelper.ParameterPrefix">
+            <summary>
+            Returns the prefix used for parameters to a DbCommand.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:IdeaBlade.Rdb.AdoProviderHelper.ParameterPlaceholder">
+            <summary>
+            Returns the placeholder character used for parameters to a DbCommand.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:IdeaBlade.Rdb.AdoProviderHelper.IdentifierPrefix">
+            <summary>
+            Returns the prefix delimiter for database object names.
+            </summary>
+            <value>The double quote (") character is as the database object prefix.</value>
+        </member>
+        <member name="P:IdeaBlade.Rdb.AdoProviderHelper.IdentifierSuffix">
+            <summary>
+            Returns the suffix delimiter for database object names.
+            </summary>
+            <value>The double quote (") character is as the database object suffix.</value>
+        </member>
+        <member name="P:IdeaBlade.Rdb.AdoProviderHelper.LikePercent">
+            <summary>
+            Returns the wildcard character representing 0 or more character matches used in 'LIKE' clauses.
+            </summary>
+            <value>
+            The percent sign (%) is used for this wildcard character.
+            </value>
+        </member>
+        <member name="P:IdeaBlade.Rdb.AdoProviderHelper.LikeUnderscore">
+            <summary>
+            Returns the wildcard character representing a single character match used in 'LIKE' clauses.
+            </summary>
+            <value>
+            The underscore (_) is used for this wildcard character.
+            </value>
+        </member>
+        <member name="T:IdeaBlade.Rdb.AdoHelper">
+            <summary>
+            Utility class associated with a single <see cref="T:IdeaBlade.Rdb.RdbKey"/> providing all of the basic ADO access
+            methods in a SQL provider-agnostic fashion. 
+            <seealso cref="T:IdeaBlade.Rdb.AdoProviderHelper"/>
+            </summary>
+            <remarks>
+            <b>AdoHelper</b> methods should be used instead of the System.Data.OleDb or System.Data.SqlClient 
+            versions of the same methods in order to retain database independence.
+            <para><b>AdoHelper</b> is used internally within the DevForce framework, but you will use the 
+            AdoHelper directly when implementing <see cref="T:IdeaBlade.Persistence.IIdGenerator"/>,
+            <see cref="T:IdeaBlade.Persistence.Server.IAdapterProvider"/> and 
+            <see cref="T:IdeaBlade.Persistence.IEntityQuery"/>, or defining a remote server method using
+            the <see cref="T:IdeaBlade.Persistence.ServerRpcDelegate"/> signature.
+            </para>
+            </remarks>
+        </member>
+        <member name="M:IdeaBlade.Rdb.AdoHelper.#ctor">
+            <overloads>Constructs an instance of the AdoHelper class.</overloads>
+             <summary>
+             Constructs an AdoHelper using the default <see cref="P:IdeaBlade.Rdb.AdoHelper.RdbKey"/> in the
+             IdeaBladeConfig file.
+             </summary>
+        </member>
+        <member name="M:IdeaBlade.Rdb.AdoHelper.#ctor(System.String)">
+            <summary>
+            Constructs an AdoHelper using the specified <see cref="P:IdeaBlade.Rdb.AdoHelper.RdbKey"/> in the
+            IdeaBladeConfig file.
+            </summary>
+            <param name="pRdbKeyName"></param>
+        </member>
+        <member name="M:IdeaBlade.Rdb.AdoHelper.#ctor(IdeaBlade.Rdb.RdbKey)">
+            <summary>
+            Constructs an AdoHelper using the specified <see cref="P:IdeaBlade.Rdb.AdoHelper.RdbKey"/>.
+            </summary>
+            <param name="pRdbKey"></param>
+        </member>
+        <member name="M:IdeaBlade.Rdb.AdoHelper.CheckConnection">
+            <summary>
+            Checks the connection to the data source.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.Rdb.AdoHelper.IsValidConnection(System.Data.IDbConnection)">
+            <summary>
+            Determines whether a connection is valid and open.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.Rdb.AdoHelper.CreateDbConnection">
+            <summary>
+            Returns a valid connection to the database specified by the <see cref="P:IdeaBlade.Rdb.AdoHelper.ConnectionString"/>
+            property.
+            </summary>
+            <exception cref="T:IdeaBlade.Util.IdeaBladeException">Unknown or invalid RdbKey; connection error</exception>
+        </member>
+        <member name="M:IdeaBlade.Rdb.AdoHelper.CreateDbConnection(System.Boolean)">
+            <summary>
+            Returns a valid connection to the database specified by the <see cref="P:IdeaBlade.Rdb.AdoHelper.ConnectionString"/>
+            property.
+            </summary>
+            <exception cref="T:IdeaBlade.Util.IdeaBladeException">Unknown or invalid RdbKey; connection error</exception>
+        </member>
+        <member name="M:IdeaBlade.Rdb.AdoHelper.CreateConnection(System.Boolean)">
+            <summary>
+            Returns a valid connection to the database specified by the <see cref="P:IdeaBlade.Rdb.AdoHelper.ConnectionString"/>
+            property.
+            </summary>
+            <exception cref="T:IdeaBlade.Util.IdeaBladeException">Unknown or invalid RdbKey; connection error</exception>
+        </member>
+        <member name="M:IdeaBlade.Rdb.AdoHelper.CreateDbDataAdapter(System.Data.IDbDataAdapter)">
+            <summary>
+            Creates a copy (clone) of the DbDataAdapter passed.
+            </summary>
+            <param name="pAdapter"></param>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.Rdb.AdoHelper.CreateDbDataAdapter">
+            <summary>
+            Creates a new provider-independent DbDataAdapter.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.Rdb.AdoHelper.CreateDbDataAdapter(System.Data.IDbConnection,System.String)">
+            <summary>
+            Creates a new provider-specific DbDataAdapter.
+            </summary>
+            <param name="pConnection">A database connection object</param>    
+            <param name="pSqlSelect">A SQL select statement</param>
+            <returns>A provider specific DbDataAdapter</returns>
+        </member>
+        <member name="M:IdeaBlade.Rdb.AdoHelper.CreateDbDataAdapter(System.Data.IDbConnection,IdeaBlade.Rdb.ParameterizedSql)">
+            <summary>
+            Creates a new provider-specific DbDataAdapter.
+            </summary>
+            <param name="pConnection"></param>
+            <param name="pParamSql"></param>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.Rdb.AdoHelper.CreateDbCommand(System.Data.IDbConnection)">
+            <summary>
+            Creates a new provider-specific DbCommand. 
+            </summary>
+            <param name="pConnection">A database connection object</param>    
+            <returns>A provider specific DbCommand</returns>
+        </member>
+        <member name="M:IdeaBlade.Rdb.AdoHelper.CreateDbCommand(System.Data.IDbConnection,IdeaBlade.Rdb.ParameterizedSql)">
+            <summary>
+            Creates a new provider-specific DbCommand. 
+            </summary>
+            <param name="pConnection"></param>
+            <param name="pParamSql"></param>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.Rdb.AdoHelper.CreateDbParameter">
+            <summary>
+            Creates a new provider-specific DbParameter.
+            </summary>
+            <returns>A new provider-specific DbParameter</returns>
+        </member>
+        <member name="M:IdeaBlade.Rdb.AdoHelper.CreateDbParameter(System.String,System.Data.DbType)">
+            <summary>
+            Creates a new provider-specific DbParameter and ensure the parameter name is valid for the provider.
+            </summary>
+            <param name="pName"></param>
+            <param name="pDbType"></param>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.Rdb.AdoHelper.CreateDbParameter(System.Data.IDbDataParameter)">
+            <summary>
+            Creates a new provider-specific DbParameter from a provider independent IDbDataParameter and
+             ensure the parameter name is valid for the provider.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.Rdb.AdoHelper.CreateDbParameter(System.Data.DataColumn,System.String,System.String)">
+            <summary>
+            Creates a new provider-specific DbParameter.
+            </summary>
+            <param name="pColumn">The DataColumn that this paramater should be associated with
+            (used to determine the correct datatype for the parameter)</param>
+            <param name="pSourceColumnName">The SQL column name</param>
+            <param name="pParameterName">A user-specified name for this parameter. If this argument
+            is null, the method will name the parameter based on the source column name"/></param>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.Rdb.AdoHelper.FormatParameterName(System.String)">
+            <summary>
+            Formats a parameter name for a specific provider. This parameter name is what will be returned by the 
+            "Name" property of provider specific DbParameter.
+            </summary>
+            <param name="pParameterName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.Rdb.AdoHelper.GetParameterPlaceholderName(System.Data.IDbDataParameter)">
+            <summary>
+            Returns the correct provider dependent SQL placeholder name for any IDbDataParameter.
+            </summary>
+            <param name="pParameter">The parameter for which a placeholder name is desired</param>
+            <returns>A parameter SQL placeholder name that can be used given the specified provider</returns>
+            <remarks>
+            The placeholder name is the name that is used in the SQL string to indicate
+            where parameter substitution will occur.  This may come in various forms depending
+            on the database provider in use.
+            For example:
+            <example>
+                Using OleDb - placeholder is "?"
+                Using SqlClient - placeholder is "@" + {parameterName} i.e. "@foo"
+                Using OracleClient - placeholder is ":" + { parameterName} i.e. ":foo"
+            </example>
+            <para>This method is used internally by the framework and should rarely be needed by external 
+            developers.</para>
+            </remarks>
+        </member>
+        <member name="M:IdeaBlade.Rdb.AdoHelper.DeriveParameters(System.Data.IDbCommand)">
+            <summary>
+            Retrieves parameter information from the IDbCommand specified.
+            </summary>
+            <param name="pCommand"></param>
+        </member>
+        <member name="M:IdeaBlade.Rdb.AdoHelper.CopyParameters(System.Collections.Generic.ICollection{IdeaBlade.Rdb.RdbParameter},System.Data.IDataParameterCollection)">
+            <summary>
+            Create DB-specific data parameters from the RdbParameters provided.
+            </summary>
+            <param name="pParameters"></param>
+            <param name="pDestParameters"></param>
+        </member>
+        <member name="M:IdeaBlade.Rdb.AdoHelper.CopyParameters(System.Collections.Generic.ICollection{System.Data.IDbDataParameter},System.Data.IDataParameterCollection)">
+            <summary>
+            Create DB-specific data parameters from the IDbDataParameters provided.
+            </summary>
+            <param name="pParameters"></param>
+            <param name="pDestParameters"></param>
+        </member>
+        <member name="M:IdeaBlade.Rdb.AdoHelper.GetDbType(System.Type)">
+            <summary>
+            Returns the DbType that corresponds to any given standard .NET data type.
+            </summary>
+            <param name="pType">The type for which a corresponding DbType is desired</param>
+            <returns>The corresponding DbType</returns>
+        </member>
+        <member name="M:IdeaBlade.Rdb.AdoHelper.AddWhereClause(System.String,System.String)">
+            <summary>
+            Combines a SQL expression with a where clause.
+            </summary>
+            <param name="pSqlBase">Base SQL expression; may or may not include 'where'</param>
+            <param name="pSqlWhere">A SQL where clause; may or may not include 'where'</param>
+            <returns>A new SQL expression</returns>
+        </member>
+        <member name="M:IdeaBlade.Rdb.AdoHelper.Select(System.String)">
+            <summary>
+            Executes and returns the result set of an SQL Query.
+            </summary>
+            <param name="pSqlSelect">The SQL select statement to execute</param>
+            <returns>
+            Returns the result set of an SQL Query as a list of object arrays.
+            One array for each record in the result set. Each array will be of the length determined 
+            by the number of columns selected.
+            </returns>    
+        </member>
+        <member name="M:IdeaBlade.Rdb.AdoHelper.Select(IdeaBlade.Rdb.ParameterizedSql)">
+            <summary>
+            Executes and returns the result set of an SQL Query.
+            </summary>
+            <param name="pParamSql">The parameterized SQL select statement to execute</param>
+            <returns>Returns the result set of an SQL Query as a list of object arrays.
+            One array for each record in the result set. Each array will be of the length determined 
+            by the number of columns selected.
+            </returns>    
+        </member>
+        <member name="M:IdeaBlade.Rdb.AdoHelper.SelectScalar(System.String)">
+            <summary>
+            Executes the query and returns the first column of the first row in the resultset returned by the query.
+            </summary>
+            <param name="pSqlSelect">SQL select statement to execute</param>
+            <returns>A scalar value</returns>
+        </member>
+        <member name="M:IdeaBlade.Rdb.AdoHelper.SelectScalar(IdeaBlade.Rdb.ParameterizedSql)">
+            <summary>
+            Executes the query and returns the first column of the first row in the resultset returned by the query.
+            </summary>
+            <param name="pParamSql">The parameterized SQL select statement to execute</param>
+            <returns>A scalar value</returns>
+        </member>
+        <member name="M:IdeaBlade.Rdb.AdoHelper.SelectFirstRow(System.String)">
+            <summary>
+            Executes the query and returns the first record of the result set returned by a SQL query.
+            </summary>
+            <param name="pSqlSelect">The SQL select statement to execute</param>
+            <returns>An array repesenting the field values of the first record returned by
+            a SQL query. The length of the array will be determined 
+            by the number of columns selected.</returns>
+        </member>
+        <member name="M:IdeaBlade.Rdb.AdoHelper.SelectFirstRow(IdeaBlade.Rdb.ParameterizedSql)">
+            <summary>
+            Executes the query and returns the first record of the result set returned by a SQL query.
+            </summary>
+            <param name="pParamSql">The Parameterized SQL select statement to execute</param>
+            <returns>An array repesenting the field values of the first record returned by
+            a SQL query. The length of the array will be determined 
+            by the number of columns selected.</returns>
+        </member>
+        <member name="M:IdeaBlade.Rdb.AdoHelper.SelectIntoDataSet(System.Data.DataSet,System.String,System.String)">
+            <summary>
+            Executes a SQL Query and returns the results in a DataTable.
+            </summary>
+            <param name="pDataSet">The DataSet in which the results of the query should be placed</param>
+            <param name="pTableName">The name of the <see cref="T:System.Data.DataTable"/> within this
+            dataset to populate</param>
+            <param name="pSqlSelect">The SQL query to execute</param>
+            <returns>A DataTable containing the results of the SQL Query</returns>
+        </member>
+        <member name="M:IdeaBlade.Rdb.AdoHelper.SelectIntoDataSet(System.Data.DataSet,System.String,IdeaBlade.Rdb.ParameterizedSql)">
+            <summary>
+            Executes a SQL Query and returns the results in a DataTable.
+            </summary>
+            <param name="pDataSet">The DataSet in which the results of the query should be placed</param>
+            <param name="pTableName">The name of the <see cref="T:System.Data.DataTable"/> within this
+            dataset to populate</param>
+            <param name="pParamSql">The parameterized SQL query to execute</param>
+            <returns>A DataTable containing the results of the SQL Query</returns>
+        </member>
+        <member name="P:IdeaBlade.Rdb.AdoHelper.RdbKey">
+            <summary>
+            Gets the <see cref="P:IdeaBlade.Rdb.AdoHelper.RdbKey"/> containing data source connection information.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.Rdb.AdoHelper.ProviderHelper">
+            <summary>
+            Gets the helper class providing SQL provider-specific functionality.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.Rdb.AdoHelper.DatabaseDriver">
+            <summary>
+            Gets the <see cref="P:IdeaBlade.Rdb.AdoHelper.DatabaseDriver"/> used by this helper.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:IdeaBlade.Rdb.AdoHelper.ConnectionString">
+            <summary>
+            Gets the ADO.NET connection string to be used for database access.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.Rdb.AdoHelper.IsOleDbConnectionString">
+            <summary>
+            Determines whether this connection string is an OleDb connection string.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.Rdb.SqlServerCeProviderHelper">
+            <summary>
+            A helper class that provides native Oracle client connectivity support via a standard interface.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.Rdb.DynamicProviderHelper">
+            <summary>
+            A helper class that provides native Oracle client connectivity support via a standard interface.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.Rdb.DynamicProviderHelper.#ctor">
+            <summary>
+            Initializes assembly information from DbProvider Factory Class.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.Rdb.DynamicProviderHelper.DeriveParameters(System.Data.IDbCommand)">
+            <summary>
+            See Oracle.DataAccess.Client.OracleCommandBuilder.DeriveParameters reference.
+            </summary>
+            <param name="pCommand"></param>
+        </member>
+        <member name="M:IdeaBlade.Rdb.DynamicProviderHelper.QualifyParameter(System.Data.IDbDataParameter,System.Data.DataRow)">
+            <summary>
+            Qualifies the properties of the IDbDataParameter using schema information to set Size.
+            </summary>
+            <param name="pParameter"></param>
+            <param name="pSchemaRow"></param>
+        </member>
+        <member name="M:IdeaBlade.Rdb.DynamicProviderHelper.LoadInfo">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:IdeaBlade.Rdb.DynamicProviderHelper.AssemblyName">
+            <summary>
+            The name of the dynamic native client .NET assembly.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.Rdb.DynamicProviderHelper.AssemblyVersion">
+            <summary>
+            The version number.  
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.Rdb.DynamicProviderHelper.AssemblyCulture">
+            <summary>
+            The culture value.  This is normally Neutral.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.Rdb.DynamicProviderHelper.AssemblyPublicKeyToken">
+            <summary>
+            The Public Key Token of the target assembly.  
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.Rdb.DynamicProviderHelper.AssemblyDisplayName">
+            <summary>
+            The DisplayName of the provider assembly (fully-qualified if possible)
+            The display format is "name, Version=xx.xx.xx.xx, Culture=xxxx, PublicKeyToken=xxxxxxxxx".
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.Rdb.DynamicProviderHelper.ProviderAssembly">
+            <summary>
+            The loaded native client assembly.  The app will discover this assembly
+            and load it dynamically based on what native client has been installed on the machine.
+            The assembly may also be assigned at runtime.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.Rdb.DynamicProviderHelper.DeriveParametersMethodInfo">
+            <summary>
+            Returns the DeriveParameters method on the loaded provider
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.Rdb.DynamicProviderHelper.ParameterType">
+            <summary>
+            Looks up the Parameter type so that is can be used to enforce QualifyParameters.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.Rdb.DynamicProviderHelper.ParameterTypeName">
+            <summary/>
+        </member>
+        <member name="F:IdeaBlade.Rdb.SqlServerCeProviderHelper.DataProviderName">
+            <summary>
+            The .NET Data Provider for MS SQL Server Compact Edition.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.Rdb.SqlServerCeProviderHelper.#ctor">
+            <summary>
+            Initializes assembly information from DbProvider Factory Class.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.Rdb.SqlServerCeProviderHelper.GetDatabaseDriver(System.String)">
+            <summary>
+            Return the <see cref="T:IdeaBlade.Rdb.DatabaseDriver"/> for a connection string.
+            This feature is only available in certain editions of DevForce.
+            </summary>
+            <param name="pConnectionString">Oracle connection string</param>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.Rdb.SqlServerCeProviderHelper.MapDbParameterType(System.Data.DbType)">
+            <summary>
+            Allows mapping of provider-specific DbParameter DbTypes to other DbTypes.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:IdeaBlade.Rdb.SqlServerCeProviderHelper.ParameterTypeName">
+            <summary/>
+        </member>
+        <member name="P:IdeaBlade.Rdb.SqlServerCeProviderHelper.DataProvider">
+            <summary>
+            Returns the Data Provider Name used by this helper.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.Rdb.SqlServerCeProviderHelper.ParameterPrefix">
+            <summary>
+            Returns the prefix used for parameters to a DbCommand.
+            </summary>
+            <value>
+            A colon (:) is prefixed to named parameters referenced in the CommandText of an OracleCommand.
+            </value>
+        </member>
+        <member name="P:IdeaBlade.Rdb.SqlServerCeProviderHelper.ParameterPlaceholder">
+            <summary>
+            Returns the placeholder character used for parameters to a DbCommand.
+            </summary>
+            <value>No placeholder is used for OracleParameters.</value>
+        </member>
+        <member name="T:IdeaBlade.Rdb.RdbValueComparer">
+            <summary>
+            Implementation of <see cref="T:System.Collections.IComparer"/> for database values. 
+            </summary>
+            <remarks>Used internally within the DevForce framework to handle DBNull issues.  
+            Two static comparators are provided.
+            </remarks>
+        </member>
+        <member name="F:IdeaBlade.Rdb.RdbValueComparer.Ascending">
+            <summary>
+            An 'ascending' comparator.
+            </summary>
+        </member>
+        <member name="F:IdeaBlade.Rdb.RdbValueComparer.Descending">
+            <summary>
+            A 'descending' comparator.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.Rdb.RdbValueComparer.Compare(System.Object,System.Object)">
+            <summary>
+            Compares two database values.
+            </summary>
+            <param name="pObject1">The first arg</param>
+            <param name="pObject2">The second arg</param>
+            <returns>
+            A 32-bit signed integer indicating the lexical relationship between the two comparands.
+            </returns>
+        </member>
+        <member name="P:IdeaBlade.Rdb.RdbValueComparer.SortDirection">
+            <summary>
+            The sort direction of this comparer.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.Rdb.OleDbProviderHelper">
+            <summary>
+            A helper class that provides OleDb connectivity support via a standard interface.
+            </summary>
+        </member>
+        <member name="F:IdeaBlade.Rdb.OleDbProviderHelper.DataProviderName">
+            <summary>
+            The .NET Framework Data Provider for OLE DB.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.Rdb.OleDbProviderHelper.IsValidConnectionString(System.String)">
+            <summary>
+            Determines if the connection string passed is a valid OLE DB connection string.
+            </summary>
+            <param name="pConnectionString"></param>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.Rdb.OleDbProviderHelper.GetDatabaseDriver(System.String)">
+            <summary>
+            Return the <see cref="T:IdeaBlade.Rdb.DatabaseDriver"/> for a connection string.
+            This feature is only available in certain editions of DevForce.
+            </summary>
+            <param name="pConnectionString">OLE-DB connection string</param>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.Rdb.OleDbProviderHelper.DeriveParameters(System.Data.IDbCommand)">
+            <summary>
+            See <see cref="M:System.Data.OleDb.OleDbCommandBuilder.DeriveParameters(System.Data.OleDb.OleDbCommand)">OleDbCommandBuilder.DeriveParameters</see>.
+            </summary>
+            <param name="pCommand"></param>
+        </member>
+        <member name="M:IdeaBlade.Rdb.OleDbProviderHelper.QualifyParameter(System.Data.IDbDataParameter,System.Data.DataRow)">
+            <summary>
+            Qualifies the properties of the IDbDataParameter using schema information to set OleDbType and Size.
+            </summary>
+            <param name="pParameter"></param>
+            <param name="pSchemaRow"></param>
+        </member>
+        <member name="P:IdeaBlade.Rdb.OleDbProviderHelper.DataProvider">
+            <summary>
+            Returns the Data Provider used by this helper.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.Rdb.OleDbProviderHelper.ParameterPrefix">
+            <summary>
+            Returns the prefix used for parameters to a DbCommand.
+            </summary>
+            <value>No prefix is used with OleDbCommand parameters.</value>
+        </member>
+        <member name="P:IdeaBlade.Rdb.OleDbProviderHelper.ParameterPlaceholder">
+            <summary>
+            Returns the placeholder character used for parameters to a DbCommand.
+            </summary>
+            <value>A question mark (?) is used as the placeholder for OleDbParameters.</value>
+        </member>
+        <member name="T:IdeaBlade.Rdb.DatabaseVendor">
+            <summary>
+            Describes the database vendor.
+            </summary>
+        </member>
+        <member name="F:IdeaBlade.Rdb.DatabaseVendor.Unknown">
+            <summary>
+            Vendor is unknown or not supported.
+            </summary>
+        </member>
+        <member name="F:IdeaBlade.Rdb.DatabaseVendor.Microsoft">
+            <summary>
+            Microsoft.
+            </summary>
+        </member>
+        <member name="F:IdeaBlade.Rdb.DatabaseVendor.Oracle">
+            <summary>
+            Oracle.
+            </summary>
+        </member>
+        <member name="F:IdeaBlade.Rdb.DatabaseVendor.IBM">
+            <summary>
+            IBM.
+            </summary>
+        </member>
+        <member name="F:IdeaBlade.Rdb.DatabaseVendor.Sybase">
+            <summary>
+            Sybase.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.Rdb.DatabaseDriverType">
+            <summary>
+            Describes the type of database provider used.
+            </summary>
+        </member>
+        <member name="F:IdeaBlade.Rdb.DatabaseDriverType.OLEDB">
+            <summary>
+            OLE-DB provider.
+            </summary>
+        </member>
+        <member name="F:IdeaBlade.Rdb.DatabaseDriverType.Native">
+            <summary>
+            Native provider.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.Rdb.DatabaseDriver">
+            <summary>
+            Describes database information for a connection string.
+            </summary>
+            <remarks>
+            Used internally by the DevForce framework.
+            </remarks>
+        </member>
+        <member name="M:IdeaBlade.Rdb.DatabaseDriver.#ctor(IdeaBlade.Rdb.AdoProviderHelper,System.String,System.String,IdeaBlade.Util.DatabaseProduct,IdeaBlade.Rdb.DatabaseVendor,System.String,IdeaBlade.Rdb.DatabaseVendor,IdeaBlade.Rdb.DatabaseDriverType,System.String)">
+            <summary>
+            Construct an instance of the DatabaseDriver for the parameters specified.
+            </summary>
+            <param name="pProviderHelper">ADO Provider helper</param>
+            <param name="pDataProvider">DataProvider string (like System.Data.OleDb)</param>
+            <param name="pConnectionString">Connection string</param>
+            <param name="pDatabaseProduct">Database product</param>
+            <param name="pDatabaseVendor">Database vendor</param>
+            <param name="pDatabaseVersion">Database version</param>
+            <param name="pDriverVendor">Driver vendor</param>
+            <param name="pDriverType">Driver type</param>
+            <param name="pDriverVersion">Driver version</param>
+        </member>
+        <member name="P:IdeaBlade.Rdb.DatabaseDriver.DataProvider">
+            <summary>
+            Gets the name of the DataProvider.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.Rdb.DatabaseDriver.DatabaseProduct">
+            <summary>
+            Gets the database product.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.Rdb.DatabaseDriver.DatabaseVendor">
+            <summary>
+            Gets the database vendor.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.Rdb.DatabaseDriver.DatabaseVersion">
+            <summary>
+            Gets the database version.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.Rdb.DatabaseDriver.DriverType">
+            <summary>
+            Gets the driver type.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.Rdb.DatabaseDriver.DriverVendor">
+            <summary>
+            Gets the driver vendor.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.Rdb.DatabaseDriver.ProviderHelper">
+            <summary>
+            Gets the AdoProviderHelper.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.Rdb.OracleProviderHelper">
+            <summary>
+            A helper class that provides Oracle connectivity support via a standard interface.
+            </summary>
+        </member>
+        <member name="F:IdeaBlade.Rdb.OracleProviderHelper.DataProviderName">
+            <summary>
+            The .NET Framework Data Provider for Oracle.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.Rdb.OracleProviderHelper.GetDatabaseDriver(System.String)">
+            <summary>
+            Return the <see cref="T:IdeaBlade.Rdb.DatabaseDriver"/> for a connection string.
+            This feature is only available in certain editions of DevForce.
+            </summary>
+            <param name="pConnectionString">Oracle connection string</param>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.Rdb.OracleProviderHelper.DeriveParameters(System.Data.IDbCommand)">
+            <summary>
+            See <see cref="M:System.Data.OracleClient.OracleCommandBuilder.DeriveParameters(System.Data.OracleClient.OracleCommand)">OracleCommandBuilder.DeriveParameters</see>.
+            </summary>
+            <param name="pCommand"></param>
+        </member>
+        <member name="M:IdeaBlade.Rdb.OracleProviderHelper.CreateDbParameter(System.Data.IDbDataParameter)">
+            <summary>
+            Creates a new provider-specific DbParameter from a provider independent IDbDataParameter.
+            </summary>
+            <remarks>
+            This overload ensure the OracleType property of the parameter is set correctly.
+            </remarks>
+            <returns>A new provider independent IDbDataParameter</returns>
+        </member>
+        <member name="M:IdeaBlade.Rdb.OracleProviderHelper.QualifyParameter(System.Data.IDbDataParameter,System.Data.DataRow)">
+            <summary>
+            Qualifies the properties of the IDbDataParameter using schema information to set Size.
+            </summary>
+            <param name="pParameter"></param>
+            <param name="pSchemaRow"></param>
+        </member>
+        <member name="P:IdeaBlade.Rdb.OracleProviderHelper.DataProvider">
+            <summary>
+            Returns the Data Provider used by this helper.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.Rdb.OracleProviderHelper.ParameterPrefix">
+            <summary>
+            Returns the prefix used for parameters to a DbCommand.
+            </summary>
+            <value>
+            A colon (:) is prefixed to named parameters referenced in the CommandText of an OracleCommand.
+            </value>
+        </member>
+        <member name="P:IdeaBlade.Rdb.OracleProviderHelper.ParameterPlaceholder">
+            <summary>
+            Returns the placeholder character used for parameters to a DbCommand.
+            </summary>
+            <value>No placeholder is used for OracleParameters.</value>
+        </member>
+        <member name="T:IdeaBlade.Rdb.OracleNativeClientProviderHelper">
+            <summary>
+            A helper class that provides native Oracle client connectivity support via a standard interface.
+            </summary>
+        </member>
+        <member name="F:IdeaBlade.Rdb.OracleNativeClientProviderHelper.DataProviderName">
+            <summary>
+            The Oracle native client data provider for .NET.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.Rdb.OracleNativeClientProviderHelper.#ctor">
+            <summary>
+            OracleNativeClientProviderHelper constructor - initialize assembly information from DbProvider Factory Class
+            </summary>
+        </member>
+        <member name="F:IdeaBlade.Rdb.OracleNativeClientProviderHelper.mOracleAssembly">
+            <summary>
+            The loaded Oracle Assembly.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.Rdb.OracleNativeClientProviderHelper.GetDatabaseDriver(System.String)">
+            <summary>
+            Return the <see cref="T:IdeaBlade.Rdb.DatabaseDriver"/> for a connection string.
+            This feature is only available in certain editions of DevForce.
+            </summary>
+            <param name="pConnectionString">Oracle connection string</param>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.Rdb.OracleNativeClientProviderHelper.DeriveParameters(System.Data.IDbCommand)">
+            <summary>
+            See Oracle.DataAccess.Client.OracleCommandBuilder.DeriveParameters reference.
+            </summary>
+            <param name="pCommand"></param>
+        </member>
+        <member name="M:IdeaBlade.Rdb.OracleNativeClientProviderHelper.MapDbParameterType(System.Data.DbType)">
+            <summary>
+            Allows mapping of provider-specific DbParameter DbTypes to other DbTypes.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.Rdb.OracleNativeClientProviderHelper.CreateDbParameter(System.Data.IDbDataParameter)">
+            <summary>
+            Creates a new provider-specific DbParameter from a provider independent IDbDataParameter.
+            </summary>
+            <remarks>
+            This overload ensure the OracleType property of the parameter is set correctly.
+            </remarks>
+            <returns>A new provider independent IDbDataParameter</returns>
+        </member>
+        <member name="M:IdeaBlade.Rdb.OracleNativeClientProviderHelper.QualifyParameter(System.Data.IDbDataParameter,System.Data.DataRow)">
+            <summary>
+            Qualifies the properties of the IDbDataParameter using schema information to set Size.
+            </summary>
+            <param name="pParameter"></param>
+            <param name="pSchemaRow"></param>
+        </member>
+        <member name="P:IdeaBlade.Rdb.OracleNativeClientProviderHelper.OracleAssemblyName">
+            <summary>
+            The name of the Oracle native client .NET assembly.
+            This normally is "Oracle.DataAccess".  You may set this value if it is different.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.Rdb.OracleNativeClientProviderHelper.OracleAssemblyVersion">
+            <summary>
+            The "Oracle.DataAccess" version number.  
+            You may set this value if it is different then the current setting.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.Rdb.OracleNativeClientProviderHelper.OracleAssemblyCulture">
+            <summary>
+            The "Oracle.DataAccess" culture number.  This is normally Neutral.
+            You may set this value if it is different then the current setting.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.Rdb.OracleNativeClientProviderHelper.OracleAssemblyPublicKeyToken">
+            <summary>
+            The "Oracle.DataAccess" Public Key Token.  
+            You may set this value if it is different then the current setting.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.Rdb.OracleNativeClientProviderHelper.OracleAssemblyDisplayName">
+            <summary>
+            The DisplayName of the Oracle.DataAccess.dll.
+            The display format is "name, Version=xx.xx.xx.xx, Culture=xx, PublicKeyToken=xx".
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.Rdb.OracleNativeClientProviderHelper.OracleAssembly">
+            <summary>
+            The loaded Oracle native client assembly.  The app will discover the
+            Oracle assembly and load it dynamically based on what Oracle client has
+            been installed on the machine.
+            The assembly may also be assigned at runtime.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.Rdb.OracleNativeClientProviderHelper.DeriveParametersMethodInfo">
+            <summary>
+            Returns the DeriveParameters method on the OracleCommand
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.Rdb.OracleNativeClientProviderHelper.OracleParameterType">
+            <summary>
+            Looks up the OracleParameter typs so that is can be used to enforce QualifyParameters as an OracleParameter.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.Rdb.OracleNativeClientProviderHelper.DataProvider">
+            <summary>
+            Returns the Data Provider Name used by this helper.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.Rdb.OracleNativeClientProviderHelper.ParameterPrefix">
+            <summary>
+            Returns the prefix used for parameters to a DbCommand.
+            </summary>
+            <value>
+            A colon (:) is prefixed to named parameters referenced in the CommandText of an OracleCommand.
+            </value>
+        </member>
+        <member name="P:IdeaBlade.Rdb.OracleNativeClientProviderHelper.ParameterPlaceholder">
+            <summary>
+            Returns the placeholder character used for parameters to a DbCommand.
+            </summary>
+            <value>No placeholder is used for OracleParameters.</value>
+        </member>
+        <member name="T:IdeaBlade.Rdb.RdbKey">
+            <summary>
+            Represents the connection information to a database.
+            </summary>
+            <remarks>Each <b>RdbKey</b> used by an application is normally specified in the
+            <b>IdeaBlade.ibconfig</b> file.  You can also create an RdbKey at run-time by 
+            implementing a custom IdeaBlade.Persistence.IDataSourceKeyResolver.
+            </remarks>
+        </member>
+        <member name="M:IdeaBlade.Rdb.RdbKey.LocateRdbKey(System.String)">
+            <summary>
+            Finds information for the specified key name in IdeaBlade.ibconfig.
+            </summary>
+            <param name="pKeyName">Key name</param>
+            <returns>The specified RdbKey or null if not found.</returns>
+        </member>
+        <member name="M:IdeaBlade.Rdb.RdbKey.#ctor(IdeaBlade.Util.IdeaBladeConfig.XmlRdbKey)">
+            <summary>
+            Construct an instance of the class from an XmlRdbKey.
+            </summary>
+            <param name="pXmlRdbKey"></param>
+        </member>
+        <member name="M:IdeaBlade.Rdb.RdbKey.#ctor(System.String,System.String)">
+            <summary>
+            Create an instance of the class for the specified connection string.
+            </summary>
+            <param name="pName">Key name</param>
+            <param name="pConnectionString">Connection string</param>
+            <remarks>
+            The DataProvider is determined from the connection string.
+            </remarks>
+        </member>
+        <member name="M:IdeaBlade.Rdb.RdbKey.#ctor(System.String,System.String,System.String)">
+            <summary>
+            Create an instance of this class for the specified data provider and connection string.
+            </summary>
+            <param name="pName">Key name</param>
+            <param name="pDataProvider">Name of the data provider</param>
+            <param name="pConnectionString">Connection string</param>
+        </member>
+        <member name="M:IdeaBlade.Rdb.RdbKey.#ctor(System.String,System.String,System.String,System.Collections.Generic.IEnumerable{System.String},System.String)">
+            <summary>
+            Create an instance of this class specifying all values.
+            </summary>
+            <param name="pName">Key name</param>
+            <param name="pDataProvider">Name of the data provider</param>
+            <param name="pConnectionString">Connection string</param>
+            <param name="pProbeAssemblyNames">List of probe assemblies</param>
+            <param name="pTag">User-defined tag value</param>
+        </member>
+        <member name="M:IdeaBlade.Rdb.RdbKey.#ctor(System.String,System.String,System.String,System.Collections.Generic.IEnumerable{System.String},System.String,IdeaBlade.Util.DatabaseProduct)">
+            <summary>
+            Create an instance of this class specifying all values.
+            </summary>
+            <param name="pName">Key name</param>
+            <param name="pDataProvider">Name of the data provider</param>
+            <param name="pConnectionString">Connection string</param>
+            <param name="pProbeAssemblyNames">List of probe assemblies</param>
+            <param name="pTag">User-defined tag value</param>
+            <param name="pDatabaseProduct">Database product</param>
+        </member>
+        <member name="M:IdeaBlade.Rdb.RdbKey.#ctor(System.String,System.String,System.String,System.Collections.Generic.IEnumerable{System.String},System.String,IdeaBlade.Util.DatabaseProduct,System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            Create an instance of this class specifying all values.
+            </summary>
+            <param name="pName">Key name</param>
+            <param name="pDataProvider">Name of the data provider</param>
+            <param name="pConnectionString">Connection string</param>
+            <param name="pProbeAssemblyNames">List of probe assemblies</param>
+            <param name="pTag">User-defined tag value</param>
+            <param name="pDatabaseProduct">Database product</param>
+            <param name="pOptions">Property bag of options for the RdbKey</param>
+            <remarks>
+            The <paramref name="pDatabaseProduct"/> is needed for OLE DB providers when DevForce
+            cannot determine the underlying database product.
+            </remarks>
+        </member>
+        <member name="M:IdeaBlade.Rdb.RdbKey.CheckConnection">
+            <summary>
+            Checks if the database connection is available.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.Rdb.RdbKey.Equals(System.Object)">
+            <summary>
+            See <see cref="M:System.Object.Equals(System.Object)"/>.
+            </summary>
+            <param name="pObject"></param>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.Rdb.RdbKey.GetHashCode">
+            <summary>
+            See <see cref="M:System.Object.GetHashCode"/>.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:IdeaBlade.Rdb.RdbKey.Name">
+            <summary>
+            Gets the name of the data source key.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.Rdb.RdbKey.DataProvider">
+            <summary>
+            Gets the name of the data provider (for example "System.Data.OleDb", "System.Data.SqlClient", "System.Data.OracleClient" etc).
+            </summary>
+            <remarks>
+            Also see the <see cref="P:IdeaBlade.Rdb.AdoProviderHelper.DataProvider"/> for known data provider names.
+            </remarks>
+        </member>
+        <member name="P:IdeaBlade.Rdb.RdbKey.ConnectionString">
+            <summary>
+            Gets the connection string for the key.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.Rdb.RdbKey.ProbeAssemblyNames">
+            <summary>
+            Gets the names of the assemblies to be probed for dynamically loaded types.
+            </summary>
+            <remarks>
+            Assemblies are probed for implementation of interfaces such as 
+            <see cref="T:IdeaBlade.Persistence.ILoginManager"/> and <see cref="T:IdeaBlade.Persistence.IIdGenerator"/>.
+            </remarks>
+        </member>
+        <member name="P:IdeaBlade.Rdb.RdbKey.Tag">
+            <summary>
+            Gets a free-form string value for the developer's use.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.Rdb.RdbKey.Options">
+            <summary>
+            Gets any options defined for the RdbKey.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.Rdb.RdbKey.UseSqlIdentityProc">
+            <summary>
+            Gets a flag indicating if a stored procedure should be used when generating IDs for SQL Server Identity columns.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.Rdb.RdbKey.AdoHelper">
+            <summary>
+            Gets the AdoHelper which can be used for database access.
+            </summary>
+            <returns></returns>
+            <remarks>
+            If you need to directly access the database represented by the <b>RdbKey</b> use this
+            property to obtain a helper class.  
+            </remarks>
+        </member>
+        <member name="P:IdeaBlade.Rdb.RdbKey.DatabaseDriver">
+            <summary>
+            Gets the database driver information for this RdbKey.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:IdeaBlade.Rdb.RdbKey.ProviderHelper">
+            <summary>
+            Gets the AdoProviderHelper for this RdbKey.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:IdeaBlade.Rdb.SqlServerProviderHelper">
+            <summary>
+            A helper class that provides SqlServer connectivity support via a standard interface.
+            </summary>
+        </member>
+        <member name="F:IdeaBlade.Rdb.SqlServerProviderHelper.DataProviderName">
+            <summary>
+            The .NET Framework Data Provider for SQL Server.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.Rdb.SqlServerProviderHelper.GetDatabaseDriver(System.String)">
+            <summary>
+            Return the <see cref="T:IdeaBlade.Rdb.DatabaseDriver"/> for a connection string.
+            </summary>
+            <param name="pConnectionString">SQL provider connection string</param>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.Rdb.SqlServerProviderHelper.DeriveParameters(System.Data.IDbCommand)">
+            <summary>
+            See <see cref="M:System.Data.SqlClient.SqlCommandBuilder.DeriveParameters(System.Data.SqlClient.SqlCommand)">SqlCommandBuilder.DeriveParameters</see>.
+            </summary>
+            <param name="pCommand"></param>
+        </member>
+        <member name="M:IdeaBlade.Rdb.SqlServerProviderHelper.QualifyParameter(System.Data.IDbDataParameter,System.Data.DataRow)">
+            <summary>
+            Qualifies the properties of the IDbDataParameter using schema information to set Size.
+            </summary>
+            <param name="pParameter"></param>
+            <param name="pSchemaRow"></param>
+        </member>
+        <member name="P:IdeaBlade.Rdb.SqlServerProviderHelper.DataProvider">
+            <summary>
+            Returns the Data Provider used by this helper.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.Rdb.SqlServerProviderHelper.ParameterPrefix">
+            <summary>
+            Returns the prefix used for parameters to a DbCommand.
+            </summary>
+            <value>
+            The @ sign is used with named parameters in the CommandText of a SqlCommand.
+            </value>
+        </member>
+        <member name="P:IdeaBlade.Rdb.SqlServerProviderHelper.ParameterPlaceholder">
+            <summary>
+            Returns the placeholder character used for parameters to a DbCommand.
+            </summary>
+            <value>No placeholder is used for SqlParameters.</value>
+        </member>
+        <member name="T:IdeaBlade.Rdb.NamespaceDoc">
+            <summary>
+              Contains classes that support low level vendor independent access to SQL databases.
+            </summary>
+        </member>
+    </members>
+</doc>

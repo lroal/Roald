@@ -1,0 +1,694 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Microsoft.Practices.Mobile.DisconnectedAgent</name>
+    </assembly>
+    <members>
+        <member name="T:Microsoft.Practices.Mobile.DisconnectedAgent.WebServiceProxyFactory">
+            <summary>
+            This class is the default concrete implementation of IProxyFactory.
+            It uses the OnlineProxyType property of the Request to know the expected type for the proxy object.
+            Additionaly it sets the URL and Credentials properties in the proxy object. 
+            To set these properties, the factory uses the EndpointCatalog to get the right address and credentials
+            for the current network name and the Request's endpoint.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Practices.Mobile.DisconnectedAgent.IProxyFactory.GetOnlineProxy(Microsoft.Practices.Mobile.DisconnectedAgent.Request,System.String)">
+            <summary>
+            This method allows you to create the proxy object in concrete implementations.
+            You can use the OnlineProxyType property of the Request to know the expected type for the proxy object.
+            The concrete proxy factory should set specific properties in the proxy object like the URL and credentials. 
+            To set the URL, the proxy factory can use the network name and the Request's endpoint.
+            </summary>
+            <param name="request">Request to be dispatched.</param>
+            <param name="networkName">Current network name.</param>
+            <returns>The proxy object.</returns>
+        </member>
+        <member name="M:Microsoft.Practices.Mobile.DisconnectedAgent.WebServiceProxyFactory.#ctor(Microsoft.Practices.Mobile.EndpointCatalog.IEndpointCatalog,Microsoft.Practices.Mobile.DisconnectedAgent.IWSCredentialService)">
+            <summary>
+            Constructor which sets the IEndpointCatalog to get credentials and address for endpoints.
+            </summary>
+            <param name="catalog">
+            	Endpoint catalog containing addresses and credentials account name for each endpoint and network names.
+            </param>
+            <param name="credentialSvc">
+            	WebService Credential Service which provides credential for a given account name.
+            </param>
+        </member>
+        <member name="M:Microsoft.Practices.Mobile.DisconnectedAgent.WebServiceProxyFactory.GetOnlineProxy(Microsoft.Practices.Mobile.DisconnectedAgent.Request,System.String)">
+            <summary>
+            This method creates the proxy object and set the URL and Credentials properties.
+            </summary>
+            <param name="request">Request to be dispatched.</param>
+            <param name="networkName">Current network name.</param>
+            <returns>The proxy object which has been created.</returns>
+        </member>
+        <member name="P:Microsoft.Practices.Mobile.DisconnectedAgent.IConnectionMonitor.CurrentConnectionPrice">
+            <summary>
+            Get the current connection price.
+            It should throw an InvalidOperationException if there is not connection.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Practices.Mobile.DisconnectedAgent.IConnectionMonitor.CurrentNetwork">
+            <summary>
+            Get the current network.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Practices.Mobile.DisconnectedAgent.IConnectionMonitor.IsConnected">
+            <summary>
+            Gets the connection state.
+            </summary>
+        </member>
+        <member name="E:Microsoft.Practices.Mobile.DisconnectedAgent.IConnectionMonitor.ConnectionStatusChanged">
+            <summary>
+            Event fired when the device gets connected.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Practices.Mobile.DisconnectedAgent.Request.#ctor">
+            <summary>
+            Default constructor.
+            It sets a new RequestId, an empty Behavior and an empty CallParameters object array.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Practices.Mobile.DisconnectedAgent.Request.Behavior">
+            <summary>
+            Offline behavior for the current request.
+            It contains several options.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Practices.Mobile.DisconnectedAgent.Request.CallParameters">
+            <summary>
+            Object array with the parameters to be used dispatching the request.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Practices.Mobile.DisconnectedAgent.Request.Endpoint">
+            <summary>
+            Logical endpoint name for the request.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Practices.Mobile.DisconnectedAgent.Request.RequestId">
+            <summary>
+            Global unique identifier for the request.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Practices.Mobile.DisconnectedAgent.Request.MethodName">
+            <summary>
+            Method to be invoked in the dispatching process.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Practices.Mobile.DisconnectedAgent.Request.OnlineProxyType">
+            <summary>
+            Type of the proxy object for dispatching.
+            It use to be the proxy class generated by Visual Studio.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Practices.Mobile.DisconnectedAgent.CommandCallback.#ctor(System.Type,System.String)">
+            <summary>
+            Constructor which creates a new command callback object for the 
+            target type and method name.
+            It's used as wrapper for callbacks in the dispatching process of requests.
+            </summary>
+            <param name="targetType">Type of the target object.</param>
+            <param name="targetMethodName">Method name to be invoked.</param>
+        </member>
+        <member name="M:Microsoft.Practices.Mobile.DisconnectedAgent.CommandCallback.Invoke(System.Object[])">
+            <summary>
+            Creates a new instance of the TargetType and invokes the method name
+            with the given parameters.
+            </summary>
+            <param name="args">List of arguments for the method.</param>
+            <returns>Result of the invoked method.</returns>
+        </member>
+        <member name="P:Microsoft.Practices.Mobile.DisconnectedAgent.CommandCallback.TargetType">
+            <summary>
+            Gets the target type.
+            This is the type for the object to be created.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Practices.Mobile.DisconnectedAgent.CommandCallback.TargetMethodName">
+            <summary>
+            Gets the method name.
+            This is the name of the method to be invoked.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Practices.Mobile.DisconnectedAgent.CallParametersSerializer.Serialize(System.Object[])">
+            <summary>
+            	Serializes a list of parameters into an XML string.
+            	It's called for persist requests into a repository.
+            </summary>
+            <param name="callParams">
+            	The list of parameters that need to be serialized for sending the message.
+            </param>
+            <returns>string containing the serialized list of parameters.</returns>
+        </member>
+        <member name="M:Microsoft.Practices.Mobile.DisconnectedAgent.CallParametersSerializer.Deserialize(System.String)">
+            <summary>
+            Deserialize a list of parameters from a string.
+            It's called to reconstruct the request from a persistance repository.
+            </summary>
+            <param name="serializedParameter">string with the serialized list of parameters.</param>
+            <returns>object array containing the parameters.</returns>
+        </member>
+        <member name="T:Microsoft.Practices.Mobile.DisconnectedAgent.ReturnCallbackException">
+            <summary>
+            Exception to wrap any exception thrown by return callback methods.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Practices.Mobile.DisconnectedAgent.ReturnCallbackException.#ctor(System.String)">
+            <summary>
+            Creates an instance of <see cref="T:Microsoft.Practices.Mobile.DisconnectedAgent.ReturnCallbackException"/>
+            </summary>
+            <param name="message">Message for the exception.</param>
+        </member>
+        <member name="M:Microsoft.Practices.Mobile.DisconnectedAgent.ReturnCallbackException.#ctor(System.String,System.Exception)">
+            <summary>
+            Creates an instance of <see cref="T:Microsoft.Practices.Mobile.DisconnectedAgent.ReturnCallbackException"/>
+            </summary>
+            <param name="message">Message for the exception.</param>
+            <param name="innerException">Exception thrown by the return callback method.</param>
+        </member>
+        <member name="T:Microsoft.Practices.Mobile.DisconnectedAgent.WebServiceRequestDispatcher">
+            <summary>
+            Default implementation of IRequestDispatcher.
+            It's responsible for request dispatching regarding max retries, callbacks methods and ReturnCallbackException.
+            It invokes the 
+            </summary>
+        </member>
+        <member name="M:Microsoft.Practices.Mobile.DisconnectedAgent.IRequestDispatcher.Dispatch(Microsoft.Practices.Mobile.DisconnectedAgent.Request,System.String)">
+            <summary>
+            This method's implementations should dispatch a request for the given network name.
+            </summary>
+            <param name="request">Request to be dispatched.</param>
+            <param name="networkName">Current network name.</param>
+            <returns>DispatchResult with the corresponding result of the dispatching process.</returns>
+        </member>
+        <member name="M:Microsoft.Practices.Mobile.DisconnectedAgent.WebServiceRequestDispatcher.#ctor(Microsoft.Practices.Mobile.EndpointCatalog.IEndpointCatalog,Microsoft.Practices.Mobile.DisconnectedAgent.IWSCredentialService)">
+            <summary>
+            This constructor sets the dispatcher to use a new WebServiceProxyFactory created using 
+            the given catalog.
+            </summary>
+            <param name="catalog">
+            	IEndpointCatalog used to create a new WebServiceProxyFactory.
+            </param>
+        </member>
+        <member name="M:Microsoft.Practices.Mobile.DisconnectedAgent.WebServiceRequestDispatcher.#ctor(Microsoft.Practices.Mobile.DisconnectedAgent.IProxyFactory)">
+            <summary>
+            This constructor sets the dispatcher to use the given onlineProxyFactory.
+            </summary>
+            <param name="onlineProxyFactory">
+            	IProxyFactory used to create proxy objects.
+            </param>
+        </member>
+        <member name="M:Microsoft.Practices.Mobile.DisconnectedAgent.WebServiceRequestDispatcher.Dispatch(Microsoft.Practices.Mobile.DisconnectedAgent.Request,System.String)">
+            <summary>
+            This method dispatches the given request by invoking the corresponding method.
+            </summary>
+            <param name="request">Request to be dispatched</param>
+            <param name="networkName">Current network name</param>
+            <returns></returns>
+        </member>
+        <member name="P:Microsoft.Practices.Mobile.DisconnectedAgent.WebServiceRequestDispatcher.OnlineProxyFactory">
+            <summary>
+            Get/Set the IProxyFactory used to create proxy objects.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Practices.Mobile.DisconnectedAgent.DispatchResultStatus">
+            <summary>
+            Valid values for the dispatching process result.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Practices.Mobile.DisconnectedAgent.CancelDispatchException">
+            <summary>
+            Exception thrown to cancel dispatching
+            </summary>
+        </member>
+        <member name="M:Microsoft.Practices.Mobile.DisconnectedAgent.CancelDispatchException.#ctor">
+            <summary>
+            Creates a new instance of the CancelDispatchException
+            </summary>
+        </member>
+        <member name="M:Microsoft.Practices.Mobile.DisconnectedAgent.CancelDispatchException.#ctor(System.String)">
+            <summary>
+            Creates a new instance of the CancelDispatchException
+            </summary>
+            <param name="message">The error message</param>
+        </member>
+        <member name="M:Microsoft.Practices.Mobile.DisconnectedAgent.CancelDispatchException.#ctor(System.String,System.Exception)">
+            <summary>
+            Creates a new instance of the CancelDispatchException
+            </summary>
+            <param name="message">The error message</param>
+            <param name="inner">The inner exception</param>
+        </member>
+        <member name="M:Microsoft.Practices.Mobile.DisconnectedAgent.IRequestQueue.Enqueue(Microsoft.Practices.Mobile.DisconnectedAgent.Request)">
+            <summary>
+            Enqueue a request.
+            </summary>
+            <param name="request">Request to be enqueued.</param>
+        </member>
+        <member name="M:Microsoft.Practices.Mobile.DisconnectedAgent.IRequestQueue.GetCount">
+            <summary>
+            Gets the total count of requests in the queue.
+            </summary>
+            <returns>Requests count in the queue.</returns>
+        </member>
+        <member name="M:Microsoft.Practices.Mobile.DisconnectedAgent.IRequestQueue.GetNextRequest">
+            <summary>
+            Gets the next request in the queue.
+            </summary>
+            <returns>The next request in the queue.</returns>
+        </member>
+        <member name="M:Microsoft.Practices.Mobile.DisconnectedAgent.IRequestQueue.GetRequests(System.String)">
+            <summary>
+            Gets an iterator with the requests that contain the given string in the tag.
+            </summary>
+            <param name="tag">String to be searched.</param>
+            <returns>IEnumerable with the matching requests.</returns>
+        </member>
+        <member name="M:Microsoft.Practices.Mobile.DisconnectedAgent.IRequestQueue.GetRequests(System.UInt32)">
+            <summary>
+            Gets an iterator with the requests that have equal or more stamps than the given value.
+            </summary>
+            <param name="stampsEqualOrMoreThan">Minimum stamps number for a request to be dispatched.</param>
+            <returns>IEnumerable with the matching requests.</returns>
+        </member>
+        <member name="M:Microsoft.Practices.Mobile.DisconnectedAgent.IRequestQueue.GetRequests">
+            <summary>
+            Gets an iterator with all the requests in the queue.
+            </summary>
+            <returns>IEnumerable with all the requests.</returns>
+        </member>
+        <member name="M:Microsoft.Practices.Mobile.DisconnectedAgent.IRequestQueue.GetRequest(System.Guid)">
+            <summary>
+            Gets a specific request by RequestId.
+            </summary>
+            <param name="requestId">Request Id to be searched.</param>
+            <returns>The matching request or null if it's not found.</returns>
+        </member>
+        <member name="M:Microsoft.Practices.Mobile.DisconnectedAgent.IRequestQueue.GetRequest(System.Guid,System.UInt32)">
+            <summary>
+            This method searches the request matching the given requestId in the queue.
+            </summary>
+            <param name="requestId">Request Id to be searched.</param>
+            <param name="stampsEqualOrMoreThan">Minimum stamps value for a request to be dispatched.</param>
+            <returns>The matching request or null if it's not found.</returns>
+        </member>
+        <member name="M:Microsoft.Practices.Mobile.DisconnectedAgent.IRequestQueue.Remove(Microsoft.Practices.Mobile.DisconnectedAgent.Request)">
+            <summary>
+            Removes a request from the queue if it exists.
+            </summary>
+            <param name="request">Request to be removed.</param>
+        </member>
+        <member name="M:Microsoft.Practices.Mobile.DisconnectedAgent.IRequestQueue.GetCountByTag(System.String)">
+            <summary>
+            Gets the count of requests in the queue with the specified tag.
+            </summary>
+            <param name="tag">Request tag</param>
+            <returns>Requests count in the queue.</returns>
+        </member>
+        <member name="E:Microsoft.Practices.Mobile.DisconnectedAgent.IRequestQueue.RequestEnqueued">
+            <summary>
+            Event fired when a request is enqueued in the queue.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Practices.Mobile.DisconnectedAgent.Properties.Resources">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Practices.Mobile.DisconnectedAgent.Properties.Resources.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Practices.Mobile.DisconnectedAgent.Properties.Resources.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Practices.Mobile.DisconnectedAgent.Properties.Resources.ExceptionOnReturnCallback">
+            <summary>
+              Looks up a localized string similar to Exception thrown on return callback: .
+            </summary>
+        </member>
+        <member name="P:Microsoft.Practices.Mobile.DisconnectedAgent.Properties.Resources.PriceNotConnection">
+            <summary>
+              Looks up a localized string similar to Cannot get current connection price if the device is not connected..
+            </summary>
+        </member>
+        <member name="T:Microsoft.Practices.Mobile.DisconnectedAgent.ConnectionMonitorAdapter">
+            <summary>
+            Adapter that implements the IConnectionMonitor interface required by the
+            Disconnected Agent Block using the ConnectionMonitor block.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Practices.Mobile.DisconnectedAgent.ConnectionMonitorAdapter.#ctor(Microsoft.Practices.Mobile.ConnectionMonitor.ConnectionMonitor)">
+            <summary>
+            Constructor which creates a new adapter using the given ConnectionMonitor.
+            </summary>
+            <param name="monitor">ConnectionMonitor to be engaged.</param>
+        </member>
+        <member name="M:Microsoft.Practices.Mobile.DisconnectedAgent.ConnectionMonitorAdapter.Dispose">
+            <summary>
+            This method disposes adapter used resources.
+            </summary>
+        </member>
+        <member name="E:Microsoft.Practices.Mobile.DisconnectedAgent.ConnectionMonitorAdapter.ConnectionStatusChanged">
+            <summary>
+            Fired when the ConnectionMonitor gets connection.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Practices.Mobile.DisconnectedAgent.ConnectionMonitorAdapter.CurrentConnectionPrice">
+            <summary>
+            This method gets the current connection price from the ConnectionMonitor.
+            </summary>
+            <exception cref="T:System.InvalidOperationException">
+            If there is not active connection this method throws an InvalidOperationException.
+            </exception>
+        </member>
+        <member name="P:Microsoft.Practices.Mobile.DisconnectedAgent.ConnectionMonitorAdapter.CurrentNetwork">
+            <summary>
+            Gets the current network name.
+            If there is not active network returns null.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Practices.Mobile.DisconnectedAgent.ConnectionMonitorAdapter.IsConnected">
+            <summary>
+            Gets the connection state.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Practices.Mobile.DisconnectedAgent.CallParameters">
+            <summary>
+            Helper class to build call parameters array.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Practices.Mobile.DisconnectedAgent.CallParameters.ToArray(System.Object[])">
+            <summary>
+            Helper method which builds an object array with a list of arguments.
+            </summary>
+            <param name="arguments">List of arguments.</param>
+            <returns>object array with the list of arguments.</returns>
+        </member>
+        <member name="T:Microsoft.Practices.Mobile.DisconnectedAgent.RequestEnqueuedEventArgs">
+            <summary>
+            These EventArgs are used when a request has been enqueued
+            </summary>
+        </member>
+        <member name="M:Microsoft.Practices.Mobile.DisconnectedAgent.RequestEnqueuedEventArgs.#ctor(Microsoft.Practices.Mobile.DisconnectedAgent.Request)">
+            <summary>
+            Creates an instance of the RequestEnqueuedEventArgs
+            </summary>
+            <param name="request"></param>
+        </member>
+        <member name="P:Microsoft.Practices.Mobile.DisconnectedAgent.RequestEnqueuedEventArgs.Request">
+            <summary>
+            The request that has been enqueued
+            </summary>
+        </member>
+        <member name="T:Microsoft.Practices.Mobile.DisconnectedAgent.OnExceptionAction">
+            <summary>
+            Action to take when an exception occurs during the dispatch of a request.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Practices.Mobile.DisconnectedAgent.Guard">
+            <summary>
+            Common guard clauses
+            </summary>
+        </member>
+        <member name="M:Microsoft.Practices.Mobile.DisconnectedAgent.Guard.ArgumentNotNull(System.Object,System.String)">
+            <summary>
+            Checks an argument to ensure it isn't null
+            </summary>
+            <param name="argumentValue">The argument value to check.</param>
+            <param name="argumentName">The name of the argument.</param>
+        </member>
+        <member name="M:Microsoft.Practices.Mobile.DisconnectedAgent.RequestManager.Initialize(Microsoft.Practices.Mobile.DisconnectedAgent.IRequestQueue,Microsoft.Practices.Mobile.DisconnectedAgent.IRequestQueue,Microsoft.Practices.Mobile.DisconnectedAgent.IConnectionMonitor,Microsoft.Practices.Mobile.DisconnectedAgent.IRequestDispatcher,Microsoft.Practices.Mobile.EndpointCatalog.IEndpointCatalog)">
+            <summary>
+            This method initializes the RequestManager for request dispatching with all the configurable elements.
+            </summary>
+            <param name="requestQueue">Queue for the pending requests.</param>
+            <param name="deadLetterQueue">Queue for the failures.</param>
+            <param name="connectionMonitor">IConnectionMonitor for connectivity events and info.</param>
+            <param name="requestDispatcher">Dispatcher to be used by the manager.</param>
+            <param name="endpointCatalog">Catalog to get the Endpoint especific information for the dispatching.</param>
+        </member>
+        <member name="M:Microsoft.Practices.Mobile.DisconnectedAgent.RequestManager.Initialize(Microsoft.Practices.Mobile.EndpointCatalog.IEndpointCatalog,Microsoft.Practices.Mobile.DisconnectedAgent.IConnectionMonitor,Microsoft.Practices.Mobile.DataAccess.Database)">
+            <summary>
+            This method initializes the RequestManager in a simpler way, providing only the minimum set of elements required.
+            It creates a default WebServiceRequestDispatcher and "Requests" queue for the pending queue and "Dlq" queue
+            for failures in the given database.
+            </summary>
+            <param name="catalog">Catalog to get the Endpoint especific information for the dispatching.</param>
+            <param name="connectionMonitor">IConnectionMonitor for connectivity events an state info.</param>
+            <param name="queuesDatabase">Database to create the queues.</param>
+        </member>
+        <member name="M:Microsoft.Practices.Mobile.DisconnectedAgent.RequestManager.StartAutomaticDispatch">
+            <summary>
+            Starts the automatic dispatch regarding connectivity events and enquing.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Practices.Mobile.DisconnectedAgent.RequestManager.StopAutomaticDispatch">
+            <summary>
+            Stops the automatic dispatch.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Practices.Mobile.DisconnectedAgent.RequestManager.DispatchAllPendingRequestsForConnection">
+            <summary>
+            Dispatch all the requests in the pending queue having an endpoint valid address 
+            regardless of stamp's value and connectivity price.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Practices.Mobile.DisconnectedAgent.RequestManager.DispatchPendingRequestsByTag(System.String)">
+            <summary>
+            Dispatch all the requests in the pending queue that match (like) the given tag 
+            having endpoint valid address regardless of stamp's value.
+            </summary>
+            <param name="tag"></param>
+        </member>
+        <member name="M:Microsoft.Practices.Mobile.DisconnectedAgent.RequestManager.DispatchAllPendingRequests">
+            <summary>
+            Dispatch all the requests in the pending queue having endpoint valid address regardless of stamp's value.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Practices.Mobile.DisconnectedAgent.RequestManager.DispatchRequest(Microsoft.Practices.Mobile.DisconnectedAgent.Request)">
+            <summary>
+            Dispatch the request if it exists in the pending queue having an endpoint valid address 
+            regardless of stamp's value.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Practices.Mobile.DisconnectedAgent.RequestManager.Join(System.Int32)">
+            <summary>
+            Wait for the dispatch inner thread finish.
+            </summary>
+            <param name="timeout">Milliseconds to wait.</param>
+            <returns>true if the thread has finished before timeout, otherwise false.</returns>
+        </member>
+        <member name="M:Microsoft.Practices.Mobile.DisconnectedAgent.RequestManager.Join">
+            <summary>
+            Wait for the dispatch inner thread finish.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Practices.Mobile.DisconnectedAgent.RequestManager.Stop">
+            <summary>
+            Stops the dispatching thread.
+            </summary>
+        </member>
+        <member name="E:Microsoft.Practices.Mobile.DisconnectedAgent.RequestManager.RequestDispatched">
+            <summary>
+            Event fired when the RequestManager has tried to dispatch a Request.
+            It could be a successful, failing or expired dispatch.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Practices.Mobile.DisconnectedAgent.RequestManager.RequestQueue">
+            <summary>
+            Gets the pending requests queue.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Practices.Mobile.DisconnectedAgent.RequestManager.DeadLetterQueue">
+            <summary>
+            Gets the failed requests queue.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Practices.Mobile.DisconnectedAgent.RequestManager.Running">
+            <summary>
+            Gets the automatic dispatch running state of the RequestManager.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Practices.Mobile.DisconnectedAgent.RequestManager.Instance">
+            <summary>
+            Gets the single instance for the RequestManager.
+            If there is not an instance it creates a new one and returns it.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Practices.Mobile.DisconnectedAgent.RequestDispatchedEventArgs.#ctor(Microsoft.Practices.Mobile.DisconnectedAgent.Request,Microsoft.Practices.Mobile.DisconnectedAgent.DispatchResultStatus,System.Exception)">
+            <summary>
+            It creates an RequestDispatchedEventArgs for the given request and result.
+            It is used by the RequestDispatched event, fired during the dispatch process.
+            </summary>
+            <param name="request">Request tried to be dispatched.</param>
+            <param name="result">Dispatch process result.</param>
+            <param name="exception">The dispatch exception if dispatch failed</param>
+        </member>
+        <member name="P:Microsoft.Practices.Mobile.DisconnectedAgent.RequestDispatchedEventArgs.Request">
+            <summary>
+            Request tried to be dispatched.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Practices.Mobile.DisconnectedAgent.RequestDispatchedEventArgs.Result">
+            <summary>
+            Result of the dispatch process.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Practices.Mobile.DisconnectedAgent.RequestDispatchedEventArgs.Exception">
+            <summary>
+            Dispatch Exception if an exception occured
+            </summary>
+        </member>
+        <member name="P:Microsoft.Practices.Mobile.DisconnectedAgent.OfflineBehavior.ExceptionCallback">
+            <summary>
+            Callback to be invoked if an Exception is thrown during the dispatching process.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Practices.Mobile.DisconnectedAgent.OfflineBehavior.Expiration">
+            <summary>
+            Maximum datetime to dispatch a request. If the request is expired, it will not be dispatched and
+            a RequestDispatched event will be fired with the DispatchResult.Expired result in the argument.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Practices.Mobile.DisconnectedAgent.OfflineBehavior.QueuedDate">
+            <summary>
+            Datetime when the request has been enqueued.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Practices.Mobile.DisconnectedAgent.OfflineBehavior.MaxRetries">
+            <summary>
+            Maximum number of dispatching retries, before to move a failing dispatch request in the dead letter queue.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Practices.Mobile.DisconnectedAgent.OfflineBehavior.ReturnCallback">
+            <summary>
+            Callback to be invoked when a request is dispatched succesfully. 
+            </summary>
+        </member>
+        <member name="P:Microsoft.Practices.Mobile.DisconnectedAgent.OfflineBehavior.Stamps">
+            <summary>
+            Maximum connectivity price to be dispatched.
+            The request will be dispatched automatically if the connectivity price
+            is equal or lower than this value.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Practices.Mobile.DisconnectedAgent.OfflineBehavior.Tag">
+            <summary>
+            String to provide a customizable clasification for the request.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Practices.Mobile.DisconnectedAgent.OfflineBehavior.MessageId">
+            <summary>
+            Message Id
+            </summary>
+        </member>
+        <member name="M:Microsoft.Practices.Mobile.DisconnectedAgent.Command.#ctor(System.Object,System.String,System.Object[])">
+            <summary>
+            Command constructor which creates a new command for the corresponding object, method name and
+            with the given arguments.
+            It's used from the RequestManager class to implement a command queue.
+            </summary>
+            <param name="target">Target object for the command.</param>
+            <param name="commandName">Method name to be invoked.</param>
+            <param name="args">Array of parameters to be used during the invoke.</param>
+        </member>
+        <member name="M:Microsoft.Practices.Mobile.DisconnectedAgent.Command.Execute">
+            <summary>
+            This method invokes the method with the command name using the parameteres.
+            </summary>
+            <returns>The result value of the method.</returns>
+        </member>
+        <member name="P:Microsoft.Practices.Mobile.DisconnectedAgent.Command.CommandName">
+            <summary>
+            Getter for the command method name to invoke.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Practices.Mobile.DisconnectedAgent.DatabaseRequestQueue.#ctor(Microsoft.Practices.Mobile.DataAccess.Database)">
+            <summary>
+            Constructor which creates a DatabaseRequestQueue that is persisted in the given database.
+            It uses the tablename "Requests" for persist the requests.
+            </summary>
+            <param name="database">Database for the queue persistance.</param>
+        </member>
+        <member name="M:Microsoft.Practices.Mobile.DisconnectedAgent.DatabaseRequestQueue.#ctor(Microsoft.Practices.Mobile.DataAccess.Database,System.String)">
+            <summary>
+            Constructor which creates a DatabaseRequestQueue that is persisted in the given table name and database.
+            </summary>
+            <param name="database">Database for the queue persistance.</param>
+            <param name="tableName">Customized tablename to persist the requests.</param>
+        </member>
+        <member name="M:Microsoft.Practices.Mobile.DisconnectedAgent.DatabaseRequestQueue.Enqueue(Microsoft.Practices.Mobile.DisconnectedAgent.Request)">
+            <summary>
+            This method is used to enqueue a request in the queue.
+            </summary>
+            <param name="request">Request to be enqueued.</param>
+        </member>
+        <member name="M:Microsoft.Practices.Mobile.DisconnectedAgent.DatabaseRequestQueue.GetCount">
+            <summary>
+            Gets the total count of requests in the queue.
+            </summary>
+            <returns>Count of requests in the queue.</returns>
+        </member>
+        <member name="M:Microsoft.Practices.Mobile.DisconnectedAgent.DatabaseRequestQueue.GetNextRequest">
+            <summary>
+            Gets the next request in the queue.
+            </summary>
+            <returns>The next request in the queue.</returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:Microsoft.Practices.Mobile.DisconnectedAgent.DatabaseRequestQueue.GetRequests(System.String)" -->
+        <member name="M:Microsoft.Practices.Mobile.DisconnectedAgent.DatabaseRequestQueue.GetRequests(System.UInt32)">
+            <summary>
+            This method creates an iterator for the requests in the queue that have 
+            equal or more stamps than the given value.
+            </summary>
+            <param name="stampsEqualOrMoreThan">Minimum stamps value for a request to be dispatched.</param>
+            <returns>IEnumerable with the matching requests.</returns>
+        </member>
+        <member name="M:Microsoft.Practices.Mobile.DisconnectedAgent.DatabaseRequestQueue.GetRequests">
+            <summary>
+            This method creates an iterator for all the requests in the queue.
+            </summary>
+            <returns>IEnumerable with all the requests.</returns>
+        </member>
+        <member name="M:Microsoft.Practices.Mobile.DisconnectedAgent.DatabaseRequestQueue.GetRequest(System.Guid)">
+            <summary>
+            This method searches the request matching the given requestId in the queue.
+            </summary>
+            <param name="requestId">Request Id to be searched.</param>
+            <returns>The matching request or null if it's not found.</returns>
+        </member>
+        <member name="M:Microsoft.Practices.Mobile.DisconnectedAgent.DatabaseRequestQueue.GetRequest(System.Guid,System.UInt32)">
+            <summary>
+            This method searches the request matching the given requestId in the queue.
+            </summary>
+            <param name="requestId">Request Id to be searched.</param>
+            <param name="stampsEqualOrMoreThan">Minimum stamps value for a request to be dispatched.</param>
+            <returns>The matching request or null if it's not found.</returns>
+        </member>
+        <member name="M:Microsoft.Practices.Mobile.DisconnectedAgent.DatabaseRequestQueue.Remove(Microsoft.Practices.Mobile.DisconnectedAgent.Request)">
+            <summary>
+            This method removes an specific request from the queue.
+            If the request doesn't exist in the queue it doesn't do anything.
+            </summary>
+            <param name="request">Request to be removed from the queue.</param>
+        </member>
+        <member name="M:Microsoft.Practices.Mobile.DisconnectedAgent.DatabaseRequestQueue.GetCountByTag(System.String)">
+            <summary>
+            Gets the count of requests in the queue with the specified tag.
+            </summary>
+            <param name="tag">Request tag</param>
+            <returns>Requests count in the queue.</returns>
+        </member>
+        <member name="E:Microsoft.Practices.Mobile.DisconnectedAgent.DatabaseRequestQueue.RequestEnqueued">
+            <summary>
+            Event fired when a request is enqueued.
+            </summary>
+        </member>
+    </members>
+</doc>

@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>IdeaBlade.UI.WinForms.Deployment</name>
+    </assembly>
+    <members>
+        <member name="T:IdeaBlade.UI.WinForms.Deployment.AppUpdater">
+            <summary>
+              The AppUpdater class is responsible for versioning and updating a
+              client application over the web.
+            </summary>
+            <remarks>
+              Call Update() to check for a new version and update the client application.
+              The IdeaBlade help file explains in detail the steps required for
+              deploying a new version of the application.
+            </remarks>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.Deployment.AppUpdater.Update">
+            <summary>
+              Checks for a new version and prompts the user to update if found.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.Deployment.AppUpdater.Update(System.Boolean)">
+            <summary>
+              Checks for a new version and updates the application if found.
+            </summary>
+            <param name="pSilentMode">
+              If false, prompts the user whether or not to update.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.Deployment.AppUpdater.NewVersionAvailable">
+            <summary>
+              Returns true if a new version is available.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.UI.WinForms.Deployment.NamespaceDoc">
+            <summary>
+              Provides a class that manages distributed application updating and versioning.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.Deployment.DownloadingDialog.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.Deployment.DownloadingDialog.InitializeComponent">
+            <summary>
+            Required method for Designer support, do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="F:IdeaBlade.UI.WinForms.Deployment.DownloadingDialog.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+    </members>
+</doc>

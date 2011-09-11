@@ -1,0 +1,696 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>IdeaBlade.Persistence.Wcf</name>
+    </assembly>
+    <members>
+        <member name="T:IdeaBlade.Persistence.Wcf.NotificationServiceManager">
+            <summary>
+            Internal use only. Manages publisher and subscriber communications for the Notification Service.
+            </summary>
+            <remarks>
+            One NotificationManager is created per PersistenceServer.
+            It does the actual Subscribe/Unsubscribe logic for the INotificationService contract
+            implemented by the PersistenceServer, and implements the INotificationManager
+            to manage threads started to run server methods.
+            <para>
+            Unlike the PersistenceServer, the NotificationManager is "stateful" in that it keeps a list
+            of subscribers and a list of running "services".
+            </para>
+            </remarks>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Wcf.NotificationServiceManager.#ctor(IdeaBlade.Persistence.IPersistenceServer)">
+            <summary>
+            Construct a NotificationServiceManager.
+            </summary>
+            <param name="pPersistenceServer"></param>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Wcf.NotificationServiceManager.Subscribe(IdeaBlade.Persistence.Wcf.INotificationServiceCallback,IdeaBlade.Persistence.SessionBundle,System.String,System.String,System.Object,System.Object[])">
+            <summary>
+            Handle client subscription.
+            </summary>
+            <remarks>
+            We currently always start up a thread for the requested server method upon the first subscription.
+            Although pArgs are passed along here, they are NOT actually passed into the server method right now,
+            because they're presumed to be client-specific and the server method runs for all clients.
+            The client Args are available to the service using the GetSubscribers() call.
+            </remarks>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Wcf.NotificationServiceManager.Unsubscribe(IdeaBlade.Persistence.Wcf.INotificationServiceCallback,System.Object)">
+            <summary>
+            Remove subscribed user from a delegate list.
+            </summary>
+            <remarks>
+            Note that we currently use a single callback channel on the client, regardless of how many
+            services they register for, therefore we treat the callback + token as the unique subscription.
+            </remarks>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Wcf.NotificationServiceManager.Send(System.Guid,System.Object[])">
+            <summary>
+            Called by a <see cref="T:IdeaBlade.Persistence.ServerNotifyDelegate"/> implementation to send information to its subscribers.
+            </summary>
+            <param name="pServiceKey">Key identifying the service</param>
+            <param name="pServerArgs">Data to be passed to subscribers</param>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Wcf.NotificationServiceManager.Send(System.Guid,IdeaBlade.Persistence.NotificationSubscriber,System.Object[])">
+            <summary>
+            Called by a <see cref="T:IdeaBlade.Persistence.ServerNotifyDelegate"/> implementation to send information to a specific subscriber.
+            </summary>
+            <param name="pServiceKey">Key identifying the service</param>
+            <param name="pSubscriber">Subscriber to be notified</param>
+            <param name="pServerArgs">Data to be passed to the subscriber</param>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Wcf.NotificationServiceManager.GetSubscribers(System.Guid)">
+            <summary>
+            Called by a <see cref="T:IdeaBlade.Persistence.ServerNotifyDelegate"/> implementation to retrieve a list of current subscribers.
+            </summary>
+            <param name="pServiceKey">Key identifying the service</param>
+            <returns>List of subscribers</returns>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Wcf.NotificationServiceManager.TimedCleanup(System.Object)">
+            <summary>
+             Used to periodically check if subscribers are still present.  We ping each, asynchronously,
+            to determine this.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.Persistence.Wcf.NotificationServiceManager.ServerMethodInfo">
+            <summary>
+            Information about a ServerDelegate.
+            </summary>
+            <remarks>
+            Each Server Delegate is assigned a key, and will have a thread started for it by 
+            the thread helper.  It also has a list of subscribers.
+            </remarks>
+        </member>
+        <member name="T:IdeaBlade.Persistence.Wcf.NotificationServiceManager.SubscriberCallbackInfo">
+            <summary>
+            Information about a subscriber.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.Persistence.Wcf.WcfPersistenceServerProxy">
+            <summary>
+            This class supports the DevForce Framework infrastructure 
+            and is not intended to be used directly from your code. 
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Wcf.WcfPersistenceServerProxy.Reconnect">
+            <summary>
+            Connect or reconnect to a PersistenceServer.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Wcf.WcfPersistenceServerProxy.Disconnect">
+            <summary>
+            Disconnect from a PersistenceServer.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Wcf.WcfPersistenceServerProxy.GetPersistenceServer">
+            <summary>
+            Get a local P-Server or a proxy to the remote service.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:IdeaBlade.Persistence.Wcf.WcfPersistenceServerProxy.CallbackManager">
+            <summary>
+            Instantiate the callback manager only if needed.  CallbackManager manages client subscriptions
+            to NotificationService.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.Persistence.Wcf.NotificationThreadHelper">
+            <summary>
+            Internal use only. Responsible for managing the thread the ServerNotifyDelegate code runs on. 
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Wcf.NotificationThreadHelper.#ctor(System.Guid,IdeaBlade.Persistence.INotificationManager,IdeaBlade.Persistence.ServerNotifyDelegate,IdeaBlade.Persistence.PersistenceManager,System.Object[])">
+            <summary>
+            Construct an instance of this class.
+            </summary>
+            <param name="pServiceId"></param>
+            <param name="pManager"></param>
+            <param name="pDelegate"></param>
+            <param name="pPersistenceManager"></param>
+            <param name="pArgs"></param>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Wcf.NotificationThreadHelper.StartThread">
+            <summary>
+            Start a thread running the server method.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Wcf.NotificationThreadHelper.StopThread">
+            <summary>
+            Stop the thread.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Wcf.NotificationThreadHelper.RunServerMethod">
+            <summary>
+            Method started on a separate thread - runs the server delegate.
+            </summary>
+        </member>
+        <member name="E:IdeaBlade.Persistence.Wcf.NotificationThreadHelper.NotificationThreadCompleted">
+            <summary>
+            Fired when the thread completes.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.Persistence.Wcf.NotificationThreadCompletedEventArgs">
+            <summary>
+            Arguments to the <see cref="E:NotificationThreadCompleted"/> event.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Wcf.NotificationThreadCompletedEventArgs.#ctor(System.Guid)">
+            <summary>
+            Initialize a new instance of this class.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.Persistence.Wcf.NotificationThreadCompletedEventArgs.ServiceId">
+            <summary>
+            Gets the assigned service ID.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.Persistence.Wcf.IWcfPersistenceService">
+            <summary>
+            Service contract for the Persistence Service.
+            </summary>
+            <remarks>
+            Knowledge of this interface will only be needed in the event
+            that the existing PersistenceService needs to be extended.
+            </remarks>  
+        </member>
+        <member name="M:IdeaBlade.Persistence.Wcf.IWcfPersistenceService.GetPersistenceServerName(System.String)">
+            <summary>
+            Return the service name of an instance of a PersistenceServer service.
+            </summary>
+            <param name="pDataSourceExtensionName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Wcf.IWcfPersistenceService.Ping">
+            <summary>
+            Determines whether the PersistenceService is responding.
+            </summary>
+            <returns>true if awake; otherwise raises exception
+            (this method should never return false) </returns>
+        </member>
+        <member name="T:IdeaBlade.Persistence.Wcf.WcfPersistenceServer">
+            <summary>
+            Internal use only.  DevForce Business Object Server.
+            </summary>
+            <remarks>
+            One instance of this class will reside on the Business Object Server
+            for each unique data source extension key and will communicate with the PersistenceManager(s) on each client machine.
+            Knowledge of this class is only needed in the event that the existing query and persistence mechanisms 
+            need to be extended.
+            <para>
+            The <b>WcfPersistenceServer</b> uses Windows Communication Foundation for distributed communications.
+            A WcfPersistenceServer is configured using the <see cref="T:IdeaBlade.Util.IdeaBladeConfig.RemotingInfo"/>
+            defined in <b>IdeaBlade.ibconfig</b> or using an app.config (web.config in IIS) file.
+            Each WcfPersistenceServer service is started by the <see cref="T:IdeaBlade.Persistence.Wcf.WcfPersistenceService"/> as needed.
+            </para>
+            <para>
+            If configuring the service from an app.config, use a service name consisting of the name
+            "PersistenceServer" suffixed with an underscore and the data source extension.
+            </para>
+            <para>
+            If the service is configured from the IdeaBlade.ibconfig, the transport indicated by the
+            <see cref="P:IdeaBlade.Util.IdeaBladeConfig.RemotingInfo.RemoteBaseUrl"/> is used, 
+            along with compressed binary encoding using the 
+            <see cref="T:IdeaBlade.Util.Wcf.Extensions.GZipMessageEncodingBindingElement"/>.  Only one service
+            endpoint is created.  If you wish to customize the endpoint, or add additional endpoints, then
+            you will need to use the app.config to configure the service.
+            </para>
+            </remarks>
+        </member>
+        <member name="T:IdeaBlade.Persistence.Wcf.IWcfPersistenceServer">
+            <summary>
+            Service contract for a Persistence Server. 
+            </summary>
+            <remarks>
+            Knowledge of this interface will only be needed in the event
+            that the existing PersistenceServer needs to be extended.
+            </remarks>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Wcf.IWcfPersistenceServer.Login(IdeaBlade.Persistence.ILoginCredential)">
+            <summary>
+            Used to validate client credentials and identify the session.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Wcf.IWcfPersistenceServer.Logout(IdeaBlade.Persistence.SessionBundle)">
+            <summary>
+            Used to log off a given client session.
+            </summary>
+            <param name="pSessionBundle"></param>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Wcf.IWcfPersistenceServer.CheckDataSourceKey(System.String)">
+            <summary>
+            Returns the status of a given <see cref="T:IdeaBlade.Util.IDataSourceKey"/>.
+            </summary>
+            <param name="pDataSourceKeyName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Wcf.IWcfPersistenceServer.Fetch(IdeaBlade.Persistence.SessionBundle,IdeaBlade.Persistence.IEntityQuery)">
+            <summary>
+            Returns a (usually single table) dataset that contains the result of the EntityQuery.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Wcf.IWcfPersistenceServer.SaveChanges(IdeaBlade.Persistence.SessionBundle,IdeaBlade.Persistence.EntityDataSetSurrogate,IdeaBlade.Persistence.SaveOptions)">
+            <summary>
+            Saves any changes to a DataSet back to the data source, with the save options specified.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Wcf.IWcfPersistenceServer.GetRealIdMap(System.Collections.Generic.IDictionary{IdeaBlade.Util.IDataSourceKey,IdeaBlade.Persistence.UniqueIdCollection})">
+            <summary>
+            Returns a mapping of temporary to real IDs, called before data is 
+            saved to the data source.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Wcf.IWcfPersistenceServer.InvokeServerMethod(IdeaBlade.Persistence.SessionBundle,System.Type,System.String,System.String,System.Object[])">
+            <summary>
+            Invokes a static method for execution on the server.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.Persistence.Wcf.INotificationService">
+            <summary>
+            Service contract supporting client subscriptions to server events.
+            </summary>
+            <remarks>
+            </remarks>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Wcf.INotificationService.Subscribe(IdeaBlade.Persistence.Wcf.INotificationServiceCallback,IdeaBlade.Persistence.SessionBundle,System.String,System.String,System.Object,System.Object[])">
+            <summary>
+            Internal use only - Subscribe to a notification server.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Wcf.INotificationService.Unsubscribe(IdeaBlade.Persistence.Wcf.INotificationServiceCallback,System.Object)">
+            <summary>
+            Internal use only - Unsubscribe from a notification server.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Wcf.WcfPersistenceServer.#ctor(System.String)">
+            <summary>
+            Construct a PersistenceServer for the specified data source extension.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Wcf.WcfPersistenceServer.Login(IdeaBlade.Persistence.ILoginCredential)">
+            <summary>
+            Validate a user's credentials.
+            </summary>
+            <param name="pCredential">Login credential</param>
+            <returns>Encrypted session bundle</returns>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Wcf.WcfPersistenceServer.Logout(IdeaBlade.Persistence.SessionBundle)">
+            <summary>
+            Logs a user off, discarding his session information.
+            </summary>
+            <param name="pBundle"></param>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Wcf.WcfPersistenceServer.CheckDataSourceKey(System.String)">
+            <summary>
+            Resolves the data source key and determines the connection status.
+            </summary>
+            <param name="pDataSourceKeyName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Wcf.WcfPersistenceServer.Fetch(IdeaBlade.Persistence.SessionBundle,IdeaBlade.Persistence.IEntityQuery)">
+            <summary>
+            Return a dataset that contains the results of a single EntityQuery. 
+            </summary>
+            <param name="pSessionBundle"></param>
+            <param name="pEntityQuery"></param>
+            <returns></returns>
+            <remarks>
+            This dataset may contain more than one datatable if the EntityQuery contained a subselect.
+            </remarks>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Wcf.WcfPersistenceServer.SaveChanges(IdeaBlade.Persistence.SessionBundle,IdeaBlade.Persistence.EntityDataSetSurrogate,IdeaBlade.Persistence.SaveOptions)">
+            <summary>
+            Saves the changes made to a DataSet into the backend data source.
+            </summary>
+            <param name="pSessionBundle">Encrypted session bundle identifies the client</param>
+            <param name="pEntityDataSetSurrogate">Data set with changes</param>
+            <param name="pSaveOptions">Save options</param>
+            <returns></returns>
+            <remarks>
+            The <b>TransactionManager</b> indicated by settings in the <b>IdeaBlade.ibconfig</b>
+            file is used to perform the save processing.
+            </remarks>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Wcf.WcfPersistenceServer.GetRealIdMap(System.Collections.Generic.IDictionary{IdeaBlade.Util.IDataSourceKey,IdeaBlade.Persistence.UniqueIdCollection})">
+            <summary>
+            Build and return a dictionary that maps temporary ids to real ids.
+            </summary>
+            <param name="pUniqueIdCollectionMap"></param>
+            <returns></returns>
+            <remarks>
+            This will call the <see cref="M:IdeaBlade.Persistence.IIdGenerator.GetRealIdMap(IdeaBlade.Persistence.UniqueIdCollection,IdeaBlade.Util.IDataSourceKey)"/> method in your custom
+            <see cref="T:IdeaBlade.Persistence.IIdGenerator"/> implementation.
+            </remarks>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Wcf.WcfPersistenceServer.InvokeServerMethod(IdeaBlade.Persistence.SessionBundle,System.Type,System.String,System.String,System.Object[])">
+            <summary>
+            Invokes a static method for execution on the server.
+            </summary>
+            <param name="pSessionBundle">Encrypted session bundle identifying the client</param>
+            /// <param name="pDelegateType"></param>
+            <param name="pTypeName">Assembly-qualified type name</param>
+            <param name="pMethodName">Method to be called</param>
+            <param name="pArgs">Arguments to the method</param>
+            <returns>Any serializable object may be returned</returns>
+            <exception cref="T:System.Security.SecurityException">The method must be marked with the <see cref="T:IdeaBlade.Persistence.AllowRpcAttribute"/></exception>
+            <remarks>
+            Called by the corresponding <see cref="T:IdeaBlade.Persistence.PersistenceManager"/> method.
+            </remarks>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Wcf.WcfPersistenceServer.Subscribe(IdeaBlade.Persistence.Wcf.INotificationServiceCallback,IdeaBlade.Persistence.SessionBundle,System.String,System.String,System.Object,System.Object[])">
+            <summary>
+            Process a client subscription.
+            </summary>
+            <param name="pCallback">Client callback</param>
+            <param name="pSessionBundle">Session bundle</param>
+            <param name="pServerTypeName">Type name containing server delegate method</param>
+            <param name="pServerMethodName">Name of server delegate method</param>
+            <param name="pUserToken">Token identifying the client request</param>
+            <param name="pArgs">User-defined arguments passed from the client</param>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Wcf.WcfPersistenceServer.Unsubscribe(IdeaBlade.Persistence.Wcf.INotificationServiceCallback,System.Object)">
+            <summary>
+            Process an unsubscribe request from a client.
+            </summary>
+            <param name="pCallback">Client callback</param>
+            <param name="pUserToken">Token identifying the client subscription</param>
+        </member>
+        <member name="T:IdeaBlade.Persistence.Wcf.WcfPersistenceServiceConfigurator">
+            <summary>
+            Contains PersistenceService-related configuration functions for both the service and its proxy.
+            </summary>
+            <remarks>
+            Internal use only.
+            </remarks>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Wcf.WcfPersistenceServiceConfigurator.ConfigureCustomBinding(System.Uri,System.Boolean)">
+            <summary>
+            Programmatically create a binding for the PersistenceService using IdeaBlade.ibconfig.
+            </summary>
+            <param name="pServerUri"></param>
+            <param name="pIsServer"></param>
+            <returns></returns>
+            <remarks>
+            Transports supported are http, https, net.tcp and net.pipe.  The <see cref="T:IdeaBlade.Util.Wcf.Extensions.GZipMessageEncodingBindingElement"/>
+            is always used to provide compressed binary encoding.
+            </remarks>
+        </member>
+        <member name="T:IdeaBlade.Persistence.Wcf.WcfPersistenceServiceConfigurator.Service">
+            <summary>
+            Configuration logic for a PersistenceService service.
+            </summary>
+            <remarks>
+            A service can have multiple endpoints defined, but will use only one if configured using IdeaBlade.ibconfig.
+            <para>This class is not used when the PersistenceService is used in a hosted environment (IIS or WAS).</para>
+            </remarks>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Wcf.WcfPersistenceServiceConfigurator.Service.Start(System.Boolean)">
+            <summary>
+            Start the service.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Wcf.WcfPersistenceServiceConfigurator.Service.Stop">
+            <summary>
+            Stop the service.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.Persistence.Wcf.WcfPersistenceServiceConfigurator.Proxy">
+            <summary>
+            Configuration logic for a PersistenceService proxy.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Wcf.WcfPersistenceServiceConfigurator.Proxy.Create">
+            <summary>
+            Create a proxy to a PersistenceService service.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.Persistence.Wcf.WcfPersistenceServiceConfigurator.Proxy.RemoteAddress">
+            <summary>
+            The resolved remote address.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.Persistence.Wcf.ServerHostFactory">
+            <summary>
+            Custom ServiceHostFactory for PersistenceServers in a hosted environment.
+            </summary>
+            <remarks>
+            When running the Business Object Server in a hosted environment (IIS or WAS)
+            you must specify this class on the ServiceHost directive in the 
+            *.svc file for each PersistenceServer: <code>Factory="IdeaBlade.Persistence.Wcf.ServerHostFactory"</code>.
+            </remarks>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Wcf.ServerHostFactory.CreateServiceHost(System.String,System.Uri[])">
+            <summary>
+            Create a ServiceHost for the PersistenceServer.
+            </summary>
+            <param name="constructorString"></param>
+            <param name="baseAddresses"></param>
+            <returns></returns>
+            <remarks>
+            The <paramref name="constructorString"/> should contain the type name and data
+            source extension, separated by a comma: for example, "IdeaBlade.Persistence.Wcf.WcfPersistenceServer, A".
+            You'll specify this on the ServiceHost directive in the *.svc file for the specific PersistenceServer:
+            <code>Service="IdeaBlade.Persistence.Wcf.WcfPersistenceServer, A"</code>. 
+            </remarks>
+        </member>
+        <member name="T:IdeaBlade.Persistence.Wcf.NotificationCallbackManager">
+            <summary>
+            Internal use only.
+            </summary>
+            <remarks>
+            We have one NotificationCallbackManager per PersistenceServerProxy.  This means there's one callback channel
+            and that all subscriptions made on a PM go through this single channel.
+            The manager keeps track of client subscriptions - which must be keyed by a unique (for the client) token.
+            Subscription requests come in for a server method, or what we can very loosely call a service.  The service sends
+            notifications to each subscriber in the OnNotify operation of the callback contract.  The ClientNotifyDelegate
+            passed with the subscription is called from the OnNotify method.
+            </remarks>
+        </member>
+        <member name="T:IdeaBlade.Persistence.Wcf.INotificationServiceCallback">
+            <summary>
+            Callback contract used by the <see cref="T:IdeaBlade.Persistence.Wcf.INotificationService"/> contract to support
+            client notifications.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Wcf.INotificationServiceCallback.OnNotify(System.Object,System.Object[])">
+            <summary>
+            Receive notifications from an <see cref="T:IdeaBlade.Persistence.Wcf.INotificationService"/>.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Wcf.INotificationServiceCallback.Ping">
+            <summary>
+            Ping the client to see if it's still alive.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Wcf.NotificationCallbackManager.Subscribe(IdeaBlade.Persistence.SessionBundle,System.String,System.String,System.String,System.String,System.Object,System.Object[])">
+            <summary>
+            Subscribe to an INotificationService.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Wcf.NotificationCallbackManager.Subscribe(IdeaBlade.Persistence.SessionBundle,System.String,System.String,IdeaBlade.Persistence.ClientNotifyDelegate,System.Object,System.Object[])">
+            <summary>
+            Subscribe to an INotificationService.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Wcf.NotificationCallbackManager.Unsubscribe(System.Object)">
+            <summary>
+            Unsubscribe from the service.
+            </summary>
+            <param name="pUserToken"></param>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Wcf.NotificationCallbackManager.OnNotify(System.Object,System.Object[])">
+            <summary>
+            Called from the service as part of the callback contract.
+            </summary>
+            <param name="pUserToken"></param>
+            <param name="pServerArgs"></param>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Wcf.NotificationCallbackManager.GetNotificationService">
+            <summary>
+            The WcfPersistenceServer implements the INotificationService contract.  When running local this
+            returns the WcfPersistenceServer instance, otherwise it returns a proxy to the INotificationService.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.Persistence.Wcf.WcfPersistenceService">
+            <summary>
+            Internal use only. 
+            This class supports the DevForce Framework infrastructure 
+            and is not intended to be used directly from your code.
+            </summary>
+            <remarks>
+            A single instance of this class resides on the Business Object Server and receives and responds to 
+            requests from the <see cref="T:IdeaBlade.Persistence.PersistenceManager"/>s on each client.
+            <para>
+            The <b>WcfPersistenceService</b> uses Windows Communication Foundation for distributed communications.
+            The WcfPersistenceService is configured using the <see cref="T:IdeaBlade.Util.IdeaBladeConfig.RemotingInfo"/>
+            defined in <b>IdeaBlade.ibconfig</b> or using an app.config (web.config in IIS) file.
+            The <b>WcfPersistenceService</b> is the "factory" for the Business Object Server - it responds to
+            client requests and starts <see cref="T:IdeaBlade.Persistence.Wcf.WcfPersistenceServer"/>s as needed.
+            </para>
+            <para>
+            If configuring the service from an app.config, use "PersistenceService" as the service name.
+            </para>
+            <para>
+            If the service is configured from the IdeaBlade.ibconfig, the transport indicated by the
+            <see cref="P:IdeaBlade.Util.IdeaBladeConfig.RemotingInfo.RemoteBaseUrl"/> is used, 
+            along with compressed binary encoding using the 
+            <see cref="T:IdeaBlade.Util.Wcf.Extensions.GZipMessageEncodingBindingElement"/>.  Only one service
+            endpoint is created.  If you wish to customize the endpoint, or add additional endpoints, then
+            you will need to use the app.config to configure the service.
+            </para>
+            </remarks>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Wcf.WcfPersistenceService.#ctor">
+            <summary>
+            Do not use - called during service configuration.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Wcf.WcfPersistenceService.Finalize">
+            <summary>
+            Finalizer.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Wcf.WcfPersistenceService.Reconnect(System.Boolean)">
+            <summary>
+            Forces a reconnect to the service.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Wcf.WcfPersistenceService.GetRemoteInstance">
+            <summary>
+            Get a proxy to the remote PersistenceService.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Wcf.WcfPersistenceService.GetPersistenceServer(System.String)">
+            <summary>
+            Return a local instance of a PersistenceServer.
+            </summary>
+            <param name="pDataSourceExtensionName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Wcf.WcfPersistenceService.GetPersistenceServerName(System.String)">
+            <summary>
+            Return the service name of a remote Persistence Server.
+            </summary>
+            <param name="pDataSourceExtensionName"></param>
+            <returns></returns>
+            <remarks>
+            If the Persistence Server is not running it is started.
+            </remarks>
+        </member>
+        <member name="P:IdeaBlade.Persistence.Wcf.WcfPersistenceService.LocalInstance">
+            <summary>
+            Returns the singleton instance for this class.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.Persistence.Wcf.WcfPersistenceService.RemoteInstance">
+            <summary>
+            Returns a proxy to the singleton instance of this class.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.Persistence.Wcf.WcfPersistenceServerErrorHandler">
+            <summary>
+            Custom error handler for the WcfPersistenceServer service.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.Persistence.Wcf.PersistenceServerFault">
+            <summary>
+            Defines a FaultContract for PersistenceServer operations.
+            </summary>
+        </member>
+        <member name="F:IdeaBlade.Persistence.Wcf.PersistenceServerFault.Message">
+            <summary>
+            Fault message.
+            </summary>
+        </member>
+        <member name="F:IdeaBlade.Persistence.Wcf.PersistenceServerFault.SerializedException">
+            <summary>
+            Serialized exception.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.Persistence.Wcf.WcfPersistenceServerConfigurator">
+            <summary>
+            Internal class providing helper functions for configuration of a PersistenceServer service or proxy.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Wcf.WcfPersistenceServerConfigurator.AddNotificationServiceEndpoint(System.ServiceModel.ServiceHost,System.String)">
+            <summary>
+            Programmatically add an endpoint for the INotificationService to the PServer host.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Wcf.WcfPersistenceServerConfigurator.ConfigureCustomBinding(System.Uri,System.Boolean)">
+            <summary>
+            Programmatically create a binding using IdeaBlade.ibconfig.
+            </summary>
+            <param name="pServerUri"></param>
+            <param name="pIsServer"></param>
+            <returns></returns>
+        </member>
+        <member name="T:IdeaBlade.Persistence.Wcf.WcfPersistenceServerConfigurator.Service">
+            <summary>
+            Configuration logic for a PersistenceServer service.
+            </summary>
+            <remarks>
+            A service can have multiple endpoints defined, but will use only one if configured using IdeaBlade.ibconfig.
+            <para>This class is not used when the PersistenceServer is used in a hosted environment (IIS or WAS).</para>
+            <para>The PersistenceServer also hosts the endpoint for the optional NotificationService.</para>
+            </remarks>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Wcf.WcfPersistenceServerConfigurator.Service.UseAppConfig(System.String)">
+            <summary>
+            Note that an appconfig will always be used - whether we want it or not - if there's a 
+            matching service type in the file.
+            </summary>
+            <param name="pServiceName"></param>
+            <returns></returns>
+        </member>
+        <member name="T:IdeaBlade.Persistence.Wcf.WcfPersistenceServerConfigurator.Proxy">
+            <summary>
+            Configuration logic to create a proxy to a PersistenceServer service.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Wcf.WcfPersistenceServerConfigurator.Proxy.Create(System.String)">
+            <summary>
+            Create a proxy to a PersistenceServer.
+            </summary>
+            <param name="pServiceName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Wcf.WcfPersistenceServerConfigurator.Proxy.ConfigFileConfiguration(System.String)">
+            <summary>
+            Will use the client endpoint with the specified service name.
+            </summary>
+            <param name="pServiceName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Wcf.WcfPersistenceServerConfigurator.Proxy.ProgrammaticConfiguration(System.String)">
+            <summary>
+            Will use the RemoteBaseURL and port defined in ibconfig, along with the specified service name.
+            </summary>
+            <param name="pServiceName"></param>
+            <returns></returns>
+        </member>
+        <member name="T:IdeaBlade.Persistence.Wcf.WcfPersistenceServerConfigurator.NotificationServiceProxy">
+            <summary>
+            Configuration logic to create a proxy to a NotificationService enpdoint.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Wcf.WcfPersistenceServerConfigurator.NotificationServiceProxy.Create(System.String,IdeaBlade.Persistence.Wcf.INotificationServiceCallback)">
+            <summary>
+            Create a proxy to a PersistenceServer.
+            </summary>
+            <param name="pDataSourceExtensionName">Data source extension</param>
+            <param name="pCallback">Client callback</param>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.Persistence.Wcf.WcfPersistenceServerConfigurator.NotificationServiceProxy.ConfigFileConfiguration(System.String,IdeaBlade.Persistence.Wcf.INotificationServiceCallback)">
+            <summary>
+            Will use the client endpoint with the specified service name.
+            </summary>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

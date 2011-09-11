@@ -1,0 +1,2141 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>IdeaBlade.Persistence.WS</name>
+    </assembly>
+    <members>
+        <member name="T:IdeaBlade.Persistence.WS.IWsProxyGenerator">
+            <summary>
+            Interface implemented by service proxy code generators - internal use only.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.Persistence.WS.IWsProxyGenerator.GenerateCompiledProxy(IdeaBlade.Persistence.WS.WsProxyGeneratorOptions)">
+            <summary>
+            Internal use only - dynamically generate and compile a service proxy.
+            </summary>
+            <param name="pOptions"></param>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.Persistence.WS.IWsProxyGenerator.GenerateProxyClass(IdeaBlade.Persistence.WS.WsProxyGeneratorOptions)">
+            <summary>
+            Internal use only - dynamically generate a service proxy.
+            </summary>
+            <param name="pOptions"></param>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.Persistence.WS.IWsProxyGenerator.SaveGeneratedClass(System.String,IdeaBlade.Persistence.WS.WsProxyGeneratorOptions)">
+            <summary>
+            Internal use only - save a generated proxy to the file provided.
+            </summary>
+            <param name="pFileName"></param>
+            <param name="pOptions"></param>
+        </member>
+        <member name="T:IdeaBlade.Persistence.WS.IWsTable">
+            <summary>
+            The interface implemented by generated <see cref="T:IdeaBlade.Persistence.EntityTable"/> classes which are backed by a web service.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.Persistence.WS.BasicWsProxySettings">
+            <summary>
+            Helper class used when creating and configuring a <see cref="T:System.Web.Services.Protocols.SoapHttpClientProtocol"/> proxy object used to communicate with a web service.
+            </summary>
+            <remarks>
+            <b>BasicWsProxySettings</b> are passed from a <see cref="T:IdeaBlade.Persistence.WS.WsQuery"/> to an <see cref="T:IdeaBlade.Persistence.WS.IWsProxyInterceptor"/>
+            to finalize configuration of the client proxy.
+            Implement a custom server-side <see cref="T:IdeaBlade.Persistence.WS.IWsProxyInterceptor"/> to modify the 
+            <see cref="P:WsProxySettings.ClientProxy"/> in the <see cref="M:IdeaBlade.Persistence.WS.IWsProxyInterceptor.AfterProxyCreate(IdeaBlade.Persistence.WS.WsKey,IdeaBlade.Persistence.WS.WsProxySettings)"/> method.  The 
+            <b>ClientProxy</b> object will be a subclass of <see cref="T:System.Web.Services.Protocols.SoapHttpClientProtocol"/>.
+            <para>
+            If an IWsProxyInterceptor is not found for a <see cref="T:IdeaBlade.Persistence.WS.WsKey"/>, the properties of both the WsKey 
+            and the <b>BasicWsQuerySettings</b> will be used to configure the client proxy.
+            The Url comes from the <b>WsKey</b>, and the <b>BasicWsQuerySettings</b> provide the SoapHeader, credentials and 
+            web proxy.  
+            </para>
+            </remarks>
+            <example><code lang="C#">
+
+// A sample IWsProxyInterceptor for our Google service.
+
+public class GoogleProxyInterceptor : IdeaBlade.Persistence.WS.IWsProxyInterceptor {
+
+    public void BeforeProxyCreate(WsKey pWsKey, WsProxySettings pSettings) {
+      // Nothing to do!
+    }
+
+    public void AfterProxyCreate(WsKey pWsKey, WsProxySettings pSettings) {
+      // Let's reset the timeout value to 1 min.
+	  // The proxy class is defined in the generated Web Reference in your model.
+      GoogleSearchService proxy = pSettings.ClientProxy as GoogleSearchService;
+      proxy.Timeout = 60 * 1000;
+    }
+}
+		</code></example>
+        </member>
+        <member name="T:IdeaBlade.Persistence.WS.WsProxySettings">
+            <summary>
+            Helper class used to configure the client proxy object which communicates with a web or WCF service
+            when a <see cref="T:IdeaBlade.Persistence.WS.WsQuery"/> is executed.
+            </summary>
+            <remarks>
+            The <b>BasicWsProxySettings</b> and <b>WcfWsProxySettings</b> classes configure the settings specific
+            to the type of service.  An instance of this class is passed to the <see cref="T:IdeaBlade.Persistence.WS.IWsProxyInterceptor"/>
+            found for the <see cref="T:IdeaBlade.Persistence.WS.WsKey"/> to allow server-side control of proxy configuration.
+            </remarks>
+        </member>
+        <member name="M:IdeaBlade.Persistence.WS.WsProxySettings.#ctor(IdeaBlade.Persistence.WS.WsKey,IdeaBlade.Persistence.WS.WsQuery,System.Type)">
+            <summary>
+            Protected constructor.
+            </summary>
+            <param name="pWsKey">WsKey</param>
+            <param name="pWsQuery">WsQuery</param>
+            <param name="pProxyReferenceType">Type of proxy object</param>
+        </member>
+        <member name="M:IdeaBlade.Persistence.WS.WsProxySettings.Configure">
+            <summary>
+            Internal use only - called by the WsQuery to create and configure the client proxy object.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.Persistence.WS.WsProxySettings.ProxyExists">
+            <summary>
+            Internal use only - overridden by derived classes to determine if the client proxy has already been created.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.Persistence.WS.WsProxySettings.CreateProxy">
+            <summary>
+            Internal use only - overridden by derived classes to create and configure the client proxy object.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.Persistence.WS.WsProxySettings.ApplyQuerySettings(IdeaBlade.Persistence.WS.WsQuerySettings)">
+            <summary>
+            Internal use only - overridden by derived classes to apply query settings to the client proxy object.
+            </summary>
+            <param name="pQuerySettings"></param>
+        </member>
+        <member name="F:IdeaBlade.Persistence.WS.WsProxySettings.mWsKey">
+            <summary>
+            Datasource key.
+            </summary>
+        </member>
+        <member name="F:IdeaBlade.Persistence.WS.WsProxySettings.mServiceType">
+            <summary>
+            Type of the proxy.
+            </summary>
+        </member>
+        <member name="F:IdeaBlade.Persistence.WS.WsProxySettings.mWsQuery">
+            <summary>
+            WsQuery instance.
+            </summary>
+        </member>
+        <member name="F:IdeaBlade.Persistence.WS.WsProxySettings.mCurrentProxy">
+            <summary>
+            Generated proxy.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.Persistence.WS.WsProxySettings.ClientProxy">
+            <summary>
+            Gets the client proxy object.
+            </summary>
+            <remarks>
+            Implement <see cref="M:IdeaBlade.Persistence.WS.IWsProxyInterceptor.AfterProxyCreate(IdeaBlade.Persistence.WS.WsKey,IdeaBlade.Persistence.WS.WsProxySettings)"/> to modify values on the proxy,
+            such as credentials or headers.  The type of proxy object is dependent on the service
+            the proxy communicates with.  If a web service proxy was generated, the <b>ClientProxy</b>
+            will be derived from <b>SoapHttpClientProtocol</b>; if a WCF proxy was generated, the
+            <b>ClientProxy</b> will be derived from <b>ClientBase&lt;T&gt;</b>.
+            </remarks>
+        </member>
+        <member name="M:IdeaBlade.Persistence.WS.BasicWsProxySettings.#ctor(IdeaBlade.Persistence.WS.WsKey,IdeaBlade.Persistence.WS.WsQuery)">
+            <summary>
+            Internal use only - create an instance of this class.
+            </summary>
+            <param name="pWsKey"></param>
+            <param name="pWsQuery"></param>
+        </member>
+        <member name="M:IdeaBlade.Persistence.WS.BasicWsProxySettings.#ctor(IdeaBlade.Persistence.WS.WsKey,IdeaBlade.Persistence.WS.WsQuery,System.Type)">
+            <summary>
+            Internal use only - create an instance of this class.
+            </summary>
+            <param name="pWsKey"></param>
+            <param name="pWsQuery"></param>
+            <param name="pServiceType"></param>
+        </member>
+        <member name="M:IdeaBlade.Persistence.WS.BasicWsProxySettings.ProxyExists">
+            <summary>
+            Return true if the proxy object has been created for the <b>WsKey</b>.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.Persistence.WS.BasicWsProxySettings.CreateProxy">
+            <summary>
+            Internal use only - create the client proxy object.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.Persistence.WS.BasicWsProxySettings.ApplyQuerySettings(IdeaBlade.Persistence.WS.WsQuerySettings)">
+            <summary>
+            Internal use only - apply <see cref="T:IdeaBlade.Persistence.WS.WsQuerySettings"/> to the client proxy.
+            </summary>
+            <param name="pQuerySettings">WsQuerySettings</param>
+        </member>
+        <member name="M:IdeaBlade.Persistence.WS.BasicWsProxySettings.GetServiceType">
+            <summary>
+            Find the named service in the probe assemblies - used when the proxy type
+            is not passed in the constructor.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:IdeaBlade.Persistence.WS.WsPublishingSecurityContext">
+            <summary>
+            Security information used by publishing services.
+            </summary>
+        </member>
+        <member name="F:IdeaBlade.Persistence.WS.WsPublishingSecurityContext.DataSourceExtension">
+            <summary>
+            Gets or sets the data source extension.
+            </summary>
+        </member>
+        <member name="F:IdeaBlade.Persistence.WS.WsPublishingSecurityContext.SessionBundle">
+            <summary>
+            Gets or sets the serialized session bundle.
+            </summary>
+        </member>
+        <member name="F:IdeaBlade.Persistence.WS.WsPublishingSecurityContext.Credential">
+            <summary>
+            Gets or sets the LoginCredential.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.Persistence.WS.WsPublishingServiceFns">
+            <summary>
+            Common publishing-related functions - internal use only.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.Persistence.WS.WsPublishingServiceFns.ExecuteIEntityQuery``1(IdeaBlade.Persistence.IEntityQuery,IdeaBlade.Persistence.WS.WsPublishingSecurityContext)">
+            <summary>
+            Execute a query.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="pQuery"></param>
+            <param name="pContext"></param>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.Persistence.WS.WsPublishingServiceFns.ExecuteIEntityQuery``1(IdeaBlade.Persistence.IEntityQuery,System.Collections.Generic.IEnumerable{IdeaBlade.Persistence.EntitySpan},IdeaBlade.Persistence.WS.WsPublishingSecurityContext)">
+            <summary>
+            Execute a query.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="pQuery"></param>
+            <param name="pEntitySpans"></param>
+            <param name="pContext"></param>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.Persistence.WS.WsPublishingServiceFns.GetPersistenceManager(IdeaBlade.Persistence.WS.WsPublishingSecurityContext)">
+            <summary>
+            Retrieve a PersistenceManager.
+            This feature is only available in certain editions of DevForce.
+            </summary>
+            <param name="pContext"></param>
+            <returns></returns>
+        </member>
+        <member name="T:IdeaBlade.Persistence.WS.WsProxyType">
+            <summary>
+            Defines the client proxy type used by a <see cref="T:IdeaBlade.Persistence.WS.WsQuery"/> when calling a service.
+            </summary>
+        </member>
+        <member name="F:IdeaBlade.Persistence.WS.WsProxyType.WebServiceReference">
+            <summary>
+            Basic web service.
+            </summary>
+        </member>
+        <member name="F:IdeaBlade.Persistence.WS.WsProxyType.WcfServiceReference">
+            <summary>
+            WCF service.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.Persistence.WS.IWsProxyInterceptor">
+            <summary>
+            Interface to be implemented when using a <see cref="T:IdeaBlade.Persistence.WS.WsQuery"/> if the client proxy object
+            requires server-side customization before the service is called.
+            </summary>
+            <remarks>
+            If you implement this interface, be sure to include the assembly containing the implementation
+            in the <b>probeAssemblyName</b> collection for the <see cref="T:IdeaBlade.Persistence.WS.WsKey"/>.  Only one IWsProxyInterceptor is
+            allowed per WsKey.  Methods of this interface will be called by the PersistenceServer
+            during execution of a <b>WsQuery</b>.
+            <para>
+            The <see cref="T:IdeaBlade.Persistence.WS.WsProxySettings"/> passed to the <see cref="M:IdeaBlade.Persistence.WS.IWsProxyInterceptor.BeforeProxyCreate(IdeaBlade.Persistence.WS.WsKey,IdeaBlade.Persistence.WS.WsProxySettings)"/> and
+            <see cref="M:IdeaBlade.Persistence.WS.IWsProxyInterceptor.AfterProxyCreate(IdeaBlade.Persistence.WS.WsKey,IdeaBlade.Persistence.WS.WsProxySettings)"/> methods will be specific to the type of proxy object required
+            to communicate with the service: a <b>BasicWsProxySettings</b> will be passed if using a web service proxy, 
+            while a <b>WcfWsProxySettings</b> will be passed when using a WCF service proxy.  
+            </para>
+            <para>
+            The type of service will indicate the customization that might be needed.  For example, when
+            using a WCF service proxy you might need custom code to set the <see cref="T:System.ServiceModel.Channels.Binding"/>
+            used.  The two methods should give you flexibility in both setting the information needed to create
+            the proxy object, and in modifying the proxy client after creation.
+            </para>
+            </remarks>
+        </member>
+        <member name="M:IdeaBlade.Persistence.WS.IWsProxyInterceptor.BeforeProxyCreate(IdeaBlade.Persistence.WS.WsKey,IdeaBlade.Persistence.WS.WsProxySettings)">
+            <summary>
+            Called prior to creation of the client proxy object.
+            </summary>
+            <param name="pWsKey"></param>
+            <param name="pSettings"></param>
+            <remarks>
+            Use this method to set service-specific values in the <see cref="T:IdeaBlade.Persistence.WS.WsProxySettings"/> provided.
+            </remarks>
+        </member>
+        <member name="M:IdeaBlade.Persistence.WS.IWsProxyInterceptor.AfterProxyCreate(IdeaBlade.Persistence.WS.WsKey,IdeaBlade.Persistence.WS.WsProxySettings)">
+            <summary>
+            Called after a client proxy object has been created.
+            </summary>
+            <param name="pWsKey"></param>
+            <param name="pSettings"></param>
+            <remarks>
+            Use this method to customize the <see cref="P:IdeaBlade.Persistence.WS.WsProxySettings.ClientProxy"/> object itself when necessary.  
+            </remarks>
+            <example><code lang="C#">
+
+// A sample IWsProxyInterceptor for our Google service.
+
+public class GoogleProxyInterceptor : IdeaBlade.Persistence.WS.IWsProxyInterceptor {
+
+    public void BeforeProxyCreate(WsKey pWsKey, WsProxySettings pSettings) {
+      // Nothing to do!
+    }
+
+    public void AfterProxyCreate(WsKey pWsKey, WsProxySettings pSettings) {
+      // Let's reset the timeout value to 1 min.
+	  // The proxy class is defined in the generated Web Reference in your model.
+      GoogleSearchService proxy = pSettings.ClientProxy as GoogleSearchService;
+      proxy.Timeout = 60 * 1000;
+    }
+}
+		</code></example>
+        </member>
+        <member name="T:IdeaBlade.Persistence.WS.IWsEntity">
+            <summary>
+            The interface implemented by generated <see cref="T:IdeaBlade.Persistence.Entity"/> classes which are backed by a web service.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.Persistence.WS.BasicWsQuerySettings">
+            <summary>
+            Settings for a <see cref="T:IdeaBlade.Persistence.WS.WsQuery"/> specific to communication using a web service proxy.
+            </summary>
+            <remarks>
+            When you create a <see cref="T:IdeaBlade.Persistence.WS.WsQuery"/> and provide a <see cref="F:IdeaBlade.Persistence.WS.WsProxyType.WebServiceReference"/>
+            client proxy type, the <see cref="P:IdeaBlade.Persistence.WS.WsQuery.Settings"/> will be of type <b>BasicWsQuerySettings</b>.
+            <para>
+            The <b>BasicWsQuerySettings</b> allows you to specify the <see cref="P:IdeaBlade.Persistence.WS.BasicWsQuerySettings.SoapHeader"/> and other information
+            which might be needed to use the web service.
+            </para>
+            </remarks>
+        </member>
+        <member name="T:IdeaBlade.Persistence.WS.WsQuerySettings">
+            <summary>
+            Helper class used to provide service-specific settings to a <b>WsQuery</b>.
+            </summary>
+            <remarks>
+            A <b>WsQuery</b> can be used to retrieve data from either a web service or WCF service, and
+            each may have settings specific to the service type.  The <see cref="P:IdeaBlade.Persistence.WS.WsQuery.Settings"/>
+            property will reference the WsQuerySettings specific to the query.
+            </remarks>
+        </member>
+        <member name="M:IdeaBlade.Persistence.WS.WsQuerySettings.Clone">
+            <summary>
+            Clone this object.  Overridden by derived classes.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.Persistence.WS.BasicWsQuerySettings.Clone">
+            <summary>
+            Clone the settings.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:IdeaBlade.Persistence.WS.BasicWsQuerySettings.WebProxy">
+            <summary>
+            Gets or sets proxy information for making the web service request through a firewall.
+            </summary>
+            <remarks>
+            This property may be removed in a future release.  If a web proxy is needed you
+            can also add it directly to the <b>SoapHttpClientProtocol</b> object available
+            from the <see cref="T:IdeaBlade.Persistence.WS.BasicWsProxySettings"/> passed to an <see cref="T:IdeaBlade.Persistence.WS.IWsProxyInterceptor"/>.
+            </remarks>
+        </member>
+        <member name="P:IdeaBlade.Persistence.WS.BasicWsQuerySettings.Credentials">
+            <summary>
+            Gets or sets security credentials for web service client authentication.
+            </summary>
+            <remarks>
+            This property may be removed in a future release.  Do not use this property if you
+            are using a Business Object Server, since the credentials will not be serialized from
+            your client application to the BOS.
+            <para>
+            You can also set the credentials directly on the <b>SoapHttpClientProtocol</b> object
+            available from the <see cref="T:IdeaBlade.Persistence.WS.BasicWsProxySettings"/> passed to an <see cref="T:IdeaBlade.Persistence.WS.IWsProxyInterceptor"/>.
+            </para>
+            </remarks>
+        </member>
+        <member name="P:IdeaBlade.Persistence.WS.BasicWsQuerySettings.SoapHeader">
+            <summary>
+            Gets or sets the Soap Header used when calling the web method.
+            </summary>
+            <remarks>
+            If you are using a subclassed <b>WsQuery</b> auto-generated by the Object Mapper into your
+            business object class, the <b>SoapHeader</b> will also be available as a property of that class.
+            </remarks>
+            <example><code lang="C#">
+
+// Sample passing a SoapHeader to a WsQuery.
+// This example uses the XEdgar web service, information for which
+// is available at http://www.xignite.com/xEdgar.asmx.  
+
+// There's an easy way, and a slightly harder way, to build a query and pass the SoapHeader.
+// The easy way is to use the nested WsQuery which was auto-generated into your business object.
+// The harder way is to build a WsQuery from scratch.
+
+// Define the soapheader. Note you must register at XIgnite to receive a user name.
+Xignite.Header header = new XigniteEdgar.Header();
+header.Username = myEdgarUserName;
+
+PersistenceManager pm = PersistenceManager.DefaultManager;
+
+// Here's the easy way:
+ManagementOwnership.WsQuery query1 = new ManagementOwnership.WsQuery("MSFT", XigniteEdgar.IdentifierTypes.Symbol);
+query1.SoapHeader = header;
+
+// Here's the harder way:
+WsQuery query2 = new WsQuery("XigniteEdgar", "GetManagementOwnership", typeof(ManagementOwnership));
+query2.Parameters.Add(new WsParameter("Identifier", "ORCL"));
+query2.Parameters.Add(new WsParameter("IdentifierType", Xignite.IdentifierTypes.Symbol));
+BasicWsQuerySettings settings = query2.Settings as BasicWsQuerySettings;
+settings.SoapHeader = header;
+
+// Run the queries 
+ManagementOwnership result1 = pm.GetEntity&lt;ManagementOwnership&gt;(query1);
+ManagementOwnership result2 = pm.GetEntity&lt;ManagementOwnership&gt;(query2);
+	</code></example>
+        </member>
+        <member name="T:IdeaBlade.Persistence.WS.BasicWsProxyGenerator">
+            <summary>
+            Dynamically generate a web service proxy client.  Internal use only.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.Persistence.WS.BasicWsProxyGenerator.#ctor(System.String)">
+            <summary>
+            Initialize from a WSDL.
+            </summary>
+            <param name="pWsdl"></param>
+        </member>
+        <member name="M:IdeaBlade.Persistence.WS.BasicWsProxyGenerator.#ctor(System.Web.Services.Discovery.DiscoveryClientProtocol)">
+            <summary>
+            Initialize from an existing DiscoveryClientProtocol object.
+            </summary>
+            <param name="pDiscoveryClientProtocol"></param>
+            <remarks>
+            Used by the Object Mapper.
+            </remarks>
+        </member>
+        <member name="M:IdeaBlade.Persistence.WS.BasicWsProxyGenerator.GenerateCompiledProxy(IdeaBlade.Persistence.WS.WsProxyGeneratorOptions)">
+            <summary>
+            Generate and compile the proxy class, returning the generated Assembly.
+            </summary>
+            <param name="pOptions"></param>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.Persistence.WS.BasicWsProxyGenerator.SaveGeneratedClass(System.String,IdeaBlade.Persistence.WS.WsProxyGeneratorOptions)">
+            <summary>
+            Save the generated class to a file.
+            </summary>
+            <param name="pFileName"></param>
+            <param name="pOptions"></param>
+        </member>
+        <member name="M:IdeaBlade.Persistence.WS.BasicWsProxyGenerator.GenerateProxyClass(IdeaBlade.Persistence.WS.WsProxyGeneratorOptions)">
+            <summary>
+            Generate the proxy class, returning the CodeCompileUnit.
+            </summary>
+            <param name="pOptions"></param>
+            <returns></returns>
+        </member>
+        <member name="T:IdeaBlade.Persistence.WS.WsParameter">
+            <summary>
+            Represents a parameter to a <see cref="T:IdeaBlade.Persistence.WS.WsQuery"/>.
+            <seealso cref="T:IdeaBlade.Persistence.WS.WsQuery"/>
+            </summary>
+            <remarks>Although <b>WsParameter</b> implements the IDataParameter interface, only the 
+            <b>ParameterName</b> and <b>Value</b> properties are required in order to 
+            pass valid parameter information to a WsQuery.
+            </remarks>
+        </member>
+        <member name="M:IdeaBlade.Persistence.WS.WsParameter.#ctor(System.String)">
+            <summary>
+            Initialize a new instance of the WsParameter class.
+            </summary>
+            <param name="pName">Parameter name</param>
+        </member>
+        <member name="M:IdeaBlade.Persistence.WS.WsParameter.#ctor(System.String,System.Object)">
+            <summary>
+            Initialize a new instance of the WsParameter class.
+            </summary>
+            <param name="pName">Parameter name</param>
+            <param name="pValue">Parameter value</param>
+        </member>
+        <member name="M:IdeaBlade.Persistence.WS.WsParameter.#ctor(IdeaBlade.Persistence.WS.WsParameter)">
+            <summary>
+            Copy Constructor.
+            </summary>
+            <param name="pParameter">Parameter to be copied</param>
+        </member>
+        <member name="T:IdeaBlade.Persistence.WS.WsProxyGeneratorOptions">
+            <summary>
+            Internal use only.  Used when dynamically generating a service proxy.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.Persistence.WS.WsProxyGeneratorOptions.#ctor">
+            <summary>
+            Default constructor - internal use only.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.Persistence.WS.WsProxyGeneratorOptions.Language">
+            <summary>
+            Gets or sets the language used.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.Persistence.WS.WsProxyGeneratorOptions.FormatMode">
+            <summary>
+            Gets or sets the serialization formatting options.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.Persistence.WS.WsProxyGeneratorOptions.Namespace">
+            <summary>
+            Gets or sets the namespace used.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.Persistence.WS.WsProxyGeneratorOptions.CodeModifier">
+            <summary>
+            Gets or sets the code modifier.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.Persistence.WS.WsProxyGeneratorOptions.GenerateConfig">
+            <summary>
+            Gets or sets whether an app.config file should be generated.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.Persistence.WS.WsProxyGeneratorOptions.ConfigFileName">
+            <summary>
+            Gets or sets the full path and file name of the configuration file.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.Persistence.WS.WsProxyGeneratorOptions.ProxyCodeModifier">
+            <summary>
+            Method signature of an external function used to modify generated code.
+            </summary>
+            <param name="pProxyCode"></param>
+            <returns></returns>
+        </member>
+        <member name="T:IdeaBlade.Persistence.WS.WsProxyGeneratorOptions.LanguageOptions">
+            <summary>
+            Language the code is generated in.
+            </summary>
+        </member>
+        <member name="F:IdeaBlade.Persistence.WS.WsProxyGeneratorOptions.LanguageOptions.CS">
+            <summary>
+            CSharp.
+            </summary>
+        </member>
+        <member name="F:IdeaBlade.Persistence.WS.WsProxyGeneratorOptions.LanguageOptions.VB">
+            <summary>
+            VB.NET.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.Persistence.WS.WsProxyGeneratorOptions.FormatModeOptions">
+            <summary>
+            Formatting options for the serializer.
+            </summary>
+        </member>
+        <member name="F:IdeaBlade.Persistence.WS.WsProxyGeneratorOptions.FormatModeOptions.Auto">
+            <summary>
+            Auto formatting.
+            </summary>
+        </member>
+        <member name="F:IdeaBlade.Persistence.WS.WsProxyGeneratorOptions.FormatModeOptions.XmlSerializer">
+            <summary>
+            Use formatting for Xml serialization.
+            </summary>
+        </member>
+        <member name="F:IdeaBlade.Persistence.WS.WsProxyGeneratorOptions.FormatModeOptions.DataContractSerializer">
+            <summary>
+            Use formatting for the DataContractSerializer.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.Persistence.WS.WsProxyInterceptor">
+            <summary>
+            Default implementation of the <see cref="T:IdeaBlade.Persistence.WS.IWsProxyInterceptor"/>.
+            </summary>
+            <remarks>
+            By default, no custom actions are performed in the interface methods here.
+            You may extend this class, or implement <see cref="T:IdeaBlade.Persistence.WS.IWsProxyInterceptor"/>
+            directly, to provide custom actions for the <see cref="M:IdeaBlade.Persistence.WS.WsProxyInterceptor.BeforeProxyCreate(IdeaBlade.Persistence.WS.WsKey,IdeaBlade.Persistence.WS.WsProxySettings)"/>
+            and <see cref="M:IdeaBlade.Persistence.WS.WsProxyInterceptor.AfterProxyCreate(IdeaBlade.Persistence.WS.WsKey,IdeaBlade.Persistence.WS.WsProxySettings)"/> methods.
+            </remarks>
+        </member>
+        <member name="M:IdeaBlade.Persistence.WS.WsProxyInterceptor.GetInterceptor(IdeaBlade.Persistence.WS.WsKey)">
+            <summary>
+            Retrieve the <see cref="T:IdeaBlade.Persistence.WS.IWsProxyInterceptor"/> for the given datasource key.
+            </summary>
+            <param name="pWsKey"></param>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.Persistence.WS.WsProxyInterceptor.BeforeProxyCreate(IdeaBlade.Persistence.WS.WsKey,IdeaBlade.Persistence.WS.WsProxySettings)">
+            <summary>
+            Called prior to proxy creation - not used in the default implementation.
+            </summary>
+            <param name="pWsKey"></param>
+            <param name="pSettings"></param>
+        </member>
+        <member name="M:IdeaBlade.Persistence.WS.WsProxyInterceptor.AfterProxyCreate(IdeaBlade.Persistence.WS.WsKey,IdeaBlade.Persistence.WS.WsProxySettings)">
+            <summary>
+            Called after proxy creation - not used in the default implementation.
+            </summary>
+            <param name="pWsKey"></param>
+            <param name="pSettings"></param>
+        </member>
+        <member name="T:IdeaBlade.Persistence.WS.WsTableMappingInfo">
+            <summary>
+            <see cref="T:IdeaBlade.Persistence.TableMappingInfo"/> for entities backed by a web service.
+            </summary>
+            <remarks>
+            The <b>DevForce Object Mapping Tool</b> automatically creates <b>WsTableMappingInfo</b>
+            in your generated <see cref="T:IdeaBlade.Persistence.EntityTable"/> classes.  
+            </remarks>
+        </member>
+        <member name="M:IdeaBlade.Persistence.WS.WsTableMappingInfo.#ctor">
+            <summary>
+            Initialize a new instance of this class.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.Persistence.WS.WsTableMappingInfo.#ctor(IdeaBlade.Persistence.EntityTable)">
+            <summary>
+            Create an instance of this class for the specified <see cref="T:IdeaBlade.Persistence.EntityTable"/>.
+            </summary>
+            <param name="pTable"></param>
+        </member>
+        <member name="M:IdeaBlade.Persistence.WS.WsTableMappingInfo.#ctor(IdeaBlade.Persistence.WS.WsTableMappingInfo)">
+            <summary>
+            Copy constructor.
+            </summary>
+            <param name="pTableMappingInfo"></param>
+        </member>
+        <member name="M:IdeaBlade.Persistence.WS.WsTableMappingInfo.GetFromTable(IdeaBlade.Persistence.EntityTable)">
+            <summary>
+            Gets TableMappingInfo from an EntityTable cast as WsTableMappingInfo.
+            </summary>
+            <param name="pTable"></param>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.Persistence.WS.WsTableMappingInfo.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            
+            </summary>
+            <param name="pInfo"></param>
+            <param name="pContext"></param>
+        </member>
+        <member name="M:IdeaBlade.Persistence.WS.WsTableMappingInfo.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            
+            </summary>
+            <param name="pInfo"></param>
+            <param name="pContext"></param>
+        </member>
+        <member name="M:IdeaBlade.Persistence.WS.WsTableMappingInfo.Clone">
+            <summary>
+            See <see cref="M:System.ICloneable.Clone"/>.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:IdeaBlade.Persistence.WS.WsTableMappingInfo.ServiceName">
+            <summary>Gets or sets the web service name.</summary>
+        </member>
+        <member name="P:IdeaBlade.Persistence.WS.WsTableMappingInfo.ResponseObjectName">
+            <summary>
+            Gets the name of the response object upon 
+            which the EntityTable is based.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.Persistence.WS.WsTableMappingInfo.DependencyMapping">
+            <summary>
+            Gets a mapping of source names to business object types 
+            for all direct dependents of this object.   
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.Persistence.WS.SecurityHeader">
+            <summary>
+            <see cref="T:System.Web.Services.Protocols.SoapHeader"/> used by the <see cref="T:IdeaBlade.Persistence.WS.BasicWebService"/> to authenticate and authorize requests.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.Persistence.WS.SecurityHeader.#ctor">
+            <summary>
+            Create a new instance of the class.
+            </summary>
+        </member>
+        <member name="F:IdeaBlade.Persistence.WS.SecurityHeader.HeaderCredential">
+            <summary>
+            Gets or sets the login information.
+            </summary>
+        </member>
+        <member name="F:IdeaBlade.Persistence.WS.SecurityHeader.SessionBundle">
+            <summary>
+            Gets or sets the serialized session information.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.Persistence.WS.SecurityHeader.LoginCredential">
+            <summary>
+            Login information passed via the SOAP SecurityHeader.
+            </summary>
+        </member>
+        <member name="F:IdeaBlade.Persistence.WS.SecurityHeader.LoginCredential.Username">
+            <summary>
+            Gets or sets the login username.
+            </summary>
+        </member>
+        <member name="F:IdeaBlade.Persistence.WS.SecurityHeader.LoginCredential.Password">
+            <summary>
+            Gets or sets the login password.  Can be clear text or encrypted.
+            </summary>
+        </member>
+        <member name="F:IdeaBlade.Persistence.WS.SecurityHeader.LoginCredential.Domain">
+            <summary>
+            Gets or sets the login domain.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.Persistence.WS.SecurityHeader.LoginCredential.ToPeristenceLoginCredential">
+            <summary>
+            Return an IdeaBlade.Persistence.LoginCredential.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:IdeaBlade.Persistence.WS.BasicWebService">
+            <summary>
+            Base class for auto-generated web services.
+            </summary>
+            <remarks>
+            If you've enabled "web publishing" via ASMX web services in the DevForce Object Mapping Tool
+            the generated web service will extend this class.
+            <para>
+            This class should be declared as Abstract, but is not for
+            VS Designer purposes.  Your web service should
+            extend this class and define the web methods required.
+            </para>
+            <para>
+            If a web method fails, the SoapException returned to the web service client
+            contains additional information in its <see cref="P:SoapException.Detail"/> property.
+            That information will include a node named "Exception" with attributes of <b>name</b>,
+            <b>message</b>, <b>operationType</b> and <b>failureType</b>.
+            </para>
+            </remarks>
+        </member>
+        <member name="M:IdeaBlade.Persistence.WS.BasicWebService.ExecuteQuery``1(IdeaBlade.Persistence.WS.Query,System.String)">
+            <summary>
+            Execute the specified query and return an array of objects.
+            </summary>
+            <typeparam name="T">Entity type</typeparam>
+            <param name="pQuery">Web method Query or null</param>
+            <param name="pDataSourceExtension">The extension used to search for DataSourceKeys in IdeaBlade.ibconfig</param>
+            <returns>Array of entities</returns>
+        </member>
+        <member name="M:IdeaBlade.Persistence.WS.BasicWebService.ExecuteQueryAsDataSet``1(IdeaBlade.Persistence.WS.Query,System.String)">
+            <summary>
+            Execute the specified query and return a DataSet.
+            </summary>
+            <typeparam name="T">Entity type</typeparam>
+            <param name="pQuery">Web method Query or null</param>
+            <param name="pDataSourceExtension">The extension used to search for DataSourceKeys in IdeaBlade.ibconfig</param>
+            <returns>Dataset</returns>
+        </member>
+        <member name="M:IdeaBlade.Persistence.WS.BasicWebService.ExecuteIEntityQuery``1(IdeaBlade.Persistence.IEntityQuery,System.String)">
+            <summary>
+            Execute an <see cref="T:IdeaBlade.Persistence.IEntityQuery"/>.
+            </summary>
+            <typeparam name="T">Entity type</typeparam>
+            <param name="pQuery">Valid IEntityQuery</param>
+            <param name="pDataSourceExtension">The extension used to search for DataSourceKeys in IdeaBlade.ibconfig</param>
+            <returns>List of entities</returns>
+            <remarks>
+            Can be used by custom web methods to execute a <b>PassthruRdbQuery</b>, <b>StoredProcRdbQuery</b>
+            or <see cref="T:IdeaBlade.Persistence.WS.WsQuery"/>.
+            <para>
+            If your <see cref="T:IdeaBlade.Persistence.WS.WsQuery"/> will return an object graph use the <see cref="M:IdeaBlade.Persistence.WS.BasicWebService.ExecuteWsQuery``1(IdeaBlade.Persistence.WS.WsQuery,System.Collections.Generic.IEnumerable{IdeaBlade.Persistence.EntitySpan},System.String)"/> method
+            instead, and pass an array of <see cref="T:IdeaBlade.Persistence.EntitySpan"/> objects which reflect the object graph wanted.
+            </para>
+            </remarks>
+        </member>
+        <member name="M:IdeaBlade.Persistence.WS.BasicWebService.ExecuteWsQuery``1(IdeaBlade.Persistence.WS.WsQuery,System.Collections.Generic.IEnumerable{IdeaBlade.Persistence.EntitySpan},System.String)">
+            <summary>
+            Execute a <see cref="T:IdeaBlade.Persistence.WS.WsQuery"/> with the <see cref="T:IdeaBlade.Persistence.EntitySpan"/> objects specified.
+            </summary>
+            <typeparam name="T">Entity type</typeparam>
+            <param name="pQuery">Valid WsQuery</param>
+            <param name="pEntitySpans">List of EntitySpans</param>
+            <param name="pDataSourceExtension">The extension used to search for DataSourceKeys in IdeaBlade.ibconfig</param>
+            <returns>List of entities</returns>
+            <remarks>
+            Can be used by custom web methods to execute a <see cref="T:IdeaBlade.Persistence.WS.WsQuery"/> which returns an object graph.
+            In order to return this object graph from the current web method you will need to specify the <see cref="T:IdeaBlade.Persistence.EntitySpan"/>
+            objects corresponding to the object graph.
+            </remarks>
+        </member>
+        <member name="M:IdeaBlade.Persistence.WS.BasicWebService.BuildDataSet``1(System.Collections.Generic.IList{``0})">
+            <summary>
+            Build a dataset from a list of entities.
+            </summary>
+            <typeparam name="T">Entity type</typeparam>
+            <param name="pList">List of entities</param>
+            <returns>Dataset</returns>
+            <remarks>
+            Can be used by custom web methods to return a <see cref="T:System.Data.DataSet"/>.
+            </remarks>
+        </member>
+        <member name="M:IdeaBlade.Persistence.WS.BasicWebService.BuildSoapException(System.Exception)">
+            <summary>
+            Wrap an exception as a <see cref="T:System.Web.Services.Protocols.SoapException"/>.
+            </summary>
+            <param name="ex">Exception</param>
+            <returns>SoapException</returns>
+            <remarks>
+            This method can be used to create a <see cref="T:System.Web.Services.Protocols.SoapException"/> from the exception passed, and will set the
+            <see cref="P:System.Web.Services.Protocols.SoapException.Detail"/> property with additional information.
+            <para>
+            You do not need to call this method to return a <see cref="T:System.Web.Services.Protocols.SoapException"/> from your web methods since 
+            any exception thrown will be wrapped by ASP.NET when necessary.  Use this method only to add the
+            <see cref="P:System.Web.Services.Protocols.SoapException.Detail"/> data.
+            </para>
+            </remarks>
+        </member>
+        <member name="M:IdeaBlade.Persistence.WS.BasicWebService.GetPersistenceManager(System.String)">
+            <summary>
+            Construct and login to a PersistenceManager.
+            </summary>
+            <param name="pDataSourceExtension">Data source extension required by the PersistenceManager</param>
+            <returns>A PersistenceManager "connected" to a PersistenceServer</returns>
+            <remarks>
+            Auto-generated web methods and the helper execution methods already call this method; you only
+            need to call <b>GetPersistenceManager</b> if you need to call methods on the PersistenceManager
+            directly.
+            <para>
+            If a <see cref="P:IdeaBlade.Persistence.WS.BasicWebService.SecurityHeader"/> was passed with the web method, its credentials will be used
+            to login to the PersistenceManager.
+            </para>
+            </remarks>
+        </member>
+        <member name="P:IdeaBlade.Persistence.WS.BasicWebService.SecurityHeader">
+            <summary>
+            Gets or sets the optional <see cref="T:System.Web.Services.Protocols.SoapHeader"/> used by the service.
+            </summary>
+            <remarks>
+            The <b>SecurityHeader</b> is required when <see cref="T:IdeaBlade.Persistence.IPersistenceLoginManager"/>
+            has been implemented and a <see cref="M:IdeaBlade.Persistence.PersistenceManager.Login(IdeaBlade.Persistence.ILoginCredential)"/> is required.
+            The LoginCredential information should be provided in the SecurityHeader
+            by the caller to the web service.  Subsequent calls from the same client
+            will use the <see cref="T:IdeaBlade.Persistence.SessionBundle"/> stored in the SecurityHeader.
+            </remarks>
+            <example><code lang="C#">
+// The client of the web service will set the SoapHeader.
+// The property names in the WSDL are a little different than in the service definition.
+
+// Setup the web service proxy and SoapHeader
+this.mWebServiceProxy = new WebService();
+
+// If the Model contains a LoginManager then security info is required.
+// The SoapHeader is passed with each web method call.
+LoginCredential credential = new LoginCredential();
+credential.Username = "demo";
+credential.Password = "demo";
+credential.Domain = "here";
+this.mWebServiceProxy.Security = new SecurityHeader();
+this.mWebServiceProxy.Security.UsernameToken = credential;
+		</code></example>
+        </member>
+        <member name="T:IdeaBlade.Persistence.WS.IQuery">
+            <summary>
+            Interface defining a web method <see cref="T:IdeaBlade.Persistence.WS.Query"/> or <see cref="T:IdeaBlade.Persistence.WS.SubQuery"/>.  Internal use only.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.Persistence.WS.IQuery.Expressions">
+            <summary>
+            Get or set query expressions.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.Persistence.WS.IQuery.Top">
+            <summary>
+            Get or set the number of objects returned.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.Persistence.WS.QueryExpression">
+            <summary>
+            Types of expressions in a Query or SubQuery.
+            </summary>
+            <remarks>
+            Defined as a class rather than an interface to support Xml serialization.
+            </remarks>
+        </member>
+        <member name="T:IdeaBlade.Persistence.WS.Query">
+            <summary>
+            Defines a query to a web method in a published web service.
+            </summary>
+            <remarks>
+            Corresponds to the <see cref="T:IdeaBlade.Persistence.EntityQuery"/> used by DevForce client applications.
+            <para>
+            Note that auto-generated web methods all accept null (or Nothing in VB) for the 
+            query argument, meaning that all objects of the indicated type should be returned.
+            </para>
+            <para>
+            <b>Note:</b>The query classes defined here are used when publishing the service.  What the clients
+            of your service will see will be classes generated from the service metadata.  Documentation
+            and samples here describe how clients will use these classes to query your service.
+            </para>
+            </remarks>
+            <example><code lang="C#">
+
+// A sample web method query returning customers whose name starts with 'A'.
+
+// Start query.
+Query q = new Query();
+
+// Build a clause.
+QueryClause clause = new QueryClause();
+clause.ColumnName = "CompanyName";
+clause.Operator = QueryOp.StartsWith;
+clause.ColumnValue = "A";
+
+// Add clause to query.
+q.Expressions = new QueryExpression[] {clause};
+
+// Run the query.
+Customer[] customers = service.GetCustomers(q, "");
+     </code></example><example><code lang="VB">
+' A sample web method query returning customers whose name starts with 'A'.
+' Start query.
+Dim q As New Query()
+
+' Build a clause.
+Dim clause As New QueryClause()
+clause.ColumnName = "CompanyName"
+clause.Operator = QueryOp.StartsWith
+clause.ColumnValue = "A"
+
+' Add clause to query.
+q.Expressions = New QueryExpression() {clause}
+
+' Run the query.
+Dim customers As Customer() = service.GetCustomers(q, "")
+     </code></example>
+        </member>
+        <member name="M:IdeaBlade.Persistence.WS.Query.#ctor">
+            <summary>
+            Create a new Query object.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.Persistence.WS.Query.ToEntityQuery(System.Type,IdeaBlade.Persistence.WS.Query)">
+            <summary>
+            Convert the query to an <see cref="T:IdeaBlade.Persistence.EntityQuery"/>.
+            </summary>
+            <param name="pType"></param>
+            <param name="pQuery"></param>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.Persistence.WS.Query.AddQueryExpressions(IdeaBlade.Persistence.WS.IQuery,IdeaBlade.Persistence.EntityQuery)">
+            <summary>
+            Add expressions to a Query or SubQuery.
+            </summary>
+            <param name="pQuery"></param>
+            <param name="pEntityQuery"></param>
+            <returns></returns>
+        </member>
+        <member name="P:IdeaBlade.Persistence.WS.Query.Top">
+            <summary>
+            Gets or sets the top n objects to return from this query.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.Persistence.WS.Query.Expressions">
+            <summary>
+            Gets or sets the array of <see cref="T:IdeaBlade.Persistence.WS.QueryClause"/>, <see cref="T:IdeaBlade.Persistence.WS.BooleanOp"/>, and <see cref="T:IdeaBlade.Persistence.WS.SubQuery"/> objects forming the Query.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.Persistence.WS.Query.Spans">
+            <summary>
+            Gets or sets the array of <see cref="T:IdeaBlade.Persistence.WS.QuerySpan"/> objects determining related objects to retrieve.
+            </summary>
+            <example><code lang="C#">
+
+// A sample web method query returning customers whose name starts with 'A',
+// and also including their Orders and OrderDetails.
+
+
+// Start query.
+Query q = new Query();
+
+// Build a clause.
+QueryClause clause = new QueryClause();
+clause.ColumnName = "CompanyName";
+clause.Operator = QueryOp.StartsWith;
+clause.ColumnValue = "A";
+
+// Add clause to query.
+q.Expressions = new QueryExpression[] {clause};
+
+// Build a span.  This is used to retrieve other parts of the object graph
+// in one method call.
+QuerySpan span = new QuerySpan();
+// Spans work just like EntitySpans, but include a chained list
+// of relational property names instead of EntityRelationLinks.
+// We'll drill down from Customer -&gt; OrderSummaries -&gt; OrderDetails
+// Note we expect properties named Customer.OrderSummaries
+// and OrderSummary.OrderDetails.
+span.Relations = new string[] {"OrderSummaries", "OrderDetails"};
+
+// Add span to query.
+q.Spans = new QuerySpan[] { span };
+
+// Run the query.
+Customer[] customers = service.GetCustomers(q, "");
+     </code></example><example><code lang="VB">
+' A sample web method query returning customers whose name starts with 'A',
+' and also including their Orders and OrderDetails.
+
+' Start query.
+Dim q As New Query()
+
+' Build a clause.
+Dim clause As New QueryClause()
+clause.ColumnName = "CompanyName"
+clause.Operator = QueryOp.StartsWith
+clause.ColumnValue = "A"
+
+' Add clause to query.
+q.Expressions = New QueryExpression() {clause}
+
+' Build a span.  This is used to retrieve other parts of the object graph
+' in one method call.
+Dim span As New QuerySpan()
+' Spans work just like EntitySpans, but include a chained list
+' of relational property names instead of EntityRelationLinks.
+' We'll drill down from Customer -&gt; OrderSummaries -&gt; OrderDetails
+' Note we expect properties named Customer.OrderSummaries
+' and OrderSummary.OrderDetails.
+span.Relations = New String() {"OrderSummaries", "OrderDetails"}
+
+' Add span to query.
+q.Spans = New QuerySpan() {span}
+
+' Run the query.
+Dim customers As Customer() = service.GetCustomers(q, "")
+     </code></example>
+        </member>
+        <member name="T:IdeaBlade.Persistence.WS.SubQuery">
+            <summary>
+            Defines a subquery to a <see cref="T:IdeaBlade.Persistence.WS.Query"/> in the Persistence Web Service.
+            </summary>
+            <remarks>
+            Corresponds to an <see cref="T:IdeaBlade.Persistence.EntitySubquery"/> used by DevForce client applications.
+            </remarks>  
+            <example><code lang="C#">
+
+// A sample web method query showing subqueries.
+// This will retrieve all customers whose orders
+// are owned by employees with last name starting with 'D'.
+
+// Start the query.
+Query q = new Query();
+
+// Start the first subquery.  This will look from Customer to OrderSummaries
+// eg, Select * from Customer where id in (select customerid from OrderSummary ...) ...
+SubQuery subQ1 = new SubQuery();
+subQ1.Relation = "OrderSummaries";
+
+// Start the second subquery, nested under first subquery.
+// This will look from OrderSummary to Employee
+// eg, Select * from OrderSummary where employeeid in (select id from Employee ...) ...
+SubQuery subQ2 = new SubQuery();
+subQ2.Relation = "Employee";
+
+// Build and add a clause to the second subquery.
+QueryClause clause2 = new QueryClause();
+clause2.ColumnName = "LastName";
+clause2.Operator = QueryOp.StartsWith;
+clause2.ColumnValue = "D";
+subQ2.Expressions = new QueryExpression[] { clause2 };
+
+// Add subQ2 to subQ1
+subQ1.Expressions = new QueryExpression[] { subQ2 };
+
+// Add subQ1 to the query.
+q.Expressions = new QueryExpression[] { subQ1 };
+
+// Now run the query.
+Customer[] customers = service.GetCustomers(q, "");
+     </code></example><example><code lang="VB">
+' A sample web method query showing subqueries.
+' This will retrieve all customers whose orders
+' are owned by employees with last name starting with 'D'.
+' Start the query.
+Dim q As New Query()
+
+' Start the first subquery.  This will look from Customer to OrderSummaries
+' eg, Select * from Customer where id in (select customerid from OrderSummary ...) ...
+Dim subQ1 As New SubQuery()
+subQ1.Relation = "OrderSummaries"
+
+' Start the second subquery, nested under first subquery.
+' This will look from OrderSummary to Employee
+' eg, Select * from OrderSummary where employeeid in (select id from Employee ...) ...
+Dim subQ2 As New SubQuery()
+subQ2.Relation = "Employee"
+
+' Build and add a clause to the second subquery.
+Dim clause2 As New QueryClause()
+clause2.ColumnName = "LastName"
+clause2.Operator = QueryOp.StartsWith
+clause2.ColumnValue = "D"
+subQ2.Expressions = New QueryExpression() {clause2}
+
+' Add subQ2 to subQ1
+subQ1.Expressions = New QueryExpression() {subQ2}
+
+' Add subQ1 to the query.
+q.Expressions = New QueryExpression() {subQ1}
+
+' Now run the query.
+Dim customers As Customer() = service.GetCustomers(q, "")
+     </code></example>
+        </member>
+        <member name="M:IdeaBlade.Persistence.WS.SubQuery.#ctor">
+            <summary>
+            Create a new SubQuery instance.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.Persistence.WS.SubQuery.ToEntitySubquery(System.Type)">
+            <summary>
+            Convert the Subquery to an <see cref="T:IdeaBlade.Persistence.EntitySubquery"/>.
+            </summary>
+            <param name="pType"></param>
+            <returns></returns>
+        </member>
+        <member name="P:IdeaBlade.Persistence.WS.SubQuery.Relation">
+            <summary>
+            Gets or sets the name of the relational property representing an <see cref="T:IdeaBlade.Persistence.EntityRelationLink"/> for the subquery.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.Persistence.WS.SubQuery.Top">
+            <summary>
+            Gets or sets the top n objects to return from this SubQuery.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.Persistence.WS.SubQuery.Expressions">
+            <summary>
+            Gets or sets the array of <see cref="T:IdeaBlade.Persistence.WS.QueryClause"/>, <see cref="T:IdeaBlade.Persistence.WS.BooleanOp"/>, and <see cref="T:IdeaBlade.Persistence.WS.SubQuery"/> objects forming the SubQuery.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.Persistence.WS.QueryClause">
+            <summary>
+            Represents a single phrase in a <see cref="T:IdeaBlade.Persistence.WS.Query"/> or <see cref="T:IdeaBlade.Persistence.WS.SubQuery"/>.
+            </summary>
+            <remarks>
+            Corresponds to an <see cref="T:IdeaBlade.Persistence.EntityQueryClause"/> used by DevForce client applications.
+            </remarks>
+        </member>
+        <member name="M:IdeaBlade.Persistence.WS.QueryClause.#ctor">
+            <summary>
+            Create a new QueryClause instance.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.Persistence.WS.QueryClause.ToEntityQueryOp">
+            <summary>
+            Convert the query operator to an <see cref="T:IdeaBlade.Persistence.EntityQueryOp"/>.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.Persistence.WS.QueryClause.ToEntityQueryClause">
+            <summary>
+            Convert the clause to an <see cref="T:IdeaBlade.Persistence.EntityQueryClause"/>.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:IdeaBlade.Persistence.WS.QueryClause.ColumnName">
+            <summary>
+            Gets or sets the column name for the clause.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.Persistence.WS.QueryClause.Operator">
+            <summary>
+            Gets or sets the query operator.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.Persistence.WS.QueryClause.ColumnValue">
+            <summary>
+            Gets or sets the value.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.Persistence.WS.BooleanOp">
+            <summary>
+            A logical operator used to join <see cref="T:IdeaBlade.Persistence.WS.QueryClause"/> objects.
+            </summary>
+            <remarks>
+            Corresponds to the <see cref="T:IdeaBlade.Persistence.EntityBooleanOp"/> used by DevForce client applications.
+            </remarks>
+            <example><code lang="C#">
+
+// A sample web method query OR'ing two query clauses.
+// This retrieves customers with Id &lt; 5 OR Country = USA
+
+// Start the query.
+Query q = new Query();
+
+// Build first clause.
+QueryClause clause1 = new QueryClause();
+clause1.ColumnName = "Id";
+clause1.Operator = QueryOp.LT;
+clause1.ColumnValue = 5;
+
+// Build second clause.
+QueryClause clause2 = new QueryClause();
+clause2.ColumnName = "Country";
+clause2.Operator = QueryOp.EQ;
+clause2.ColumnValue = "USA";
+
+// Build boolean operator.
+BooleanOp expr = new BooleanOp();
+expr.Value = LogicalOp.OR;
+
+// Add all expressions to query.
+q.Expressions = new QueryExpression[] { clause1, clause2, expr };
+
+// Run the query.
+Customer[] customers = service.GetCustomers(q, "");
+     </code></example><example><code lang="VB">
+' A sample web method query OR'ing two query clauses.
+' This retrieves customers with Id &lt; 5 OR Country = USA
+' Start the query.
+Dim q As New Query()
+
+' Build first clause.
+Dim clause1 As New QueryClause()
+clause1.ColumnName = "Id"
+clause1.Operator = QueryOp.LT
+clause1.ColumnValue = 5
+
+' Build second clause.
+Dim clause2 As New QueryClause()
+clause2.ColumnName = "Country"
+clause2.Operator = QueryOp.EQ
+clause2.ColumnValue = "USA"
+
+' Build boolean operator.
+Dim expr As New BooleanOp()
+expr.Value = LogicalOp.OR
+
+' Add all expressions to query.
+q.Expressions = New QueryExpression() {clause1, clause2, expr}
+
+' Run the query.
+Dim customers As Customer() = service.GetCustomers(q, "")
+     </code></example>
+        </member>
+        <member name="M:IdeaBlade.Persistence.WS.BooleanOp.#ctor">
+            <summary>
+            Create a new BooleanOp instance.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.Persistence.WS.BooleanOp.ToEntityBooleanOp">
+            <summary>
+            Convert the operator to an <see cref="T:IdeaBlade.Persistence.EntityBooleanOp"/>.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:IdeaBlade.Persistence.WS.BooleanOp.Value">
+            <summary>
+            Gets or sets the operator value;
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.Persistence.WS.QuerySpan">
+            <summary>
+            Defines related objects to retrieve as part of the returned object graph.
+            </summary>
+            <remarks>
+            Corresponds to an <see cref="T:IdeaBlade.Persistence.EntitySpan"/> used by DevForce client applications.
+            </remarks>
+            <example><code lang="C#">
+
+// A sample web method query returning customers whose name starts with 'A',
+// and also including their Orders and OrderDetails.
+
+
+// Start query.
+Query q = new Query();
+
+// Build a clause.
+QueryClause clause = new QueryClause();
+clause.ColumnName = "CompanyName";
+clause.Operator = QueryOp.StartsWith;
+clause.ColumnValue = "A";
+
+// Add clause to query.
+q.Expressions = new QueryExpression[] {clause};
+
+// Build a span.  This is used to retrieve other parts of the object graph
+// in one method call.
+QuerySpan span = new QuerySpan();
+// Spans work just like EntitySpans, but include a chained list
+// of relational property names instead of EntityRelationLinks.
+// We'll drill down from Customer -&gt; OrderSummaries -&gt; OrderDetails
+// Note we expect properties named Customer.OrderSummaries
+// and OrderSummary.OrderDetails.
+span.Relations = new string[] {"OrderSummaries", "OrderDetails"};
+
+// Add span to query.
+q.Spans = new QuerySpan[] { span };
+
+// Run the query.
+Customer[] customers = service.GetCustomers(q, "");
+     </code></example><example><code lang="VB">
+' A sample web method query returning customers whose name starts with 'A',
+' and also including their Orders and OrderDetails.
+
+' Start query.
+Dim q As New Query()
+
+' Build a clause.
+Dim clause As New QueryClause()
+clause.ColumnName = "CompanyName"
+clause.Operator = QueryOp.StartsWith
+clause.ColumnValue = "A"
+
+' Add clause to query.
+q.Expressions = New QueryExpression() {clause}
+
+' Build a span.  This is used to retrieve other parts of the object graph
+' in one method call.
+Dim span As New QuerySpan()
+' Spans work just like EntitySpans, but include a chained list
+' of relational property names instead of EntityRelationLinks.
+' We'll drill down from Customer -&gt; OrderSummaries -&gt; OrderDetails
+' Note we expect properties named Customer.OrderSummaries
+' and OrderSummary.OrderDetails.
+span.Relations = New String() {"OrderSummaries", "OrderDetails"}
+
+' Add span to query.
+q.Spans = New QuerySpan() {span}
+
+' Run the query.
+Dim customers As Customer() = service.GetCustomers(q, "")
+     </code></example>
+        </member>
+        <member name="M:IdeaBlade.Persistence.WS.QuerySpan.#ctor">
+            <summary>
+            Create a new QuerySpan instance.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.Persistence.WS.QuerySpan.Relations">
+            <summary>
+            Gets or sets the list of relational property names (corresponding to <see cref="T:IdeaBlade.Persistence.EntityRelationLink"/>s). 
+            </summary>
+            <remarks>
+            These names must be defined on the Entities, and must "connect" with the same
+            rules used when building an EntityQuerySpan.  Eg, a query for "Order" might
+            include { "OrderDetails", "Product" } as the relations in a Span.
+            </remarks>
+        </member>
+        <member name="T:IdeaBlade.Persistence.WS.QueryOp">
+            <summary>
+            Enumeration of valid query comparison operators used in building a QueryClause.
+            </summary>
+            <remarks>
+            Corresponds to <see cref="T:IdeaBlade.Persistence.EntityQueryOp"/> values used by DevForce client applications.
+            </remarks>
+        </member>
+        <member name="F:IdeaBlade.Persistence.WS.QueryOp.EQ">
+            <summary>
+            Equals operator.
+            </summary>
+        </member>
+        <member name="F:IdeaBlade.Persistence.WS.QueryOp.NE">
+            <summary>
+            Not equals operator.
+            </summary>
+        </member>
+        <member name="F:IdeaBlade.Persistence.WS.QueryOp.GT">
+            <summary>
+            Greater than operator.
+            </summary>
+        </member>
+        <member name="F:IdeaBlade.Persistence.WS.QueryOp.GE">
+            <summary>
+            Greater than or equal to operator.
+            </summary>
+        </member>
+        <member name="F:IdeaBlade.Persistence.WS.QueryOp.LT">
+            <summary>
+            Less than operator.
+            </summary>
+        </member>
+        <member name="F:IdeaBlade.Persistence.WS.QueryOp.LE">
+            <summary>
+            Less than or equal to operator.
+            </summary>
+        </member>
+        <member name="F:IdeaBlade.Persistence.WS.QueryOp.Between">
+            <summary>
+            Between operator.
+            </summary>
+        </member>
+        <member name="F:IdeaBlade.Persistence.WS.QueryOp.StartsWith">
+            <summary>
+            Starts with operator.
+            </summary>
+        </member>
+        <member name="F:IdeaBlade.Persistence.WS.QueryOp.EndsWith">
+            <summary>
+            Ends with operator.
+            </summary>
+        </member>
+        <member name="F:IdeaBlade.Persistence.WS.QueryOp.Contains">
+            <summary>
+            Contains operator.
+            </summary>
+        </member>
+        <member name="F:IdeaBlade.Persistence.WS.QueryOp.In">
+            <summary>
+            In operator.
+            </summary>
+        </member>
+        <member name="F:IdeaBlade.Persistence.WS.QueryOp.IsNull">
+            <summary>
+            Is null operator.
+            </summary>
+        </member>
+        <member name="F:IdeaBlade.Persistence.WS.QueryOp.IsNotNull">
+            <summary>
+            Is not null operator.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.Persistence.WS.LogicalOp">
+            <summary>
+            A logical operator (and, or, not) enumeration used to build a BooleanOp.
+            </summary>
+        </member>
+        <member name="F:IdeaBlade.Persistence.WS.LogicalOp.AND">
+            <summary>
+            And operator.
+            </summary>
+        </member>
+        <member name="F:IdeaBlade.Persistence.WS.LogicalOp.OR">
+            <summary>
+            Or operator.
+            </summary>
+        </member>
+        <member name="F:IdeaBlade.Persistence.WS.LogicalOp.NOT">
+            <summary>
+            Not operator.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.Persistence.WS.HttpListenerController">
+            <summary>
+            Starts and stops an Http Listener thread.  Internal use only.
+            </summary>
+            <remarks>
+            Used by the internal PersistenceWebServer.
+            <para>
+            The web server requires that all dependent assemblies be placed in 
+            the \bin subdirectory of the physical directory.  
+            </para>
+            </remarks>
+        </member>
+        <member name="M:IdeaBlade.Persistence.WS.HttpListenerController.#ctor(System.Boolean)">
+            <summary>
+            Construct an instance of the class using the IdeaBlade.ibconfig file.
+            </summary>
+            <param name="pUseConsole">True if messages should be written to the console</param>
+        </member>
+        <member name="M:IdeaBlade.Persistence.WS.HttpListenerController.Start">
+            <summary>
+            Start listening.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.Persistence.WS.HttpListenerController.Stop">
+            <summary>
+            Stop listening and shutdown thread.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.Persistence.WS.HttpListenerController.Pump">
+            <summary>
+            Create, configure and start the listener.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.Persistence.WS.HttpListenerController.ServiceUri">
+            <summary>
+            Gets the configured Uri the web service is listening on.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.Persistence.WS.HttpListenerWrapper">
+            <summary>
+            Wrapper for an HttpListener.  Internal use only.
+            </summary>
+            <remarks>
+            Wrapping the HttpListener allows it to be controlled from another AppDomain.
+            HttpListener is sealed also.
+            </remarks>
+        </member>
+        <member name="M:IdeaBlade.Persistence.WS.HttpListenerWrapper.#ctor">
+            <summary>
+            Construct a new instance of the class.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.Persistence.WS.HttpListenerWrapper.Configure(System.String[],System.String,System.String,System.Net.AuthenticationSchemes)">
+            <summary>
+            Configure the listener.
+            </summary>
+            <param name="pUriPrefixes"></param>
+            <param name="pVirtualDir"></param>
+            <param name="pPhysicalDir"></param>
+            <param name="pAuthSchemes"></param>
+        </member>
+        <member name="M:IdeaBlade.Persistence.WS.HttpListenerWrapper.Start">
+            <summary>
+            Start the listener.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.Persistence.WS.HttpListenerWrapper.Stop">
+            <summary>
+            Stop the listener.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.Persistence.WS.HttpListenerWrapper.ProcessRequest">
+            <summary>
+            Process requests (synchronously).  Not used.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.Persistence.WS.HttpListenerWrapper.ProcessRequestAsync">
+            <summary>
+            Process requests asynchronously.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.Persistence.WS.HttpListenerWrapper.ListenerCallback(System.IAsyncResult)">
+            <summary>
+            Callback called when an asynchronous request completes.
+            </summary>
+            <param name="result"></param>
+        </member>
+        <member name="M:IdeaBlade.Persistence.WS.HttpListenerWrapper.InitializeLifetimeService">
+            <summary>
+            Get a lifetime lease.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:IdeaBlade.Persistence.WS.HttpListenerWrapper.ListenerState">
+            <summary>
+            Used to pass state information with asynchronous requests.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.Persistence.WS.HttpListenerWorkerRequest">
+            <summary>
+            HttpWorkerRequest handling .asmx files.  Internal use only.
+            </summary>
+            <remarks>
+            To fully support ASMX endpoints, you need a custom HttpWorkerRequest that knows how to deal 
+            with the request/response streams. It should be based on the HttpListenerContext object 
+            you get back from GetContext.
+            <para>
+            This class has not been modified from the original MSDN code.
+            </para>
+            </remarks>
+        </member>
+        <member name="M:IdeaBlade.Persistence.WS.HttpListenerWorkerRequest.#ctor(System.Net.HttpListenerContext,System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="context"></param>
+            <param name="vdir"></param>
+            <param name="pdir"></param>
+        </member>
+        <member name="M:IdeaBlade.Persistence.WS.HttpListenerWorkerRequest.EndOfRequest">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.Persistence.WS.HttpListenerWorkerRequest.FlushResponse(System.Boolean)">
+            <summary>
+            
+            </summary>
+            <param name="finalFlush"></param>
+        </member>
+        <member name="M:IdeaBlade.Persistence.WS.HttpListenerWorkerRequest.GetHttpVerbName">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.Persistence.WS.HttpListenerWorkerRequest.GetHttpVersion">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.Persistence.WS.HttpListenerWorkerRequest.GetLocalAddress">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.Persistence.WS.HttpListenerWorkerRequest.GetLocalPort">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.Persistence.WS.HttpListenerWorkerRequest.GetQueryString">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.Persistence.WS.HttpListenerWorkerRequest.GetRawUrl">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.Persistence.WS.HttpListenerWorkerRequest.GetRemoteAddress">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.Persistence.WS.HttpListenerWorkerRequest.GetRemotePort">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.Persistence.WS.HttpListenerWorkerRequest.GetUriPath">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.Persistence.WS.HttpListenerWorkerRequest.SendKnownResponseHeader(System.Int32,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="index"></param>
+            <param name="value"></param>
+        </member>
+        <member name="M:IdeaBlade.Persistence.WS.HttpListenerWorkerRequest.SendResponseFromMemory(System.Byte[],System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="data"></param>
+            <param name="length"></param>
+        </member>
+        <member name="M:IdeaBlade.Persistence.WS.HttpListenerWorkerRequest.SendStatus(System.Int32,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="statusCode"></param>
+            <param name="statusDescription"></param>
+        </member>
+        <member name="M:IdeaBlade.Persistence.WS.HttpListenerWorkerRequest.SendUnknownResponseHeader(System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="name"></param>
+            <param name="value"></param>
+        </member>
+        <member name="M:IdeaBlade.Persistence.WS.HttpListenerWorkerRequest.SendResponseFromFile(System.IntPtr,System.Int64,System.Int64)">
+            <summary>
+            
+            </summary>
+            <param name="handle"></param>
+            <param name="offset"></param>
+            <param name="length"></param>
+        </member>
+        <member name="M:IdeaBlade.Persistence.WS.HttpListenerWorkerRequest.SendResponseFromFile(System.String,System.Int64,System.Int64)">
+            <summary>
+            
+            </summary>
+            <param name="filename"></param>
+            <param name="offset"></param>
+            <param name="length"></param>
+        </member>
+        <member name="M:IdeaBlade.Persistence.WS.HttpListenerWorkerRequest.CloseConnection">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.Persistence.WS.HttpListenerWorkerRequest.GetAppPath">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.Persistence.WS.HttpListenerWorkerRequest.GetAppPathTranslated">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.Persistence.WS.HttpListenerWorkerRequest.ReadEntityBody(System.Byte[],System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="buffer"></param>
+            <param name="size"></param>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.Persistence.WS.HttpListenerWorkerRequest.GetUnknownRequestHeader(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="name"></param>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.Persistence.WS.HttpListenerWorkerRequest.GetUnknownRequestHeaders">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.Persistence.WS.HttpListenerWorkerRequest.GetKnownRequestHeader(System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="index"></param>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.Persistence.WS.HttpListenerWorkerRequest.GetServerVariable(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="name"></param>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.Persistence.WS.HttpListenerWorkerRequest.GetFilePath">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.Persistence.WS.HttpListenerWorkerRequest.GetFilePathTranslated">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.Persistence.WS.HttpListenerWorkerRequest.GetPathInfo">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:IdeaBlade.Persistence.WS.WsQuery">
+            <summary>
+            Standard mechanism for retrieving business objects backed by a web or WCF service.
+            <seealso cref="T:IdeaBlade.Persistence.PersistenceManager"/>
+            <seealso cref="T:IdeaBlade.Persistence.WS.IWsEntity"/>
+            <seealso cref="T:IdeaBlade.Persistence.WS.WsKey"/>
+            </summary>
+            <remarks>
+            The <b>IdeaBlade DevForce Object Mapping tool</b> automatically generates a <b>WsQuery</b> 
+            for any "root" business object defined against a web service method.  A "root" business
+            object is the head object type in the object graph hierarchy returned by a web method.
+            You'll usually use this subclassed
+            query to pass parameters to the web method and retrieve your business objects.
+            Queries are submitted using the
+            <see cref="M:IdeaBlade.Persistence.PersistenceManager.GetEntity(IdeaBlade.Persistence.IEntityQuery)"/>
+            and <see cref="M:IdeaBlade.Persistence.PersistenceManager.GetEntities(IdeaBlade.Persistence.IEntityQuery)"/>
+            methods.
+            <para>These queries always use a <see cref="T:IdeaBlade.Persistence.FetchStrategy"/>
+            of <b>DataSourceOnly</b>, and cannot be used when disconnected from the PersistenceServer.
+            </para>
+            <para>Business objects retrieved using a <b>WsQuery</b> will not be saved by a
+            <see cref="M:IdeaBlade.Persistence.PersistenceManager.SaveChanges"/> call unless you 
+            have implemented a custom <see cref="T:IdeaBlade.Persistence.Server.IAdapterProvider"/>.
+            </para>
+            </remarks>
+            <example><code lang="C#">
+// Sample use of a subclassed WsQuery class.
+// This example uses the GoogleSearch web service, information for which
+// is available at http://www.google.com/apis/.  
+
+PersistenceManager pm = PersistenceManager.DefaultManager;
+
+// Create a query to call the "doGoogleSearch" web method.
+GoogleSearchResult.WsQuery query = new GoogleSearchResult.WsQuery();
+
+// Set all calling parameters using strongly typed properties on the WsQuery.
+// See the Google developer's kit for information on parameter usage.
+query.keyParm = myGoogleLicenseKey;	// You must obtain a license key to call the web service.
+query.qParm = "IdeaBlade";
+query.startParm = 0;
+query.maxResultsParm = 10;
+query.filterParm = true;
+query.restrictParm = "";
+query.safeSearchParm = true;
+query.lrParm = "lang-en";
+query.ieParm = "UTF-8";
+query.oeParm = "UTF-8";
+
+// Run the query     
+GoogleSearchResult result = pm.GetEntity&lt;GoogleSearchResult&gt;(query);     
+</code></example><example><code lang="VB">
+' Sample use of a subclassed WsQuery class.
+' This example uses the GoogleSearch web service, information for which
+' is available at http://www.google.com/apis/.  
+
+Dim pm As PersistenceManager = PersistenceManager.DefaultManager
+
+' Create a query to call the "doGoogleSearch" web method.
+Dim query As New GoogleSearchResult.WsQuery
+
+' Set all calling parameters using strongly typed properties on the WsQuery.
+' See the Google developer's kit for information on parameter usage.
+query.keyParm = myGoogleLicenseKey  ' You must obtain a license key to call the web service.
+query.qParm = "IdeaBlade"
+query.startParm = 0
+query.maxResultsParm = 10
+query.filterParm = True
+query.restrictParm = ""
+query.safeSearchParm = True
+query.lrParm = "lang-en"
+query.ieParm = "UTF-8"
+query.oeParm = "UTF-8"
+
+' Run the query     
+Dim result As GoogleSearchResult = pm.GetEntity(Of GoogleSearchResult)(query)
+
+  </code></example>
+        </member>
+        <member name="M:IdeaBlade.Persistence.WS.WsQuery.#ctor(System.String,System.String,System.Type)">
+            <summary>
+            Initializes a new instance of the WsQuery class.
+            </summary>
+            <param name="pServiceName">The web service name or WCF service contract name</param>
+            <param name="pMethodName">The method to be called</param>
+            <param name="pEntityType">The entity type that this query will return</param>
+            <remarks>
+            The <see cref="T:IdeaBlade.Persistence.WS.WsProxyType"/> defaults to <see cref="F:IdeaBlade.Persistence.WS.WsProxyType.WebServiceReference"/>
+            when using this constructor.  Use one of the other constructor overloads if you
+            need to use a <see cref="F:IdeaBlade.Persistence.WS.WsProxyType.WcfServiceReference"/>.
+            </remarks>
+            <example><code lang="C#">
+// Sample use of the base WsQuery class.
+// This example uses the GoogleSearch web service, information for which
+// is available at http://www.google.com/apis/.  
+
+PersistenceManager pm = PersistenceManager.DefaultManager;
+
+// Create a query, providing service and method names, and entity type.
+WsQuery query = new WsQuery("GoogleSearchService", "doGoogleSearch", typeof(GoogleSearchResult));
+
+// Pass parameters.
+query.Parameters.Add(new WsParameter("q", "ideablade smart client"));
+query.Parameters.Add(new WsParameter("start", 0));
+query.Parameters.Add(new WsParameter("maxResults", 10));
+query.Parameters.Add(new WsParameter("filter", true));
+query.Parameters.Add(new WsParameter("restrict", ""));
+query.Parameters.Add(new WsParameter("safeSearch", false));
+query.Parameters.Add(new WsParameter("lr", ""));
+query.Parameters.Add(new WsParameter("ie", ""));
+query.Parameters.Add(new WsParameter("oe", ""));
+query.Parameters.Add(new WsParameter("key", GoogleLicenseKey));
+
+// Run the query     
+GoogleSearchResult result = pm.GetEntity&lt;GoogleSearchResult&gt;(query);     
+</code></example><example><code lang="VB">
+' Sample use of the base WsQuery class.
+' This example uses the GoogleSearch web service, information for which
+' is available at http://www.google.com/apis/.  
+
+Dim pm As PersistenceManager = PersistenceManager.DefaultManager
+
+' Create a query, providing service and method names, and entity type.
+Dim query As New WsQuery("GoogleSearchService", "doGoogleSearch", GetType(GoogleSearchResult))
+
+' Pass parameters.
+query.Parameters.Add(New WsParameter("q", "ideablade smart client"))
+query.Parameters.Add(New WsParameter("start", 0))
+query.Parameters.Add(New WsParameter("maxResults", 10))
+query.Parameters.Add(New WsParameter("filter", True))
+query.Parameters.Add(New WsParameter("restrict", ""))
+query.Parameters.Add(New WsParameter("safeSearch", False))
+query.Parameters.Add(New WsParameter("lr", ""))
+query.Parameters.Add(New WsParameter("ie", ""))
+query.Parameters.Add(New WsParameter("oe", ""))
+query.Parameters.Add(New WsParameter("key", myGoogleLicenseKey))
+
+' Run the query 
+Dim result As GoogleSearchResult = pm.GetEntity(Of GoogleSearchResult)(query)    
+
+  </code></example>
+        </member>
+        <member name="M:IdeaBlade.Persistence.WS.WsQuery.#ctor(System.String,System.String,System.Type,IdeaBlade.Persistence.WS.WsProxyType)">
+            <summary>
+            Initializes a new instance of the WsQuery class.
+            </summary>
+            <param name="pServiceName">The web service name or WCF service contract name</param>
+            <param name="pMethodName">The method to be called</param>
+            <param name="pEntityType">The entity type that this query will return</param>
+            <param name="pProxyType">Indicates whether a web or WCF service will be queried</param>
+        </member>
+        <member name="M:IdeaBlade.Persistence.WS.WsQuery.#ctor(System.Type,System.String,System.Type)">
+            <summary>
+            Initializes a new instance of the WsQuery class.
+            </summary>
+            <param name="pClientProxyType">The Type of the client proxy used to communicate with the service</param>
+            <param name="pMethodName">The method to be called</param>
+            <param name="pEntityType">The entity type that this query will return</param>
+            <remarks>
+            The <paramref name="pClientProxyType"/> is the type of the proxy class generated by the Object Mapper
+            when creating the web or WCF service reference. The proxy instance is constructed by the
+            PersistenceServer when communicating with the service.
+            <para>
+            Nested <b>WsQuery</b> classes generated by the Object Mapper use this constructor.
+            </para>
+            </remarks>
+        </member>
+        <member name="M:IdeaBlade.Persistence.WS.WsQuery.SetParameterValue(System.String,System.Object)">
+            <summary>
+            Sets the value of the specified parameter.
+            </summary>
+            <param name="pName">Parameter name</param>
+            <param name="pValue">Parameter value</param>
+            <remarks>If a <see cref="T:IdeaBlade.Persistence.WS.WsParameter"/> with the specified name is not currently in the
+            <see cref="P:IdeaBlade.Persistence.WS.WsQuery.Parameters"/> collection a new parameter will be added.
+            </remarks>
+        </member>
+        <member name="M:IdeaBlade.Persistence.WS.WsQuery.FindParameter(System.String)">
+            <summary>
+            Finds the named parameter.
+            </summary>
+            <param name="pName">Parameter name</param>
+            <returns>The WsParameter or null if not found</returns>
+        </member>
+        <member name="M:IdeaBlade.Persistence.WS.WsQuery.Clone">
+            <summary>
+            Creates a deep copy of this WsQuery. 
+            </summary>
+            <returns>A deep copy of this instance</returns>
+        </member>
+        <member name="M:IdeaBlade.Persistence.WS.WsQuery.Equals(System.Object)">
+            <summary>
+            See <see cref="M:System.Object.Equals(System.Object)"/>.
+            </summary>
+            <param name="pObject"></param>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.Persistence.WS.WsQuery.GetHashCode">
+            <summary>
+            See <see cref="M:System.Object.GetHashCode"/>.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.Persistence.WS.WsQuery.ToString">
+            <summary>
+            Returns a human readable representation of the current query.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.Persistence.WS.WsQuery.FindRows(IdeaBlade.Persistence.PersistenceManager)">
+            <summary>
+            This method is not intended to be called directly from your code.
+            </summary>
+            <remarks>
+            This method executes on the client side of the Persistence divide to 
+            retrieve cached rows.  Not used by the <b>WsQuery</b> class.
+            </remarks>
+            <param name="pPersistenceManager"></param>
+            <returns>An array of strongly typed DataRows (Entities) from the cache</returns>
+        </member>
+        <member name="M:IdeaBlade.Persistence.WS.WsQuery.Fetch(System.Data.DataSet,IdeaBlade.Util.IDataSourceKey)">
+            <summary>
+            This method is not intended to be called directly from your code.
+            This feature is only available in certain editions of DevForce.
+            </summary>
+            <remarks>
+            This method executes on the server side of the Persistence divide to 
+            retrieve data from the backend datasource.
+            </remarks>
+            <param name="pDataSet">The dataset holding fetched data</param>
+            <param name="pDataSourceKey">The <see cref="T:IdeaBlade.Persistence.WS.WsKey"/> containing connection information for the web service.</param>
+        </member>
+        <member name="M:IdeaBlade.Persistence.WS.WsQuery.InQueryCache(IdeaBlade.Persistence.QueryCache)">
+            <summary>
+            Always returns false - WsQuery objects are never added to the QueryCache.
+            </summary>
+            <param name="pQueryCache"></param>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.Persistence.WS.WsQuery.AddToQueryCache(IdeaBlade.Persistence.QueryCache)">
+            <summary>
+            WsQuery objects are never added to the QueryCache.
+            </summary>
+            <param name="pQueryCache"></param>
+        </member>
+        <member name="M:IdeaBlade.Persistence.WS.WsQuery.Execute(IdeaBlade.Persistence.WS.WsKey)">
+            <summary>
+            Overridden by derived classes to execute the query without using reflection.
+            </summary>
+            <param name="pWsKey"></param>
+            <returns>Object graph returned from the service operation</returns>
+        </member>
+        <member name="M:IdeaBlade.Persistence.WS.WsQuery.CreateEntity(System.Data.DataSet,System.Type,System.Object,IdeaBlade.Persistence.Entity)">
+            <summary>
+            Build business object graph from the class object(s) returned by the web method.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.Persistence.WS.WsQuery.ServiceName">
+            <summary>
+            Gets or sets the name of the service or contract.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.Persistence.WS.WsQuery.MethodName">
+            <summary>
+            Get or sets the name of the web method.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.Persistence.WS.WsQuery.Parameters">
+            <summary>
+            Gets or sets the collection of <see cref="T:IdeaBlade.Persistence.WS.WsParameter"/>s used by the query.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.Persistence.WS.WsQuery.Settings">
+            <summary>
+            Gets the <see cref="T:IdeaBlade.Persistence.WS.WsQuerySettings"/> specific to the type of service being called.
+            </summary>
+            <remarks>
+            An instance of either <b>BasicWsQuerySettings</b> or <b>WcfWsQuerySettings</b> will be returned.
+            You can use the <b>Settings</b> to set service-specific values, such as the SoapHeader for the
+            <see cref="T:IdeaBlade.Persistence.WS.BasicWsQuerySettings"/> used when communicating with a web service.
+            </remarks>
+        </member>
+        <member name="P:IdeaBlade.Persistence.WS.WsQuery.EntityType">
+            <summary>
+            Gets the <see cref="T:IdeaBlade.Persistence.Entity"/> type returned by this query.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.Persistence.WS.WsQuery.QueryStrategy">
+            <summary>
+            Gets or sets the <see cref="P:IdeaBlade.Persistence.WS.WsQuery.QueryStrategy"/> used by the query.
+            </summary>
+            <remarks>
+            A WsQuery may operate against the backend datasource only.
+            The default <see cref="T:IdeaBlade.Persistence.MergeStrategy"/> is <b>OverwriteChanges</b>, but may be changed as
+            long as a <see cref="T:IdeaBlade.Persistence.FetchStrategy"/> of <b>DataSourceOnly</b> is used.
+            </remarks>
+            <exception cref="T:IdeaBlade.Util.IdeaBladeException">If FetchStrategy is not DataSourceOnly</exception>
+        </member>
+        <member name="P:IdeaBlade.Persistence.WS.WsQuery.CommandTimeout">
+            <summary>
+            Command execution timeout value. Not supported by the WsQuery.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.Persistence.WS.WsQuery.FindRowsResultMode">
+            <summary>
+            Returns information regarding the behaviour of the <see cref="M:IdeaBlade.Persistence.WS.WsQuery.FindRows(IdeaBlade.Persistence.PersistenceManager)"/> method call.
+            </summary>
+            <value>The FindRows result mode.</value>
+            <remarks><b>WsQuery</b> does not implement <see cref="M:IdeaBlade.Persistence.WS.WsQuery.FindRows(IdeaBlade.Persistence.PersistenceManager)"/>.
+            </remarks>
+        </member>
+        <member name="P:IdeaBlade.Persistence.WS.WsQuery.ProxySettings">
+            <summary>
+            Returns the ProxySettings used by the query to fetch entities.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.Persistence.WS.WsKey">
+            <summary>
+            Represents the connection information to a web or WCF service.
+            <seealso cref="T:IdeaBlade.Persistence.PersistenceManager"/>
+            </summary>
+            <remarks>Each <b>WsKey</b> used by an application is normally specified in the
+            <b>IdeaBlade.ibconfig</b> file.
+            </remarks>
+        </member>
+        <member name="M:IdeaBlade.Persistence.WS.WsKey.LocateWsKey(System.String)">
+            <summary>
+            Finds information for the specified key name in IdeaBlade.ibconfig.
+            </summary>
+            <param name="pKeyName">Key name</param>
+            <returns>The specified WsKey or null if not found.</returns>
+        </member>
+        <member name="M:IdeaBlade.Persistence.WS.WsKey.#ctor(IdeaBlade.Util.IdeaBladeConfig.XmlWsKey)">
+            <summary>
+            Construct an instance of the class from an XmlWsKey.
+            </summary>
+            <param name="pXmlWsKey"></param>
+        </member>
+        <member name="M:IdeaBlade.Persistence.WS.WsKey.#ctor(System.String,System.String)">
+            <summary>
+            Create an instance of the class.
+            </summary>
+            <param name="pName">Key name</param>
+            <param name="pWsdlUrl">URL of WSDL document</param>
+        </member>
+        <member name="M:IdeaBlade.Persistence.WS.WsKey.#ctor(System.String,System.String,System.String,System.String)">
+            <summary>
+            Create an instance of the class.
+            </summary>
+            <param name="pName">Key name</param>
+            <param name="pWsdlUrl">URL of WSDL document</param>
+            <param name="pServiceUrl">URL of web service</param>
+            <param name="pEndpointName">Name of the endpoint in the app.config file</param>
+            <remarks>
+            The Endpoint name is used only when using a WCF service.
+            </remarks>
+        </member>
+        <member name="M:IdeaBlade.Persistence.WS.WsKey.CheckConnection">
+            <summary>
+            Checks if the datasource connection is available.  Not used at this time.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.Persistence.WS.WsKey.Name">
+            <summary>
+            Gets the name of the data source key.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.Persistence.WS.WsKey.ProbeAssemblyNames">
+            <summary>
+            Gets or sets the names of the assemblies to be probed for dynamically loaded types.
+            </summary>
+            <remarks>
+            Assemblies may be probed to find implementations of client proxy classes
+            (SoapHttpClientProtocol).
+            </remarks>
+        </member>
+        <member name="P:IdeaBlade.Persistence.WS.WsKey.Options">
+            <summary>
+            Gets or sets any options defined for the wsKey.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.Persistence.WS.WsKey.Tag">
+            <summary>
+            Gets or sets a free-form string value for the developer's use.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.Persistence.WS.WsKey.Wsdl">
+            <summary>
+            Gets the URL of the WSDL document for the Web Service.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.Persistence.WS.WsKey.Url">
+            <summary>
+            Gets the URL used to invoke the Web Service.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.Persistence.WS.WsKey.EndpointName">
+            <summary>
+            Gets the name of the Endpoint element in the app.config file.
+            </summary>
+            <remarks>Applies only when using a WCF service.
+            </remarks>
+        </member>
+    </members>
+</doc>

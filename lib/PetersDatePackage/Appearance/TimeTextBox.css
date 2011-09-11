@@ -1,0 +1,26 @@
+.TMTBHelpButton
+{
+}
+
+.TMTBHelpButtonPressed
+{
+}
+
+/* prevent external img styles from affecting these styles */
+.TMTBHelpButton img
+{
+   background-color:transparent; 
+   margin-left: 0px; 
+   margin-top: 0px; 
+   margin-bottom:0px; 
+   margin-right:0px;
+}
+/* prevent external img styles from affecting these styles */
+.TMTBHelpButtonPressed img
+{
+   background-color:transparent; 
+   margin-left: 0px; 
+   margin-top: 0px; 
+   margin-bottom:0px; 
+   margin-right:0px;
+}

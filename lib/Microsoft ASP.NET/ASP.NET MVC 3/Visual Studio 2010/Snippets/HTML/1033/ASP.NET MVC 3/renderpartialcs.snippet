@@ -1,0 +1,25 @@
+﻿<CodeSnippet Format="1.1.0" xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+  <Header>
+    <Title>renderpartialcs3</Title>
+    <Author>Microsoft Corporation</Author>
+    <Shortcut>renderpartialcs3</Shortcut>
+    <Description>Markup snippet for an ASP.NET MVC partial view rendering in C#</Description>
+    <SnippetTypes>
+      <SnippetType>Expansion</SnippetType>
+    </SnippetTypes>
+    <ProjectTypeGuids>{E53F8FEA-EAE0-44A6-8774-FFD645390401};{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <FileExtensions>
+        aspx;master;ascx
+    </FileExtensions>
+  </Header>
+  <Snippet>
+    <Declarations>
+      <Literal>
+        <ID>viewname</ID>
+        <ToolTip>The name of the partial view to render.</ToolTip>
+        <Default>viewname</Default>
+      </Literal>
+    </Declarations>
+    <Code Language="html" Key="*"><![CDATA[<% Html.RenderPartial("$viewname$"); %>$end$]]></Code>
+  </Snippet>
+</CodeSnippet>

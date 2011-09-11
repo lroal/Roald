@@ -1,0 +1,2212 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>IdeaBlade.UI.WinForms</name>
+    </assembly>
+    <members>
+        <member name="T:IdeaBlade.UI.WinForms.NamespaceDoc">
+            <summary>
+              Contains fundamental classes and base classes that provide Windows Forms
+              data and style binding functionality.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.UI.WinForms.IdeaBladeBinding">
+            <summary>
+              A binding that contains information about the ViewDescriptor and
+              can refresh the binding when the converter properties change.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.IdeaBladeBinding.#ctor(System.String,System.Object,IdeaBlade.UI.WinForms.BindingDescriptor)">
+            <summary>
+              Constructs a IdeaBladeBinding.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.IdeaBladeBinding.#ctor(System.String,System.Object,IdeaBlade.UI.WinForms.BindingDescriptor,System.Windows.Forms.ErrorProvider)">
+            <summary>
+              Constructs a IdeaBladeBinding.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.IdeaBladeBinding.OnBindingComplete(System.Windows.Forms.BindingCompleteEventArgs)">
+            <summary>
+            
+            </summary>
+            <param name="e"></param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.IdeaBladeBinding.OnParse(System.Windows.Forms.ConvertEventArgs)">
+            <summary>
+              Raises the Parse event.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.IdeaBladeBinding.BindingDescriptor">
+            <summary>
+              Gets the BindingDescriptor.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.IdeaBladeBinding.ErrorProvider">
+            <summary>
+              Gets the ErrorProvider for this binding.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.IdeaBladeBinding.CancelEditOnError">
+            <summary>
+             Determines whether the edit to a control is cancelled, causing the control to revert to its earlier
+             state after an error or whether the control should be left in its errant state (the default)
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.UI.WinForms.IControlConfigurator">
+            <summary>
+              Interface that understands how to and whether a control can be configured
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.IControlConfigurator.CanConfigureControl(System.Type)">
+            <summary>
+            
+            </summary>
+            <param name="pControlType"></param>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.IControlConfigurator.ConfigureControl(System.Windows.Forms.Control,System.Type)">
+            <summary>
+            
+            </summary>
+            <param name="pControl"></param>
+            <param name="pDataType"></param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.IControlConfigurator.IsListControlType(System.Type)">
+            <summary>
+            
+            </summary>
+            <param name="pControlType"></param>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.IControlConfigurator.GetAssemblyReferenceNames(System.Type)">
+            <summary>
+            
+            </summary>
+            <param name="pControlType"></param>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.IControlConfigurator.ConfigureLabel(System.Windows.Forms.Control)">
+            <summary>
+            
+            </summary>
+            <param name="pLabel"></param>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.IControlConfigurator.PreferredLabelType">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.UI.WinForms.BindingDescriptor">
+             <summary>
+             Abstract (MustInherit in Visual Basic) class that 
+             encapsulates the metadata about a binding between an object property and a UI control.
+               <seealso cref="T:IdeaBlade.UI.WinForms.BindingManager"/>
+             </summary>
+             <remarks>
+               In addition to the bound UI control, a <b>BindingDescriptor</b> contains 
+               the <see cref="P:IdeaBlade.UI.WinForms.BindingDescriptor.ViewDescriptor"/> and <see cref="P:IdeaBlade.UI.WinForms.BindingDescriptor.DataConverter"/> for the binding.
+             <para><b>Derived classes:</b></para>
+             <list type="table">
+             <listheader>
+             <term>Class</term>
+             <description>Description</description>
+             </listheader>
+             <item>
+               <term><see cref="T:IdeaBlade.UI.WinForms.ControlBindingDescriptor"/></term>
+               <description>A BindingDescriptor for a non-grid control.</description>
+             </item>
+             <item>
+               <term><see cref="T:IdeaBlade.UI.WinForms.GridBindingDescriptor"/></term>
+               <description>A BindingDescriptor for a grid control.</description>
+             </item>
+            </list>
+             </remarks>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.BindingDescriptor.#ctor(IdeaBlade.UI.ViewDescriptor)">
+            <summary>
+            Constructs a BindingDescriptor from a ViewDescriptor.
+            </summary>
+            <param name="pViewDescriptor"></param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.BindingDescriptor.#ctor(IdeaBlade.UI.ViewDescriptor,System.Windows.Forms.DataSourceUpdateMode)">
+            <summary>
+              Constructs a BindingDescriptor from a ViewDescriptor.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.BindingDescriptor.SuspendRefresh">
+            <summary>
+              Suspend refreshing.
+              Prevent UI redraw and improve performance when setting multiple properties
+              on the ViewDescriptor or DataConverter.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.BindingDescriptor.ResumeRefresh">
+            <summary>
+              Resume refreshing.
+              This will fire a single refresh event if the data is dirty.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.BindingDescriptor.Refresh">
+            <summary>
+              Manually refreshes the binding with the current properties.
+              This is automatically handled by the framework when a property on
+              the ViewDescriptor or DataConverter changes.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.BindingDescriptor.RefreshCore">
+            <summary>
+              Refreshes the binding with the current properties.
+              Typically used when some aspect of the converter changes.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.BindingDescriptor.OnError(IdeaBlade.UI.WinForms.BindingErrorEventArgs)">
+            <summary>
+            Raises the <see cref="E:IdeaBlade.UI.WinForms.BindingDescriptor.Error"/> event
+            </summary>
+            <param name="pArgs"></param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.BindingDescriptor.Dispose">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.BindingDescriptor.Dispose(System.Boolean)">
+            <summary>
+            
+            </summary>
+            <param name="pDisposing"></param>
+        </member>
+        <member name="E:IdeaBlade.UI.WinForms.BindingDescriptor.Refreshed">
+            <summary>
+              Fires after a binding has been refreshed.  You may want to use this to customize the control
+              after its properties have been initialized by databinding.
+            </summary>
+        </member>
+        <member name="E:IdeaBlade.UI.WinForms.BindingDescriptor.Error">
+            <summary>
+            Fires if an error occurs during the binding process.  You may want to use this to handle
+            UI errors in a customized fashion
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.BindingDescriptor.ViewDescriptor">
+            <summary>
+              Gets the ViewDescriptor for this binding.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.BindingDescriptor.DataSourceUpdateMode">
+            <summary>
+            Gets or sets the DataSourceUpdateMode for this binding; usually DataSourceUpdateMode.OnValidation
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.BindingDescriptor.DataConverter">
+            <summary>
+              Gets or sets the Converter for this binding.
+              Setting the converter automatically causes the binding to refresh.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.BindingDescriptor.CancelEditOnError">
+            <summary>
+             Determines whether the edit to a control is cancelled, causing the control to revert to its earlier
+             state after an error or whether the control should be left in its errant state (the default)
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.UI.WinForms.GridBindingManager">
+             <summary>
+               Abstract (MustInherit in Visual Basic) class that 
+               manages the data binding between a list of business objects and a grid control.
+               <seealso cref="T:IdeaBlade.Util.BindableList`1"/>
+             </summary>
+             <remarks>
+             <para><b>Derived classes:</b></para>
+             <list type="table">
+             <listheader>
+             <term>Class</term>
+             <description>Description</description>
+             </listheader>
+             <item>
+               <term><see cref="T:IdeaBlade.UI.WinForms.DotnetControls.DataGridBindingManager">DataGridBindingManager</see></term>
+               <description>Manages the data binding between a list of business objects and a 
+               .NET <see cref="T:System.Windows.Forms.DataGrid"/>.</description>
+             </item>
+             <item>
+               <term><see cref="T:IdeaBlade.UI.WinForms.DotnetControls.DataGridViewBindingManager">DataGridViewBindingManager</see></term>
+               <description>Manages the data binding between a list of business objects and a 
+               .NET <see cref="T:System.Windows.Forms.DataGridView"/>.</description>
+             </item>
+             <item>
+               <term><see cref="T:IdeaBlade.UI.WinForms.InfragisticsControls.UltraGridBindingManager">UltraGridBindingManager</see></term>
+               <description>Manages the data binding between a list of business objects and an 
+               Infragistics UltraGrid.</description>
+             </item>
+             <item>
+               <term><see cref="T:IdeaBlade.UI.WinForms.DevExpressControls.XtraGridBindingManager">XtraGridBindingManager</see></term>
+               <description>Manages the data binding between a list of business objects and a 
+               Developer Express XtraGrid.</description>
+             </item>
+            </list>
+             </remarks>
+        </member>
+        <member name="T:IdeaBlade.UI.WinForms.BindingManager">
+            <summary>
+              Abstract (MustInherit in Visual Basic) class that 
+              manages the data binding between a business object and a set of UI controls.
+            </summary>
+            <remarks>
+            </remarks>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.BindingManager.#ctor">
+            <summary>
+              Constructs a new BindingManager.
+            </summary>
+            <remarks>
+            Beware: potential memory leak if fail to dispose of manager.
+            Prefer <see cref="M:IdeaBlade.UI.WinForms.BindingManager.#ctor(System.ComponentModel.IContainer)"/>.
+            </remarks>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.BindingManager.#ctor(System.ComponentModel.IContainer)">
+            <summary>
+              Constructs a BindingManager and adds to parent control's components
+            </summary>
+            <remarks>
+            Parent control will dispose of this manager.
+            </remarks>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.BindingManager.OnBindingSourceChanged">
+            <summary>
+            Re-bind when BindingSource changes.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.BindingManager.OnDataSourceChanged">
+            <summary>
+            Manage bindings when the DataSource changes.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.BindingManager.BeginInit">
+            <summary>
+              Signals the object that initialization is starting.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.BindingManager.EndInit">
+            <summary>
+              Signals the object that initialization is complete.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.BindingManager.CreateObjRef(System.Type)">
+            <summary>
+              For internal use only.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.BindingManager.GetLifetimeService">
+            <summary>
+              For internal use only.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.BindingManager.InitializeLifetimeService">
+            <summary>
+              For internal use only.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.BindingManager.Bind(IdeaBlade.UI.WinForms.BindingDescriptor)">
+            <summary>
+             Creates an <see cref="T:IdeaBlade.UI.WinForms.IdeaBladeBinding"/> for the BindingDescriptor.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.BindingManager.Unbind(IdeaBlade.UI.WinForms.BindingDescriptor)">
+            <summary>
+              Unbinds the BindingDescriptor.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.BindingManager.BindAll">
+            <summary>
+              Creates an <see cref="T:IdeaBlade.UI.WinForms.IdeaBladeBinding"/> for all BindingDescriptors.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.BindingManager.UnbindAll">
+            <summary>
+              Unbinds all BindingDescriptors.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.BindingManager.UpdateBindingSourceDependencies">
+            <summary>
+            Updates dependent settings when the BindingSource is set or changed.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.BindingManager.UpdatePropertyDescriptors(System.Boolean)">
+            <summary>
+            Update the PropertyDescriptorList describing the DataSource.
+            </summary>
+            <param name="pForceUpdate"></param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.BindingManager.GetBindingSourceItemType(System.Windows.Forms.BindingSource)">
+            <summary>
+            Retrieve the Type held in the specified BindingSource <see cref="P:System.Windows.Forms.BindingSource.DataSource"/>, or 
+            <see cref="P:System.Windows.Forms.BindingSource.DataMember"/> if assigned.
+            </summary>
+            <param name="pBindingSource"></param>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.BindingManager.BuildEmptyDataSource(System.Type)">
+            <summary>
+            Builds a strongly typed <see cref="T:IdeaBlade.Util.BindableList`1()"/> of the specified Type.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.BindingManager.BindingSourceDataSourceChangedHandler(System.Object,System.EventArgs)">
+            <summary>
+            Event handler that is called when the BindingSource's DataSource is changed.
+            </summary>
+            <param name="sender">The binding source instance</param>
+            <param name="e">Event data</param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.BindingManager.BindingSourceListChangedHandler(System.Object,System.ComponentModel.ListChangedEventArgs)">
+            <summary>
+            
+            </summary>
+            <param name="pSender"></param>
+            <param name="pArgs"></param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.BindingManager.DescriptorsChangedHandler(System.Object,System.ComponentModel.CollectionChangeEventArgs)">
+            <summary>
+              Handles the CollectionChanging event on the binding descriptor collection.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.BindingManager.Dispose(System.Boolean)">
+            <summary>
+            See <see cref="M:System.ComponentModel.Component.Dispose(System.Boolean)"/>.
+            </summary>
+            <param name="disposing"></param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.BindingManager.CreateBindingDescriptorCollection">
+            <summary>
+              Creates the strongly typed binding descriptor collection.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.BindingManager.BindCore(IdeaBlade.UI.WinForms.BindingDescriptor)">
+            <summary>
+              Bind template method to be implemented on subclassed binders.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.BindingManager.UnbindCore(IdeaBlade.UI.WinForms.BindingDescriptor)">
+            <summary>
+              Unbind template method to be implemented on subclassed binders.
+            </summary>
+        </member>
+        <member name="F:IdeaBlade.UI.WinForms.BindingManager.mHack">
+            <summary>
+            Workaround for a .NET bug where the creation of a new XmlSerializer fails if it is
+            called late in an InitializeComponent call (usually in code dealing with DataBinding)
+            One specific example of this is during the configuration of column styles in a .NET datagrid. 
+            The idea here is that all BindingManager creation calls will occur before any binding logic.
+            This is only a hack and other edge conditions may require the XmlSerializer to be created
+            even earlier.  
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.BindingManager.BindingSource">
+            <summary>
+            Gets or sets the <see cref="T:System.Windows.Forms.BindingSource"/> used by the binder.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.BindingManager.IsDesignMode">
+            <summary>
+            Used as a reliable way to indicate when running in designer (so that OnBindingSourceChanged
+            logic doesn't kick in and remove descriptors).
+            Do not change this without extensive re-testing of the OnBindingSourceChanged logic!
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.BindingManager.CurrencyManager">
+            <summary>
+              Gets the <see cref="T:System.Windows.Forms.CurrencyManager"/> which manages the bindings.
+            </summary>
+            <remarks>
+            </remarks>
+            <example><code lang="C#">
+
+// This example shows use of CurrencyManager to navigate among customer objects
+
+// Create the BindingManager and BindableList
+PersistenceManager pm = PersistenceManager.DefaultManager;
+ControlBindingManager mgr = new ControlBindingManager(typeof(Customer));
+BindableList&lt;Customer&gt; custList = new BindableList&lt;Customer&gt;();
+
+// Set the DataSource
+mgr.BindingSource.DataSource = custList;
+
+// Add descriptors for the bound properties
+mgr.Descriptors.Add(this.textBox1, "ContactName");
+mgr.Descriptors.Add(this.textBox2,  "Phone");
+
+// Add all Customers to the BindableList
+custList.AddRange(pm.GetEntities&lt;Customer&gt;());
+
+// Setup event handlers for "next" and "previous" buttons
+btnNext.Click += new EventHandler(btnNext_Click);
+btnPrev.Click += new EventHandler(btnPrev_Click);
+
+// sample button handlers
+private void btnNext_Click(object sender, EventArgs e) {
+   mgr.CurrencyManager.Position += 1;
+}
+private void btnPrev_Click(object sender, EventArgs e) {
+   mgr.CurrencyManager.Position -= 1;
+}
+
+	  </code></example><example><code lang="VB">
+
+' This example shows use of CurrencyManager to navigate among customer objects
+
+' Create the BindingManager and BindableList
+Dim pm As PersistenceManager = PersistenceManager.DefaultManager
+Dim mgr As New ControlBindingManager(GetType(Customer))
+Dim custList As New BindableList(Of Customer)()
+
+' Set the DataSource
+mgr.BindingSource.DataSource = custList
+
+' Add descriptors for the bound properties
+mgr.Descriptors.Add(Me.TextBox1, "ContactName")
+mgr.Descriptors.Add(Me.TextBox2, "Phone")
+
+' Add all Customers to the BindableList
+custList.AddRange(pm.GetEntities(Of Customer)())
+
+' Setup event handlers for "next" and "previous" buttons
+AddHandler btnNext.Click, AddressOf btnNext_Click
+AddHandler btnPrev.Click, AddressOf btnPrev_Click
+
+' sample button handlers
+Private Sub btnNext_Click(ByVal sender As Object, ByVal e As EventArgs)
+   mgr.CurrencyManager.Position += 1
+End Sub 
+Private Sub btnPrev_Click(ByVal sender As Object, ByVal e As EventArgs)
+   mgr.CurrencyManager.Position -= 1
+End Sub 
+    </code></example>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.BindingManager.DataSource">
+            <summary>
+              Gets the underlying data source used by the binder.
+            </summary>
+            <remarks>
+            Use <see cref="P:IdeaBlade.UI.WinForms.BindingManager.BindingSource"/> to set the binder's data source.  <b>DataSource</b>
+            returns the <see cref="P:System.Windows.Forms.BindingSource.DataSource"/> used.
+            </remarks>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.BindingManager.BoundType">
+            <summary>
+              Gets or sets the type of object to be bound.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.BindingManager.ParentControl">
+            <summary>
+              For internal use only.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.BindingManager.Descriptors">
+            <summary>
+              Gets the collection of bindings managed by this binder.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.BindingManager.Site">
+            <summary>
+              For internal use only.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.BindingManager.Container">
+            <summary>
+              For internal use only.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.BindingManager.SuspendBinding">
+            <summary>
+              True when binding has been suspended.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.GridBindingManager.#ctor">
+            <summary>
+              Constructs an GridBindingManager
+            </summary>
+            <remarks>Beware: potential memory leak if fail to dispose of manager.</remarks>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.GridBindingManager.#ctor(System.ComponentModel.IContainer)">
+            <summary>
+              Constructs an GridBindingManager and adds to parent control's components
+            </summary>
+            <remarks>Parent control will dispose of this manager.</remarks>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.GridBindingManager.BoundControl">
+            <summary>
+              Gets the control that this manager is bound to.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.UI.WinForms.GridBindingDescriptor">
+             <summary>
+             Abstract (MustInherit in Visual Basic) class that encapsulates the metadata about a binding between 
+             an object property and a grid column.
+             <seealso cref="T:IdeaBlade.UI.WinForms.GridBindingManager"/>
+             </summary>
+             <remarks>
+             <para><b>Derived classes:</b></para>
+             <list type="table">
+             <listheader>
+             <term>Class</term>
+             <description>Description</description>
+             </listheader>
+             <item>
+               <term><see cref="T:IdeaBlade.UI.WinForms.DotnetControls.DataGridBindingDescriptor"/></term>
+               <description>A BindingDescriptor for a <see cref="T:System.Windows.Forms.DataGrid"/> control.</description>
+             </item>
+             <item>
+               <term><see cref="T:IdeaBlade.UI.WinForms.DotnetControls.DataGridViewBindingDescriptor"/></term>
+               <description>A BindingDescriptor for a <see cref="T:System.Windows.Forms.DataGridView"/> control.</description>
+             </item>
+             <item>
+               <term><see cref="T:IdeaBlade.UI.WinForms.InfragisticsControls.UltraGridBindingDescriptor"/></term>
+               <description>A BindingDescriptor for an Infragistics UltraGrid control.</description>
+             </item>
+             <item>
+               <term><see cref="T:IdeaBlade.UI.WinForms.DevExpressControls.XtraGridBindingDescriptor"/></term>
+               <description>A BindingDescriptor for a Developer Express XtraGrid control.</description>
+             </item>
+            </list>
+             </remarks>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.GridBindingDescriptor.#ctor(IdeaBlade.UI.ViewDescriptor)">
+            <summary>
+              Constructs a GridBindingDescriptor.
+            </summary>
+        </member>
+        <member name="F:IdeaBlade.UI.WinForms.GridBindingDescriptor.mControlType">
+            <summary>
+              Type of control to use for editing the column data.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.GridBindingDescriptor.ColumnTitle">
+            <summary>
+              Gets the column title for this binding.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.GridBindingDescriptor.ControlType">
+            <summary>
+              Type of control to used to edit data in a GridColumn.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.UI.WinForms.ControlBindingManager">
+            <summary>
+              Manages the data binding between a business object and a set of discrete (non-grid) controls.
+              <seealso cref="T:IdeaBlade.Util.BindableList`1"/>
+              <seealso cref="T:IdeaBlade.UI.WinForms.ControlBindingDescriptor"/>
+            </summary>
+            <remarks>
+            <para>
+            The <see cref="P:IdeaBlade.UI.WinForms.BindingManager.BoundType"/> determines the type of business object to be managed. 
+            The <see cref="T:System.Windows.Forms.BindingSource"/> is the <see cref="T:System.Windows.Forms.BindingSource"/> that contains one or more
+            business objects of the BoundType.
+            Use the <see cref="P:IdeaBlade.UI.WinForms.ControlBindingManager.Descriptors"/> property to add <see cref="T:IdeaBlade.UI.WinForms.ControlBindingDescriptor">ControlBindingDescriptors</see>
+            to bind UI controls to properties of the business object.  
+            Use the <see cref="T:System.Windows.Forms.CurrencyManager"/> property to help synchronize data bindings.
+            </para>
+            </remarks>
+            <example><code lang="C#">
+
+// This example will bind Customer name and phone to TextBox controls
+
+// Create the BindingManager and BindableList
+PersistenceManager pm = PersistenceManager.DefaultManager;
+ControlBindingManager mgr = new ControlBindingManager(typeof(Customer));
+BindableList&lt;Customer&gt; custList = new BindableList&lt;Customer&gt;();
+
+// Set the DataSource
+mgr.BindingSource.DataSource = custList;
+
+// Add descriptors for the bound properties
+mgr.Descriptors.Add(this.textBox1, "ContactName", DataConverter.RequiredString);
+mgr.Descriptors.Add(this.textBox2,  "Phone", new RegexConverter(Editability.Required, @"^\([1-9]\d{2}\)\s?\d{3}\-\d{4}$"));
+
+// Add a Customer to the BindableList
+custList.Add(pm.GetEntity&lt;Customer&gt;(new PrimaryKey(typeof(Customer),1)));
+
+	  </code></example><example><code lang="VB">
+
+' This example will bind Customer name and phone to TextBox controls
+
+' Create the BindingManager and BindableList
+Dim pm As PersistenceManager = PersistenceManager.DefaultManager
+Dim mgr As New ControlBindingManager(GetType(Customer))
+Dim custList As New BindableList(Of Customer)()
+
+' Set the DataSource
+mgr.BindingSource.DataSource = custList
+
+' Add descriptors for the bound properties
+mgr.Descriptors.Add(Me.TextBox1, "ContactName", DataConverter.RequiredString)
+mgr.Descriptors.Add(Me.TextBox2, "Phone", New RegexConverter(Editability.Required, "^(\d{3}-\d{3}-\d{4})*$"))
+
+' Add a Customer to the BindableList
+custList.Add(pm.GetEntity(Of Customer)(New PrimaryKey(GetType(Customer),1)))
+	  </code></example><method name="CurrencyManager">
+	<example><code lang="C#">
+
+// This example shows use of CurrencyManager to navigate among customer objects
+
+// Create the BindingManager and BindableList
+PersistenceManager pm = PersistenceManager.DefaultManager;
+ControlBindingManager mgr = new ControlBindingManager(typeof(Customer));
+BindableList&lt;Customer&gt; custList = new BindableList&lt;Customer&gt;();
+
+// Set the DataSource
+mgr.BindingSource.DataSource = custList;
+
+// Add descriptors for the bound properties
+mgr.Descriptors.Add(this.textBox1, "ContactName");
+mgr.Descriptors.Add(this.textBox2,  "Phone");
+
+// Add all Customers to the BindableList
+custList.AddRange(pm.GetEntities&lt;Customer&gt;());
+
+// Setup event handlers for "next" and "previous" buttons
+btnNext.Click += new EventHandler(btnNext_Click);
+btnPrev.Click += new EventHandler(btnPrev_Click);
+
+// sample button handlers
+private void btnNext_Click(object sender, EventArgs e) {
+   mgr.CurrencyManager.Position += 1;
+}
+private void btnPrev_Click(object sender, EventArgs e) {
+   mgr.CurrencyManager.Position -= 1;
+}
+
+	  </code></example>
+	  <example><code lang="VB">
+
+' This example shows use of CurrencyManager to navigate among customer objects
+
+' Create the BindingManager and BindableList
+Dim pm As PersistenceManager = PersistenceManager.DefaultManager
+Dim mgr As New ControlBindingManager(GetType(Customer))
+Dim custList As New BindableList(Of Customer)()
+
+' Set the DataSource
+mgr.BindingSource.DataSource = custList
+
+' Add descriptors for the bound properties
+mgr.Descriptors.Add(Me.TextBox1, "ContactName")
+mgr.Descriptors.Add(Me.TextBox2, "Phone")
+
+' Add all Customers to the BindableList
+custList.AddRange(pm.GetEntities(Of Customer)())
+
+' Setup event handlers for "next" and "previous" buttons
+AddHandler btnNext.Click, AddressOf btnNext_Click
+AddHandler btnPrev.Click, AddressOf btnPrev_Click
+
+' sample button handlers
+Private Sub btnNext_Click(ByVal sender As Object, ByVal e As EventArgs)
+   mgr.CurrencyManager.Position += 1
+End Sub 
+Private Sub btnPrev_Click(ByVal sender As Object, ByVal e As EventArgs)
+   mgr.CurrencyManager.Position -= 1
+End Sub 
+    </code></example>		
+   </method>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.ControlBindingManager.#ctor">
+            <overloads>Constructs a ControlBindingManager.</overloads>
+             <summary>
+               Constructs a ControlBindingManager with a default data source.
+             </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.ControlBindingManager.#ctor(System.ComponentModel.IContainer)">
+            <summary>
+              Constructs an ControlBindingManager and adds to parent control's components
+            </summary>
+            <param name="pContainer">Parent control's container</param>
+            <remarks>Parent control will dispose of this manager.</remarks>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.ControlBindingManager.#ctor(System.Type)">
+            <summary>
+              Constructs a ControlBindingManager with a default data source.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.ControlBindingManager.#ctor(System.Windows.Forms.BindingSource)">
+            <summary>
+              Constructs a ControlBindingManager using the specified BindingSource
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.ControlBindingManager.#ctor(System.Object)">
+            <summary>
+              Constructs a ControlBindingManager using the specified data source.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.ControlBindingManager.CreateBindingDescriptorCollection">
+            <summary>
+              Creates the strongly typed binding collection.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.ControlBindingManager.BindCore(IdeaBlade.UI.WinForms.BindingDescriptor)">
+            <summary>
+              Binds the data source to the control.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.ControlBindingManager.UnbindCore(IdeaBlade.UI.WinForms.BindingDescriptor)">
+            <summary>
+              Unbinds the data source from the control.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.ControlBindingManager.Descriptors">
+            <summary>
+              Gets the collection of bindings managed by this ControlBindingManager.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.UI.WinForms.ThreeStateBooleanConverter">
+            <summary>
+              Used to parse, format, and validate boolean values.
+              It differs from a normal BooleanConverter by being able to handle three valued logic:
+              true, false, and indeterminate (or null/DBNull).
+            </summary>
+            <remarks>
+            <para>The static (Shared in Visual Basic) boolean converters defined in <see cref="T:IdeaBlade.UI.DataConverter"/>
+            are actually <b>ThreeStateBooleanConverters</b>.
+            </para>
+            </remarks>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.ThreeStateBooleanConverter.#ctor">
+            <summary>
+              Constructs a ThreeStateBooleanConverter with optional editability
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.ThreeStateBooleanConverter.#ctor(IdeaBlade.UI.Editability)">
+            <summary>
+              Constructs a ThreeStateBooleanConverter.
+            </summary>
+            <param name="pEditability">
+              Editability of the field.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.ThreeStateBooleanConverter.ParseCore(System.Type,System.Object)">
+            <summary>
+              Parses a value into a boolean.
+              See DataConverter.<see cref="M:IdeaBlade.UI.DataConverter.Parse(System.Type,System.Object)"/>
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.ThreeStateBooleanConverter.FormatCore(System.Type,System.Object)">
+            <summary>
+              Formats a boolean value.
+              See DataConverter.<see cref="M:IdeaBlade.UI.DataConverter.Format(System.Type,System.Object)"/>
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.ThreeStateBooleanConverter.ThreeState">
+            <summary>
+              Indicates whether the checkbox-style editor will allow three check states rather than two.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.UI.WinForms.ControlFns">
+            <summary>
+              Helper functions when working with controls.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.ControlFns.IsAncestorOf(System.Windows.Forms.Control,System.Windows.Forms.Control)">
+            <summary>
+              Returns true if the first control logically contains the second.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.ControlFns.IsDescendantOf(System.Windows.Forms.Control,System.Windows.Forms.Control)">
+            <summary>
+              Returns true if the second control logically contains the first.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.UI.WinForms.BindingDescriptorCollection">
+             <summary>
+               Base class for all strongly typed binding collections.
+             </summary>
+             <remarks>
+             <para><b>Derived classes:</b></para>
+             <list type="table">
+             <listheader>
+             <term>Class</term>
+             <description>Description</description>
+             </listheader>
+             <item>
+               <term><see cref="T:IdeaBlade.UI.WinForms.ControlBindingDescriptorCollection"/></term>
+               <description>A strongly typed collection of ControlBindingDescriptors.</description>
+             </item>
+             <item>
+               <term><see cref="T:IdeaBlade.UI.WinForms.DotnetControls.DataGridBindingDescriptorCollection"/></term>
+               <description>A strongly typed collection of DataGridBindingDescriptors.</description>
+             </item>
+             <item>
+               <term><see cref="T:IdeaBlade.UI.WinForms.DevExpressControls.XtraGridBindingDescriptorCollection"/></term>
+               <description>A strongly typed collection of XtraGridBindingDescriptors.</description>
+             </item>
+            </list>
+             </remarks>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.BindingDescriptorCollection.#ctor">
+            <summary>
+              Constructs a BindingDescriptorCollection.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.BindingDescriptorCollection.AddRange(System.Collections.IList)">
+            <summary>
+              Adds a list of bindings to the collection.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.BindingDescriptorCollection.Get(System.String)">
+            <summary>
+              Get the Binding for the corresponding property path.
+              If multiple controls bind to the same property, returns the first one found.
+            </summary>
+            <param name="pPropertyPath">
+              Period delimited path of the property. e.g. "BirthDate" or "Address.City"
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.BindingDescriptorCollection.GetByBindingName(System.String,System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="pBindingName"></param>
+            <param name="pIndex"></param>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.BindingDescriptorCollection.IndexOfBindingName(System.String)">
+            <summary>
+            Returns the first index of a Binding with the specified binding name
+            Returns -1 if not found;
+            </summary>
+            <param name="pBindingName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.BindingDescriptorCollection.IndexOf(IdeaBlade.UI.WinForms.BindingDescriptor)">
+            <summary>
+            Return the index of the specified bindingDescriptor or -1 if not found
+            </summary>
+            <param name="pBindingDescriptor"></param>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.BindingDescriptorCollection.SetBoundType(System.Type)">
+            <summary>
+              Sets the type that this collection binds to.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.BindingDescriptorCollection.OnCollectionChanging(System.ComponentModel.CollectionChangeAction,System.Object)">
+            <summary>
+              Raises the CollectionChanging event.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.BindingDescriptorCollection.OnInsert(System.Int32,System.Object)">
+            <summary>
+              Raises the CollectionChanging event with the Add action.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.BindingDescriptorCollection.OnClear">
+            <summary>
+              Raises the CollectionChanging event with the Refresh action.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.BindingDescriptorCollection.OnRemove(System.Int32,System.Object)">
+            <summary>
+              Raises the CollectionChanging event with the Remove action.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.BindingDescriptorCollection.OnValidate(System.Object)">
+            <summary>
+              Validates the object is the correct type for this collection.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.BindingDescriptorCollection.Item(System.Int32)">
+            <summary>
+              Get the BindingDescriptor at the specified index.
+            </summary>
+        </member>
+        <member name="E:IdeaBlade.UI.WinForms.BindingDescriptorCollection.CollectionChanging">
+            <summary>
+              Occurs when the collection has changed.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.BindingDescriptorCollection.BoundType">
+            <summary>
+              Type of object the bindings are bound to.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.BindingDescriptorCollection.CollectionType">
+            <summary>
+              Type of object this collection accepts.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.UI.WinForms.UIAssemblyFns">
+            <summary>
+              
+            </summary>
+        </member>
+        <member name="F:IdeaBlade.UI.WinForms.UIAssemblyFns.AssemblyQualifier">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.UIAssemblyFns.LoadQualified(System.String)">
+            <summary>
+            Qualifies and then loads a fully qualified version of a simple assembly
+            </summary>
+            <param name="pSimpleAssemblyName"></param>
+        </member>
+        <member name="T:IdeaBlade.UI.WinForms.BindingErrorEventArgs">
+            <summary>
+            Arguments to a <see cref="E:IdeaBlade.UI.WinForms.BindingDescriptor.Error"/> event.  
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.BindingErrorEventArgs.#ctor(System.Windows.Forms.BindingCompleteEventArgs)">
+            <summary>
+            Initialize an instance of this class.
+            </summary>
+            <param name="pArgs"></param>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.BindingErrorEventArgs.CancelEdit">
+            <summary>
+             Determines whether the edit to a control is cancelled, causing the control to revert to its earlier
+             state after an error (true) or whether the control should be left in its errant state (false)
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.BindingErrorEventArgs.Handled">
+            <summary>
+            Set to true if the exception has been handled, otherwise the exception will be thrown back to the caller.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.UI.WinForms.WaitCursor">
+            <summary>
+              Displays a wait cursor for a form.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.WaitCursor.#ctor(System.Windows.Forms.Control)">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.WaitCursor.Dispose">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.UI.WinForms.UIBinderMap">
+            <summary>
+             Used by the DevForce framework to map UI controls to data and column binders.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.UIBinderMap.#ctor">
+            <summary>
+              Constructs an instance of the UIBinderMap class.
+            </summary>    
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.UIBinderMap.Clear">
+            <summary>
+            Clear current mappings.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.UIBinderMap.UpdateMap(System.String,System.Type)">
+            <summary>
+            Map binders of the specified type from an assembly, after first loading the assembly.
+            </summary>
+            <param name="pAssemblyName"></param>
+            <param name="pBinderBaseType"></param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.UIBinderMap.UpdateMap(System.Reflection.Assembly,System.Type)">
+            <summary>
+            Map binders of the specified type from an assembly.
+            </summary>
+            <param name="pAssembly"></param>
+            <param name="pBinderBaseType"></param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.UIBinderMap.UpdateMap(System.Type)">
+            <summary>
+            Map the specified data or column binder to have DevForce use the custom binder.
+            </summary>
+            <param name="pBinderType"></param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.UIBinderMap.UpdateMap(System.Type,System.Boolean)">
+            <summary>
+            For internal use only.  Adds the binder and base classes to the map.  Also clears
+            unused entries from the map if specified.
+            </summary>
+            <param name="pBinderType"></param>
+            <param name="pRemovedUnused"></param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.UIBinderMap.IncludesDesignableBindersFrom(System.Reflection.Assembly,System.Type)">
+            <summary>
+            Determines whether an assembly contains binders available at design time.
+            </summary>
+            <param name="pAssembly"></param>
+            <param name="pBinderType"></param>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.UIBinderMap.GetConfigurator(IdeaBlade.UI.WinForms.IUIBinder)">
+            <summary>
+            Returns the <see cref="T:IdeaBlade.UI.WinForms.IControlConfigurator"/> for a binder.
+            </summary>
+            <param name="pBinder"></param>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.UIBinderMap.GetConfigurator(System.Type)">
+            <summary>
+            Returns the <see cref="T:IdeaBlade.UI.WinForms.IControlConfigurator"/> for a control type.
+            </summary>
+            <param name="pControlType"></param>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.UIBinderMap.GetControlAssemblies">
+            <summary>
+            Returns all of the control assemblies that are currently handled by this binder map.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.UIBinderMap.GetBinderAssemblies">
+            <summary>
+            Returns all of the binder assemblies that are currently handled by this binder map.
+            </summary>
+            <returns></returns>
+            Note this is not necessarily the same list of assemblies as
+            contained in the mSuiteBinderAssemblies list.
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.UIBinderMap.GetAllBinderRelatedAssemblies">
+            <summary>
+            Returns all binder and related assemblies in this binder map.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.UIBinderMap.GetBinder(System.Type)">
+            <summary>
+              Get the binder for the corresponding control type.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.UIBinderMap.GetBinderOfType(System.Type)">
+            <summary>
+              Get the specified binder.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.UIBinderMap.GetControlTypes">
+            <summary>
+              Get a list of the control types that are mapped.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.UIBinderMap.GetBinders">
+            <summary>
+              Get a list of the binders that are mapped.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.UI.WinForms.IUIDataBinder">
+            <summary>
+              Interface that understands suitability of binding to a control.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.UI.WinForms.IUIBinder">
+            <summary>
+              Interface that specifies the type of control a binder can be used for.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.IUIBinder.ControlType">
+            <summary>
+              Gets the type of control this binder is capable of binding to.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.IUIDataBinder.GetFitness(IdeaBlade.UI.IDataConverter)">
+            <summary>
+              Returns the fitness of using this binder for the given converter.
+              See <see cref="T:IdeaBlade.UI.WinForms.UIFitness"/>.
+            </summary>
+            <param name="pConverter">
+              Converter that specifies formatting, syntactic, and semantic validation.
+            </param>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.IUIDataBinder.PreferredControlType">
+            <summary>
+              Gets or sets the preferred control type of this binder.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.UI.WinForms.ControlDataBinder">
+            <summary>
+              Internal use only.  Base class that understands how to bind to an individual control.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.UI.WinForms.DataBinder">
+            <summary>
+              Base class that understands how to bind to an individual control.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DataBinder.GetFitness(IdeaBlade.UI.IDataConverter)">
+            <summary>
+              Returns the effective fitness of using this binder for the specified converter.
+              See <see cref="T:IdeaBlade.UI.WinForms.UIFitness"/>.  This can be adjusted by calling AdjustBinderFitness
+              on the IUIDataBinderMap.
+            </summary>
+            <param name="pConverter">
+              Converter that specifies formatting, syntactic, and semantic validation.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DataBinder.GetBaseFitnessInternal(IdeaBlade.UI.IDataConverter)">
+            <summary>
+              For internal use only.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DataBinder.GetBaseFitness(IdeaBlade.UI.IDataConverter)">
+            <summary>
+              Returns the fitness of using this binder for the specified converter.
+              See <see cref="T:IdeaBlade.UI.WinForms.UIFitness"/>.  Called by GetFitness which then applies
+              any global modifiers before returning the effective fitness.
+            </summary>
+            <param name="pConverter">
+              Converter that specifies formatting, syntactic, and semantic validation.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DataBinder.GetStandardTextBoxFitness(IdeaBlade.UI.IDataConverter)">
+            <summary>
+              Returns the fitness for a standard textbox style control.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DataBinder.GetStandardComboBoxFitness(IdeaBlade.UI.IDataConverter)">
+            <summary>
+              Returns the fitness for a standard combobox style control.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DataBinder.GetStandardDatePickerFitness(IdeaBlade.UI.IDataConverter)">
+            <summary>
+              Returns the fitness for a standard date picker style control.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DataBinder.GetStandardCheckBoxFitness(IdeaBlade.UI.IDataConverter)">
+            <summary>
+              Returns the fitness for a standard checkbox style control.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DataBinder.ResolvablePropertyPath(System.Object,System.String)">
+            <summary>
+              Returns whether or not the property path can be fully navigated.
+              i.e. if null is encountered during navigation of the path.
+              A null value if permitted from the final property accessor because that
+              is the value of the property pathy and not the navigation of it.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.DataBinder.IsNestedPropertyPath(System.String)">
+            <summary>
+              Returns if the property path is a nested path.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.DataBinder.ControlType">
+            <summary>
+              The base type of control this binder works with.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.DataBinder.PreferredControlType">
+            <summary>
+              The preferred control type of this binder.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.DataBinder.BinderMap">
+            <summary>
+              Get the map that manages this binder.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.ControlDataBinder.AlreadyBound(System.Windows.Forms.Control)">
+            <summary>
+              Determines if the specified control has been bound.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.ControlDataBinder.Bind(System.Object,IdeaBlade.UI.WinForms.ControlBindingDescriptor)">
+            <summary>
+              Binds a control to a datasource using information in the BindingDescriptor.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.ControlDataBinder.Unbind(System.Windows.Forms.Control)">
+            <summary>
+              Unbinds a control.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.ControlDataBinder.UpdateBindingDescriptor(IdeaBlade.UI.WinForms.BindingDescriptor)">
+            <summary>
+            
+            </summary>
+            <param name="pBindingDescriptor"></param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.ControlDataBinder.InitializeControl(System.Windows.Forms.Control,IdeaBlade.UI.ViewDescriptor)">
+            <summary>
+              Initializes the properties of a control before being bound.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.ControlDataBinder.UnInitializeControl(System.Windows.Forms.Control)">
+            <summary>
+              Releases and resources or event handlers on a control after being unbound.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.ControlDataBinder.SetControlEditability(System.Windows.Forms.Control,IdeaBlade.UI.Editability)">
+            <summary>
+              Configures the control to best match the editability requirement.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.ControlDataBinder.GetControlValue(System.Windows.Forms.Control)">
+            <summary>
+              Gets the value of the data bound property for the specified control.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.ControlDataBinder.SetControlValue(System.Windows.Forms.Control,System.Object)">
+            <summary>
+              Sets the value of the data bound property for the specified control.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.ControlDataBinder.ParseHandler(System.Object,System.Windows.Forms.ConvertEventArgs)">
+            <summary>
+              Delegates the parse handler on the binding to the converter.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.ControlDataBinder.FormatHandler(System.Object,System.Windows.Forms.ConvertEventArgs)">
+            <summary>
+              Delegates the format handler on the binding to the converter.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.ControlDataBinder.ValidatingHandler(System.Object,System.ComponentModel.CancelEventArgs)">
+            <summary>
+              Delegates the validating handler on the binding to the converter.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.ControlDataBinder.BinderMap">
+            <summary>
+              Get the map that manages this binder.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.ControlDataBinder.BindingPropertyName">
+            <summary>
+              Property on the control that is set during binding.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.ControlDataBinder.ControlValueProperty">
+            <summary>
+              Gets the PropertyInfo for the bound property.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.UI.WinForms.FontFns">
+            <summary>
+              Helper functions for working with fonts.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.FontFns.AdjustFontSize(System.Drawing.Font,System.Int32)">
+            <summary>
+              Returns the font with an additive point size adjustment.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.FontFns.AdjustFontStyle(System.Drawing.Font,System.Drawing.FontStyle)">
+            <summary>
+              Returns the font with the new font style.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.FontFns.AdjustFont(System.Drawing.Font,System.Int32,System.Drawing.FontStyle)">
+            <summary>
+              Returns the font with an additive point size adjustment and new style.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.FontFns.FontFromString(System.String)">
+            <summary>
+              Returns the font from it's description.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.UI.WinForms.ColorFns">
+            <summary>
+              Utility functions for manipulating colors.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.ColorFns.AdjustColor(System.Drawing.Color,System.Int32,System.Int32,System.Int32)">
+            <summary>
+              Additive color adjustment.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.ColorFns.ScaleColor(System.Drawing.Color,System.Double)">
+            <summary>
+              Multiplicative color adjustment.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.UI.WinForms.UIFitness">
+            <summary>
+              Set of enumerated constants that describe the fitness of a binder
+              for a specified converter.
+            </summary>
+        </member>
+        <member name="F:IdeaBlade.UI.WinForms.UIFitness.Maximum">
+            <summary>Maximum fitness</summary>
+        </member>
+        <member name="F:IdeaBlade.UI.WinForms.UIFitness.VeryHigh">
+            <summary>Very high fitness</summary>
+        </member>
+        <member name="F:IdeaBlade.UI.WinForms.UIFitness.High">
+            <summary>High fitness</summary>
+        </member>
+        <member name="F:IdeaBlade.UI.WinForms.UIFitness.ModeratelyHigh">
+            <summary>Moderately high fitness</summary>
+        </member>
+        <member name="F:IdeaBlade.UI.WinForms.UIFitness.Moderate">
+            <summary>Moderate fitness</summary>
+        </member>
+        <member name="F:IdeaBlade.UI.WinForms.UIFitness.ModeratelyLow">
+            <summary>Moderately low fitness</summary>
+        </member>
+        <member name="F:IdeaBlade.UI.WinForms.UIFitness.Low">
+            <summary>Low fitness</summary>
+        </member>
+        <member name="F:IdeaBlade.UI.WinForms.UIFitness.VeryLow">
+            <summary>Very low fitness</summary>
+        </member>
+        <member name="F:IdeaBlade.UI.WinForms.UIFitness.Minimum">
+            <summary>Minimum fitness</summary>
+        </member>
+        <member name="F:IdeaBlade.UI.WinForms.UIFitness.None">
+            <summary>No fitness</summary>
+        </member>
+        <member name="F:IdeaBlade.UI.WinForms.UIFitness.Increment">
+            <summary>Increment used to tweak fitnesses</summary>
+        </member>
+        <member name="F:IdeaBlade.UI.WinForms.UIFitness.PreferredAssemblyWeight">
+            <summary>Fitness adjustment for preferring entire assemblies</summary>
+        </member>
+        <member name="T:IdeaBlade.UI.WinForms.ControlBindingDescriptorCollection">
+            <summary>
+              A strongly typed collection of <see cref="T:IdeaBlade.UI.WinForms.ControlBindingDescriptor">ControlBindingDescriptors</see>.
+              <seealso cref="T:IdeaBlade.UI.WinForms.ControlBindingDescriptor"/>
+              <seealso cref="T:IdeaBlade.UI.WinForms.ControlBindingManager"/>
+            </summary>
+            <remarks>
+            The <b>ControlBindingDescriptorCollection</b> is normally accessed
+            from a <see cref="T:IdeaBlade.UI.WinForms.ControlBindingManager"/> through the <see cref="P:IdeaBlade.UI.WinForms.ControlBindingManager.Descriptors"/>
+            property.  BindingDescriptors are added to the collection through one of the many overloaded
+            <b>Add</b> methods. Use the <see cref="M:IdeaBlade.UI.WinForms.ControlBindingDescriptorCollection.Get(System.Windows.Forms.Control)"/> method to retrieve an existing 
+            descriptor.  Changes made to an existing BindingDescriptor will be immediately
+            reflected in the data binding.
+            </remarks>
+            <example><code lang="C#">
+
+// Example showing adding and retrieval of descriptors from a ControlBindingDescriptorCollection
+PersistenceManager pm = PersistenceManager.DefaultManager;
+ControlBindingManager mgr = new ControlBindingManager(typeof(Employee));
+
+// retrieve an employee and add to the BindingManager's datasource
+Employee emp = pm.GetEntity&lt;Employee&gt;(new PrimaryKey(typeof(Employee),1));
+mgr.DataSource.Add(emp);
+
+// add bindings for first and last name
+mgr.Descriptors.Add(this.textBox1, "FirstName", new TextConverter(Editability.ReadOnly, 30));
+mgr.Descriptors.Add(this.textBox2, "LastName", new TextConverter(Editability.Required, 40));
+
+// Example of a change to an existing binding --
+//   if the user is an administrator, change the editability of the first name
+if (Thread.CurrentPrincipal.IsInRole("Admin")) {
+	ControlBindingDescriptor bd1 = mgr.Descriptors.Get("FirstName");
+	bd1.DataConverter.Editability = Editability.Required;
+}
+
+	</code></example><example><code lang="VB">
+
+' Example showing adding and retrieval of descriptors from a ControlBindingDescriptorCollection
+Dim pm As PersistenceManager = PersistenceManager.DefaultManager
+Dim mgr As New ControlBindingManager(GetType(Employee))
+
+' retrieve an employee and add to the BindingManager's datasource
+Dim emp As Employee = pm.GetEntity(Of Employee)(New PrimaryKey(GetType(Employee),1))
+mgr.DataSource.Add(emp)
+
+' add bindings for first and last name
+mgr.Descriptors.Add(Me.TextBox1, "FirstName", New TextConverter(Editability.ReadOnly, 30))
+mgr.Descriptors.Add(Me.TextBox2, "LastName", New TextConverter(Editability.Required, 40))
+
+' Example of a change to an existing binding --
+'   if the user is an administrator, change the editability of the first name
+If System.Threading.Thread.CurrentPrincipal.IsInRole("Admin") Then
+   Dim bd1 As ControlBindingDescriptor = mgr.Descriptors.Get("FirstName")
+   bd1.DataConverter.Editability = Editability.Required
+End If
+	</code></example>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.ControlBindingDescriptorCollection.#ctor">
+            <summary>
+              Constructs a ControlBindingDescriptorCollection.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.ControlBindingDescriptorCollection.Add(System.Windows.Forms.Control,System.String)">
+            <summary>
+              Adds a binding between the specified control and property path.
+            </summary>
+            <param name="pControl">
+              Control used to edit the data.
+            </param>
+            <param name="pPropertyPath">
+              Period delimited path of the property. e.g. "BirthDate" or "Address.City"
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.ControlBindingDescriptorCollection.Add(System.Windows.Forms.Control,System.String,IdeaBlade.UI.IDataConverter)">
+            <summary>
+              Adds a binding between the specified control and property path.
+            </summary>
+            <param name="pControl">
+              Control used to edit the data.
+            </param>
+            <param name="pPropertyPath">
+              Period delimited path of the property. e.g. "BirthDate" or "Address.City"
+            </param>
+            <param name="pConverter">
+              Converter that specifies formatting, syntactic, and semantic validation.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.ControlBindingDescriptorCollection.Add(System.Windows.Forms.Control,IdeaBlade.UI.ViewDescriptor)">
+            <summary>
+              Adds a binding between the specified control and ViewDescriptor.
+            </summary>
+            <param name="pControl">
+              Control used to edit the data.
+            </param>
+            <param name="pViewDescriptor">
+              ViewDescriptor describing the bound property and conversion information.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.ControlBindingDescriptorCollection.Add(IdeaBlade.UI.WinForms.ControlBindingDescriptor)">
+            <summary>
+              Adds a ControlBindingDescriptor to the collection.
+            </summary>
+            <param name="pDescriptor">
+              The ControlBindingDescriptor to add.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.ControlBindingDescriptorCollection.AddGroup(System.Windows.Forms.Control,IdeaBlade.UI.ViewDescriptor)">
+            <summary>
+              Adds bindings for all children of a container control.
+              Typically used for a group of RadioButtons.
+            </summary>
+            <param name="pContainerControl">
+              Containing control.  e.g. a GroupBox.
+            </param>
+            <param name="pViewDescriptor">
+              ViewDescriptor used to bind the child controls.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.ControlBindingDescriptorCollection.AddWithLabel(System.Windows.Forms.Control,System.Windows.Forms.Control,IdeaBlade.UI.ViewDescriptor)">
+            <summary>
+              Adds a binding between the specified control and ViewDescriptor.
+              Sets the text for the label using the display name from the ViewDescriptor.
+            </summary>
+            <param name="pControl">
+              Control used to edit the data.
+            </param>
+            <param name="pLabelControl">
+              Control used as a label for the field.
+            </param>
+            <param name="pViewDescriptor">
+              ViewDescriptor describing the bound property and conversion information.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.ControlBindingDescriptorCollection.AddGroupWithLabel(System.Windows.Forms.Control,System.Windows.Forms.Control,IdeaBlade.UI.ViewDescriptor)">
+            <summary>
+              Adds bindings for all children of a container control.
+            </summary>
+            <param name="pContainerControl">
+              Containing control.  e.g. a GroupBox.
+            </param>
+            <param name="pLabelControl">
+              Control used as a label for the field.
+            </param>
+            <param name="pViewDescriptor">
+              ViewDescriptor used to bind the child controls.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.ControlBindingDescriptorCollection.Get(System.Windows.Forms.Control)">
+            <summary>
+              Get the ControlBindingDescriptor for the corresponding control.
+            </summary>
+            <param name="pControl">
+              Control of interest.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.ControlBindingDescriptorCollection.Get(System.String)">
+            <summary>
+              Get the ControlBindingDescriptor for the corresponding property path.
+              If multiple controls bind to the same property, returns the first one found.
+            </summary>
+            <param name="pPropertyPath">
+              Period delimited path of the property. e.g. "BirthDate" or "Address.City"
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.ControlBindingDescriptorCollection.Remove(IdeaBlade.UI.WinForms.ControlBindingDescriptor)">
+            <summary>
+              Removes the specified ControlBindingDescriptor.
+            </summary>
+            <param name="pDescriptor">
+              ControlBindingDescriptor to remove.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.ControlBindingDescriptorCollection.Remove(System.Windows.Forms.Control)">
+            <summary>
+              Removes the specified ControlBindingDescriptor for the corresponding control.
+            </summary>
+            <param name="pControl">
+              Control of interest.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.ControlBindingDescriptorCollection.Remove(System.String)">
+            <summary>
+              Removes the ControlBindingDescriptor for the corresponding property path.
+              If multiple controls bind to the same property, returns the first one found.
+            </summary>
+            <param name="pPropertyPath">
+              Period delimited path of the property. e.g. "BirthDate" or "Address.City"
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.ControlBindingDescriptorCollection.SetLabelText(System.Windows.Forms.Control,IdeaBlade.UI.ViewDescriptor)">
+            <summary>
+              Sets the Text property of the specified control to the display name
+              in the ViewDescriptor.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.ControlBindingDescriptorCollection.Item(System.Int32)">
+            <summary>
+              Get the ControlBindingDescriptor at the specified index.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.ControlBindingDescriptorCollection.CollectionType">
+            <summary>
+              Type of object this collection accepts.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.UI.WinForms.BaseControlConfigurator">
+            <summary>
+              
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.BaseControlConfigurator.CanConfigureControl(System.Type)">
+            <summary>
+            
+            </summary>
+            <param name="pControlType"></param>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.BaseControlConfigurator.IsListControlType(System.Type)">
+            <summary>
+            
+            </summary>
+            <param name="pControlType"></param>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.BaseControlConfigurator.ConfigureControl(System.Windows.Forms.Control,System.Type)">
+            <summary>
+            
+            </summary>
+            <param name="pControl"></param>
+            <param name="pDataType"></param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.BaseControlConfigurator.GetAssemblyReferenceNames(System.Type)">
+            <summary>
+            
+            </summary>
+            <param name="pControlType"></param>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.BaseControlConfigurator.ConfigureLabel(System.Windows.Forms.Control)">
+            <summary>
+            
+            </summary>
+            <param name="pLabel"></param>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.BaseControlConfigurator.PreferredLabelType">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.BaseControlConfigurator.Instance">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.UI.WinForms.IncludeBinderDelegate">
+            <summary>
+            Delegate that controls whether a binder is available via the UIDataBinderMap GetBinder call
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.UI.WinForms.UIDataBinderMap">
+            <summary>
+             Used by the DevForce framework to map UI controls to data binders.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.UIDataBinderMap.#ctor">
+            <summary>
+              Constructs an instance of the UIDataBinderMap class.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.UIDataBinderMap.GetBinder(IdeaBlade.UI.IDataConverter)">
+            <summary>
+              Get the binder that is the best fit for the specified converter.
+            </summary>
+            <param name="pConverter">
+              Converter that specifies formatting, syntactic, and semantic validation.
+            </param>
+            <remarks>
+            The fitness adjustment is used to return the preferred binder.  See 
+            <see cref="M:IdeaBlade.UI.WinForms.UIDataBinderMap.AdjustBinderFitness(System.Reflection.Assembly,System.Double)"/> for how to set
+            the preferred control suite.
+            </remarks>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.UIDataBinderMap.Clear">
+            <summary>
+            Clear the fitness adjustment settings.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.UIDataBinderMap.ResetAllBinderFitnesses">
+            <summary>
+            Reset all fitness adjustments to default values.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.UIDataBinderMap.AdjustBinderFitness(System.Type,System.Double)">
+            <summary>
+            Adjusts the fitness for a specific binder, so that its associated control
+            type will be preferred over other similar controls.
+            </summary>
+            <param name="pBinderType">
+              Type of binder to adjust.
+            </param>
+            <param name="pAdjustment">
+              Amount of adjustment.
+            </param>
+            <remarks>
+            Typically used to set a bias for a specify binder or control suite.  
+            </remarks>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.UIDataBinderMap.AdjustBinderFitness(System.Reflection.Assembly,System.Double)">
+            <summary>
+            Adjusts the fitness for a specific "binder" assembly, so that associated
+            control types will be preferred over other similar controls.
+            </summary>
+            <param name="pBindersAssembly">Assembly containing data binders</param>
+            <param name="pAdjustment">Amount of adjustment</param>
+            <remarks>
+            Typically used to set a bias for a control suite (such as preferring
+            DeveloperExpress controls over .NET controls).
+            <para>
+            Also see <see cref="M:IdeaBlade.UI.WinForms.ControlBinderMap.MarkPreferredAssembly(System.Reflection.Assembly)"/>.
+            </para>
+            </remarks>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.UIDataBinderMap.GetFitnessAdjustment(System.Type)">
+            <summary>
+              Gets the fitness modifier for the binderType and any subclasses of that type.
+            </summary>
+            <param name="pBinderType">
+              Type of binder of interest.
+            </param>
+            See the <b>AdjustBinderFitness</b> methods for how to set the fitness adjustment.
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.UIDataBinderMap.IncludeBinderDelegate">
+            <summary>
+            Gets or sets the delegate which can be used to determine binder availability.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.UI.WinForms.ImageListConverter">
+            <summary>
+             DataConverter that manages a list of images.
+            </summary>
+            <remarks>
+            <para>
+            This is generally used with a <see cref="T:IdeaBlade.UI.WinForms.DevExpressControls.ClearablePickImage"/>,
+            a Developer Express ImageComboBoxEdit, or similar combo box controls which support images.
+            </para>
+            <para>
+            Use <see cref="P:IdeaBlade.UI.WinForms.ImageListConverter.ImageList"/> to set the list of images.  See the <see cref="T:IdeaBlade.UI.ListConverter"/> overview
+            for other information.
+            </para>
+            </remarks>
+            <example><code lang="C#">
+
+// Example binding to a list of card suits in an ImageComboBoxEdit
+
+// a simple class
+class CardShark {
+  private string mSuit;
+  public string SuitPreference {
+    get { return mSuit; }
+    set { mSuit = value; }
+  }
+}
+
+string[] cards = new string[] {"hearts", "spades", "diamonds", "clubs" };
+this.imageList1.Images.Add(Bitmap.FromFile("heart.bmp"));
+this.imageList1.Images.Add(Bitmap.FromFile("spade.bmp"));
+this.imageList1.Images.Add(Bitmap.FromFile("diamond.bmp"));
+this.imageList1.Images.Add(Bitmap.FromFile("club.bmp"));
+
+// create the converter
+ImageListConverter converter;
+converter = new ImageListConverter(cards, this.imageList1, Editability.Required, false, null, false);
+
+// setup the binding
+ControlBindingManager mgr = new ControlBindingManager(typeof(CardShark));
+mgr.Descriptors.Add(this.imageComboBoxEdit1, "SuitPreference", converter);
+
+	</code></example><example><code lang="VB">
+
+' Example binding to a list of card suits in an ImageComboBoxEdit
+
+' a simple class
+Class CardShark
+   Private mSuit As String
+   Public Property SuitPreference() As String
+      Get
+         Return mSuit
+      End Get
+      Set
+         mSuit = value
+      End Set
+   End Property
+End Class 
+
+Dim cards() As String = {"hearts", "spades", "diamonds", "clubs"}
+Me.imageList1.Images.Add(Bitmap.FromFile("heart.bmp"))
+Me.imageList1.Images.Add(Bitmap.FromFile("spade.bmp"))
+Me.imageList1.Images.Add(Bitmap.FromFile("diamond.bmp"))
+Me.imageList1.Images.Add(Bitmap.FromFile("club.bmp"))
+
+' create the converter
+Dim converter As ImageListConverter
+converter = New ImageListConverter(cards, Me.imageList1, Editability.Required, False, Nothing, False)
+
+' setup the binding
+Dim mgr As New ControlBindingManager(GetType(CardShark))
+mgr.Descriptors.Add(Me.imageComboBoxEdit1, "SuitPreference", converter)
+	</code></example>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.ImageListConverter.#ctor(System.Collections.IList,System.Windows.Forms.ImageList,IdeaBlade.UI.Editability,System.Boolean,System.String,System.Boolean)">
+            <summary>
+              Constructs an ImageListConverter
+            </summary>
+            <param name="pValueList">List of valid items.</param>
+            <param name="pImageList">List of associated images.</param>
+            <param name="pEditability">Editability of the business object property.</param>
+            <param name="pSort">Whether to sort the value list.</param>
+            <param name="pDisplayMember">Property of items in the list to use for formatting.
+              Null refers to the item itself.</param>
+            <param name="pImagesOnly">Determines if text should be displayed next to the images.</param>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.ImageListConverter.ImageList">
+            <summary>
+              Gets or sets the image list.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.ImageListConverter.ImagesOnly">
+            <summary>
+              Gets or sets whether or not text should be displayed next to the images.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.UI.WinForms.ControlBindingDescriptor">
+            <summary>
+            Encapsulates the metadata about a binding between an object property and an
+            individual (non-grid) UI control.
+            <seealso cref="T:IdeaBlade.UI.WinForms.ControlBindingManager"/>
+            <seealso cref="T:IdeaBlade.UI.WinForms.ControlBindingDescriptorCollection"/>
+            </summary>
+            <remarks>
+            Use the <b>ControlBindingDescriptor</b> to create a binding between a UI control and
+            a business object property.  Each binding is added to a <see cref="T:IdeaBlade.UI.WinForms.ControlBindingManager"/>
+            using the <see cref="M:IdeaBlade.UI.WinForms.ControlBindingDescriptorCollection.Add(System.Windows.Forms.Control,System.String)"/> method.  A binding
+            is constructed for an instance of a UI control, together with a <see cref="T:IdeaBlade.UI.ViewDescriptor"/> or
+            additional property and <see cref="T:IdeaBlade.UI.DataConverter"/> information.  
+            The <b>ControlBindingDescriptor</b> will always bind to the "display" property 
+            (usually <c>Text</c>) of the UI control.  
+            </remarks> 
+            <example><code lang="C#">
+[C#]
+private void SampleControlBindingDescriptors() {
+  // This example shows various ways of constructing and using a ControlBindingDescriptor
+
+  PersistenceManager pm = PersistenceManager.DefaultManager;
+  ControlBindingManager mgr = new ControlBindingManager(typeof(Employee));
+
+  // A descriptor for a binding between a property and a control
+  ControlBindingDescriptor d1 = new ControlBindingDescriptor(textBox1, typeof(Employee), "LastName");
+
+  // A descriptor with control, property info, and a DataConverter
+  DateConverter dateConverter = new DateConverter(Editability.Required, "d");
+  ControlBindingDescriptor d2 = new ControlBindingDescriptor(textBox2, typeof(Employee), "HireDate", dateConverter);
+
+  // Using a ViewDescriptor
+  ViewDescriptor vd = new ViewDescriptor(typeof(Employee), "Title");
+  ControlBindingDescriptor d3 = new ControlBindingDescriptor(textBox3, vd);
+
+  // Add the BindingDescriptors to the BindingManager
+  mgr.Descriptors.Add(d1);
+  mgr.Descriptors.Add(d2);
+  mgr.Descriptors.Add(d3);
+
+  // Load datasource.
+  Employee emp = pm.GetEntity&lt;Employee&gt;(new RdbQuery(typeof(Employee), Employee.IdEntityColumn, EntityQueryOp.EQ, 1));
+  mgr.BindingSource.DataSource = emp;
+
+	</code></example><example><code lang="VB">
+
+Private Sub SampleControlBindingDescriptors()
+  ' This example shows various ways of constructing and using a ControlBindingDescriptor
+  Dim pm As PersistenceManager = PersistenceManager.DefaultManager
+  Dim mgr As New ControlBindingManager(GetType(Employee))
+
+  ' A descriptor for a binding between a property and a control
+  Dim d1 As New ControlBindingDescriptor(textBox1, GetType(Employee), "LastName")
+
+  ' A descriptor with control, property info, and a DataConverter
+  Dim dateConverter As New DateConverter(Editability.Required, "d")
+  Dim d2 As New ControlBindingDescriptor(textBox2, GetType(Employee), "HireDate", dateConverter)
+
+  ' Using a ViewDescriptor
+  Dim vd As New ViewDescriptor(GetType(Employee), "Title")
+  Dim d3 As New ControlBindingDescriptor(textBox3, vd)
+
+  ' Add the BindingDescriptors to the BindingManager
+  mgr.Descriptors.Add(d1)
+  mgr.Descriptors.Add(d2)
+  mgr.Descriptors.Add(d3)
+
+  ' Load datasource.
+  Dim emp As Employee = pm.GetEntity(Of Employee)(New RdbQuery(GetType(Employee), Employee.IdEntityColumn, EntityQueryOp.EQ, 1))
+  mgr.BindingSource.DataSource = emp
+End Sub
+	</code></example>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.ControlBindingDescriptor.#ctor(System.Windows.Forms.Control,IdeaBlade.UI.ViewDescriptor)">
+            <summary>
+              Constructs a ControlBindingDescriptor.
+            </summary>
+            <param name="pControl">
+              Control used to edit the data.
+            </param>
+            <param name="pViewDescriptor">
+              ViewDescriptor describing the bound property and conversion information.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.ControlBindingDescriptor.#ctor(System.Windows.Forms.Control,IdeaBlade.UI.ViewDescriptor,System.Windows.Forms.DataSourceUpdateMode)">
+            <summary>
+            
+            </summary>
+            <param name="pControl"></param>
+            <param name="pViewDescriptor"></param>
+            <param name="pDataSourceUpdateMode"></param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.ControlBindingDescriptor.#ctor(System.Windows.Forms.Control,System.Type,System.String)">
+            <summary>
+              Constructs a ControlBindingDescriptor.
+            </summary>
+            <param name="pControl">
+              Control used to edit the data.
+            </param>
+            <param name="pObjectType">
+              Type of the object that the property exists on.  e.g. typeof(Employee)
+            </param>
+            <param name="pPropertyPath">
+              Period delimited path of the property. e.g. "BirthDate" or "Address.City"
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.ControlBindingDescriptor.#ctor(System.Windows.Forms.Control,System.Type,System.String,System.Windows.Forms.DataSourceUpdateMode)">
+            <summary>
+              Constructs a ControlBindingDescriptor.
+            </summary>
+            <param name="pControl">
+              Control used to edit the data.
+            </param>
+            <param name="pObjectType">
+              Type of the object that the property exists on.  e.g. typeof(Employee)
+            </param>
+            <param name="pPropertyPath">
+              Period delimited path of the property. e.g. "BirthDate" or "Address.City"
+            </param>
+            <param name="pDataSourceUpdateMode">
+              DataSourceUpdateMode
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.ControlBindingDescriptor.#ctor(System.Windows.Forms.Control,System.Type,System.String,IdeaBlade.UI.IDataConverter)">
+            <summary>
+              Constructs a ControlBindingDescriptor.
+            </summary>
+            <param name="pControl">
+              Control used to edit the data.
+            </param>
+            <param name="pObjectType">
+              Type of the object that the property exists on.  e.g. typeof(Employee)
+            </param>
+            <param name="pPropertyPath">
+              Period delimited path of the property. e.g. "BirthDate" or "Address.City"
+            </param>
+            <param name="pConverter">
+              Converter that specifies formatting, syntactic, and semantic validation.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.ControlBindingDescriptor.#ctor(System.Windows.Forms.Control,System.Type,System.String,IdeaBlade.UI.IDataConverter,System.Windows.Forms.DataSourceUpdateMode)">
+            <summary>
+              Constructs a ControlBindingDescriptor.
+            </summary>
+            <param name="pControl">
+              Control used to edit the data.
+            </param>
+            <param name="pObjectType">
+              Type of the object that the property exists on.  e.g. typeof(Employee)
+            </param>
+            <param name="pPropertyPath">
+              Period delimited path of the property. e.g. "BirthDate" or "Address.City"
+            </param>
+            <param name="pDataSourceUpdateMode">
+              DataSourceUpdateMode
+            </param>
+            <param name="pConverter">
+              Converter that specifies formatting, syntactic, and semantic validation.
+            </param>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.ControlBindingDescriptor.RefreshCore">
+            <summary>
+              Refreshes the binding with the current properties.
+              Typically used when some aspect of the converter changes.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.ControlBindingDescriptor.Control">
+            <summary>
+              Gets the control used to edit the data.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.UI.WinForms.HWndAdapter">
+            <summary>
+              Class that wraps any window handle as a IWin32Window
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.HWndAdapter.#ctor(System.Int32)">
+            <summary>
+              Constructs an HWndAdapter.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.HWndAdapter.Handle">
+            <summary>
+            See <see cref="T:System.Windows.Forms.IWin32Window"/>
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.UI.WinForms.ControlSuite">
+            <summary>
+            Control suite information used at installation and by the DevForce designers.  Internal use only. 
+            </summary>
+            <remarks>
+            <see cref="F:IdeaBlade.UI.WinForms.ControlSuite.AllSuites"/> contains the list of currently supported control suites.
+            </remarks>
+        </member>
+        <member name="F:IdeaBlade.UI.WinForms.ControlSuite.Dotnet">
+            <summary>
+            .NET Control suite.
+            </summary>
+        </member>
+        <member name="F:IdeaBlade.UI.WinForms.ControlSuite.DevExpress_2_2">
+            <summary>
+            Developer Express 2.2.
+            </summary>
+        </member>
+        <member name="F:IdeaBlade.UI.WinForms.ControlSuite.DevExpress_6_1_3">
+            <summary>
+            Developer Express 6.1.3.
+            </summary>
+        </member>
+        <member name="F:IdeaBlade.UI.WinForms.ControlSuite.DevExpress_6_2_2">
+            <summary>
+            Developer Express 6.2.2.
+            </summary>
+        </member>
+        <member name="F:IdeaBlade.UI.WinForms.ControlSuite.DevExpress_6_3_1">
+            <summary>
+            Developer Express 6.3.1.
+            </summary>
+        </member>
+        <member name="F:IdeaBlade.UI.WinForms.ControlSuite.DevExpress_7_1_0">
+            <summary>
+            Developer Express 7.1.0.
+            </summary>
+        </member>
+        <member name="F:IdeaBlade.UI.WinForms.ControlSuite.DevExpress_7_2_1">
+            <summary>
+            Developer Express 7.2.1.
+            </summary>
+        </member>
+        <member name="F:IdeaBlade.UI.WinForms.ControlSuite.DevExpress_7_3_0">
+            <summary>
+            Developer Express 7.3.0.
+            </summary>
+        </member>
+        <member name="F:IdeaBlade.UI.WinForms.ControlSuite.DevExpress_8_1_1">
+            <summary>
+            Developer Express 8.1.1.
+            </summary>
+        </member>
+        <member name="F:IdeaBlade.UI.WinForms.ControlSuite.DevExpress_8_2_1">
+            <summary>
+            Developer Express 8.2.1.
+            </summary>
+        </member>
+        <member name="F:IdeaBlade.UI.WinForms.ControlSuite.DevExpress_8_3_2">
+            <summary>
+            Developer Express 8.3.2.
+            </summary>
+        </member>
+        <member name="F:IdeaBlade.UI.WinForms.ControlSuite.Infragistics_5_3">
+            <summary>
+            Infragistics 5.3.
+            </summary>
+        </member>
+        <member name="F:IdeaBlade.UI.WinForms.ControlSuite.Infragistics_6_1">
+            <summary>
+            Infragistics 6.1.
+            </summary>
+        </member>
+        <member name="F:IdeaBlade.UI.WinForms.ControlSuite.Infragistics_6_2">
+            <summary>
+            Infragistics 6.2.
+            </summary>
+        </member>
+        <member name="F:IdeaBlade.UI.WinForms.ControlSuite.Infragistics_6_3">
+            <summary>
+            Infragistics 6.3.
+            </summary>
+        </member>
+        <member name="F:IdeaBlade.UI.WinForms.ControlSuite.Infragistics_7_1">
+            <summary>
+            Infragistics 7.1.
+            </summary>
+        </member>
+        <member name="F:IdeaBlade.UI.WinForms.ControlSuite.Infragistics_7_2">
+            <summary>
+            Infragistics 7.2.
+            </summary>
+        </member>
+        <member name="F:IdeaBlade.UI.WinForms.ControlSuite.Infragistics_7_3">
+            <summary>
+            Infragistics 7.3.
+            </summary>
+        </member>
+        <member name="F:IdeaBlade.UI.WinForms.ControlSuite.Infragistics_8_1">
+            <summary>
+            Infragistics 8.1.
+            </summary>
+        </member>
+        <member name="F:IdeaBlade.UI.WinForms.ControlSuite.Infragistics_8_2">
+            <summary>
+            Infragistics 8.2.
+            </summary>
+        </member>
+        <member name="F:IdeaBlade.UI.WinForms.ControlSuite.Infragistics_8_3">
+            <summary>
+            Infragistics 8.3.
+            </summary>
+        </member>
+        <member name="F:IdeaBlade.UI.WinForms.ControlSuite.AllSuites">
+            <summary>
+            Returns all supported control suites.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.ControlSuite.ToString">
+            <summary>
+            String representation of this object.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.ControlSuite.IsUsable">
+            <summary>
+            Returns whether the suite can be used by DevForce.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.ControlSuite.IsAuthorized">
+            <summary>
+            Returns true if authorized for any 3rd party suite, false otherwise.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.ControlSuite.DisplayName">
+            <summary>
+            Gets the display name of the suite.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.ControlSuite.BindersAssemblyName">
+            <summary>
+            Gets the name of the DevForce "binder" assembly for the suite.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.ControlSuite.BindersAssembly">
+            <summary>
+            Gets the DevForce "binder" assembly for the suite.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.ControlSuite.SupportedAssemblyNames">
+            <summary>
+            Gets the list of suite assemblies used by DevForce.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.ControlSuite.SupportedVersion">
+            <summary>
+            Gets the supported suite version.
+            </summary>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.ControlSuite.CanLoadAssembly">
+            <summary>
+            Returns whether the DevForce binder assembly is available.
+            </summary>
+        </member>
+        <member name="T:IdeaBlade.UI.WinForms.ControlBinderMap">
+            <summary>
+            Used by the DevForce framework to map UI controls to control binders.
+            </summary>
+            <remarks>
+            A <see cref="T:IdeaBlade.UI.WinForms.ControlDataBinder"/> is used to tell DevForce how to configure
+            and bind to the binder's <see cref="P:IdeaBlade.UI.WinForms.DataBinder.ControlType"/>.  
+            The <b>ControlBinderMap</b> is used to track this information, and to assist
+            the DevForce designers in autopopulation.
+            <para>
+            DevForce will automatically discover and map binders for all supported control suites.
+            If you have created any custom binders or custom controls then you will need
+            to manually include this mapping using one of the <b>UpdateMap</b> methods.  If you
+            have not specified any customization, then you generally do not need to be concerned
+            with the <b>ControlBinderMap</b> and the binders used.
+            </para>
+            <para>
+            <b>Note:</b> A control type, for example System.Windows.Forms.TextBox, will have only one
+            <see cref="T:IdeaBlade.UI.WinForms.ControlDataBinder"/> assigned - if multiple binders for a type are
+            specified the last binder specified is used.
+            </para>
+            </remarks>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.ControlBinderMap.#ctor">
+            <summary>
+              
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.ControlBinderMap.GetDataBinder(IdeaBlade.UI.IDataConverter)">
+            <summary>
+              Gets the ControlDataBinder that is the best fit for the specified converter.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.ControlBinderMap.GetDataBinder(System.Type)">
+            <summary>
+              Gets the ContolDataBinder for the specified control type.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.ControlBinderMap.GetDataBinderOfType(System.Type)">
+            <summary>
+              Get the ControlDataBinder of the specified binder type.
+            </summary>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.ControlBinderMap.GetBinder(System.Type)">
+            <summary>
+            Get a binder for the specified control type.
+            </summary>
+            <param name="pType"></param>
+            <returns></returns>
+        </member>
+        <member name="M:IdeaBlade.UI.WinForms.ControlBinderMap.MarkPreferredAssembly(System.Reflection.Assembly)">
+            <summary>
+            Adjust the fitness of binders in the assembly to make the associated controls "preferred".
+            </summary>
+            <param name="pAssembly"></param>
+            <remarks>
+            Typically used to set a bias for a control suite (such as preferring
+            DeveloperExpress controls over .NET controls).
+            </remarks>
+        </member>
+        <member name="P:IdeaBlade.UI.WinForms.ControlBinderMap.Instance">
+            <summary>
+              Gets the singleton instance of the ControlBinderMap.
+            </summary>
+        </member>
+    </members>
+</doc>
