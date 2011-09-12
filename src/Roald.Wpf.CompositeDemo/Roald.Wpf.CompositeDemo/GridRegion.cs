@@ -14,7 +14,7 @@ namespace Roald.CompositeDemo
         }
 
         public IGridLineRegion CreateLine()
-        {            
+        {
             _lineNo++;
             var rowDefinition = new RowDefinition();
             _grid.RowDefinitions.Add(rowDefinition);

@@ -99,6 +99,42 @@ namespace Roald.CompositeDemo.ModuleSpecs
             Container.AssertWasCalled(x => x.RegisterType<ICurrencyPresenterFactory, CurrencyPresenterFactory>());
         }
 
+        [Test]
+        public void It_Should_Register_DataGridRegionFactory()
+        {
+            Container.AssertWasCalled(x => x.RegisterType<IDataGridRegionFactory, DataGridRegionFactory>());
+        }
+
+        [Test]
+        public void It_Should_Register_DataGridRegionSetup()
+        {
+            Container.AssertWasCalled(x => x.RegisterType<IDataGridRegionSetup, DataGridRegion>());
+        }
+
+        [Test]
+        public void It_Should_Register_DataGridLineRegionFactory()
+        {
+            Container.AssertWasCalled(x => x.RegisterType<IDataGridLineRegionFactory, DataGridLineRegionFactory>());
+        }
+
+        [Test]
+        public void It_Should_Register_DataGridLineRegionSetup()
+        {
+            Container.AssertWasCalled(x => x.RegisterType<IDataGridLineRegionSetup, DataGridLineRegion>());
+        }
+
+        [Test]
+        public void It_Should_Register_DataCellRegionFactory()
+        {
+            Container.AssertWasCalled(x => x.RegisterType<IDataCellRegionFactory, DataCellRegionFactory>());
+        }
+
+        [Test]
+        public void It_Should_Register_DataCellRegionSetup()
+        {
+            Container.AssertWasCalled(x => x.RegisterType<IDataCellRegionSetup, DataCellRegion>());
+        }
+
         
 
     }

@@ -7,9 +7,9 @@ namespace Roald.CompositeDemo
         private readonly ICodeView _codeView;
         private readonly IValueView _valueView;
         private readonly IDescriptionView _descriptionView;
-        private ICellRegion _descriptionCell;
-        private ICellRegion _codeCell;
-        private ICellRegion _valueCell;
+        private IDataCellRegion _descriptionCell;
+        private IDataCellRegion _codeCell;
+        private IDataCellRegion _valueCell;
         private ICurrency _currency;
 
         public CurrencyPresenter(ICodeView codeView,IValueView valueView, IDescriptionView descriptionView)
@@ -19,7 +19,7 @@ namespace Roald.CompositeDemo
             _descriptionView = descriptionView;
         }
 
-        public void Activate(IGridLineRegion region)
+        public void Activate(IDataGridLineRegion region)
         {
             _codeCell = region.CreateCell();
             _codeCell.Add(_codeView);

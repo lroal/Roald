@@ -8,12 +8,12 @@ namespace Roald.CompositeDemo.CurrenciesPresenterSpecs.New.Activated
     {
         protected ICurrencyPresenter CurrencyPresenter1 = MockRepository.GenerateStub<ICurrencyPresenter>();
         protected ICurrencyPresenter CurrencyPresenter2 = MockRepository.GenerateStub<ICurrencyPresenter>();
-        protected IGridRegion Region = MockRepository.GenerateStub<IGridRegion>();
+        protected IDataGridRegion Region = MockRepository.GenerateStub<IDataGridRegion>();
         protected List<ICurrency> Currencies = new List<ICurrency>();
         protected ICurrency Currency1 = MockRepository.GenerateStub<ICurrency>();
         protected ICurrency Currency2 = MockRepository.GenerateStub<ICurrency>();
-        protected IGridLineRegion LineRegion2 { get; set; }
-        protected IGridLineRegion LineRegion1 { get; set; }
+        protected IDataGridLineRegion LineRegion2 { get; set; }
+        protected IDataGridLineRegion LineRegion1 { get; set; }
 
 
         protected override void Arrange()

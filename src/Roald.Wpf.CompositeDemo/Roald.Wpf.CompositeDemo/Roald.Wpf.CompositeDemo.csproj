@@ -69,7 +69,27 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Compile Include="Currency.cs" />
     <Compile Include="CurrencyPresenterFactory.cs" />
+    <Compile Include="DataCellRegion.cs" />
+    <Compile Include="DataCellRegionFactory.cs" />
+    <Compile Include="DataGridLineRegion.cs" />
+    <Compile Include="DataGridLineRegionFactory.cs" />
+    <Compile Include="DataGridRegion.cs" />
+    <Compile Include="DataGridRegionFactory.cs" />
+    <Compile Include="GridLineRegion.cs" />
+    <Compile Include="GridLineRegionFactory.cs" />
+    <Compile Include="ICellRegion.cs" />
+    <Compile Include="IDataCellRegion.cs" />
+    <Compile Include="IDataCellRegionFactory.cs" />
+    <Compile Include="IDataCellRegionSetup.cs" />
+    <Compile Include="IDataGridLineRegion.cs" />
+    <Compile Include="IDataGridLineRegionFactory.cs" />
+    <Compile Include="IDataGridLineRegionSetup.cs" />
+    <Compile Include="IDataGridRegion.cs" />
+    <Compile Include="IDataGridRegionFactory.cs" />
+    <Compile Include="IDataGridRegionSetup.cs" />
+    <Compile Include="IGridLineRegion.cs" />
     <Compile Include="ValueView.xaml.cs">
       <DependentUpon>ValueView.xaml</DependentUpon>
     </Compile>
@@ -99,7 +119,7 @@
     <Compile Include="ICellRegionSetup.cs" />
     <Compile Include="ICodeView.cs" />
     <Compile Include="ICurrenciesPresenter.cs" />
-    <Compile Include="ICurrenciesView.xaml.cs" />
+    <Compile Include="ICurrenciesView.cs" />
     <Compile Include="CurrenciesWindow.xaml.cs">
       <DependentUpon>CurrenciesWindow.xaml</DependentUpon>
       <SubType>Code</SubType>

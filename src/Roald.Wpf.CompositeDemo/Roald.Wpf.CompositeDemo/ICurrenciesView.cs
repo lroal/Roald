@@ -4,7 +4,7 @@
     {
         void Activate();
         void DeActivate();
-        IGridRegion Region { get; }
+        IDataGridRegion Region { get; }
         void ShowError(string title, string errorMsg);
     }
 }

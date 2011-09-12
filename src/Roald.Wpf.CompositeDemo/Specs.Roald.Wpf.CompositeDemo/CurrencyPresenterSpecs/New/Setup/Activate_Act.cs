@@ -5,10 +5,10 @@ namespace Roald.CompositeDemo.CurrencyPresenterSpecs.New.Setup
 {
     internal abstract class Activate_Act : Setup_Act
     {
-        protected IGridLineRegion LineRegion = MockRepository.GenerateStub<IGridLineRegion>();
-        protected ICellRegion Cell1 = MockRepository.GenerateStub<ICellRegion>();
-        protected ICellRegion Cell2 = MockRepository.GenerateStub<ICellRegion>();
-        protected ICellRegion Cell3 = MockRepository.GenerateStub<ICellRegion>();
+        protected IDataGridLineRegion LineRegion = MockRepository.GenerateStub<IDataGridLineRegion>();
+        protected IDataCellRegion Cell1 = MockRepository.GenerateStub<IDataCellRegion>();
+        protected IDataCellRegion Cell2 = MockRepository.GenerateStub<IDataCellRegion>();
+        protected IDataCellRegion Cell3 = MockRepository.GenerateStub<IDataCellRegion>();
         protected string Code = "USD";
         protected decimal Value = 7.23m;
         protected string Description = "US Dollars";

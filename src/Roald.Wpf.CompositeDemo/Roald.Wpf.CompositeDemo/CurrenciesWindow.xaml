@@ -3,12 +3,50 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Currencies" Height="350" Width="525" x:ClassModifier="internal" >
     <StackPanel>
+        <DataGrid  Name="_dataGrid" SelectionMode="Single" >
+            <DataGrid.Columns>
+                <DataGridTemplateColumn Header="Code">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <ContentControl IsTabStop="false" Content="{Binding Cells[0]}" >                                
+                            </ContentControl>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Value">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <ContentControl IsTabStop="false" Content="{Binding Cells[1]}" >
+                            </ContentControl>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Description">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <ContentControl  IsTabStop="false" Content="{Binding Cells[2]}" >
+                            </ContentControl>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+            </DataGrid.Columns>
+        </DataGrid>
+        <!--<ListView Name="_listView">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Width="120" Header="Code" />
+                    <GridViewColumn Width="120" Header="Value" />
+                    <GridViewColumn Width="120" Header="Description"/>
+                </GridView>
+            </ListView.View>
+        </ListView>-->
         <Grid Name="_currencyGrid" >
             <Grid.ColumnDefinitions>
                 <ColumnDefinition></ColumnDefinition>
                 <ColumnDefinition></ColumnDefinition>
                 <ColumnDefinition></ColumnDefinition>
-            </Grid.ColumnDefinitions>
+            </Grid.ColumnDefinitions>          
         </Grid>
     </StackPanel>
 </Window>

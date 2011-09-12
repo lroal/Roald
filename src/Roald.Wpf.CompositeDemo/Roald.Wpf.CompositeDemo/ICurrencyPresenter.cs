@@ -2,7 +2,7 @@
 {
     internal interface ICurrencyPresenter
     {
-        void Activate(IGridLineRegion region);
+        void Activate(IDataGridLineRegion region);
         void DeActivate();
     }
 }

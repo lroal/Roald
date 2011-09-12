@@ -24,6 +24,13 @@ namespace Roald.CompositeDemo
             _c.RegisterType<ICurrenciesView, CurrenciesWindow>();
             _c.RegisterType<IGetCurrenciesService, GetCurrenciesService>();
             _c.RegisterType<ICurrencyPresenterFactory, CurrencyPresenterFactory>();
+            _c.RegisterType<IDataGridRegionFactory, DataGridRegionFactory>();
+            _c.RegisterType<IDataGridRegionSetup, DataGridRegion>();
+            _c.RegisterType<IDataGridLineRegionSetup, DataGridLineRegion>();
+            _c.RegisterType<IDataGridLineRegionFactory, DataGridLineRegionFactory>();
+            _c.RegisterType<IDataCellRegionFactory, DataCellRegionFactory>();
+            _c.RegisterType<IDataCellRegionSetup, DataCellRegion>();
+
         }
     }
 }
