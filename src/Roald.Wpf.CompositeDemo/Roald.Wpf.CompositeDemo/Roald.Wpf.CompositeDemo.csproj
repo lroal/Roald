@@ -77,8 +77,6 @@
     <Compile Include="DataGridLineRegionFactory.cs" />
     <Compile Include="DataGridRegion.cs" />
     <Compile Include="DataGridRegionFactory.cs" />
-    <Compile Include="GridLineRegion.cs" />
-    <Compile Include="GridLineRegionFactory.cs" />
     <Compile Include="ICellRegion.cs" />
     <Compile Include="IDataCellRegion.cs" />
     <Compile Include="IDataCellRegionFactory.cs" />
@@ -101,8 +99,6 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="CellRegion.cs" />
-    <Compile Include="CellRegionFactory.cs" />
     <Compile Include="CodeView.xaml.cs">
       <DependentUpon>CodeView.xaml</DependentUpon>
     </Compile>
@@ -113,10 +109,6 @@
       <DependentUpon>DescriptionView.xaml</DependentUpon>
     </Compile>
     <Compile Include="GetCurrenciesService.cs" />
-    <Compile Include="GridRegion.cs" />
-    <Compile Include="GridRegionFactory.cs" />
-    <Compile Include="ICellRegionFactory.cs" />
-    <Compile Include="ICellRegionSetup.cs" />
     <Compile Include="ICodeView.cs" />
     <Compile Include="ICurrenciesPresenter.cs" />
     <Compile Include="ICurrenciesView.cs" />
@@ -140,11 +132,7 @@
     <Compile Include="ICurrencyPresenterSetup.cs" />
     <Compile Include="IDescriptionView.cs" />
     <Compile Include="IGetCurrenciesService.cs" />
-    <Compile Include="IGridLineRegionFactory.cs" />
-    <Compile Include="IGridLineRegionSetup.cs" />
     <Compile Include="IGridRegion.cs" />
-    <Compile Include="IGridRegionFactory.cs" />
-    <Compile Include="IGridRegionSetup.cs" />
     <Compile Include="IValueView.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>

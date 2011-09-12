@@ -34,42 +34,6 @@ namespace Roald.CompositeDemo.ModuleSpecs
         }
 
         [Test]
-        public void It_Should_Register_GridRegionFactory()
-        {
-            Container.AssertWasCalled(x => x.RegisterType<IGridRegionFactory, GridRegionFactory>());
-        }
-
-        [Test]
-        public void It_Should_Register_GridRegionSetup()
-        {
-            Container.AssertWasCalled(x => x.RegisterType<IGridRegionSetup, GridRegion>());
-        }
-
-        [Test]
-        public void It_Should_Register_GridLineRegionFactory()
-        {
-            Container.AssertWasCalled(x => x.RegisterType<IGridLineRegionFactory, GridLineRegionFactory>());
-        }
-
-        [Test]
-        public void It_Should_Register_GridLineRegionSetup()
-        {
-            Container.AssertWasCalled(x => x.RegisterType<IGridLineRegionSetup, GridLineRegion>());
-        }
-
-        [Test]
-        public void It_Should_Register_CellRegionFactory()
-        {
-            Container.AssertWasCalled(x => x.RegisterType<ICellRegionFactory, CellRegionFactory>());
-        }
-
-        [Test]
-        public void It_Should_Register_CellRegionSetup()
-        {
-            Container.AssertWasCalled(x => x.RegisterType<ICellRegionSetup, CellRegion>());
-        }
-
-        [Test]
         public void It_Should_Register_CodeView()
         {
             Container.AssertWasCalled(x => x.RegisterType<ICodeView, CodeView>());

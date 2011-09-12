@@ -15,12 +15,6 @@ namespace Roald.CompositeDemo
             _c.RegisterType<IValueView, ValueView>();
             _c.RegisterType<ICodeView, CodeView>();
             _c.RegisterType<IDescriptionView, DescriptionView>();
-            _c.RegisterType<IGridRegionFactory, GridRegionFactory>();
-            _c.RegisterType<IGridRegionSetup, GridRegion>();
-            _c.RegisterType<IGridLineRegionSetup, GridLineRegion>();
-            _c.RegisterType<IGridLineRegionFactory, GridLineRegionFactory>();
-            _c.RegisterType<ICellRegionFactory, CellRegionFactory>();
-            _c.RegisterType<ICellRegionSetup, CellRegion>();
             _c.RegisterType<ICurrenciesView, CurrenciesWindow>();
             _c.RegisterType<IGetCurrenciesService, GetCurrenciesService>();
             _c.RegisterType<ICurrencyPresenterFactory, CurrencyPresenterFactory>();

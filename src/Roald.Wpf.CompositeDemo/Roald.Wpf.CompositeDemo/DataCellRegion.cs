@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace Roald.CompositeDemo
@@ -18,7 +19,7 @@ namespace Roald.CompositeDemo
         }
 
         public void Setup(ContentControl control)
-        {
+        {            
             _control = control;
         }
 
