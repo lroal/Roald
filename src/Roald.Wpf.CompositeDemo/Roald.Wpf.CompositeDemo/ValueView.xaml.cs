@@ -19,14 +19,29 @@ namespace Roald.CompositeDemo
     /// </summary>
     internal partial class ValueView : UserControl, IValueView
     {
+        private decimal _value;
+
         public ValueView()
         {
             InitializeComponent();
+            DataContext = this;
         }
 
         public void SetValue(decimal value)
         {
-            _value.Text = value.ToString();
+            _value = value;
+        }
+
+        public decimal Value
+        {
+            get { return _value; }
+
+            set
+            {
+                if (value < 0)
+                    throw new InvalidOperationException("cann be lesz than zero");
+                _value = value;
+            }
         }
     }
 }

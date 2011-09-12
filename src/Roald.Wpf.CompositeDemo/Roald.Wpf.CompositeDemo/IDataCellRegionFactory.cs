@@ -2,7 +2,7 @@
 
 namespace Roald.CompositeDemo
 {
-    internal interface IDataCellRegionFactory
+    public interface IDataCellRegionFactory
     {
         IDataCellRegion Create(ContentControl control);
     }

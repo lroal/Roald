@@ -1,11 +1,10 @@
-﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Windows.Controls;
-using System.Windows.Documents;
 
 namespace Roald.CompositeDemo
 {
-    class DataGridLineRegion : IDataGridLineRegionSetup
+    public class DataGridLineRegion : IDataGridLineRegionSetup, INotifyPropertyChanged
     {
         private readonly IDataCellRegionFactory _cellRegionFactory;
 
@@ -20,7 +19,7 @@ namespace Roald.CompositeDemo
             var control = new ContentControl();
             control.IsTabStop = false;
             var cell=  _cellRegionFactory.Create(control);
-            Cells.Add(control);
+            Cells.Add(control);;
             return cell;
         }
 
@@ -32,5 +31,7 @@ namespace Roald.CompositeDemo
         public ObservableCollection<Control> Cells
         {
             get; private set; }
+
+        public event PropertyChangedEventHandler PropertyChanged = delegate { };
     }
 }

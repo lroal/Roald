@@ -7,5 +7,7 @@
              d:DesignHeight="300" d:DesignWidth="300" x:ClassModifier="internal">
 
 
-    <Controls:TextBox xmlns:Controls="clr-namespace:System.Windows.Controls;assembly=PresentationFramework" Name="_value"/>
+    <Controls:TextBox xmlns:Controls="clr-namespace:System.Windows.Controls;assembly=PresentationFramework" Name="ValueTextBox" Text="{Binding Value, ValidatesOnExceptions=True}">
+    </Controls:TextBox>
+    <!--<Controls:TextBlock xmlns:Controls="clr-namespace:System.Windows.Controls;assembly=PresentationFramework" Name="ValueText" Text="{Binding Value}"/>-->
 </UserControl>

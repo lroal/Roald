@@ -1,6 +1,6 @@
 ﻿namespace Roald.CompositeDemo
 {
-    internal interface IDataGridLineRegion
+    public interface IDataGridLineRegion
     {
         IDataCellRegion CreateCell();
     }

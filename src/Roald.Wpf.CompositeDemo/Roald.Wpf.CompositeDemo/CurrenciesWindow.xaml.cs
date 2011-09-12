@@ -15,6 +15,7 @@ namespace Roald.CompositeDemo
         {
             _gridRegionFactory = gridRegionFactory;
             InitializeComponent();
+            
             Region = _gridRegionFactory.Create(_dataGrid);
         }
 

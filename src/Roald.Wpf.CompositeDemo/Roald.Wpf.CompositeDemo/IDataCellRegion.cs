@@ -1,6 +1,6 @@
 ﻿namespace Roald.CompositeDemo
 {
-    internal interface IDataCellRegion
+    public interface IDataCellRegion
     {
         void Add(object view);
         void Remove(object view);
