@@ -7,7 +7,9 @@
              d:DesignHeight="300" d:DesignWidth="300" >
 
 
-    <Controls:TextBox xmlns:Controls="clr-namespace:System.Windows.Controls;assembly=PresentationFramework" Name="_code"/>
+        <Label Name="_code"  />
+
+
 
 </UserControl>
     

@@ -26,7 +26,7 @@ namespace Roald.CompositeDemo
 
         public void SetCode(string code)
         {
-            _code.Text = code;
+            _code.Content = code;
         }
     }
 }
