@@ -12,10 +12,10 @@ namespace Roald.CompositeDemo
             _container = container;
         }
 
-        public ICompositeGrid Create(Grid grid)
+        public ICompositeGrid Create(ContentControl control)
         {
             var instance = _container.Resolve<ICompositeGridSetup>();
-            instance.Setup(grid);
+            instance.Setup(control);
             return instance;
         }
     }

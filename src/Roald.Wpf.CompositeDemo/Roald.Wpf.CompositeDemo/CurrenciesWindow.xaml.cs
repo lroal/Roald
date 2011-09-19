@@ -14,7 +14,10 @@ namespace Roald.CompositeDemo
         {
             _gridFactory = gridFactory;
             InitializeComponent();
-            Grid = _gridFactory.Create(_grid);
+            Grid = _gridFactory.Create(_gridRegion);
+            Grid.CreateLeftAlignColumn("Code");
+            Grid.CreateLeftAlignColumn("Value");
+            Grid.CreateLeftAlignColumn("Description");
         }
 
         public new void Activate()
@@ -34,5 +37,7 @@ namespace Roald.CompositeDemo
         {
             throw new NotImplementedException();
         }
+
+
     }
 }

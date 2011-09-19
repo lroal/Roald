@@ -1,6 +1,4 @@
-﻿using System.Windows.Controls;
-
-namespace Roald.CompositeDemo
+﻿namespace Roald.CompositeDemo
 {
     class Row : IRowSetup
     {
@@ -17,14 +15,9 @@ namespace Roald.CompositeDemo
             return _cellFactory.Create();
         }
 
-        public void Setup(Grid grid)
+        public void Setup(IContextRow contextRow)
         {
-            //var dataGrid = new DataGrid();
-            //dataGrid.Columns.Add()
-
-            var rowDef = new RowDefinition();
-            grid.RowDefinitions.Add(rowDef);
-            _cellFactory = _cellFactoryFactory.Create(grid);
+            _cellFactory = _cellFactoryFactory.Create(contextRow);
         }
     }
 }

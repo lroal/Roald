@@ -1,9 +1,7 @@
-﻿using System.Windows.Controls;
-
-namespace Roald.CompositeDemo
+﻿namespace Roald.CompositeDemo
 {
     internal interface IRowSetup : IRow
     {
-        void Setup(Grid grid);
+        void Setup(IContextRow contextRow);
     }
 }

@@ -1,10 +1,7 @@
-﻿using System;
-using System.Windows.Controls;
-
-namespace Roald.CompositeDemo
+﻿namespace Roald.CompositeDemo
 {
     public interface IColumnFactory
     {
-        IColumn Create(Grid grid);
+        void CreateLeftAligned(string header);
     }
 }

@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.Practices.Unity;
+﻿using Microsoft.Practices.Unity;
 
 namespace Roald.CompositeDemo
 {
@@ -30,12 +29,18 @@ namespace Roald.CompositeDemo
             _c.RegisterType<IRowCellFactorySetup, RowCellFactory>();
             _c.RegisterType<ICellSetup, Cell>();
             _c.RegisterType<IColumnFactory, ColumnFactory>();
-            _c.RegisterType<IColumnSetup, Column>();
-            _c.RegisterType<IColumnCellFactory, ColumnCellFactory>();
-            _c.RegisterType<IColumnCellFactoryFactory, ColumnCellFactoryFactory>();
             _c.RegisterType<ICompositeGridSetup, CompositeGrid>();
             _c.RegisterType<ICompositeGridFactory,CompositeGridFactory>();
             _c.RegisterType<ICellView, CellView>();
+            _c.RegisterType<IColumnFactoryFactory, ColumnFactoryFactory>();
+            _c.RegisterType<IColumnFactorySetup, ColumnFactory>();
+            _c.RegisterType<ICompositeDataContext, CompositeDataContext>();
+            _c.RegisterType<IRegionFactory, RegionFactory>();
+            _c.RegisterType<IRegionSetup, Region>();
+            _c.RegisterType<IRowFactoryFactory, RowFactoryFactory>();
+            _c.RegisterType<IRowFactorySetup, RowFactory>();
+            _c.RegisterType<IContextRowSetup, ContextRow>();
+            _c.RegisterType<IContextRowFactory, ContextRowFactory>();
         }
     }
 }

@@ -5,6 +5,6 @@ namespace Roald.CompositeDemo
 {
     internal interface IRowCellFactoryFactory
     {
-        IRowCellFactory Create(Grid grid);
+        IRowCellFactory Create(IContextRow contextRow);
     }
 }

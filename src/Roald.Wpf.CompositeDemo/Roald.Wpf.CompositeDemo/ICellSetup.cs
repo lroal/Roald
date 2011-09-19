@@ -4,6 +4,6 @@ namespace Roald.CompositeDemo
 {
     internal interface ICellSetup : ICell
     {
-        void Setup(Grid grid, int rowNo, int columnNo);
+        void Setup(IContextRow contextRow);
     }
 }

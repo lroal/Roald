@@ -4,6 +4,7 @@ namespace Roald.CompositeDemo
 {
     public interface ICompositeGridSetup : ICompositeGrid
     {
-        void Setup(Grid grid);
+        void Setup(ContentControl control);
+
     }
 }

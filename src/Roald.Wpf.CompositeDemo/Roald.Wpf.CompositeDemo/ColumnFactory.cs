@@ -1,22 +1,32 @@
-﻿using System.Windows.Controls;
-using Microsoft.Practices.Unity;
+﻿using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
 
 namespace Roald.CompositeDemo
 {
-    class ColumnFactory : IColumnFactory
-    {
-        private readonly IUnityContainer _container;
+    internal class ColumnFactory : IColumnFactorySetup
+    {        
+        private DataGrid _grid;
+        private int _index;
 
-        public ColumnFactory(IUnityContainer container)
+        public void CreateLeftAligned(string header)
         {
-            _container = container;
+            var column = new DataGridTemplateColumn();
+            column.Header = header;
+            var template = new DataTemplate();
+            var factory = new FrameworkElementFactory(typeof(ContentControl));
+            template.VisualTree = factory;
+            factory.SetValue(Control.IsTabStopProperty, false);
+            string cellString = string.Format("[{0}]", _index);
+            factory.SetBinding(ContentControl.ContentProperty, new Binding(cellString));
+            column.CellTemplate = template;
+            _grid.Columns.Add(column);
+            _index++;
         }
 
-        public IColumn Create(Grid grid)
+        public void Setup(DataGrid grid)
         {
-            var instance = _container.Resolve<IColumnSetup>();
-            instance.Setup(grid);
-            return instance;
+            _grid = grid;
         }
     }
 }

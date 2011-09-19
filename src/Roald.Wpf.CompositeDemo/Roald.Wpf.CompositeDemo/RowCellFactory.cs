@@ -1,14 +1,12 @@
-﻿using System.Windows.Controls;
-using Microsoft.Practices.Unity;
+﻿using Microsoft.Practices.Unity;
 
 namespace Roald.CompositeDemo
 {
     class RowCellFactory : IRowCellFactorySetup
     {
         private readonly IUnityContainer _container;
-        private Grid _grid;
-        private int _rowNo;
         private int _columnNo;
+        private IContextRow _contextRow;
 
         public RowCellFactory(IUnityContainer container)
         {
@@ -18,15 +16,14 @@ namespace Roald.CompositeDemo
         public ICell Create()
         {
             var instance = _container.Resolve<ICellSetup>();
-            instance.Setup(_grid,_rowNo,_columnNo);
+            instance.Setup(_contextRow);
             _columnNo++;
             return instance;
         }
 
-        public void Setup(Grid grid)
+        public void Setup(IContextRow contextRow)
         {
-            _grid = grid;
-            _rowNo = grid.RowDefinitions.Count-1;
+            _contextRow = contextRow;
         }
     }
 }

@@ -4,6 +4,6 @@ namespace Roald.CompositeDemo
 {
     internal interface IColumnSetup : IColumn
     {
-        void Setup(Grid grid);
+        void Setup(DataGrid grid);
     }
 }

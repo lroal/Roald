@@ -76,11 +76,12 @@
     <Compile Include="CellView.xaml.cs">
       <DependentUpon>CellView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Column.cs" />
-    <Compile Include="ColumnCellFactory.cs" />
-    <Compile Include="ColumnCellFactoryFactory.cs" />
     <Compile Include="ColumnFactory.cs" />
+    <Compile Include="ColumnFactoryFactory.cs" />
+    <Compile Include="CompositeDataContext.cs" />
     <Compile Include="CompositeGridFactory.cs" />
+    <Compile Include="ContextRow.cs" />
+    <Compile Include="ContextRowFactory.cs" />
     <Compile Include="Currency.cs" />
     <Compile Include="CurrencyPresenterFactory.cs" />
     <Compile Include="DataCellRegion.cs" />
@@ -96,10 +97,14 @@
     <Compile Include="IColumnCellFactoryFactory.cs" />
     <Compile Include="IColumnCellFactorySetup.cs" />
     <Compile Include="IColumnFactory.cs" />
+    <Compile Include="IColumnFactoryFactory.cs" />
+    <Compile Include="IColumnFactorySetup.cs" />
     <Compile Include="IColumnSetup.cs" />
+    <Compile Include="ICompositeDataContext.cs" />
     <Compile Include="ICompositeGrid.cs" />
     <Compile Include="ICompositeGridFactory.cs" />
     <Compile Include="ICompositeGridSetup.cs" />
+    <Compile Include="IContextRowSetup.cs" />
     <Compile Include="IDataCellRegion.cs" />
     <Compile Include="IDataCellRegionFactory.cs" />
     <Compile Include="IDataCellRegionSetup.cs" />
@@ -109,6 +114,8 @@
     <Compile Include="IDataGridRegion.cs" />
     <Compile Include="IDataGridRegionFactory.cs" />
     <Compile Include="IDataGridRegionSetup.cs" />
+    <Compile Include="IContextRow.cs" />
+    <Compile Include="IContextRowFactory.cs" />
     <Compile Include="IRegionFactory.cs" />
     <Compile Include="IRegionSetup.cs" />
     <Compile Include="IRow.cs" />
@@ -119,6 +126,8 @@
     <Compile Include="IRowFactory.cs" />
     <Compile Include="IGridLineRegion.cs" />
     <Compile Include="IRegion.cs" />
+    <Compile Include="IRowFactoryFactory.cs" />
+    <Compile Include="IRowFactorySetup.cs" />
     <Compile Include="IRowSetup.cs" />
     <Compile Include="Region.cs" />
     <Compile Include="Row.cs" />
@@ -127,6 +136,7 @@
     <Compile Include="RowCellFactory.cs" />
     <Compile Include="RowCellFactoryFactory.cs" />
     <Compile Include="RowFactory.cs" />
+    <Compile Include="RowFactoryFactory.cs" />
     <Compile Include="ValueView.xaml.cs">
       <DependentUpon>ValueView.xaml</DependentUpon>
     </Compile>

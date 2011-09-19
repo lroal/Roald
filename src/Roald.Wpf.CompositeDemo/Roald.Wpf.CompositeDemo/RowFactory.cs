@@ -1,22 +1,28 @@
-﻿using System.Windows.Controls;
-using Microsoft.Practices.Unity;
+﻿using Microsoft.Practices.Unity;
 
 namespace Roald.CompositeDemo
 {
-    class RowFactory :  IRowFactory
+    class RowFactory :  IRowFactorySetup
     {
-        private readonly IUnityContainer _container;
+        private readonly IUnityContainer _container;       
+        private ICompositeDataContext _dataContext;
 
         public RowFactory(IUnityContainer container)
         {
             _container = container;
         }
 
-        public IRow Create(Grid grid)
-        {
+        public IRow Create()
+        {            
             var instance = _container.Resolve<IRowSetup>();
-            instance.Setup(grid);
+            var contextRow = _dataContext.CreateContextRow();
+            instance.Setup(contextRow);
             return instance;
+        }
+
+        public void Setup(ICompositeDataContext dataContext)
+        {
+            _dataContext = dataContext;            
         }
     }
 }

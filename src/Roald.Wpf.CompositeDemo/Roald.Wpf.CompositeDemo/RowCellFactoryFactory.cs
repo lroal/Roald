@@ -1,5 +1,4 @@
-﻿using System.Windows.Controls;
-using Microsoft.Practices.Unity;
+﻿using Microsoft.Practices.Unity;
 
 namespace Roald.CompositeDemo
 {
@@ -12,10 +11,10 @@ namespace Roald.CompositeDemo
             _container = container;
         }
 
-        public IRowCellFactory Create(Grid grid)
+        public IRowCellFactory Create(IContextRow contextRow)
         {
             var instance = _container.Resolve<IRowCellFactorySetup>();
-            instance.Setup(grid);
+            instance.Setup(contextRow);
             return instance;
         }
     }

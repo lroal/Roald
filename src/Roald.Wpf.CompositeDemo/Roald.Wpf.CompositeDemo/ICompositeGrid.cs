@@ -2,7 +2,7 @@
 {
     public interface ICompositeGrid 
     {
-        IColumn CreateColumn();
         IRow CreateRow();
+        void CreateLeftAlignColumn(string header);
     }
 }

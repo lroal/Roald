@@ -1,32 +1,42 @@
+using System;
 using System.Windows.Controls;
 
 namespace Roald.CompositeDemo
 {
-    public class CompositeGrid : ICompositeGridSetup
+    internal class CompositeGrid : ICompositeGridSetup
     {
-        private Grid _grid;
-        private readonly IRowFactory _rowFactory;
-        private readonly IColumnFactory _columnFactory;
+        private readonly IRowFactoryFactory _rowFactoryFactory;
+        private readonly IColumnFactoryFactory _columnFactoryFactory;
+        private readonly ICompositeDataContext _context;
+        private IRowFactory _rowFactory;
+        private IColumnFactory _columnFactory;
 
-        public CompositeGrid(IRowFactory rowFactory, IColumnFactory columnFactory)
+        public CompositeGrid(IRowFactoryFactory rowFactoryFactory, IColumnFactoryFactory columnFactoryFactory,
+                              ICompositeDataContext context)
         {
-            _rowFactory = rowFactory;
-            _columnFactory = columnFactory;
+            _rowFactoryFactory = rowFactoryFactory;
+            _columnFactoryFactory = columnFactoryFactory;
+            _context = context;
         }
 
-        public void Setup(Grid grid)
-        {            
-            _grid = grid;
-        }
-
-        public IColumn CreateColumn()
+        public void Setup(ContentControl contentControl)
         {
-            return _columnFactory.Create(_grid);
+            var grid = new DataGrid();
+            grid.AutoGenerateColumns = false;
+            contentControl.Content = grid;
+            _rowFactory = _rowFactoryFactory.Create(grid, _context);
+            _columnFactory = _columnFactoryFactory.Create(grid);
         }
 
         public IRow CreateRow()
         {
-            return _rowFactory.Create(_grid);
+            return _rowFactory.Create();
         }
+
+        public void CreateLeftAlignColumn(string header)
+        {
+            _columnFactory.CreateLeftAligned(header);
+        }
+
     }
 }

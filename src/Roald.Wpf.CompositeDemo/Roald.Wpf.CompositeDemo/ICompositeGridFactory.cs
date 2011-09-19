@@ -5,6 +5,6 @@ namespace Roald.CompositeDemo
 {
     public interface ICompositeGridFactory 
     {
-        ICompositeGrid Create(Grid grid);
+        ICompositeGrid Create(ContentControl grid);
     }
 }

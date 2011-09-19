@@ -3,18 +3,18 @@ using Microsoft.Practices.Unity;
 
 namespace Roald.CompositeDemo
 {
-    class ColumnCellFactoryFactory : IColumnCellFactoryFactory
+    class ColumnFactoryFactory : IColumnFactoryFactory
     {
         private readonly IUnityContainer _container;
 
-        public ColumnCellFactoryFactory(IUnityContainer container)
+        public ColumnFactoryFactory(IUnityContainer container)
         {
             _container = container;
         }
 
-        public IColumnCellFactory Create(Grid grid)
+        public IColumnFactory Create(DataGrid grid)
         {
-            var instance = _container.Resolve<IColumnCellFactorySetup>();
+            var instance = _container.Resolve<IColumnFactorySetup>();
             instance.Setup(grid);
             return instance;
         }
