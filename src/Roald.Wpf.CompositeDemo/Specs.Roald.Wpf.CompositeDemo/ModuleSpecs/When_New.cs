@@ -24,7 +24,7 @@ namespace Roald.CompositeDemo.ModuleSpecs
         [Test]
         public void It_Should_Register_CurrenciesPresenter()
         {
-            Container.AssertWasCalled(x => x.RegisterType<ICurrenciesPresenter, CurrenciesPresenter>());
+            Container.AssertWasCalled(x => x.RegisterType<ICurrencyGridPresenter, CurrencyGridPresenter>());
         }
 
         [Test]
@@ -99,7 +99,103 @@ namespace Roald.CompositeDemo.ModuleSpecs
             Container.AssertWasCalled(x => x.RegisterType<IDataCellRegionSetup, DataCellRegion>());
         }
 
+        [Test]
+        public void It_Should_Register_CompositeGrid()
+        {
+            Container.AssertWasCalled(x => x.RegisterType<ICompositeGridSetup, CompositeGrid>());
+        }
+
+
+        [Test]
+        public void It_Should_Register_RowFactory()
+        {
+            Container.AssertWasCalled(x => x.RegisterType<IRowFactory, RowFactory>());
+        }
+
+        [Test]
+        public void It_Should_Register_RowSetup()
+        {
+            Container.AssertWasCalled(x => x.RegisterType<IRowSetup, Row>());
+        }
+
+        [Test]
+        public void It_Should_Register_RowCellFactory()
+        {
+            Container.AssertWasCalled(x => x.RegisterType<IRowCellFactorySetup, RowCellFactory>());
+        }
+
+        [Test]
+        public void It_Should_Register_RowCellSetup()
+        {
+            Container.AssertWasCalled(x => x.RegisterType<ICellSetup, Cell>());
+        }
+
+
+        [Test]
+        public void It_Should_Register_Column()
+        {
+            Container.AssertWasCalled(x => x.RegisterType<IColumnSetup, Column>());
+        }
+
+        [Test]
+        public void It_Should_Register_ColumnFactory()
+        {
+            Container.AssertWasCalled(x => x.RegisterType<IColumnFactory, ColumnFactory>());
+        }
+
+        [Test]
+        public void It_Should_Register_ColumnSetup()
+        {
+            Container.AssertWasCalled(x => x.RegisterType<IColumnSetup, Column>());
+        }
+
+        [Test]
+        public void It_Should_Register_ColumnCellFactory()
+        {
+            Container.AssertWasCalled(x => x.RegisterType<IColumnCellFactory, ColumnCellFactory>());
+        }
+
+
+        [Test]
+        public void It_Should_Register_CompositeGridFactory()
+        {
+            Container.AssertWasCalled(x => x.RegisterType<ICompositeGridFactory, CompositeGridFactory>());
+        }
+
+        [Test]
+        public void It_Should_Register_RowCellFactoryFactory()
+        {
+            Container.AssertWasCalled(x => x.RegisterType<IRowCellFactoryFactory, RowCellFactoryFactory>());
+        }
+
+        [Test]
+        public void It_Should_Register_ColumnCellFactoryFactory()
+        {
+            Container.AssertWasCalled(x => x.RegisterType<IColumnCellFactoryFactory, ColumnCellFactoryFactory>());
+        }
+
+        [Test]
+        public void It_Should_Register_RegionFactory()
+        {
+            Container.AssertWasCalled(x => x.RegisterType<IRegionFactory, RegionFactory>());
+        }
+
+        [Test]
+        public void It_Should_Register_RegionSetup()
+        {
+            Container.AssertWasCalled(x => x.RegisterType<IRegionSetup, Region>());
+        }
+
+
+        [Test]
+        public void It_Should_Register_CellView()
+        {
+            Container.AssertWasCalled(x => x.RegisterType<ICellView, CellView>());
+        }
+
         
 
-    }
+       
+
+   }
 }

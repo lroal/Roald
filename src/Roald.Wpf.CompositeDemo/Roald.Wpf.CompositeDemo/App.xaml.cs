@@ -13,7 +13,7 @@ namespace Roald.CompositeDemo
         {
             base.OnStartup(e);
             new CompositeDemoModule(_container);
-            var presenter = _container.Resolve<ICurrenciesPresenter>();
+            var presenter = _container.Resolve<ICurrencyGridPresenter>();
             presenter.Activate();
         }
 

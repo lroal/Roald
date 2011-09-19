@@ -4,7 +4,7 @@
     {
         void Activate();
         void DeActivate();
-        IDataGridRegion Region { get; }
+        ICompositeGrid Grid { get; }
         void ShowError(string title, string errorMsg);
     }
 }

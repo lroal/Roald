@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Windows;
-using System.Windows.Controls;
 
 namespace Roald.CompositeDemo
 {
@@ -9,14 +8,13 @@ namespace Roald.CompositeDemo
     /// </summary>
     internal partial class CurrenciesWindow : Window, ICurrenciesView
     {
-        private readonly IDataGridRegionFactory _gridRegionFactory;
+        private readonly ICompositeGridFactory _gridFactory;
 
-        public CurrenciesWindow(IDataGridRegionFactory gridRegionFactory)
+        public CurrenciesWindow(ICompositeGridFactory gridFactory)
         {
-            _gridRegionFactory = gridRegionFactory;
+            _gridFactory = gridFactory;
             InitializeComponent();
-            
-            Region = _gridRegionFactory.Create(_dataGrid);
+            Grid = _gridFactory.Create(_grid);
         }
 
         public new void Activate()
@@ -28,7 +26,9 @@ namespace Roald.CompositeDemo
             Close();
         }
 
-        public IDataGridRegion Region { get; private set; }
+        public ICompositeGrid Grid { get; private set; }
+
+        public IDataGridRegion GridRegion { get; private set; }
 
         public void ShowError(string title, string errorMsg)
         {

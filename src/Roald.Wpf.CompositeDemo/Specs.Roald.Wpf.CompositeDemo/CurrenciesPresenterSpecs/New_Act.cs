@@ -5,7 +5,7 @@ namespace Roald.CompositeDemo.CurrenciesPresenterSpecs
 {
     internal abstract class New_Act
     {
-        protected CurrenciesPresenter Presenter { get; set; }
+        protected CurrencyGridPresenter Presenter { get; set; }
         protected ICurrenciesView View = MockRepository.GenerateStub<ICurrenciesView>();
         protected IGetCurrenciesService GetCurrenciesService = MockRepository.GenerateStub<IGetCurrenciesService>();
         protected ICurrencyPresenterFactory CurrencyPresenterFactory = MockRepository.GenerateStub<ICurrencyPresenterFactory>();
@@ -16,7 +16,7 @@ namespace Roald.CompositeDemo.CurrenciesPresenterSpecs
 
         protected virtual void Act()
         {
-            Presenter = new CurrenciesPresenter(View,GetCurrenciesService,CurrencyPresenterFactory);
+            Presenter = new CurrencyGridPresenter(View,GetCurrenciesService,CurrencyPresenterFactory);
         }
     }
 

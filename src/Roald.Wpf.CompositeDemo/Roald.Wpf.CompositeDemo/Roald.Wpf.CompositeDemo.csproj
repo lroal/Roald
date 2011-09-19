@@ -65,10 +65,22 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="CellView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="CodeView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Compile Include="CellView.xaml.cs">
+      <DependentUpon>CellView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Column.cs" />
+    <Compile Include="ColumnCellFactory.cs" />
+    <Compile Include="ColumnCellFactoryFactory.cs" />
+    <Compile Include="ColumnFactory.cs" />
+    <Compile Include="CompositeGridFactory.cs" />
     <Compile Include="Currency.cs" />
     <Compile Include="CurrencyPresenterFactory.cs" />
     <Compile Include="DataCellRegion.cs" />
@@ -77,7 +89,17 @@
     <Compile Include="DataGridLineRegionFactory.cs" />
     <Compile Include="DataGridRegion.cs" />
     <Compile Include="DataGridRegionFactory.cs" />
+    <Compile Include="ICell.cs" />
     <Compile Include="ICellRegion.cs" />
+    <Compile Include="IColumn.cs" />
+    <Compile Include="IColumnCellFactory.cs" />
+    <Compile Include="IColumnCellFactoryFactory.cs" />
+    <Compile Include="IColumnCellFactorySetup.cs" />
+    <Compile Include="IColumnFactory.cs" />
+    <Compile Include="IColumnSetup.cs" />
+    <Compile Include="ICompositeGrid.cs" />
+    <Compile Include="ICompositeGridFactory.cs" />
+    <Compile Include="ICompositeGridSetup.cs" />
     <Compile Include="IDataCellRegion.cs" />
     <Compile Include="IDataCellRegionFactory.cs" />
     <Compile Include="IDataCellRegionSetup.cs" />
@@ -87,7 +109,24 @@
     <Compile Include="IDataGridRegion.cs" />
     <Compile Include="IDataGridRegionFactory.cs" />
     <Compile Include="IDataGridRegionSetup.cs" />
+    <Compile Include="IRegionFactory.cs" />
+    <Compile Include="IRegionSetup.cs" />
+    <Compile Include="IRow.cs" />
+    <Compile Include="IRowCellFactory.cs" />
+    <Compile Include="IRowCellFactoryFactory.cs" />
+    <Compile Include="IRowCellFactorySetup.cs" />
+    <Compile Include="ICellSetup.cs" />
+    <Compile Include="IRowFactory.cs" />
     <Compile Include="IGridLineRegion.cs" />
+    <Compile Include="IRegion.cs" />
+    <Compile Include="IRowSetup.cs" />
+    <Compile Include="Region.cs" />
+    <Compile Include="Row.cs" />
+    <Compile Include="Cell.cs" />
+    <Compile Include="CompositeGrid.cs" />
+    <Compile Include="RowCellFactory.cs" />
+    <Compile Include="RowCellFactoryFactory.cs" />
+    <Compile Include="RowFactory.cs" />
     <Compile Include="ValueView.xaml.cs">
       <DependentUpon>ValueView.xaml</DependentUpon>
     </Compile>
@@ -103,14 +142,14 @@
       <DependentUpon>CodeView.xaml</DependentUpon>
     </Compile>
     <Compile Include="CompositeDemoModule.cs" />
-    <Compile Include="CurrenciesPresenter.cs" />
+    <Compile Include="CurrencyGridPresenter.cs" />
     <Compile Include="CurrencyPresenter.cs" />
     <Compile Include="DescriptionView.xaml.cs">
       <DependentUpon>DescriptionView.xaml</DependentUpon>
     </Compile>
     <Compile Include="GetCurrenciesService.cs" />
     <Compile Include="ICodeView.cs" />
-    <Compile Include="ICurrenciesPresenter.cs" />
+    <Compile Include="ICurrencyGridPresenter.cs" />
     <Compile Include="ICurrenciesView.cs" />
     <Compile Include="CurrenciesWindow.xaml.cs">
       <DependentUpon>CurrenciesWindow.xaml</DependentUpon>

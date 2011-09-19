@@ -1,0 +1,193 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{03C9630A-8580-4D51-80D3-FFA5593EF9BE}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Roald.CompositeDemo</RootNamespace>
+    <AssemblyName>Roald.Wpf.CompositeDemo</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Practices.Unity">
+      <HintPath>..\..\..\lib\Unity\Desktop\Microsoft.Practices.Unity.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.framework">
+      <HintPath>..\..\..\tools\Nunit\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="Rhino.Mocks">
+      <HintPath>..\..\..\tools\Rhino\Rhino.Mocks.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Page Include="CodeView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="Column.cs" />
+    <Compile Include="ColumnCell.cs" />
+    <Compile Include="ColumnCellFactory.cs" />
+    <Compile Include="ColumnFactory.cs" />
+    <Compile Include="Currency.cs" />
+    <Compile Include="CurrencyPresenterFactory.cs" />
+    <Compile Include="DataCellRegion.cs" />
+    <Compile Include="DataCellRegionFactory.cs" />
+    <Compile Include="DataGridLineRegion.cs" />
+    <Compile Include="DataGridLineRegionFactory.cs" />
+    <Compile Include="DataGridRegion.cs" />
+    <Compile Include="DataGridRegionFactory.cs" />
+    <Compile Include="ICell.cs" />
+    <Compile Include="ICellRegion.cs" />
+    <Compile Include="IColumn.cs" />
+    <Compile Include="IColumnCell.cs" />
+    <Compile Include="IColumnCellFactory.cs" />
+    <Compile Include="IColumnCellSetup.cs" />
+    <Compile Include="IColumnFactory.cs" />
+    <Compile Include="IColumnSetup.cs" />
+    <Compile Include="ICompositeGrid.cs" />
+    <Compile Include="ICompositeGridSetup.cs" />
+    <Compile Include="IDataCellRegion.cs" />
+    <Compile Include="IDataCellRegionFactory.cs" />
+    <Compile Include="IDataCellRegionSetup.cs" />
+    <Compile Include="IDataGridLineRegion.cs" />
+    <Compile Include="IDataGridLineRegionFactory.cs" />
+    <Compile Include="IDataGridLineRegionSetup.cs" />
+    <Compile Include="IDataGridRegion.cs" />
+    <Compile Include="IDataGridRegionFactory.cs" />
+    <Compile Include="IDataGridRegionSetup.cs" />
+    <Compile Include="IRow.cs" />
+    <Compile Include="IRowCell.cs" />
+    <Compile Include="IRowCellFactory.cs" />
+    <Compile Include="IRowCellSetup.cs" />
+    <Compile Include="IRowFactory.cs" />
+    <Compile Include="IGridLineRegion.cs" />
+    <Compile Include="IRegion.cs" />
+    <Compile Include="IRowSetup.cs" />
+    <Compile Include="Row.cs" />
+    <Compile Include="RowCell.cs" />
+    <Compile Include="CompositeGrid.cs" />
+    <Compile Include="RowCellFactory.cs" />
+    <Compile Include="RowFactory.cs" />
+    <Compile Include="ValueView.xaml.cs">
+      <DependentUpon>ValueView.xaml</DependentUpon>
+    </Compile>
+    <Page Include="CurrenciesWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="CodeView.xaml.cs">
+      <DependentUpon>CodeView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CompositeDemoModule.cs" />
+    <Compile Include="CurrenciesPresenter.cs" />
+    <Compile Include="CurrencyPresenter.cs" />
+    <Compile Include="DescriptionView.xaml.cs">
+      <DependentUpon>DescriptionView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GetCurrenciesService.cs" />
+    <Compile Include="ICodeView.cs" />
+    <Compile Include="ICurrenciesPresenter.cs" />
+    <Compile Include="ICurrenciesView.cs" />
+    <Compile Include="CurrenciesWindow.xaml.cs">
+      <DependentUpon>CurrenciesWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Page Include="DescriptionView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ValueView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ICurrency.cs" />
+    <Compile Include="ICurrencyPresenter.cs" />
+    <Compile Include="ICurrencyPresenterFactory.cs" />
+    <Compile Include="ICurrencyPresenterSetup.cs" />
+    <Compile Include="IDescriptionView.cs" />
+    <Compile Include="IGetCurrenciesService.cs" />
+    <Compile Include="IGridRegion.cs" />
+    <Compile Include="IValueView.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <AppDesigner Include="Properties\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

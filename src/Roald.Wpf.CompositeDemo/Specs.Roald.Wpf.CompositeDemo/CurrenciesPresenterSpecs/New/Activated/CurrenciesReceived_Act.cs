@@ -8,12 +8,12 @@ namespace Roald.CompositeDemo.CurrenciesPresenterSpecs.New.Activated
     {
         protected ICurrencyPresenter CurrencyPresenter1 = MockRepository.GenerateStub<ICurrencyPresenter>();
         protected ICurrencyPresenter CurrencyPresenter2 = MockRepository.GenerateStub<ICurrencyPresenter>();
-        protected IDataGridRegion Region = MockRepository.GenerateStub<IDataGridRegion>();
+        protected ICompositeGrid Grid = MockRepository.GenerateStub<ICompositeGrid>();
         protected List<ICurrency> Currencies = new List<ICurrency>();
         protected ICurrency Currency1 = MockRepository.GenerateStub<ICurrency>();
         protected ICurrency Currency2 = MockRepository.GenerateStub<ICurrency>();
-        protected IDataGridLineRegion LineRegion2 { get; set; }
-        protected IDataGridLineRegion LineRegion1 { get; set; }
+        protected IRow Row1 = MockRepository.GenerateStub<IRow>();
+        protected IRow Row2 = MockRepository.GenerateStub<IRow>();
 
 
         protected override void Arrange()
@@ -28,13 +28,13 @@ namespace Roald.CompositeDemo.CurrenciesPresenterSpecs.New.Activated
 
         private void StubView()
         {
-            View.Stub(x => x.Region).Return(Region);
+            View.Stub(x => x.Grid).Return(Grid);
         }
 
         private void StubGridRegion()
         {
-            Region.Stub(x => x.CreateLine()).Return(LineRegion1).Repeat.Once();
-            Region.Stub(x => x.CreateLine()).Return(LineRegion2).Repeat.Once();
+            Grid.Stub(x => x.CreateRow()).Return(Row2).Repeat.Once();
+            Grid.Stub(x => x.CreateRow()).Return(Row1).Repeat.Once();
         }
 
         private void StubCurrencies()

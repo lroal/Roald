@@ -10,7 +10,7 @@ namespace Roald.CompositeDemo
         public CompositeDemoModule(IUnityContainer container)
         {
             _c = container;
-            _c.RegisterType<ICurrenciesPresenter, CurrenciesPresenter>();
+            _c.RegisterType<ICurrencyGridPresenter, CurrencyGridPresenter>();
             _c.RegisterType<ICurrencyPresenterSetup, CurrencyPresenter>();
             _c.RegisterType<IValueView, ValueView>();
             _c.RegisterType<ICodeView, CodeView>();
@@ -24,7 +24,18 @@ namespace Roald.CompositeDemo
             _c.RegisterType<IDataGridLineRegionFactory, DataGridLineRegionFactory>();
             _c.RegisterType<IDataCellRegionFactory, DataCellRegionFactory>();
             _c.RegisterType<IDataCellRegionSetup, DataCellRegion>();
-
+            _c.RegisterType<IRowFactory, RowFactory>();
+            _c.RegisterType<IRowSetup, Row>();
+            _c.RegisterType<IRowCellFactoryFactory, RowCellFactoryFactory>();
+            _c.RegisterType<IRowCellFactorySetup, RowCellFactory>();
+            _c.RegisterType<ICellSetup, Cell>();
+            _c.RegisterType<IColumnFactory, ColumnFactory>();
+            _c.RegisterType<IColumnSetup, Column>();
+            _c.RegisterType<IColumnCellFactory, ColumnCellFactory>();
+            _c.RegisterType<IColumnCellFactoryFactory, ColumnCellFactoryFactory>();
+            _c.RegisterType<ICompositeGridSetup, CompositeGrid>();
+            _c.RegisterType<ICompositeGridFactory,CompositeGridFactory>();
+            _c.RegisterType<ICellView, CellView>();
         }
     }
 }

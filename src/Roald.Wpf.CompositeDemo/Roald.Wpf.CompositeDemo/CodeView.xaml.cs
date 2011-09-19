@@ -19,6 +19,7 @@ namespace Roald.CompositeDemo
     /// </summary>
     public partial class CodeView : UserControl, ICodeView
     {
+
         public CodeView()
         {
             InitializeComponent();
