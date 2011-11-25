@@ -1,7 +1,0 @@
-<Modules>
-  <Module PersistentId="03C9630A-8580-4D51-80D3-FFA5593EF9BE" ModuleId="Roald.Wpf.CompositeDemo" />
-  <Module PersistentId="476C9753-7F40-4747-AD6A-CC15B886FD0A" ModuleId="Specs.Roald.Wpf.CompositeDemo" />
-  <Module PersistentId="d:Miscellaneous Files" ModuleId="PresentationFramework" />
-  <Module PersistentId="PresentationFramework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" ModuleId="PresentationFramework_1" />
-  <Module PersistentId="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" ModuleId="mscorlib" />
-</Modules>
