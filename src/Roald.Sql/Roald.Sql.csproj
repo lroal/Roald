@@ -1,0 +1,108 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{AF0C4CDB-0F4E-49B6-888D-A45EAEF2142D}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Roald.Sql</RootNamespace>
+    <AssemblyName>Roald.Sql</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Practices.Unity">
+      <HintPath>..\..\lib\Unity\Desktop\Microsoft.Practices.Unity.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.framework">
+      <HintPath>..\..\tools\Nunit\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="Rhino.Mocks">
+      <HintPath>..\..\tools\Rhino\Rhino.Mocks.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ByOrder\GetOrderRowByPrimaryService.cs" />
+    <Compile Include="Base_Act.cs" />
+    <Compile Include="ByOrder\IConsigneeMap.cs" />
+    <Compile Include="ByOrder\IConsigneeReference.cs" />
+    <Compile Include="ByOrder\IConsigneeRow.cs" />
+    <Compile Include="IRowFetcher.cs" />
+    <Compile Include="ISelectSql.cs" />
+    <Compile Include="ISelectSqlExecuter.cs" />
+    <Compile Include="ISelectSqlFactory.cs" />
+    <Compile Include="ISpanTree.cs" />
+    <Compile Include="ISqlLine.cs" />
+    <Compile Include="ISqlLineToRowService.cs" />
+    <Compile Include="ISqlResult.cs" />
+    <Compile Include="ITableSpanLeg.cs" />
+    <Compile Include="ITableSpanLegFactory.cs" />
+    <Compile Include="RowFetcher.cs" />
+    <Compile Include="SqlLineToRowService.cs" />
+    <Compile Include="TableSpan.cs" />
+    <Compile Include="IRowJacket.cs" />
+    <Compile Include="GetRowsService.cs" />
+    <Compile Include="IFilter.cs" />
+    <Compile Include="IGetRowsService.cs" />
+    <Compile Include="IPrimaryKeyFilter.cs" />
+    <Compile Include="IPrimaryKeyFilterFactory.cs" />
+    <Compile Include="IQueryGraphFactory.cs" />
+    <Compile Include="IReference.cs" />
+    <Compile Include="IRow.cs" />
+    <Compile Include="IQuerySetup.cs" />
+    <Compile Include="ITableSpan.cs" />
+    <Compile Include="ByOrder\OrderRow.cs" />
+    <Compile Include="GetRowByPrimaryService.cs" />
+    <Compile Include="IColumnMap.cs" />
+    <Compile Include="ByOrder\IGetOrderRowByPrimaryService.cs" />
+    <Compile Include="IGetRowByPrimaryService.cs" />
+    <Compile Include="IOrderMap.cs" />
+    <Compile Include="ByOrder\IOrderRow.cs" />
+    <Compile Include="IPrimaryKeyValue.cs" />
+    <Compile Include="IPrimaryKeyMap.cs" />
+    <Compile Include="IQuery.cs" />
+    <Compile Include="IQueryFactory.cs" />
+    <Compile Include="ITableMap.cs" />
+    <Compile Include="ByOrder\OrderMap.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Query.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="ByOrder\ByTableMap\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
