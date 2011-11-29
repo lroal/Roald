@@ -11,11 +11,6 @@ namespace Roald.Sql.ByOrder
             _row = row;
         }
 
-        public TRow GetRelated<TRow>()
-        {
-            throw new NotImplementedException();
-        }
-
         public int? OrderNo
         {
             get { throw new NotImplementedException(); }

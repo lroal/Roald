@@ -9,7 +9,7 @@
             _getRowByPrimaryService = getRowByPrimaryService;
         }
 
-        public IOrderRow Get(Sql.ITableSpan tableSpan,IPrimaryKeyValue keyValue)
+        public IOrderRow Get(ITableSpan tableSpan,IPrimaryKeyValue keyValue)
         {
             return _getRowByPrimaryService.Get(tableSpan,keyValue);
         }

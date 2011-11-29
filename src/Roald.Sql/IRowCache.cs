@@ -1,6 +1,6 @@
 ﻿namespace Roald.Sql
 {
-    public interface ISqlLine
+    internal interface IRowCache
     {
     }
 }

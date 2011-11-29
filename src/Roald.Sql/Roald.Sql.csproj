@@ -54,6 +54,7 @@
     <Compile Include="ByOrder\IConsigneeMap.cs" />
     <Compile Include="ByOrder\IConsigneeReference.cs" />
     <Compile Include="ByOrder\IConsigneeRow.cs" />
+    <Compile Include="IRowCache.cs" />
     <Compile Include="IRowFetcher.cs" />
     <Compile Include="ISelectSql.cs" />
     <Compile Include="ISelectSqlExecuter.cs" />
@@ -61,6 +62,7 @@
     <Compile Include="ISpanTree.cs" />
     <Compile Include="ISqlLine.cs" />
     <Compile Include="ISqlLineToRowService.cs" />
+    <Compile Include="ISqlLineToRowServiceFactory.cs" />
     <Compile Include="ISqlResult.cs" />
     <Compile Include="ITableSpanLeg.cs" />
     <Compile Include="ITableSpanLegFactory.cs" />

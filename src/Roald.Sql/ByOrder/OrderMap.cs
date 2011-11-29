@@ -6,11 +6,6 @@ namespace Roald.Sql.ByOrder
     class OrderMap : IOrderMap
     {
         
-        public Guid TableId
-        {
-            get { throw new NotImplementedException(); }
-        }
-
         public IPrimaryKeyMap PrimaryKey
         {
             get { throw new NotImplementedException(); }
