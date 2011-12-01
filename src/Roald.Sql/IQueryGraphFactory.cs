@@ -5,6 +5,6 @@ namespace Roald.Sql
     internal interface IQueryGraphFactory<TTableMap>
         where TTableMap : ITableMap
     {
-        IQueryGraph Create(ITableSpan tableSpan);
+        //IQueryGraph Create(ITableSpan tableSpan);
     }
 }
