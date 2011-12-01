@@ -18,11 +18,11 @@ namespace Roald.Sql
             _row.CreateFromDb(line);
             foreach (var leg in tableSpan.Legs)
             {
-                var sqlLineToRow = _sqlLineToRowServiceFactory.Create<()
-                leg.Reference
+                //var sqlLineToRow = _sqlLineToRowServiceFactory.Create<()
+                //leg.Reference
                     
             }
-            tableSpan.Legs
+            //tableSpan.Legs
             throw new NotImplementedException();
         }
     }
