@@ -2,28 +2,32 @@
 
 namespace Roald.Sql.ByOrder
 {
-    class OrderRow : IOrderRow
+    public class OrderRow : RowJacket
     {
-        private IRow _row;
+        private Row _row;
 
-        public void Setup(IRow row)
+        public OrderRow()
+        {
+        }
+
+        public void Setup(Row row)
         {
             _row = row;
         }
 
-        public int? OrderNo
+        public virtual int? OrderNo
         {
             get { throw new NotImplementedException(); }
         }
 
-        public string WayBillNo
+        public virtual string WayBillNo
         {
             get { throw new NotImplementedException(); }
         }
 
-        public IConsigneeRow Consignee
+        public virtual ConsigneeRow Consignee
         {
-            get { return _row.GetRelated<IConsigneeRow,IConsigneeReference>(); }
+            get { return _row.GetRelated<ConsigneeRow,ConsigneeReference>(); }
         }
     }
 }

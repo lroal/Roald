@@ -1,22 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Microsoft.Practices.Unity;
-using Roald.Sql.ByOrder;
 
 namespace Roald.Sql
 {
-    class GetRowsService<TTableMap, TRowJacket> : IGetRowsService<TTableMap, TRowJacket> where TTableMap : ITableMap where TRowJacket : IRowJacket
+    public class GetRowsService<TTableMap, TRowJacket>  where TTableMap : TableMap where TRowJacket : RowJacket
     {
-        private readonly IQueryFactory<TTableMap> _queryFactory;
+        private readonly QueryFactory<TTableMap> _queryFactory;
         private readonly IUnityContainer _container;
 
-        public GetRowsService(IQueryFactory<TTableMap> queryFactory,IUnityContainer container)
+        public GetRowsService()
+        {            
+        }
+
+        public GetRowsService(QueryFactory<TTableMap> queryFactory,IUnityContainer container)
         {
             _queryFactory = queryFactory;
             _container = container;
         }
 
-        public IEnumerable<TRowJacket> Get(ITableSpan tableSpan, IEnumerable<IFilter> filters)
+        public virtual IEnumerable<TRowJacket> Get(TableSpan tableSpan, IEnumerable<Filter> filters)
         {
             var query = _queryFactory.Create(tableSpan, filters);
             var rows = query.Execute();

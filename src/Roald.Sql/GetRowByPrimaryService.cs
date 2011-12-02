@@ -1,25 +1,28 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Roald.Sql.ByOrder;
 
 namespace Roald.Sql
 {
-    internal class GetRowByPrimaryService<TTableMap, TRowJacket> : IGetRowByPrimaryService<TTableMap, TRowJacket>
-        where TTableMap : ITableMap
-        where TRowJacket : IRowJacket
+    public class GetRowByPrimaryService<TTableMap, TRowJacket> 
+        where TTableMap : TableMap
+        where TRowJacket : RowJacket
     {
-        private readonly IGetRowsService<TTableMap, TRowJacket> _getRowsService;
-        private readonly IPrimaryKeyFilterFactory<TTableMap> _primaryKeyFilterFactory;
-        private ITableSpan _tableSpan;
-        private IPrimaryKeyValue _primaryKeyValue;
+        private readonly GetRowsService<TTableMap, TRowJacket> _getRowsService;
+        private readonly PrimaryKeyFilterFactory<TTableMap> _primaryKeyFilterFactory;
+        private TableSpan _tableSpan;
+        private PrimaryKeyValue _primaryKeyValue;
 
-        public GetRowByPrimaryService(IGetRowsService<TTableMap, TRowJacket> getRowsService, IPrimaryKeyFilterFactory<TTableMap> primaryKeyFilterFactory)
+        public GetRowByPrimaryService()
+        {
+            
+        }
+        public GetRowByPrimaryService(GetRowsService<TTableMap, TRowJacket> getRowsService, PrimaryKeyFilterFactory<TTableMap> primaryKeyFilterFactory)
         {
             _getRowsService = getRowsService;
             _primaryKeyFilterFactory = primaryKeyFilterFactory;
         }
 
-        public TRowJacket Get(ITableSpan tableSpan, IPrimaryKeyValue primaryKeyValue)
+        public virtual TRowJacket Get(TableSpan tableSpan, PrimaryKeyValue primaryKeyValue)
         {
             _tableSpan = tableSpan;
             _primaryKeyValue = primaryKeyValue;
@@ -32,7 +35,7 @@ namespace Roald.Sql
             return _getRowsService.Get(_tableSpan, new[] {filter});
         }
 
-        public TRowJacket TryGet(ITableSpan tableSpan, IPrimaryKeyValue primaryKeyValue)
+        public virtual TRowJacket TryGet(TableSpan tableSpan, PrimaryKeyValue primaryKeyValue)
         {
             _tableSpan = tableSpan;
             _primaryKeyValue = primaryKeyValue;

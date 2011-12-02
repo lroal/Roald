@@ -3,25 +3,25 @@ using System.Collections.Generic;
 
 namespace Roald.Sql.ByOrder
 {
-    class OrderMap : IOrderMap
+    public class OrderMap : TableMap
     {
         
-        public IPrimaryKeyMap PrimaryKey
+        public virtual PrimaryKeyMap PrimaryKey
         {
             get { throw new NotImplementedException(); }
         }
 
-        public IEnumerable<IColumnMap> Columns
+        public virtual IEnumerable<ColumnMap> Columns
         {
             get { throw new NotImplementedException(); }
         }
 
-        public IEnumerable<string> ColumnDiscriminators
+        public virtual IEnumerable<string> ColumnDiscriminators
         {
             get { throw new NotImplementedException(); }
         }
 
-        public string FormulaDiscriminator
+        public virtual string FormulaDiscriminator
         {
             get { throw new NotImplementedException(); }
         }

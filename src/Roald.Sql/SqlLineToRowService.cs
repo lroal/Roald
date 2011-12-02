@@ -2,18 +2,22 @@
 
 namespace Roald.Sql
 {
-    class SqlLineToRowService<TTableMap> : ISqlLineToRowService<TTableMap> where TTableMap : ITableMap
+    public class SqlLineToRowService<TTableMap>  where TTableMap : TableMap
     {
-        private readonly ISqlLineToRowServiceFactory _sqlLineToRowServiceFactory;
-        private readonly IRow _row;
+        private readonly SqlLineToRowServiceFactory _sqlLineToRowServiceFactory;
+        private readonly Row _row;
 
-        public SqlLineToRowService(ISqlLineToRowServiceFactory sqlLineToRowServiceFactory, IRow row, IRowCache rowCache)
+        public SqlLineToRowService()
+        {
+        }
+
+        public SqlLineToRowService(SqlLineToRowServiceFactory sqlLineToRowServiceFactory, Row row, RowCache rowCache)
         {
             _sqlLineToRowServiceFactory = sqlLineToRowServiceFactory;
             _row = row;
         }
 
-        public IRow ToRow(ITableSpan tableSpan, ISqlLine line)
+        public virtual Row ToRow(TableSpan tableSpan, SqlLine line)
         {
             _row.CreateFromDb(line);
             foreach (var leg in tableSpan.Legs)

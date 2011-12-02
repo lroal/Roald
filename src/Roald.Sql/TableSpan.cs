@@ -2,24 +2,28 @@
 
 namespace Roald.Sql
 {
-    class TableSpan : ITableSpan
+    public class TableSpan 
     {
-        private readonly ITableSpanLegFactory _tableSpanLegFactory;
-        private readonly List<ITableSpanLeg> _legs = new List<ITableSpanLeg>();
+        private readonly TableSpanLegFactory _tableSpanLegFactory;
+        private readonly List<TableSpanLeg> _legs = new List<TableSpanLeg>();
 
-        public TableSpan(ITableSpanLegFactory tableSpanLegFactory)
+        public TableSpan()
+        {
+        }
+
+        public TableSpan(TableSpanLegFactory tableSpanLegFactory)
         {
             _tableSpanLegFactory = tableSpanLegFactory;
         }       
         
-        public ITableSpan Include<TReference>() where TReference : IReference
+        public virtual TableSpan Include<TReference>() where TReference : Reference
         {
             var leg = _tableSpanLegFactory.Create<TReference>();
             _legs.Add(leg);
             return leg.Span;
         }
 
-        public IEnumerable<ITableSpanLeg> Legs  
+        public virtual IEnumerable<TableSpanLeg> Legs  
         {
             get { return _legs; }
         }

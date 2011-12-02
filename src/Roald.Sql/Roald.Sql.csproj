@@ -51,54 +51,44 @@
   <ItemGroup>
     <Compile Include="ByOrder\GetOrderRowByPrimaryService.cs" />
     <Compile Include="Base_Act.cs" />
-    <Compile Include="ByOrder\IConsigneeMap.cs" />
-    <Compile Include="ByOrder\IConsigneeReference.cs" />
-    <Compile Include="ByOrder\IConsigneeRow.cs" />
-    <Compile Include="IRowCache.cs" />
-    <Compile Include="IRowFetcher.cs" />
-    <Compile Include="ISelectSql.cs" />
-    <Compile Include="ISelectSqlExecuter.cs" />
-    <Compile Include="ISelectSqlFactory.cs" />
-    <Compile Include="ISpanTree.cs" />
-    <Compile Include="ISqlLine.cs" />
-    <Compile Include="ISqlLineToRowService.cs" />
-    <Compile Include="ISqlLineToRowServiceFactory.cs" />
-    <Compile Include="ISqlResult.cs" />
-    <Compile Include="ITableSpanLeg.cs" />
-    <Compile Include="ITableSpanLegFactory.cs" />
+    <Compile Include="ByOrder\ConsigneeMap.cs" />
+    <Compile Include="ByOrder\ConsigneeReference.cs" />
+    <Compile Include="ByOrder\ConsigneeRow.cs" />
+    <Compile Include="Factory.cs" />
+    <Compile Include="Query.cs" />
+    <Compile Include="QueryFactory.cs" />
+    <Compile Include="RowCache.cs" />
+    <Compile Include="SelectSql.cs" />
+    <Compile Include="SelectSqlExecuter.cs" />
+    <Compile Include="SelectSqlFactory.cs" />
+    <Compile Include="SpanTree.cs" />
+    <Compile Include="SqlLine.cs" />
+    <Compile Include="SqlLineToRowServiceFactory.cs" />
+    <Compile Include="SqlResult.cs" />
+    <Compile Include="TableSpanLeg.cs" />
+    <Compile Include="TableSpanLegFactory.cs" />
     <Compile Include="RowFetcher.cs" />
     <Compile Include="SqlLineToRowService.cs" />
     <Compile Include="TableSpan.cs" />
-    <Compile Include="IRowJacket.cs" />
+    <Compile Include="RowJacket.cs" />
     <Compile Include="GetRowsService.cs" />
-    <Compile Include="IFilter.cs" />
-    <Compile Include="IGetRowsService.cs" />
-    <Compile Include="IPrimaryKeyFilter.cs" />
-    <Compile Include="IPrimaryKeyFilterFactory.cs" />
-    <Compile Include="IQueryGraphFactory.cs" />
-    <Compile Include="IReference.cs" />
-    <Compile Include="IRow.cs" />
-    <Compile Include="IQuerySetup.cs" />
-    <Compile Include="ITableSpan.cs" />
+    <Compile Include="Filter.cs" />
+    <Compile Include="PrimaryKeyFilter.cs" />
+    <Compile Include="PrimaryKeyFilterFactory.cs" />
+    <Compile Include="QueryGraphFactory.cs" />
+    <Compile Include="Reference.cs" />
+    <Compile Include="Row.cs" />
     <Compile Include="ByOrder\OrderRow.cs" />
     <Compile Include="GetRowByPrimaryService.cs" />
-    <Compile Include="IColumnMap.cs" />
-    <Compile Include="ByOrder\IGetOrderRowByPrimaryService.cs" />
-    <Compile Include="IGetRowByPrimaryService.cs" />
-    <Compile Include="IOrderMap.cs" />
-    <Compile Include="ByOrder\IOrderRow.cs" />
-    <Compile Include="IPrimaryKeyValue.cs" />
-    <Compile Include="IPrimaryKeyMap.cs" />
-    <Compile Include="IQuery.cs" />
-    <Compile Include="IQueryFactory.cs" />
-    <Compile Include="ITableMap.cs" />
+    <Compile Include="ColumnMap.cs" />
+    <Compile Include="PrimaryKeyValue.cs" />
+    <Compile Include="PrimaryKeyMap.cs" />
+    <Compile Include="TableMap.cs" />
     <Compile Include="ByOrder\OrderMap.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Query.cs" />
+    <Compile Include="GenericQuery.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="ByOrder\ByTableMap\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
