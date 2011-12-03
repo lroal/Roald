@@ -2,7 +2,7 @@
 
 namespace Roald.Sql
 {
-    public class GenericQuery<TTableMap> : Query
+    public class Query<TTableMap> : Query
         where TTableMap : TableMap
     {
         private readonly SelectSqlFactory<TTableMap> _sqlFactory;
@@ -10,11 +10,11 @@ namespace Roald.Sql
         private IEnumerable<Filter> _filters;
         private TableSpan _tableSpan;
 
-        public GenericQuery()
+        public Query()
         {
         }
 
-        public GenericQuery( SelectSqlFactory<TTableMap> sqlFactory, RowFetcher<TTableMap> rowFetcher)
+        public Query( SelectSqlFactory<TTableMap> sqlFactory, RowFetcher<TTableMap> rowFetcher)
         {
             _sqlFactory = sqlFactory;
             _rowFetcher = rowFetcher;

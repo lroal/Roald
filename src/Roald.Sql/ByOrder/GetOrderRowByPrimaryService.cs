@@ -1,6 +1,6 @@
 ﻿namespace Roald.Sql.ByOrder
 {
-    public class GetOrderRowByPrimaryService : IGetOrderRowByPrimaryService
+    public class GetOrderRowByPrimaryService 
     {
         private readonly GetRowByPrimaryService<OrderMap,OrderRow> _getRowByPrimaryService;
 
