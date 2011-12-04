@@ -1,31 +1,32 @@
 ﻿using System.Collections.Generic;
-using Microsoft.Practices.Unity;
 
 namespace Roald.Sql
 {
-    public class GetRowsService<TTableMap, TRowJacket>  where TTableMap : TableMap where TRowJacket : RowJacket
+    public class GetRowsService<TTableMap, TRowJacket>
+        where TTableMap : TableMap 
+        where TRowJacket : RowJacket
     {
         private readonly QueryFactory<TTableMap> _queryFactory;
-        private readonly IUnityContainer _container;
+        private readonly Factory<TRowJacket> _factory;
 
         public GetRowsService()
-        {            
+        {
         }
 
-        public GetRowsService(QueryFactory<TTableMap> queryFactory,IUnityContainer container)
+        public GetRowsService(QueryFactory<TTableMap> queryFactory, Factory<TRowJacket> factory)
         {
             _queryFactory = queryFactory;
-            _container = container;
+            _factory = factory;
         }
-
+        
         public virtual IEnumerable<TRowJacket> Get(TableSpan tableSpan, IEnumerable<Filter> filters)
         {
-            var query = _queryFactory.Create(tableSpan, filters);
-            var rows = query.Execute();
+            Query query = _queryFactory.Create(tableSpan, filters);
+            IEnumerable<Row> rows = query.Execute();
             var jackets = new List<TRowJacket>();
-            foreach (var row in rows)
+            foreach (Row row in rows)
             {
-                var jacket = _container.Resolve<TRowJacket>();
+                var jacket = _factory.Create();
                 jacket.Setup(row);
                 jackets.Add(jacket);
             }

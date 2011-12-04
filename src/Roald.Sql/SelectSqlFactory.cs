@@ -2,9 +2,20 @@
 
 namespace Roald.Sql
 {
-    public interface SelectSqlFactory<TTableMap>
+    public class SelectSqlFactory<TTableMap>
         where TTableMap : TableMap
     {
-        SelectSql Create(TableSpan tableSpan, IEnumerable<Filter> filter);
+        private readonly Factory<SelectSql<TTableMap>> _innerFactory;
+
+        public SelectSqlFactory(Factory<SelectSql<TTableMap>> innerFactory)
+        {
+            _innerFactory = innerFactory;
+        }
+
+        public virtual  SelectSql Create(TableSpan tableSpan, IEnumerable<Filter> filter)
+        {
+            var instance = _innerFactory.Create();
+            return instance;
+        }
     }
 }

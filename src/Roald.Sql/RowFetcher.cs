@@ -11,6 +11,10 @@ namespace Roald.Sql
         private TableSpan _tableSpan;
         private SelectSql _sql;
 
+        public RowFetcher()
+        {
+        }
+
         public RowFetcher(SelectSqlExecuter sqlExecuter, SqlLineToRowService<TTableMap> sqlLineToRowService)
         {
             _sqlExecuter = sqlExecuter;

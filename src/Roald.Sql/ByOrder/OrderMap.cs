@@ -5,7 +5,11 @@ namespace Roald.Sql.ByOrder
 {
     public class OrderMap : TableMap
     {
-        
+        public string Name
+        {
+            get { throw new NotImplementedException(); }
+        }
+
         public virtual PrimaryKeyMap PrimaryKey
         {
             get { throw new NotImplementedException(); }

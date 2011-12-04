@@ -27,7 +27,11 @@ namespace Roald.Sql.ByOrder
 
         public virtual ConsigneeRow Consignee
         {
-            get { return _row.GetRelated<ConsigneeRow,ConsigneeReference>(); }
+            get
+            {
+                return null;
+                //return _row.GetRelated<ConsigneeRow,ConsigneeReference>();
+            }
         }
     }
 }

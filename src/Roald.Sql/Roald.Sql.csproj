@@ -49,6 +49,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ByOrder\ForeignKeyMap.cs" />
     <Compile Include="ByOrder\GetOrderRowByPrimaryService.cs" />
     <Compile Include="Base_Act.cs" />
     <Compile Include="ByOrder\ConsigneeMap.cs" />
@@ -87,6 +88,14 @@
     <Compile Include="ByOrder\OrderMap.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="GenericQuery.cs" />
+    <Compile Include="TableSpanLegHydrater.cs" />
+    <Compile Include="TableSpanLegHydraterFactory.cs" />
+    <Compile Include="_Specs\_SelectSqlFactory\FakeMap.cs" />
+    <Compile Include="_Specs\_SelectSqlFactory\New\Create_Act.cs" />
+    <Compile Include="_Specs\_SelectSqlFactory\New\When_Creating .cs" />
+    <Compile Include="_Specs\_SelectSqlFactory\New_Act.cs" />
+    <Compile Include="_Specs\_SelectSql\New_Act.cs" />
+    <Compile Include="_Specs\_SelectSql\When_New.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
