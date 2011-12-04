@@ -49,13 +49,28 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Alias.cs" />
+    <Compile Include="ByOrder\BySelectSql\TopColumnSql.cs" />
+    <Compile Include="ByOrder\BySelectSql\TopJoinSql.cs" />
+    <Compile Include="ByOrder\BySelectSql\StatementFactory.cs" />
+    <Compile Include="ByOrder\BySelectSql\TopWhereSql.cs" />
+    <Compile Include="ByOrder\BySelectSql\_Specs\_StatementFactory\FakeTopAlias.cs" />
+    <Compile Include="ByOrder\BySelectSql\_Specs\_StatementFactory\New\Create_Act.cs" />
+    <Compile Include="ByOrder\BySelectSql\_Specs\_StatementFactory\FakeColumnSql.cs" />
+    <Compile Include="ByOrder\BySelectSql\_Specs\_StatementFactory\New\When_Creating.cs" />
+    <Compile Include="ByOrder\BySelectSql\_Specs\_StatementFactory\New_Act.cs" />
     <Compile Include="ByOrder\ForeignKeyMap.cs" />
     <Compile Include="ByOrder\GetOrderRowByPrimaryService.cs" />
     <Compile Include="Base_Act.cs" />
     <Compile Include="ByOrder\ConsigneeMap.cs" />
     <Compile Include="ByOrder\ConsigneeReference.cs" />
     <Compile Include="ByOrder\ConsigneeRow.cs" />
+    <Compile Include="ColumnSql.cs" />
+    <Compile Include="ColumnSqlFactory.cs" />
     <Compile Include="Factory.cs" />
+    <Compile Include="SelectSqlOf.cs" />
+    <Compile Include="JoinSql.cs" />
+    <Compile Include="JoinSqlFactory.cs" />
     <Compile Include="Query.cs" />
     <Compile Include="QueryFactory.cs" />
     <Compile Include="RowCache.cs" />
@@ -90,12 +105,22 @@
     <Compile Include="GenericQuery.cs" />
     <Compile Include="TableSpanLegHydrater.cs" />
     <Compile Include="TableSpanLegHydraterFactory.cs" />
+    <Compile Include="TopAlias.cs" />
+    <Compile Include="WhereSql.cs" />
+    <Compile Include="WhereSqlFactory.cs" />
     <Compile Include="_Specs\_SelectSqlFactory\FakeMap.cs" />
     <Compile Include="_Specs\_SelectSqlFactory\New\Create_Act.cs" />
-    <Compile Include="_Specs\_SelectSqlFactory\New\When_Creating .cs" />
+    <Compile Include="_Specs\_SelectSqlFactory\New\When_Creating.cs" />
     <Compile Include="_Specs\_SelectSqlFactory\New_Act.cs" />
+    <Compile Include="_Specs\_SelectSql\New\Setup\AddJoin_Act.cs" />
+    <Compile Include="_Specs\_SelectSql\New\Setup\AddWhere_Act.cs" />
+    <Compile Include="_Specs\_SelectSql\New\Setup\AddColumn_Act.cs" />
+    <Compile Include="_Specs\_SelectSql\New\Setup\When_AddingColumn.cs" />
+    <Compile Include="_Specs\_SelectSql\New\Setup\When_AddingWhere.cs" />
+    <Compile Include="_Specs\_SelectSql\New\Setup\When_AddingJoin.cs" />
+    <Compile Include="_Specs\_SelectSql\New\Setup_Act.cs" />
+    <Compile Include="_Specs\_SelectSql\New\When_Setup.cs" />
     <Compile Include="_Specs\_SelectSql\New_Act.cs" />
-    <Compile Include="_Specs\_SelectSql\When_New.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

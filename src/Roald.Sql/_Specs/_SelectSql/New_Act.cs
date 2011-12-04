@@ -1,39 +1,29 @@
-using System;
-using System.Collections.Generic;
 using Rhino.Mocks;
-using Roald.Sql._Specs._SelectSqlFactory;
+using Roald.Sql.ByOrder.BySelectSql;
 
 namespace Roald.Sql._Specs._SelectSql
 {
     internal abstract class New_Act : Base_Act
     {
         protected SelectSql<TableMap> SelectSql { get; set; }
-        protected TableMap TableMap = MockRepository.GenerateStub<TableMap>();
-
-        protected static ColumnMap Column1 = MockRepository.GenerateStub<ColumnMap>();
-        protected static ColumnMap Column2 = MockRepository.GenerateStub<ColumnMap>();
-        protected List<ColumnMap> Columns = new List<ColumnMap>() {Column1, Column2};
-        protected const string TableName = "FakeTable";
+        protected TopColumnSql<TableMap> ColumnSql = MockRepository.GenerateStub<TopColumnSql<TableMap>>();
+        protected TopWhereSqlFactory<TableMap> WhereSqlFactory = MockRepository.GenerateStub<TopWhereSqlFactory<TableMap>>();
+        protected TopJoinSql JoinSql = MockRepository.GenerateStub<TopJoinSql>();
+        protected StatementFactory<TableMap> StatementFactory = MockRepository.GenerateStub<StatementFactory<TableMap>>();
 
         protected override void Arrange()
         {
             base.Arrange();
             base.Act();
-            StubTableMap();
         }
-
-        private void StubTableMap()
-        {
-            TableMap.Stub(x => x.Columns).Return(Columns);
-            TableMap.Stub(x => x.Name).Return(TableName);
-        }
-
 
         protected override void Act()
         {
-            SelectSql = new SelectSql<TableMap>(TableMap);
+            SelectSql = new SelectSql<TableMap>(ColumnSql,WhereSqlFactory,JoinSql,StatementFactory);
         }
 
-        
+
     }
+
+    
 }
