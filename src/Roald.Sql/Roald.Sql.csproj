@@ -50,6 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Alias.cs" />
+    <Compile Include="ByOrder\BySelectSql\CommaDelimiter.cs" />
     <Compile Include="ByOrder\BySelectSql\SelectSqlAppender.cs" />
     <Compile Include="ByOrder\BySelectSql\TopColumnSql.cs" />
     <Compile Include="ByOrder\BySelectSql\TopJoinSql.cs" />
@@ -67,6 +68,12 @@
     <Compile Include="ByOrder\BySelectSql\_Specs\_StatementFactory\FakeColumnSql.cs" />
     <Compile Include="ByOrder\BySelectSql\_Specs\_StatementFactory\New\When_Creating.cs" />
     <Compile Include="ByOrder\BySelectSql\_Specs\_StatementFactory\New_Act.cs" />
+    <Compile Include="ByOrder\BySelectSql\_Specs\_TopColumnSql\FakeAlias.cs" />
+    <Compile Include="ByOrder\BySelectSql\_Specs\_TopColumnSql\New\Add_Act.cs" />
+    <Compile Include="ByOrder\BySelectSql\_Specs\_TopColumnSql\New\FakeColumnSql.cs" />
+    <Compile Include="ByOrder\BySelectSql\_Specs\_TopColumnSql\New\When_Adding.cs" />
+    <Compile Include="ByOrder\BySelectSql\_Specs\_TopColumnSql\New_Act.cs" />
+    <Compile Include="ByOrder\BySelectSql\_Specs\_TopColumnSql\When_New.cs" />
     <Compile Include="ByOrder\ForeignKeyMap.cs" />
     <Compile Include="ByOrder\GetOrderRowByPrimaryService.cs" />
     <Compile Include="Base_Act.cs" />

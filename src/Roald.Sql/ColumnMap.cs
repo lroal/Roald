@@ -2,5 +2,6 @@
 {
     public interface ColumnMap
     {
+         string Name { get; }
     }
 }
