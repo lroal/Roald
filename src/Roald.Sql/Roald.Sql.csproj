@@ -55,6 +55,13 @@
     <Compile Include="ByOrder\BySelectSql\TopJoinSql.cs" />
     <Compile Include="ByOrder\BySelectSql\StatementFactory.cs" />
     <Compile Include="ByOrder\BySelectSql\TopWhereSql.cs" />
+    <Compile Include="ByOrder\BySelectSql\_Specs\_SelectSqlAppender\New\AppendEmpty_Act.cs" />
+    <Compile Include="ByOrder\BySelectSql\_Specs\_SelectSqlAppender\New\AppendNonEmpty_Act.cs" />
+    <Compile Include="ByOrder\BySelectSql\_Specs\_SelectSqlAppender\New\EmptySqlElementFake.cs" />
+    <Compile Include="ByOrder\BySelectSql\_Specs\_SelectSqlAppender\New\NonEmptySqlElementFake.cs" />
+    <Compile Include="ByOrder\BySelectSql\_Specs\_SelectSqlAppender\New\When_AppendingEmpty.cs" />
+    <Compile Include="ByOrder\BySelectSql\_Specs\_SelectSqlAppender\New\When_AppendingNonEmpty.cs" />
+    <Compile Include="ByOrder\BySelectSql\_Specs\_SelectSqlAppender\New_Act.cs" />
     <Compile Include="ByOrder\BySelectSql\_Specs\_StatementFactory\FakeTopAlias.cs" />
     <Compile Include="ByOrder\BySelectSql\_Specs\_StatementFactory\New\Create_Act.cs" />
     <Compile Include="ByOrder\BySelectSql\_Specs\_StatementFactory\FakeColumnSql.cs" />
