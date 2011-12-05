@@ -50,6 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Alias.cs" />
+    <Compile Include="ByOrder\BySelectSql\SelectSqlAppender.cs" />
     <Compile Include="ByOrder\BySelectSql\TopColumnSql.cs" />
     <Compile Include="ByOrder\BySelectSql\TopJoinSql.cs" />
     <Compile Include="ByOrder\BySelectSql\StatementFactory.cs" />
@@ -78,6 +79,7 @@
     <Compile Include="SelectSqlExecuter.cs" />
     <Compile Include="SelectSqlFactory.cs" />
     <Compile Include="SpanTree.cs" />
+    <Compile Include="SqlElement.cs" />
     <Compile Include="SqlLine.cs" />
     <Compile Include="SqlLineToRowServiceFactory.cs" />
     <Compile Include="SqlResult.cs" />
@@ -113,10 +115,8 @@
     <Compile Include="_Specs\_SelectSqlFactory\New\When_Creating.cs" />
     <Compile Include="_Specs\_SelectSqlFactory\New_Act.cs" />
     <Compile Include="_Specs\_SelectSql\New\Setup\AddJoin_Act.cs" />
-    <Compile Include="_Specs\_SelectSql\New\Setup\AddWhere_Act.cs" />
     <Compile Include="_Specs\_SelectSql\New\Setup\AddColumn_Act.cs" />
     <Compile Include="_Specs\_SelectSql\New\Setup\When_AddingColumn.cs" />
-    <Compile Include="_Specs\_SelectSql\New\Setup\When_AddingWhere.cs" />
     <Compile Include="_Specs\_SelectSql\New\Setup\When_AddingJoin.cs" />
     <Compile Include="_Specs\_SelectSql\New\Setup_Act.cs" />
     <Compile Include="_Specs\_SelectSql\New\When_Setup.cs" />

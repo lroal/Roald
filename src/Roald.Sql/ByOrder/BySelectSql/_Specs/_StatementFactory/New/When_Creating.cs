@@ -15,7 +15,7 @@ namespace Roald.Sql.ByOrder.BySelectSql._Specs._StatementFactory.New
         [Test]
         public void Then_It_Returns_Expected_Statement()
         {
-            Assert.AreEqual("SELECT <columns> FROM <TableName> AS <alias>", Returned);
+            Assert.AreEqual(ExpectedStatement, Returned);
         }
 
     }

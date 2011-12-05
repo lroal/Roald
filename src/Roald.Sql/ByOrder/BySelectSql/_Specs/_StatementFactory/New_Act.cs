@@ -1,4 +1,3 @@
-using System;
 using Rhino.Mocks;
 
 namespace Roald.Sql.ByOrder.BySelectSql._Specs._StatementFactory
@@ -9,6 +8,7 @@ namespace Roald.Sql.ByOrder.BySelectSql._Specs._StatementFactory
         protected TableMap TableMap = MockRepository.GenerateStub<TableMap>();
         protected FakeTopAlias Alias = new FakeTopAlias();
         protected const string TableName = "<TableName>";
+        protected SelectSqlAppender Appender = MockRepository.GenerateStub<SelectSqlAppender>();
 
         protected override void Arrange()
         {
@@ -20,7 +20,8 @@ namespace Roald.Sql.ByOrder.BySelectSql._Specs._StatementFactory
 
         protected override void Act()
         {
-            Factory = new StatementFactory<TableMap>(TableMap,Alias);
+            Factory = new StatementFactory<TableMap>(TableMap,Alias,Appender);
         }
+
     }
 }

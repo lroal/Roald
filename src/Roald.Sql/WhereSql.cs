@@ -2,7 +2,7 @@
 
 namespace Roald.Sql
 {
-    public interface WhereSql
+    public interface WhereSql : SqlElement
     {
         void Add(WhereSql other);
        

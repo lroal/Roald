@@ -25,11 +25,6 @@ namespace Roald.Sql
             _statementFactory = statementFactory;
         }
 
-        public void AddWhere(WhereSql whereSql)
-        {
-            _whereSql.Add(whereSql);
-        }
-
         public void AddJoin(JoinSql joinSql)
         {
             _joinSql.Add(joinSql);

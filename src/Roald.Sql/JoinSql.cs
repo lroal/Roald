@@ -1,6 +1,6 @@
 ﻿namespace Roald.Sql
 {
-    public interface JoinSql
+    public interface JoinSql : SqlElement
     {
          void Add(JoinSql other);
     }
